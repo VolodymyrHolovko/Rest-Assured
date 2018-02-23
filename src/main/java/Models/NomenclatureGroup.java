@@ -90,7 +90,7 @@ public class NomenclatureGroup {
     public void setDefaultDebitingMethodId(int defaultDebitingMethodId) {
         this.defaultDebitingMethodId = defaultDebitingMethodId;
     }
-
+    //dfsdfsdf
     public void setDefaultSellingMethodId(int defaultSellingMethodId) {
         this.defaultSellingMethodId = defaultSellingMethodId;
     }
