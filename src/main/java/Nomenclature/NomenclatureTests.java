@@ -1,10 +1,9 @@
 package Nomenclature;
 
-import Models.Token.GetToken;
+import token.GetToken;
 import com.google.gson.Gson;
 import com.jayway.restassured.http.ContentType;
 import com.jayway.restassured.response.ResponseBody;
-import org.json.simple.JSONObject;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -23,6 +22,7 @@ public class NomenclatureTests {
     public void getToken() {
         GetToken getToken = new GetToken();
         this.token=getToken.GetToken();
+        System.out.println("evevevevefbdefbedbesbesbebebrerbevevevev");
     }
 
     @Test
