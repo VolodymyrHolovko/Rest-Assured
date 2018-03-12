@@ -1,4 +1,4 @@
-package Models;
+package Models.NomenclatureGroup;
 
 public class NomenclatureGroup {
     NomenclatureGroup data;

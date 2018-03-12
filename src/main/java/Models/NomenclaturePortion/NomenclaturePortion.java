@@ -1,6 +1,4 @@
-package Models;
-
-import org.yecht.Data;
+package Models.NomenclaturePortion;
 
 public class NomenclaturePortion {
     NomenclaturePortion data;
@@ -75,5 +73,10 @@ public class NomenclaturePortion {
 
     public void setSuccess(boolean success) {
         isSuccess = success;
+    }
+
+    @Override
+    public String toString() {
+        return "NomenclaturePortion{" + "data=" + data + ", minimum=" + minimum + ", maximum=" + maximum + ", minimumPrice=" + minimumPrice + ", step=" + step + ", stepPrice=" + stepPrice + ", isSuccess=" + isSuccess + '}';
     }
 }

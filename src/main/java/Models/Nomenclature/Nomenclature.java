@@ -1,6 +1,7 @@
-
+package Models.Nomenclature;
 
 import org.apache.regexp.RE;
+import org.json.JSONArray;
 import org.json.simple.JSONObject;
 
 import java.util.ArrayList;
@@ -9,7 +10,6 @@ import java.util.List;
 
 public class Nomenclature {
     public JSONObject type1SupportSelling() {
-
         JSONObject type = new JSONObject();
         type.put("article",null);
         type.put("establishmentId",1);
@@ -40,10 +40,13 @@ public class Nomenclature {
         type.put("supportedOrderTypes",1);
         type.put("dimensionId",1);
         type.put("tagId",1);
+        JSONArray tax = new JSONArray();
+        tax.put(1);
+        type.put("taxesIds",tax);
         return type;
     }
 
-    public JSONObject updateModel(String article){
+    public JSONObject updateModel(int article){
         JSONObject object = type1SupportSelling();
         object.remove("establishmentId");
         object.replace("article",null,article);
@@ -83,6 +86,4 @@ public class Nomenclature {
         object.replace("nomenclatureTypeId",1,4);
         return object;
     }
-
-
 }

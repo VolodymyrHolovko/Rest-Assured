@@ -1,9 +1,11 @@
-import java.util.ArrayList;
+package Models.Nomenclature;
+
+import java.util.List;
 
 public class NomenclatureResponse {
     NomenclatureResponse data;
     private int establishmentId;
-    private String article;
+    private int article;
     private String kitchenName;
     private String shortName;
     private String publicName;
@@ -33,11 +35,15 @@ public class NomenclatureResponse {
     private int dimensionId;
     private int tagId;
     private boolean isSuccess;
+    private String descriptions;
+    private List<Integer> taxesIds;
 
-    public NomenclatureResponse(NomenclatureResponse data,String id, int establishmentId, String article, String kitchenName, String shortName, String publicName, String barCode, String recipe, String description, int weightInKilos, int coldLoss, boolean supportSelling, boolean supportExtensioning, boolean printOnCheck, boolean printToKitchen, int parentId, int preparingTime, int rushPreparingTime, int maxExtensions, int debitMethodId, int nomenclatureTypeId, int cookingPriorityId, int saleMethodId, int tasteGroupId, int specialGroupId, int supportedOrderTypes, int dimensionId, int tagId) {
+    public NomenclatureResponse(NomenclatureResponse data,List<Integer> taxesIds, String descriptions,String id, int establishmentId, int article, String kitchenName, String shortName, String publicName, String barCode, String recipe, String description, int weightInKilos, int coldLoss, boolean supportSelling, boolean supportExtensioning, boolean printOnCheck, boolean printToKitchen, int parentId, int preparingTime, int rushPreparingTime, int maxExtensions, int debitMethodId, int nomenclatureTypeId, int cookingPriorityId, int saleMethodId, int tasteGroupId, int specialGroupId, int supportedOrderTypes, int dimensionId, int tagId) {
+        this.taxesIds = taxesIds;
         this.heatLoss = heatLoss;
         this.isSuccess = isSuccess;
         this.data = data;
+        this.taxesIds = taxesIds;
         this.establishmentId = establishmentId;
         this.article = article;
         this.kitchenName = kitchenName;
@@ -66,11 +72,25 @@ public class NomenclatureResponse {
         this.supportedOrderTypes = supportedOrderTypes;
         this.dimensionId = dimensionId;
         this.tagId = tagId;
+        this.descriptions = descriptions;
 
     }
 
     public NomenclatureResponse getData() {
         return data;
+    }
+
+    public void setDescriptions(String descriptions) {
+        this.descriptions = descriptions;
+    }
+
+    public void setData2(NomenclatureResponse data2) {
+        this.taxesIds = taxesIds;
+    }
+
+    public String getDescriptions() {
+
+        return descriptions;
     }
 
     public int getHeatLoss() {
@@ -81,13 +101,11 @@ public class NomenclatureResponse {
         return id;
     }
 
-
-
     public int getEstablishmentId() {
         return establishmentId;
     }
 
-    public String getArticle() {
+    public int getArticle() {
         return article;
     }
 
@@ -207,7 +225,7 @@ public class NomenclatureResponse {
         this.establishmentId = establishmentId;
     }
 
-    public void setArticle(String article) {
+    public void setArticle(int article) {
         this.article = article;
     }
 
@@ -317,6 +335,14 @@ public class NomenclatureResponse {
         this.specialGroupId = specialGroupId;
     }
 
+    public void setTaxesIds(List<Integer> taxesIds) {
+        this.taxesIds = taxesIds;
+    }
+
+    public List<Integer> getTaxesIds() {
+        return taxesIds;
+    }
+
     public void setSupportedOrderTypes(int supportedOrderTypes) {
         this.supportedOrderTypes = supportedOrderTypes;
     }
@@ -329,9 +355,8 @@ public class NomenclatureResponse {
         this.tagId = tagId;
     }
 
-
     @Override
     public String toString() {
-        return "NomenclatureResponse{" + "data=" + data + ", establishmentId=" + establishmentId + ", article='" + article + '\'' + ", kitchenName='" + kitchenName + '\'' + ", shortName='" + shortName + '\'' + ", publicName='" + publicName + '\'' + ", barCode='" + barCode + '\'' + ", recipe='" + recipe + '\'' + ", description='" + description + '\'' + ", weightInKilos=" + weightInKilos + ", coldLoss=" + coldLoss + ", heatLoss=" + heatLoss + ", supportSelling=" + supportSelling + ", supportExtensioning=" + supportExtensioning + ", printOnCheck=" + printOnCheck + ", printToKitchen=" + printToKitchen + ", parentId=" + parentId + ", id='" + id + '\'' + ", isActive=" + isActive + ", preparingTime=" + preparingTime + ", rushPreparingTime=" + rushPreparingTime + ", maxExtensions=" + maxExtensions + ", debitMethodId=" + debitMethodId + ", nomenclatureTypeId=" + nomenclatureTypeId + ", cookingPriorityId=" + cookingPriorityId + ", saleMethodId=" + saleMethodId + ", tasteGroupId=" + tasteGroupId + ", specialGroupId=" + specialGroupId + ", supportedOrderTypes=" + supportedOrderTypes + ", dimensionId=" + dimensionId + ", tagId=" + tagId + ", isSuccess=" + isSuccess + '}';
+        return "Models.Nomenclature.NomenclatureResponse{" + "data=" + data + ", establishmentId=" + establishmentId + ", article=" + article + ", kitchenName='" + kitchenName + '\'' + ", shortName='" + shortName + '\'' + ", publicName='" + publicName + '\'' + ", barCode='" + barCode + '\'' + ", recipe='" + recipe + '\'' + ", description='" + description + '\'' + ", weightInKilos=" + weightInKilos + ", coldLoss=" + coldLoss + ", heatLoss=" + heatLoss + ", supportSelling=" + supportSelling + ", supportExtensioning=" + supportExtensioning + ", printOnCheck=" + printOnCheck + ", printToKitchen=" + printToKitchen + ", parentId=" + parentId + ", id='" + id + '\'' + ", isActive=" + isActive + ", preparingTime=" + preparingTime + ", rushPreparingTime=" + rushPreparingTime + ", maxExtensions=" + maxExtensions + ", debitMethodId=" + debitMethodId + ", nomenclatureTypeId=" + nomenclatureTypeId + ", cookingPriorityId=" + cookingPriorityId + ", saleMethodId=" + saleMethodId + ", tasteGroupId=" + tasteGroupId + ", specialGroupId=" + specialGroupId + ", supportedOrderTypes=" + supportedOrderTypes + ", dimensionId=" + dimensionId + ", tagId=" + tagId + ", isSuccess=" + isSuccess + ", descriptions='" + descriptions + '\'' + ", taxesIds=" + taxesIds + '}';
     }
 }

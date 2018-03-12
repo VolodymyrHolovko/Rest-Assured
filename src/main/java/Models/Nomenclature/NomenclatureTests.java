@@ -1,3 +1,4 @@
+package Models.Nomenclature;
 
 import com.google.gson.Gson;
 import com.jayway.restassured.http.ContentType;
@@ -6,14 +7,15 @@ import org.json.simple.JSONObject;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+import sun.invoke.empty.Empty;
 
 import static com.jayway.restassured.RestAssured.given;
 
-public class RestTest {
+public class NomenclatureTests {
     String token = "";
     String baseURI = "http://cluster.test.eservia.com/api/v0.0/Nomenclature";
     public String ids;
-    public String article;
+    public int article;
     Nomenclature nomenclature = new Nomenclature();
 
     @BeforeClass
@@ -57,11 +59,14 @@ public class RestTest {
         Assert.assertEquals(1, nomenclatureResponse.data.getSpecialGroupId());
         Assert.assertEquals(1, nomenclatureResponse.data.getSupportedOrderTypes());
         Assert.assertEquals(1, nomenclatureResponse.data.getDimensionId());
+        Assert.assertEquals(1,nomenclatureResponse.data.getTaxesIds().size());
+        System.out.println(nomenclatureResponse);
+        Assert.assertEquals(1,nomenclatureResponse.data.getTaxesIds().get(0).intValue());
     }
 
     @Test
     public void updateNomenclature() {
-        String update = baseURI+ids;
+        String update = baseURI+"/"+ids;
         ResponseBody response = given().contentType(ContentType.JSON).header("Authorization", token).header("EstablishmentContextId", "1").body(nomenclature.updateModel(article)).when().put(update).thenReturn().body();
         NomenclatureResponse nomenclatureResponse = new Gson().fromJson(response.asString(), NomenclatureResponse.class);
         Assert.assertEquals("kitchenName1", nomenclatureResponse.data.getKitchenName());
@@ -76,7 +81,7 @@ public class RestTest {
         Assert.assertEquals(false, nomenclatureResponse.data.isSupportSelling());
         Assert.assertEquals(false, nomenclatureResponse.data.isSupportExtensioning());
         Assert.assertEquals(false, nomenclatureResponse.data.isPrintOnCheck());
-        Assert.assertEquals(23, nomenclatureResponse.data.getPreparingTime());
+        Assert.assertEquals(article, nomenclatureResponse.data.getArticle());
         Assert.assertEquals(23, nomenclatureResponse.data.getRushPreparingTime());
         Assert.assertEquals(2, nomenclatureResponse.data.getMaxExtensions());
         Assert.assertEquals(2, nomenclatureResponse.data.getDebitMethodId());
@@ -105,11 +110,9 @@ public class RestTest {
 
     @Test
     public void deactivateNomenclature(){
-        String deactivateUrl = baseURI+ids+"/Deactivate";
-        String getUrl = baseURI+ids;
+        String deactivateUrl = baseURI+"/"+ids+"/Deactivate";
+        String getUrl = baseURI+"/"+ids;
         ResponseBody response = given().contentType(ContentType.JSON).header("Authorization", token).header("EstablishmentContextId", "1").when().patch(deactivateUrl).thenReturn().body();
-        NomenclatureResponse nomenclatureResponse = new Gson().fromJson(response.asString(), NomenclatureResponse.class);
-        Assert.assertEquals(true, nomenclatureResponse.data.isSuccess());
         ResponseBody response1 = given().contentType(ContentType.JSON).header("Authorization", token).header("EstablishmentContextId", "1").when().get(getUrl).thenReturn().body();
         NomenclatureResponse nomenclatureResponse1 = new Gson().fromJson(response1.asString(), NomenclatureResponse.class);
         Assert.assertEquals(false, nomenclatureResponse1.data.isActive());
