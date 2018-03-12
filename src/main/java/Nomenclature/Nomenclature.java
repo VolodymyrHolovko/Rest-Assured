@@ -1,12 +1,7 @@
-package Models.Nomenclature;
+package Nomenclature;
 
-import org.apache.regexp.RE;
 import org.json.JSONArray;
 import org.json.simple.JSONObject;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 public class Nomenclature {
     public JSONObject type1SupportSelling() {
