@@ -1,4 +1,4 @@
-package Models.Token;
+package token;
 
 import com.jayway.restassured.http.ContentType;
 import com.jayway.restassured.response.ResponseBody;
