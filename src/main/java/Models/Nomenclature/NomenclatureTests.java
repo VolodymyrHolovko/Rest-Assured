@@ -1,5 +1,6 @@
 package Models.Nomenclature;
 
+import Models.Token.GetToken;
 import com.google.gson.Gson;
 import com.jayway.restassured.http.ContentType;
 import com.jayway.restassured.response.ResponseBody;
@@ -9,6 +10,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import sun.invoke.empty.Empty;
 
+import static com.jayway.restassured.RestAssured.get;
 import static com.jayway.restassured.RestAssured.given;
 
 public class NomenclatureTests {
@@ -19,15 +21,9 @@ public class NomenclatureTests {
     Nomenclature nomenclature = new Nomenclature();
 
     @BeforeClass
-    public void GetToken() {
-        JSONObject requestParams = new JSONObject();
-        requestParams.put("username", "cadmin@eservia.com");
-        requestParams.put("password", "manager");
-        requestParams.put("deviceId", "string");
-        requestParams.put("authTypeId", 1);
-        ResponseBody response = given().contentType(ContentType.JSON).body(requestParams).when().post("http://cluster.test.eservia.com/api/v0.0/Authorize").thenReturn().body();
-        String token = response.jsonPath().get("data.token");
-        this.token = "Bearer " + token;
+    public void getToken() {
+        GetToken getToken = new GetToken();
+        this.token=getToken.GetToken();
     }
 
     @Test
