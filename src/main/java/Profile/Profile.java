@@ -1,4 +1,4 @@
-package Models.Profile;
+package Profile;
 
 import java.util.ArrayList;
 
@@ -183,7 +183,7 @@ public class Profile {
 
     @Override
     public String toString() {
-        return "Models.Profile.Profile{" + "id='" + id + '\'' + ", corporationId='" + corporationId + '\'' + ", personalNumber='" + personalNumber + '\'' + ", isActive=" + isActive + ", photoPath='" + photoPath + '\'' + ", firstName='" + firstName + '\'' + ", secondName='" + secondName + '\'' + ", middleName='" + middleName + '\'' + ", sexId='" + sexId + '\'' + ", birthday=" + birthday + ", registrationDate=" + registrationDate + ", medicalCardExpirationDate=" + medicalCardExpirationDate + ", address='" + address + '\'' + ", email='" + email + '\'' + ", phoneNumber='" + phoneNumber + '\'' + ", cardNumber=" + cardNumber + ", positions=" + positions + '}';
+        return "Profile.Profile{" + "id='" + id + '\'' + ", corporationId='" + corporationId + '\'' + ", personalNumber='" + personalNumber + '\'' + ", isActive=" + isActive + ", photoPath='" + photoPath + '\'' + ", firstName='" + firstName + '\'' + ", secondName='" + secondName + '\'' + ", middleName='" + middleName + '\'' + ", sexId='" + sexId + '\'' + ", birthday=" + birthday + ", registrationDate=" + registrationDate + ", medicalCardExpirationDate=" + medicalCardExpirationDate + ", address='" + address + '\'' + ", email='" + email + '\'' + ", phoneNumber='" + phoneNumber + '\'' + ", cardNumber=" + cardNumber + ", positions=" + positions + '}';
     }
 
 

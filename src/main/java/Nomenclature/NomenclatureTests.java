@@ -1,4 +1,4 @@
-package Models.Nomenclature;
+package Nomenclature;
 
 import Models.Token.GetToken;
 import com.google.gson.Gson;
@@ -8,7 +8,6 @@ import org.json.simple.JSONObject;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import sun.invoke.empty.Empty;
 
 import static com.jayway.restassured.RestAssured.get;
 import static com.jayway.restassured.RestAssured.given;

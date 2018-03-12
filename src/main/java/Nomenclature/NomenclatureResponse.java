@@ -1,4 +1,4 @@
-package Models.Nomenclature;
+package Nomenclature;
 
 import java.util.List;
 
@@ -357,6 +357,6 @@ public class NomenclatureResponse {
 
     @Override
     public String toString() {
-        return "Models.Nomenclature.NomenclatureResponse{" + "data=" + data + ", establishmentId=" + establishmentId + ", article=" + article + ", kitchenName='" + kitchenName + '\'' + ", shortName='" + shortName + '\'' + ", publicName='" + publicName + '\'' + ", barCode='" + barCode + '\'' + ", recipe='" + recipe + '\'' + ", description='" + description + '\'' + ", weightInKilos=" + weightInKilos + ", coldLoss=" + coldLoss + ", heatLoss=" + heatLoss + ", supportSelling=" + supportSelling + ", supportExtensioning=" + supportExtensioning + ", printOnCheck=" + printOnCheck + ", printToKitchen=" + printToKitchen + ", parentId=" + parentId + ", id='" + id + '\'' + ", isActive=" + isActive + ", preparingTime=" + preparingTime + ", rushPreparingTime=" + rushPreparingTime + ", maxExtensions=" + maxExtensions + ", debitMethodId=" + debitMethodId + ", nomenclatureTypeId=" + nomenclatureTypeId + ", cookingPriorityId=" + cookingPriorityId + ", saleMethodId=" + saleMethodId + ", tasteGroupId=" + tasteGroupId + ", specialGroupId=" + specialGroupId + ", supportedOrderTypes=" + supportedOrderTypes + ", dimensionId=" + dimensionId + ", tagId=" + tagId + ", isSuccess=" + isSuccess + ", descriptions='" + descriptions + '\'' + ", taxesIds=" + taxesIds + '}';
+        return "Nomenclature.NomenclatureResponse{" + "data=" + data + ", establishmentId=" + establishmentId + ", article=" + article + ", kitchenName='" + kitchenName + '\'' + ", shortName='" + shortName + '\'' + ", publicName='" + publicName + '\'' + ", barCode='" + barCode + '\'' + ", recipe='" + recipe + '\'' + ", description='" + description + '\'' + ", weightInKilos=" + weightInKilos + ", coldLoss=" + coldLoss + ", heatLoss=" + heatLoss + ", supportSelling=" + supportSelling + ", supportExtensioning=" + supportExtensioning + ", printOnCheck=" + printOnCheck + ", printToKitchen=" + printToKitchen + ", parentId=" + parentId + ", id='" + id + '\'' + ", isActive=" + isActive + ", preparingTime=" + preparingTime + ", rushPreparingTime=" + rushPreparingTime + ", maxExtensions=" + maxExtensions + ", debitMethodId=" + debitMethodId + ", nomenclatureTypeId=" + nomenclatureTypeId + ", cookingPriorityId=" + cookingPriorityId + ", saleMethodId=" + saleMethodId + ", tasteGroupId=" + tasteGroupId + ", specialGroupId=" + specialGroupId + ", supportedOrderTypes=" + supportedOrderTypes + ", dimensionId=" + dimensionId + ", tagId=" + tagId + ", isSuccess=" + isSuccess + ", descriptions='" + descriptions + '\'' + ", taxesIds=" + taxesIds + '}';
     }
 }
