@@ -22,7 +22,6 @@ public class NomenclatureTests {
     public void getToken() {
         GetToken getToken = new GetToken();
         this.token=getToken.GetToken();
-        System.out.println("evevevevefbdefbedbesbesbebebrerbevevevev");
     }
 
     @Test
