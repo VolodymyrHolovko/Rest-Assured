@@ -1,6 +1,6 @@
 package Departments;
 
-import Frame.tests.GetToken;
+import token.GetToken;
 import com.jayway.restassured.http.ContentType;
 import com.jayway.restassured.response.ResponseBody;
 import org.testng.annotations.BeforeClass;
