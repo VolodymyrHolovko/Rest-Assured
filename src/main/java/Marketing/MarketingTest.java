@@ -1,13 +1,9 @@
 package Marketing;
 
-import Nomenclature.Nomenclature;
 import com.google.gson.Gson;
 import com.jayway.restassured.http.ContentType;
 import com.jayway.restassured.response.ResponseBody;
-import org.testng.Assert;
-import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import token.GetToken;
 
 import static com.jayway.restassured.RestAssured.given;
 
