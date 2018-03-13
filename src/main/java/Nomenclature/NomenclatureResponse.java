@@ -217,6 +217,7 @@ public class NomenclatureResponse {
         return tagId;
     }
 
+
     public void setData(NomenclatureResponse data) {
         this.data = data;
     }
