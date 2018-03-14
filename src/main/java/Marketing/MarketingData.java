@@ -52,17 +52,18 @@ public class MarketingData {
         marketingUpdate.setEndTime("2018-03-30T11:42:32");
         marketingUpdate.setActive(false);
 
-        List<WorkSchedule> workSchedulesUpdate = new  ArrayList<WorkSchedule>();
+        List<WorkSchedule> workSchedules = new  ArrayList<WorkSchedule>();
         WorkSchedule workScheduleUpdate = new WorkSchedule();
         workScheduleUpdate.setStartTime(1520765319);
         workScheduleUpdate.setEndTime(1521370119);
         workScheduleUpdate.setDay(2);
-        workSchedulesUpdate.add(workScheduleUpdate);
-        marketingUpdate.setWorkSchedule(workSchedulesUpdate);
+        workSchedules.add(workScheduleUpdate);
+        marketingUpdate.setWorkSchedule(workSchedules);
 
 
 
         // TODO set other fields
+
 
         return marketingUpdate;
     }
