@@ -39,8 +39,28 @@ public class MarketingData {
         return marketing;
     }
     public Marketing updateMarketing() {
-        Marketing marketingUpdate = new Marketing();
+        Marketing marketingUpdate = addNewMarketing();
         marketingUpdate.setId(1);
+        marketingUpdate.setTitle("title_update");
+        marketingUpdate.setDescription("description_update");
+        marketingUpdate.setPathToPhoto("media/201803/mhGdSTf7kdT0LfdS.jpg");
+        marketingUpdate.setMarketingTypeId(1);
+        marketingUpdate.setAddress("adress_update");
+        marketingUpdate.setLongitude(24);
+        marketingUpdate.setLatitude(25);
+        marketingUpdate.setBeginTime("2018-03-29T11:55:33");
+        marketingUpdate.setEndTime("2018-03-30T11:42:32");
+        marketingUpdate.setActive(false);
+
+        List<WorkSchedule> workSchedulesUpdate = new  ArrayList<WorkSchedule>();
+        WorkSchedule workScheduleUpdate = new WorkSchedule();
+        workScheduleUpdate.setStartTime(1520765319);
+        workScheduleUpdate.setEndTime(1521370119);
+        workScheduleUpdate.setDay(2);
+        workSchedulesUpdate.add(workScheduleUpdate);
+        marketingUpdate.setWorkSchedule(workSchedulesUpdate);
+
+
 
         // TODO set other fields
 

@@ -28,7 +28,6 @@ public class MarketingTest {
                 .body(marketingData.addNewMarketing())
                 .when().post(baseURI).thenReturn().body();
         MarketingResponse marketingResponse = new Gson().fromJson(response.asString(), MarketingResponse.class);
-
     }
 
 
