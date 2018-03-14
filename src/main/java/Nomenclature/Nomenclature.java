@@ -1,9 +1,9 @@
 package Nomenclature;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Nomenclature {
-    Nomenclature data;
     private int establishmentId;
     private int article;
     private String kitchenName;
@@ -38,59 +38,10 @@ public class Nomenclature {
     private String descriptions;
     private List<Integer> taxesIds;
 
-    public Nomenclature(Nomenclature data, List<Integer> taxesIds, String descriptions, String id, int establishmentId, int article, String kitchenName, String shortName, String publicName, String barCode, String recipe, String description, int weightInKilos, int coldLoss, boolean supportSelling, boolean supportExtensioning, boolean printOnCheck, boolean printToKitchen, int parentId, int preparingTime, int rushPreparingTime, int maxExtensions, int debitMethodId, int nomenclatureTypeId, int cookingPriorityId, int saleMethodId, int tasteGroupId, int specialGroupId, int supportedOrderTypes, int dimensionId, int tagId) {
-        this.taxesIds = taxesIds;
-        this.heatLoss = heatLoss;
-        this.isSuccess = isSuccess;
-        this.data = data;
-        this.taxesIds = taxesIds;
-        this.establishmentId = establishmentId;
-        this.article = article;
-        this.kitchenName = kitchenName;
-        this.shortName = shortName;
-        this.publicName = publicName;
-        this.barCode = barCode;
-        this.recipe = recipe;
-        this.description = description;
-        this.weightInKilos = weightInKilos;
-        this.coldLoss = coldLoss;
-        this.supportSelling = supportSelling;
-        this.supportExtensioning = supportExtensioning;
-        this.printOnCheck = printOnCheck;
-        this.printToKitchen = printToKitchen;
-        this.parentId = parentId;
-        this.isActive = isActive;
-        this.preparingTime = preparingTime;
-        this.rushPreparingTime = rushPreparingTime;
-        this.maxExtensions = maxExtensions;
-        this.debitMethodId = debitMethodId;
-        this.nomenclatureTypeId = nomenclatureTypeId;
-        this.cookingPriorityId = cookingPriorityId;
-        this.saleMethodId = saleMethodId;
-        this.tasteGroupId = tasteGroupId;
-        this.specialGroupId = specialGroupId;
-        this.supportedOrderTypes = supportedOrderTypes;
-        this.dimensionId = dimensionId;
-        this.tagId = tagId;
-        this.descriptions = descriptions;
 
-    }
-
-    public Nomenclature getData() {
-        return data;
-    }
 
     public void setDescriptions(String descriptions) {
         this.descriptions = descriptions;
-    }
-
-    public void setData2(Nomenclature data2) {
-        this.taxesIds = taxesIds;
-    }
-
-    public String getDescriptions() {
-
-        return descriptions;
     }
 
     public int getHeatLoss() {
@@ -101,10 +52,6 @@ public class Nomenclature {
         return id;
     }
 
-    public int getEstablishmentId() {
-        return establishmentId;
-    }
-
     public int getArticle() {
         return article;
     }
@@ -113,9 +60,7 @@ public class Nomenclature {
         return isActive;
     }
 
-    public boolean isSuccess() {
-        return isSuccess;
-    }
+
 
     public String getKitchenName() {
         return kitchenName;
@@ -161,13 +106,6 @@ public class Nomenclature {
         return printOnCheck;
     }
 
-    public boolean isPrintToKitchen() {
-        return printToKitchen;
-    }
-
-    public int getParentId() {
-        return parentId;
-    }
 
     public int getPreparingTime() {
         return preparingTime;
@@ -213,15 +151,6 @@ public class Nomenclature {
         return dimensionId;
     }
 
-    public int getTagId() {
-        return tagId;
-    }
-
-
-    public void setData(Nomenclature data) {
-        this.data = data;
-    }
-
     public void setEstablishmentId(int establishmentId) {
         this.establishmentId = establishmentId;
     }
@@ -229,8 +158,6 @@ public class Nomenclature {
     public void setArticle(int article) {
         this.article = article;
     }
-
-
 
     public void setKitchenName(String kitchenName) {
         this.kitchenName = kitchenName;
@@ -240,8 +167,36 @@ public class Nomenclature {
         this.shortName = shortName;
     }
 
+    public int getEstablishmentId() {
+        return establishmentId;
+    }
+
+    public boolean isPrintToKitchen() {
+        return printToKitchen;
+    }
+
+    public int getParentId() {
+        return parentId;
+    }
+
+    public int getTagId() {
+        return tagId;
+    }
+
+    public boolean isSuccess() {
+        return isSuccess;
+    }
+
+    public String getDescriptions() {
+        return descriptions;
+    }
+
     public void setId(String id) {
         this.id = id;
+    }
+
+    public void setSuccess(boolean success) {
+        isSuccess = success;
     }
 
     public void setPublicName(String publicName) {
@@ -268,9 +223,7 @@ public class Nomenclature {
         this.weightInKilos = weightInKilos;
     }
 
-    public void setSuccess(boolean success) {
-        isSuccess = success;
-    }
+
 
     public void setColdLoss(int coldLoss) {
         this.coldLoss = coldLoss;
@@ -356,8 +309,5 @@ public class Nomenclature {
         this.tagId = tagId;
     }
 
-    @Override
-    public String toString() {
-        return "NomenclatureData.Nomenclature{" + "data=" + data + ", establishmentId=" + establishmentId + ", article=" + article + ", kitchenName='" + kitchenName + '\'' + ", shortName='" + shortName + '\'' + ", publicName='" + publicName + '\'' + ", barCode='" + barCode + '\'' + ", recipe='" + recipe + '\'' + ", description='" + description + '\'' + ", weightInKilos=" + weightInKilos + ", coldLoss=" + coldLoss + ", heatLoss=" + heatLoss + ", supportSelling=" + supportSelling + ", supportExtensioning=" + supportExtensioning + ", printOnCheck=" + printOnCheck + ", printToKitchen=" + printToKitchen + ", parentId=" + parentId + ", id='" + id + '\'' + ", isActive=" + isActive + ", preparingTime=" + preparingTime + ", rushPreparingTime=" + rushPreparingTime + ", maxExtensions=" + maxExtensions + ", debitMethodId=" + debitMethodId + ", nomenclatureTypeId=" + nomenclatureTypeId + ", cookingPriorityId=" + cookingPriorityId + ", saleMethodId=" + saleMethodId + ", tasteGroupId=" + tasteGroupId + ", specialGroupId=" + specialGroupId + ", supportedOrderTypes=" + supportedOrderTypes + ", dimensionId=" + dimensionId + ", tagId=" + tagId + ", isSuccess=" + isSuccess + ", descriptions='" + descriptions + '\'' + ", taxesIds=" + taxesIds + '}';
-    }
+
 }
