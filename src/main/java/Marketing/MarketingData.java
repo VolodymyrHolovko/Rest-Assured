@@ -15,10 +15,10 @@ public class MarketingData {
         marketing.setPathToPhoto("media/201803/eNOt8jcLD1hC7hP0.jpg");
         marketing.setAddress("address");
         marketing.setMarketingTypeId(2);
-        marketing.setLatitude(22);
-        marketing.setLongitude(23);
-        marketing.setBeginTime("2018-03-29T11:50:30");
-        marketing.setEndTime("2018-03-30T11:50:30");
+        marketing.setLatitude(22.00);
+        marketing.setLongitude(23.00);
+        marketing.setBeginTime("2018-03-29T11:50:30.000");
+        marketing.setEndTime("2018-04-15T11:45:30.000");
         marketing.setActive(true);
 
         List<WorkSchedule> workSchedules = new ArrayList<WorkSchedule>();
