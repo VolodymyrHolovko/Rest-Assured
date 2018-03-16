@@ -20,6 +20,7 @@ public class Marketing {
     private List<Link> links;
     private List<WorkSchedule> workSchedule;
 
+
     public long getId() {
         return id;
     }

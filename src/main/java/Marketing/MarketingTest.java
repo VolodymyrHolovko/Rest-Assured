@@ -1,11 +1,11 @@
 package Marketing;
 
+
 import com.google.gson.Gson;
 import com.jayway.restassured.http.ContentType;
 import com.jayway.restassured.response.ResponseBody;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-
 import static com.jayway.restassured.RestAssured.given;
 
 public class MarketingTest {
@@ -13,13 +13,11 @@ public class MarketingTest {
     String baseURI = "http://staging.eservia.com:8002/api/v0.0/Marketings";
     public long ids;
     MarketingData marketingData = new MarketingData();
-
 //    @BeforeClass
 //    public void getToken() {
 //        GetToken getToken = new GetToken();
 //        this.token=getToken.GetToken();
 //    }
-
     @Test
     public void addNewMarketing() {
         ResponseBody response = given().contentType(ContentType.JSON)
@@ -40,16 +38,13 @@ public class MarketingTest {
         Assert.assertEquals(22.00,marketing.getLatitude());
         Assert.assertEquals("2018-03-29T11:50:30.000", marketing.getBeginTime());
         Assert.assertEquals("2018-04-15T11:45:30.000",marketing.getEndTime());
-        Assert.assertEquals(true, marketing.isActive());
-
-
-
-
-
-
-
-
+        /*Assert.assertEquals(true, marketing.isActive());*/
+        Assert.assertEquals(1, marketing.getLinks().size());
+        Assert.assertEquals(1, marketing.getLinks().get(0).getSocialTypeId());
+        Assert.assertEquals("http://facebook.com",marketing.getLinks().get(0).getUrl());
+        Assert.assertEquals(1,marketing.getWorkSchedule().size());
+        Assert.assertEquals(1,marketing.getWorkSchedule().get(0).getDay());
+        Assert.assertEquals(1520765319,marketing.getWorkSchedule().get(0).getStartTime());
+        Assert.assertEquals(1521370119,marketing.getWorkSchedule().get(0).getEndTime());
     }
-
-
 }
