@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MarketingData {
+
     public Marketing addNewMarketing() {
         Marketing marketing = new Marketing();
         marketing.setEstablishmentId(1);
@@ -38,18 +39,18 @@ public class MarketingData {
 
         return marketing;
     }
-    public Marketing updateMarketing() {
+    public Marketing updateMarketing(int ids) {
         Marketing marketingUpdate = addNewMarketing();
-        marketingUpdate.setId(1);
+        marketingUpdate.setId(ids);
         marketingUpdate.setTitle("title_update");
         marketingUpdate.setDescription("description_update");
         marketingUpdate.setPathToPhoto("media/201803/mhGdSTf7kdT0LfdS.jpg");
-        marketingUpdate.setMarketingTypeId(1);
+        marketingUpdate.setMarketingTypeId(2);
         marketingUpdate.setAddress("adress_update");
-        marketingUpdate.setLongitude(24);
-        marketingUpdate.setLatitude(25);
-        marketingUpdate.setBeginTime("2018-03-29T11:55:33");
-        marketingUpdate.setEndTime("2018-03-30T11:42:32");
+        marketingUpdate.setLongitude(24.00);
+        marketingUpdate.setLatitude(25.00);
+        marketingUpdate.setBeginTime("2018-03-29T11:55:33.000");
+        marketingUpdate.setEndTime("2018-03-30T11:42:32.000");
         marketingUpdate.setActive(false);
 
         List<WorkSchedule> workSchedules = new  ArrayList<WorkSchedule>();
@@ -60,10 +61,12 @@ public class MarketingData {
         workSchedules.add(workScheduleUpdate);
         marketingUpdate.setWorkSchedule(workSchedules);
 
-
-
-        // TODO set other fields
-
+        List<Link> links = new ArrayList<Link>();
+        Link link = new Link();
+        link.setSocialTypeId(2);
+        link.setUrl("http://www.instagram.com/");
+        links.add(link);
+        marketingUpdate.setLinks(links);
 
         return marketingUpdate;
     }

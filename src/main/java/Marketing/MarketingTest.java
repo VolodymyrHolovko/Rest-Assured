@@ -5,19 +5,22 @@ import com.google.gson.Gson;
 import com.jayway.restassured.http.ContentType;
 import com.jayway.restassured.response.ResponseBody;
 import org.testng.Assert;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+
 import static com.jayway.restassured.RestAssured.given;
 
 public class MarketingTest {
-    String token = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJib29raW5nLnByb21vdGVyIiwiYXVkIjoiYm9va2luZy5wcm9tb3RlciIsImlhdCI6MTUyMTEyMTQ1NiwibmJmIjoxNTIxMTIxNDU2LCJwcm9tb3Rlcl9pZCI6IjI5IiwiZXhwIjoxNTIxMjA3ODU2LCJidXNpbmVzc2VzIjpbeyJpZCI6NDIsImFkZHJlc3NlcyI6WzEwMCwxMzcsMTQ2LDE2MV19LHsiaWQiOjU2LCJhZGRyZXNzZXMiOlsxNTFdfV19.kMiTyEO4033YX4bzhyb8u-TkVwvqCjIfrcOKdhumjQtb1EL3IcUW330cumg3dvDkf1CWSMbsu963hmYzfu7iTnfNtYJZ38D7QYTnvztKLog1ctd8Y7A9GH9cSQQ_c5N6GLRXIlLuDYOop1ZvVfoECX2V3Z2RwkShiA9Jm9Rq1SodfHin3Ppsxb5rQEMcOWwXQUykZcG42bhksyrKvZscfeo5U5G0kEuit0khhxYiLUhER1ZHGmTMEldcDa0WZubA9ECKx-9z8OYZCluDVPCGfEcL7MkU43ZZsWvQ3ezxdxb6E9NBorGxejtLatMiOfJzUDFeOnlieSyRJrzTTgD9zQ";
     String baseURI = "http://staging.eservia.com:8002/api/v0.0/Marketings";
-    public long ids;
+    String token = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJib29raW5nLnByb21vdGVyIiwiYXVkIjoiYm9va2luZy5wcm9tb3RlciIsImlhdCI6MTUyMTQ2ODE1MCwibmJmIjoxNTIxNDY4MTUwLCJwcm9tb3Rlcl9pZCI6IjI4IiwiZXhwIjoxNTIxNTU0NTUwLCJidXNpbmVzc2VzIjpbeyJpZCI6MzksImFkZHJlc3NlcyI6WzEyMSwxMzMsMTUzLDE1NCwxNjAsMTcxLDE3MiwxNzQsMTc1XX1dfQ.Gf7jDhPosDwDsaFY8plIIwR48RNFC5Vx08PDTaIpoP2Ghu3UUle1DBGX31fYG0Yty8hvSABRGseK8hREWREebINPgnK9P6-9T73qAfhJTpnqr9HHooE2edbR4W6Pyu_41JGPWpdpkq2zuhaaR4pOAuVQ4VBN7F3d4RJ0d2wOc4RsNEC4FSGLItePrA1TiOTEK55EgaHSgzSS9Xt1MMnsqZ4DpzkbxaQ59iLSbuBaGUiPA1Rnv2agjIc_NZW9e0sVbhiMpOIV8pgXx8nodMZ7Cig5GAf4uaDCdnlH7rc4Y8xtzeeqpXRl9vxVH7DF13EEeRZHwjbuWW9EiKDubDSfpg";
+    public int ids;
     MarketingData marketingData = new MarketingData();
-//    @BeforeClass
-//    public void getToken() {
-//        GetToken getToken = new GetToken();
-//        this.token=getToken.GetToken();
-//    }
+    /*
+        @BeforeClass
+   public void getToken() {
+       GetToken getToken = new GetToken();
+        this.token1=getToken.GetToken();
+    }*/
     @Test
     public void addNewMarketing() {
         ResponseBody response = given().contentType(ContentType.JSON)
@@ -46,5 +49,33 @@ public class MarketingTest {
         Assert.assertEquals(1,marketing.getWorkSchedule().get(0).getDay());
         Assert.assertEquals(1520765319,marketing.getWorkSchedule().get(0).getStartTime());
         Assert.assertEquals(1521370119,marketing.getWorkSchedule().get(0).getEndTime());
+    }
+    @Test
+    public void updateMarketing() {
+        ResponseBody response = given().contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .header("EstablishmentContextId", "1")
+                .body(marketingData.updateMarketing(ids))
+                .when().put(baseURI).thenReturn().body();
+        MarketingResponse marketingResponse = new Gson().fromJson(response.asString(), MarketingResponse.class);
+        Marketing marketingupdate = marketingResponse.data;
+        System.out.println(response.asString());
+        Assert.assertEquals("title_update", marketingupdate.getTitle());
+        Assert.assertEquals("description_update", marketingupdate.getDescription());
+        Assert.assertEquals("media/201803/mhGdSTf7kdT0LfdS.jpg", marketingupdate.getPathToPhoto());
+        Assert.assertEquals(2, marketingupdate.getMarketingTypeId());
+        Assert.assertEquals("adress_update", marketingupdate.getAddress());
+        Assert.assertEquals(24.00, marketingupdate.getLongitude());
+        Assert.assertEquals(25.00, marketingupdate.getLatitude());
+        Assert.assertEquals("2018-03-29T11:55:33.000", marketingupdate.getBeginTime());
+        Assert.assertEquals("2018-03-30T11:42:32.000", marketingupdate.getEndTime());
+        Assert.assertEquals(false, marketingupdate.isActive());
+        Assert.assertEquals(1,marketingupdate.getLinks().size());
+        Assert.assertEquals(2,marketingupdate.getLinks().get(0).getSocialTypeId());
+        Assert.assertEquals("http://www.instagram.com/",marketingupdate.getLinks().get(0).getUrl());
+        Assert.assertEquals(1,marketingupdate.getWorkSchedule().size());
+        Assert.assertEquals(2,marketingupdate.getWorkSchedule().get(0).getDay());
+        Assert.assertEquals(1520765319,marketingupdate.getWorkSchedule().get(0).getStartTime());
+        Assert.assertEquals(1521370119,marketingupdate.getWorkSchedule().get(0).getEndTime());
     }
 }
