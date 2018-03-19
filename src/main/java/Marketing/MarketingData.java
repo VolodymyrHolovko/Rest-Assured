@@ -18,14 +18,14 @@ public class MarketingData {
         marketing.setMarketingTypeId(2);
         marketing.setLatitude(22.00);
         marketing.setLongitude(23.00);
-        marketing.setBeginTime("2018-03-29T11:50:30.000");
+        marketing.setBeginTime("2018-03-18T11:50:30.000");
         marketing.setEndTime("2018-04-15T11:45:30.000");
         marketing.setActive(true);
 
         List<WorkSchedule> workSchedules = new ArrayList<WorkSchedule>();
         WorkSchedule workSchedule = new WorkSchedule();
-        workSchedule.setStartTime(1520765319);
-        workSchedule.setEndTime(1521370119);
+        workSchedule.setStartTime(1521472003);
+        workSchedule.setEndTime(1523718403);
         workSchedule.setDay(1);
         workSchedules.add(workSchedule);
         marketing.setWorkSchedule(workSchedules);

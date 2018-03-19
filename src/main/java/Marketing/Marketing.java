@@ -16,6 +16,7 @@ public class Marketing {
     private double latitude;
     private String beginTime;
     private String endTime;
+    @SerializedName("isActive")
     private boolean isActive;
     private List<Link> links;
     private List<WorkSchedule> workSchedule;

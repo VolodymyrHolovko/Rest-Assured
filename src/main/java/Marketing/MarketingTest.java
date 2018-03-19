@@ -39,16 +39,16 @@ public class MarketingTest {
         Assert.assertEquals(2,marketing.getMarketingTypeId());
         Assert.assertEquals(23.00,marketing.getLongitude());
         Assert.assertEquals(22.00,marketing.getLatitude());
-        Assert.assertEquals("2018-03-29T11:50:30.000", marketing.getBeginTime());
+        Assert.assertEquals("2018-03-18T11:50:30.000", marketing.getBeginTime());
         Assert.assertEquals("2018-04-15T11:45:30.000",marketing.getEndTime());
-        /*Assert.assertEquals(true, marketing.isActive());*/
+        Assert.assertEquals(true, marketing.isActive());
         Assert.assertEquals(1, marketing.getLinks().size());
         Assert.assertEquals(1, marketing.getLinks().get(0).getSocialTypeId());
         Assert.assertEquals("http://facebook.com",marketing.getLinks().get(0).getUrl());
         Assert.assertEquals(1,marketing.getWorkSchedule().size());
         Assert.assertEquals(1,marketing.getWorkSchedule().get(0).getDay());
-        Assert.assertEquals(1520765319,marketing.getWorkSchedule().get(0).getStartTime());
-        Assert.assertEquals(1521370119,marketing.getWorkSchedule().get(0).getEndTime());
+        Assert.assertEquals(1521472003,marketing.getWorkSchedule().get(0).getStartTime());
+        Assert.assertEquals(1523718403,marketing.getWorkSchedule().get(0).getEndTime());
     }
     @Test
     public void updateMarketing() {
