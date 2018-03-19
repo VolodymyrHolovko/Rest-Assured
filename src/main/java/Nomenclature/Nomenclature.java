@@ -37,8 +37,15 @@ public class Nomenclature {
     private boolean isSuccess;
     private String descriptions;
     private List<Integer> taxesIds;
+    private NomenclaturePortion portion;
 
+    public NomenclaturePortion getPortion() {
+        return portion;
+    }
 
+    public void setPortion(NomenclaturePortion portion) {
+        this.portion = portion;
+    }
 
     public void setDescriptions(String descriptions) {
         this.descriptions = descriptions;

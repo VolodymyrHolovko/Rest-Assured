@@ -11,7 +11,7 @@ public class NomenclatureTestData {
     public Nomenclature type1SupportSelling() {
 
         Nomenclature nomenclature = new Nomenclature();
-        nomenclature.setArticle(312);
+
         nomenclature.setEstablishmentId(1);
         nomenclature.setActive(true);
         nomenclature.setKitchenName("kitchenName");
@@ -46,10 +46,9 @@ public class NomenclatureTestData {
         return nomenclature;
     }
 
-    public Nomenclature updateModel(int article){
+    public Nomenclature updateModel(){
         Nomenclature nomenclatureUpdate = type1SupportSelling();
         nomenclatureUpdate.setEstablishmentId(1);
-
         nomenclatureUpdate.setKitchenName("kitchenName1");
         nomenclatureUpdate.setShortName("shortName1");
         nomenclatureUpdate.setPublicName("publicName1");

@@ -17,8 +17,8 @@ public class NomenclatureTests {
     String token = "";
     String baseURI = "http://cluster.test.eservia.com/api/v0.0/Nomenclature";
     public String ids;
-    public int article;
     NomenclatureTestData nomenclatureTestData = new NomenclatureTestData();
+    NomenclaturePortionTestData nomenclaturePortionTestData = new NomenclaturePortionTestData();
 
     @BeforeClass
     public void getToken() {
@@ -37,7 +37,6 @@ public class NomenclatureTests {
         NomenclatureResponse nomenclatureResponse  = new Gson().fromJson(response.asString(),  NomenclatureResponse.class);
         Nomenclature nomenclature = nomenclatureResponse.data;
         this.ids = nomenclature.getId();
-        this.article = nomenclature.getArticle();
         Assert.assertEquals("kitchenName", nomenclature.getKitchenName());
         Assert.assertEquals("shortName", nomenclature.getShortName());
         Assert.assertEquals("publicName", nomenclature.getPublicName());
@@ -72,7 +71,7 @@ public class NomenclatureTests {
         ResponseBody response = given().contentType(ContentType.JSON)
                 .header("Authorization", token)
                 .header("EstablishmentContextId", "1")
-                .body(nomenclatureTestData.updateModel(article))
+                .body(nomenclatureTestData.updateModel())
                 .when().put(update).thenReturn().body();
         NomenclatureResponse nomenclatureResponse  = new Gson().fromJson(response.asString(),  NomenclatureResponse.class);
         Nomenclature nomenclature = nomenclatureResponse.data;
@@ -88,7 +87,6 @@ public class NomenclatureTests {
         Assert.assertEquals(false, nomenclature.isSupportSelling());
         Assert.assertEquals(false, nomenclature.isSupportExtensioning());
         Assert.assertEquals(false, nomenclature.isPrintOnCheck());
-        Assert.assertEquals(article, nomenclature.getArticle());
         Assert.assertEquals(23, nomenclature.getRushPreparingTime());
         Assert.assertEquals(2, nomenclature.getMaxExtensions());
         Assert.assertEquals(2, nomenclature.getDebitMethodId());
@@ -126,5 +124,27 @@ public class NomenclatureTests {
         NomenclatureResponse nomenclatureResponse  = new Gson().fromJson(response.asString(),  NomenclatureResponse.class);
         Nomenclature nomenclature = nomenclatureResponse.data;
         Assert.assertEquals(false, nomenclature.isActive());
+    }
+
+    @Test
+    public void checkPortion() {
+        ResponseBody response = given().contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .header("EstablishmentContextId", "1")
+                .body(nomenclaturePortionTestData.addPortion())
+                .when().put(baseURI+"/"+4+"/"+"Portion").thenReturn().body();
+
+        ResponseBody response1 = given().contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .header("EstablishmentContextId", "1")
+                .when().get(baseURI+"/"+4).thenReturn().body();
+        NomenclatureResponse nomenclatureResponse = new Gson().fromJson(response1.asString(),NomenclatureResponse.class);
+        NomenclaturePortion nomenclatureResponse1 = nomenclatureResponse.data.getPortion();
+        Assert.assertEquals(15,nomenclatureResponse1.getMaximum());
+        Assert.assertEquals(3,nomenclatureResponse1.getMinimum());
+        Assert.assertEquals(5,nomenclatureResponse1.getStepPrice());
+        Assert.assertEquals(3,nomenclatureResponse1.getStep());
+        Assert.assertEquals(10,nomenclatureResponse1.getMinimumPrice());
+
     }
 }
