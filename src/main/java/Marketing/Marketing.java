@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 public class Marketing {
-    private long id;
+    private int id;
     private int establishmentId;
     private String title;
     private String description;
@@ -16,16 +16,17 @@ public class Marketing {
     private double latitude;
     private String beginTime;
     private String endTime;
+    @SerializedName("isActive")
     private boolean isActive;
     private List<Link> links;
     private List<WorkSchedule> workSchedule;
 
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
