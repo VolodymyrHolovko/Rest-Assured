@@ -1,11 +1,10 @@
 package Nomenclature;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Nomenclature {
     private int establishmentId;
-    private int article;
+    private String article;
     private String kitchenName;
     private String shortName;
     private String publicName;
@@ -59,15 +58,13 @@ public class Nomenclature {
         return id;
     }
 
-    public int getArticle() {
+    public String  getArticle() {
         return article;
     }
 
     public boolean isActive() {
         return isActive;
     }
-
-
 
     public String getKitchenName() {
         return kitchenName;
@@ -112,7 +109,6 @@ public class Nomenclature {
     public boolean isPrintOnCheck() {
         return printOnCheck;
     }
-
 
     public int getPreparingTime() {
         return preparingTime;
@@ -162,7 +158,7 @@ public class Nomenclature {
         this.establishmentId = establishmentId;
     }
 
-    public void setArticle(int article) {
+    public void setArticle(String article) {
         this.article = article;
     }
 
@@ -229,8 +225,6 @@ public class Nomenclature {
     public void setWeightInKilos(int weightInKilos) {
         this.weightInKilos = weightInKilos;
     }
-
-
 
     public void setColdLoss(int coldLoss) {
         this.coldLoss = coldLoss;
