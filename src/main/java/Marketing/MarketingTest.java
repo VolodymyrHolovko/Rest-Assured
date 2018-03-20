@@ -30,6 +30,7 @@ public class MarketingTest {
                 .header("EstablishmentContextId", "1")
                 .body(marketingData.addNewMarketing())
                 .when().post(baseURI).thenReturn().body();
+        System.out.println(response.asString());
         MarketingResponse marketingResponse = new Gson().fromJson(response.asString(), MarketingResponse.class);
         Marketing marketing = marketingResponse.data;
         System.out.println(response.asString());

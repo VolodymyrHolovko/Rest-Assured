@@ -1,17 +1,13 @@
 package Nomenclature;
 
-import cucumber.deps.com.thoughtworks.xstream.mapper.Mapper;
-import org.json.JSONArray;
-import org.json.simple.JSONObject;
-
+import static java.lang.Integer.parseInt;
 import java.util.ArrayList;
-import java.util.List;
+
 
 public class NomenclatureTestData {
     public Nomenclature type1SupportSelling() {
-
         Nomenclature nomenclature = new Nomenclature();
-        nomenclature.setArticle(312);
+        nomenclature.setArticle(null);
         nomenclature.setEstablishmentId(1);
         nomenclature.setActive(true);
         nomenclature.setKitchenName("kitchenName");
@@ -46,10 +42,10 @@ public class NomenclatureTestData {
         return nomenclature;
     }
 
-    public Nomenclature updateModel(int article){
+    public Nomenclature updateModel(String article){
         Nomenclature nomenclatureUpdate = type1SupportSelling();
+        nomenclatureUpdate.setArticle(article);
         nomenclatureUpdate.setEstablishmentId(1);
-
         nomenclatureUpdate.setKitchenName("kitchenName1");
         nomenclatureUpdate.setShortName("shortName1");
         nomenclatureUpdate.setPublicName("publicName1");
@@ -76,11 +72,13 @@ public class NomenclatureTestData {
         nomenclatureUpdate.setDimensionId(2);
         return nomenclatureUpdate;
     }
+
     public Nomenclature createNomenclatureThirdType(){
         Nomenclature object = type1SupportSelling();
         object.setNomenclatureTypeId(3);
         return object;
     }
+
     public Nomenclature createNomenclatureFourthType(){
         Nomenclature object = type1SupportSelling();
         object.setNomenclatureTypeId(4);
