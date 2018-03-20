@@ -87,15 +87,21 @@ public class MarketingTest {
             .header("Authorization", token)
             .header("EstablishmentContextId", "1")
             .when().delete(deleteUrl).thenReturn().body();
-         MarketingResponse marketingResponse = new Gson().fromJson(response.asString(), MarketingResponse.class);
-         Marketing marketingdelete = marketingResponse.data;
          System.out.println(response.asString());
 
          ResponseBody responseGet = given().contentType(ContentType.JSON)
                  .header("Authorization", token)
                  .header("EstablishmentContextId", "1")
                  .when().get(deleteUrl).thenReturn().body();
-         System.out.println(responseGet.asString());
+         Errors marketingResponse = new Gson().fromJson(response.asString(), Errors.class);
+         System.out.println("ewiofuiweolfuwoe;fuiw;oef;efiuwe;fo"+marketingResponse.getErrorDescription());
+
+
+
+
+
+
+
 
      }
 }

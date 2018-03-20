@@ -22,6 +22,7 @@ public class Marketing {
     private List<WorkSchedule> workSchedule;
 
 
+
     public int getId() {
         return id;
     }
@@ -161,7 +162,7 @@ class Link{
         return "Link{" + "socialTypeId=" + socialTypeId + ", url='" + url + '\'' + '}';
     }
 }
-class  WorkSchedule{
+class  WorkSchedule {
     private int day;
     private int startTime;
     private int endTime;
@@ -195,3 +196,33 @@ class  WorkSchedule{
         return "WorkSchedule{" + "day=" + day + ", startTime=" + startTime + ", endTime=" + endTime + '}';
     }
 }
+    class Errors {
+        Errors error;
+        private  int errorType;
+        private  String errorDescription;
+
+        public Errors getError() {
+            return error;
+        }
+
+        public void setError(Errors error) {
+            this.error = error;
+        }
+
+        public int getErrorType() {
+            return errorType;
+        }
+
+        public void setErrorType(int errorType) {
+            this.errorType = errorType;
+        }
+
+        public String getErrorDescription() {
+            return errorDescription;
+        }
+
+        public void setErrorDescription(String errorDescription) {
+            this.errorDescription = errorDescription;
+        }
+    }
+
