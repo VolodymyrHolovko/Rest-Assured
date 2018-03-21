@@ -23,6 +23,7 @@ public class Marketing {
 
 
 
+
     public int getId() {
         return id;
     }
@@ -196,33 +197,6 @@ class  WorkSchedule {
         return "WorkSchedule{" + "day=" + day + ", startTime=" + startTime + ", endTime=" + endTime + '}';
     }
 }
-    class Errors {
-        Errors error;
-        private  int errorType;
-        private  String errorDescription;
 
-        public Errors getError() {
-            return error;
-        }
 
-        public void setError(Errors error) {
-            this.error = error;
-        }
-
-        public int getErrorType() {
-            return errorType;
-        }
-
-        public void setErrorType(int errorType) {
-            this.errorType = errorType;
-        }
-
-        public String getErrorDescription() {
-            return errorDescription;
-        }
-
-        public void setErrorDescription(String errorDescription) {
-            this.errorDescription = errorDescription;
-        }
-    }
 
