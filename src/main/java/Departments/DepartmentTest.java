@@ -7,7 +7,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import static com.jayway.restassured.RestAssured.given;
 
-public class DepartmentTest {
+public class DepartmentResponseTest {
 
     String token = "";
     private final String baseURL = "http://cluster.test.eservia.com/api/v0.0";
