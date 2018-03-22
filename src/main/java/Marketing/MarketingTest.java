@@ -5,16 +5,13 @@ import com.google.gson.Gson;
 import com.jayway.restassured.http.ContentType;
 import com.jayway.restassured.response.ResponseBody;
 import org.testng.Assert;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import static com.jayway.restassured.RestAssured.given;
 
 public class MarketingTest {
     String baseURI = "http://staging.eservia.com:8002/api/v0.0/Marketings";
-    String token = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJib29raW5nLnByb21vdGVyIiwiYXVkIjoiYm9va2luZy5wcm9tb3RlciIsImlhdCI6MTUyMTUzNzg3MCwibmJmIjoxNTIxNTM3ODcwLCJwcm9tb3Rlcl9pZCI6IjI5IiwiZXhwIjoxNTIxNjI0MjcwLCJidXNpbmVzc2VzIjpbeyJpZCI6NDIsImFkZHJlc3NlcyI6WzEwMCwxNDYsMTYxXX0seyJpZCI6NTYsImFkZHJlc3NlcyI6WzE1MV19XX0.Y46ws9lkDLV9ssMRlBs2QrxWDgMv3Q8mmjD49LFXT2kyYOR0Mqoa1tljR24AygQ4tADx9Y3aj9QZVRPgq3VWtXaqxjb5pUVbzZtiOXMEztcZylOucfhD91qdv8RGywEtRJRxR0NRlMjjozWm3Sd0dc0XZa9AT5eH3yIwOL-yhCdyPUqZUQQzztKzTPpN__EgNTPsOibcueeVniA2voduAxz5rWWWvYd924x1G6P-aKRXRSwdeZn46RifgjhXQAnTiWKlgYkdHWifawF41uJBts6O9cG3NQxOyr9rcmlzf3RwkQTuGMA8r7h1E4_94VeD1dXnrz5zijD7vAg-NEQ6Cw";
+    String token = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJib29raW5nLnByb21vdGVyIiwiYXVkIjoiYm9va2luZy5wcm9tb3RlciIsImlhdCI6MTUyMTYyMTQ5OCwibmJmIjoxNTIxNjIxNDk4LCJwcm9tb3Rlcl9pZCI6IjI5IiwiZXhwIjoxNTIxNzA3ODk4LCJidXNpbmVzc2VzIjpbeyJpZCI6NDIsImFkZHJlc3NlcyI6WzEwMCwxNDYsMTYxXX0seyJpZCI6NTYsImFkZHJlc3NlcyI6WzE1MV19XX0.azE8o_XOAveVNYKsKvNyCnBzPORFlh-GjdKX1Mts5d72hH2PSNZjci5fG3n7zos-FLAIajQZ6najy9K9t3Yk5RNfy5zDRamKbs_cmtsCYpXss_Q4s0YlFZFi4R3lSf6XRTDBrpd_BxMWe8cLXFSjxu161mXHoYPsuFHPRH4pOf7GJiM519U78nIpXCGfW64DiqQhGpy3d4TuUYCpW2RGrMsFqwxgftrtCULVn-i59XHSNg5rjx56-MzvTO0eW6Txo-z9RdWssSweek0icaRaMrBBIFXmRpar2xgbY7AQZXQMUts_S3DXihVxez7c_1l0F-I2s_W3Q42HIKvWTnDNQA";
     public int ids;
     MarketingData marketingData = new MarketingData();
     /*
@@ -30,10 +27,9 @@ public class MarketingTest {
                 .header("EstablishmentContextId", "1")
                 .body(marketingData.addNewMarketing())
                 .when().post(baseURI).thenReturn().body();
-        System.out.println(response.asString());
         MarketingResponse marketingResponse = new Gson().fromJson(response.asString(), MarketingResponse.class);
         Marketing marketing = marketingResponse.data;
-        System.out.println(response.asString());
+        //System.out.println(response.asString());
         this.ids = marketing.getId();
         Assert.assertEquals("title", marketing.getTitle());
         Assert.assertEquals("description", marketing.getDescription());
@@ -88,15 +84,15 @@ public class MarketingTest {
             .header("Authorization", token)
             .header("EstablishmentContextId", "1")
             .when().delete(deleteUrl).thenReturn().body();
-         MarketingResponse marketingResponse = new Gson().fromJson(response.asString(), MarketingResponse.class);
-         Marketing marketingdelete = marketingResponse.data;
          System.out.println(response.asString());
 
-         ResponseBody responseGet = given().contentType(ContentType.JSON)
+          ResponseBody responseGet = given().contentType(ContentType.JSON)
                  .header("Authorization", token)
                  .header("EstablishmentContextId", "1")
                  .when().get(deleteUrl).thenReturn().body();
-         System.out.println(responseGet.asString());
-
+           Error errors = new Gson().fromJson(responseGet.asString(), Error.class);
+           System.out.println(responseGet.asString());
+         //Marketing marketingdeleteCheck = marketingResponse.data;
+         //Assert.assertEquals("Marketing does not exist", marketingResponse.getErrorDescription());
      }
 }

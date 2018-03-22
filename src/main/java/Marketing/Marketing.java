@@ -22,6 +22,8 @@ public class Marketing {
     private List<WorkSchedule> workSchedule;
 
 
+
+
     public int getId() {
         return id;
     }
@@ -161,7 +163,7 @@ class Link{
         return "Link{" + "socialTypeId=" + socialTypeId + ", url='" + url + '\'' + '}';
     }
 }
-class  WorkSchedule{
+class  WorkSchedule {
     private int day;
     private int startTime;
     private int endTime;
@@ -195,3 +197,6 @@ class  WorkSchedule{
         return "WorkSchedule{" + "day=" + day + ", startTime=" + startTime + ", endTime=" + endTime + '}';
     }
 }
+
+
+
