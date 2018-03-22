@@ -2,21 +2,25 @@ package Departments;
 
 import org.json.JSONObject;
 
-public class DepartmentData {
-    public  JSONObject allDepartments() {
-        JSONObject dep = new JSONObject();
-        dep.put("id", 7);
-        dep.put("typeId", 1);
-        dep.put("isMain",true);
-        dep.put("isActive", true);
-        dep.put("name", "2string");
-        dep.put("establishmentId", 1);
-        dep.put("printerId", JSONObject.NULL);
-        dep.put("storageId", JSONObject.NULL);
-        dep.put("groupId", 1);
-        dep.put("currentMenuId", JSONObject.NULL);
-        return dep;
+import java.time.LocalDate;
 
-
+public class DepartmentData  {
+    public Department CreatePreparingDepartments(String name) {
+        Department department = new Department();
+        department.setTypeId(1);
+        department.setMain(false);
+        department.setActive(true);
+        department.setName(name);
+        department.setAddressId(121);
+        return department;
+    }
+    public Department UpdateDepartment(String name,int id){
+        Department department = CreatePreparingDepartments(name);
+        department.setId(id);
+        department.setTypeId(2);
+        department.setMain(true);
+        department.setActive(true);
+        department.setName(name);
+        return department;
     }
 }

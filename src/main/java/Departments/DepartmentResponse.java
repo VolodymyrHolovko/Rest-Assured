@@ -1,6 +1,6 @@
 package Departments;
 
-public class Department {
+public class DepartmentResponse {
     Department data;
 
     public Department getData() {
