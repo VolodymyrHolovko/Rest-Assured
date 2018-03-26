@@ -16,6 +16,8 @@ public class Department {
     private List<Integer> tables;
     private int id;
 
+
+
     public int getId() {
         return id;
     }

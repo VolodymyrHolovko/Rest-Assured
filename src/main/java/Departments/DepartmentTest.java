@@ -15,7 +15,7 @@ import static com.jayway.restassured.RestAssured.given;
 
 public class DepartmentTest {
 
-    String token = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJib29raW5nLnByb21vdGVyIiwiYXVkIjoiYm9va2luZy5wcm9tb3RlciIsImlhdCI6MTUyMTcwNDc5MywibmJmIjoxNTIxNzA0NzkzLCJwcm9tb3Rlcl9pZCI6IjI4IiwiZXhwIjoxNTIxNzkxMTkzLCJidXNpbmVzc2VzIjpbeyJpZCI6MzksImFkZHJlc3NlcyI6WzEyMSwxMzMsMTUzLDE4NCwxODUsMTg2LDE4N119XX0.BfzkLkrn9ZoGcfWRNgu6cTrBiYCwN0o_Yxn8KfqYsNXwghKTqUMmegeSpcvrWlxB97JvEgL33qT9NlRSLjVBg9wxhWpPRHig9Cr9gSS46Ehta8E9zgs7JRRzBmabv-t9v3UpJqJcJyk1q5LppL8Z7OKUFjbMHI_2w6-tP1Xfy0_biL-iq7qOrNx9Mz1-ONBOOmvE2HKe2D69zvW0XWUWG2NQk_V8iEpU5FC8HiZo1ySolf1KIa6lAOkbBPbJY0-GJjzx6ENGgznoljLZu1THiPY1Ai6221FPHlX288FN_gYF6Kgz7tqR3rurpH28cwctcxVWz_zF5dd3CHlDWT9y1g";
+    String token = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJib29raW5nLnByb21vdGVyIiwiYXVkIjoiYm9va2luZy5wcm9tb3RlciIsImlhdCI6MTUyMjA1MDMxMSwibmJmIjoxNTIyMDUwMzExLCJwcm9tb3Rlcl9pZCI6IjI4IiwiZXhwIjoxNTIyMTM2NzExLCJidXNpbmVzc2VzIjpbeyJpZCI6MzksImFkZHJlc3NlcyI6WzEyMSwxMzMsMTUzLDE4NCwxODUsMTg2LDE4N119XX0.C5Jf4mhV-eXyXMlUkIlVmMCqlGWLX3nppBVDSQUyBcYB6hU3zrSDboTdtXdonBzUaMLgcQXCm5ITGJEizf8V_56JpKYOdVoVdQ4RKmhpUhWYQiyBqLED0FreG9MClZuJM4sEmjn9gu4PBSbWq6h6jQuKR0j11VPCE73r8j-QymkE_pneFUuPn6lkxU7us3Aor2oDxg5Fwif7nyArHEmMmD2-gXRqpSCw-zl2bN9d9y3rbJUEpFrZLnZX5S4kXXOWGMxNBcnE5cvekLphkWRrf-Zd0Qfa-5YFL0vzcirvnV02J9KwasWt91ZOnv5Er6jE70awM61nFIsp1akRn51nLg";
     private  String baseURL = "http://staging.eservia.com:8009/api/v0.0/Departments";
     String name = (LocalTime.now()).toString();
     int Ids;
@@ -52,9 +52,54 @@ public class DepartmentTest {
         Department department = departmentResponse.data;
         this.Ids = department.getId();
         Assert.assertEquals(2,department.getTypeId());
-        Assert.assertEquals(true,department.isMain());
+        Assert.assertEquals(false,department.isMain());
         Assert.assertEquals(true,department.isActive());
         Assert.assertEquals(121,department.getAddressId());
         Assert.assertEquals(name,department.getName());
     }
+    @Test
+    public void C_deactivateDepartment(){
+        ResponseBody response = given()
+                .contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().patch(baseURL+"/"+Ids+"/Deactivate");
+        DepartmentErrors departmentResponse = new Gson().fromJson(response.asString(),  DepartmentErrors.class);
+        Assert.assertEquals(true,departmentResponse.isSuccess());
+        Assert.assertEquals(true,departmentResponse.isData());
+
+        ResponseBody responseBody = given()
+                .contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().get(baseURL+"/"+Ids);
+        DepartmentResponse departmentResponse1 = new Gson().fromJson(responseBody.asString(),DepartmentResponse.class);
+        Department department = departmentResponse1.data;
+        Assert.assertEquals(false,department.isActive());
+    }
+    @Test
+    public void D_activateDepartment(){
+        ResponseBody response = given()
+                .contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().patch(baseURL+"/"+Ids+"/Activate");
+        DepartmentErrors departmentResponse = new Gson().fromJson(response.asString(),  DepartmentErrors.class);
+        Assert.assertEquals(true,departmentResponse.isSuccess());
+        Assert.assertEquals(true,departmentResponse.isData());
+
+        ResponseBody responseBody = given()
+                .contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().get(baseURL+"/"+Ids);
+        DepartmentResponse departmentResponse1 = new Gson().fromJson(responseBody.asString(),DepartmentResponse.class);
+        Department department = departmentResponse1.data;
+        Assert.assertEquals(true,department.isActive());
+    }
+
 }

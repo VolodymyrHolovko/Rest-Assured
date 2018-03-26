@@ -18,7 +18,6 @@ public class DepartmentData  {
         Department department = CreatePreparingDepartments(name);
         department.setId(id);
         department.setTypeId(2);
-        department.setMain(true);
         department.setActive(true);
         department.setName(name);
         return department;
