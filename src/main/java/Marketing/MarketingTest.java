@@ -11,7 +11,7 @@ import static com.jayway.restassured.RestAssured.given;
 
 public class MarketingTest {
     String baseURI = "http://staging.eservia.com:8002/api/v0.0/Marketings";
-    String token = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJib29raW5nLnByb21vdGVyIiwiYXVkIjoiYm9va2luZy5wcm9tb3RlciIsImlhdCI6MTUyMTYyMTQ5OCwibmJmIjoxNTIxNjIxNDk4LCJwcm9tb3Rlcl9pZCI6IjI5IiwiZXhwIjoxNTIxNzA3ODk4LCJidXNpbmVzc2VzIjpbeyJpZCI6NDIsImFkZHJlc3NlcyI6WzEwMCwxNDYsMTYxXX0seyJpZCI6NTYsImFkZHJlc3NlcyI6WzE1MV19XX0.azE8o_XOAveVNYKsKvNyCnBzPORFlh-GjdKX1Mts5d72hH2PSNZjci5fG3n7zos-FLAIajQZ6najy9K9t3Yk5RNfy5zDRamKbs_cmtsCYpXss_Q4s0YlFZFi4R3lSf6XRTDBrpd_BxMWe8cLXFSjxu161mXHoYPsuFHPRH4pOf7GJiM519U78nIpXCGfW64DiqQhGpy3d4TuUYCpW2RGrMsFqwxgftrtCULVn-i59XHSNg5rjx56-MzvTO0eW6Txo-z9RdWssSweek0icaRaMrBBIFXmRpar2xgbY7AQZXQMUts_S3DXihVxez7c_1l0F-I2s_W3Q42HIKvWTnDNQA";
+    String token = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJib29raW5nLnByb21vdGVyIiwiYXVkIjoiYm9va2luZy5wcm9tb3RlciIsImlhdCI6MTUyMTcxMjAyOSwibmJmIjoxNTIxNzEyMDI5LCJwcm9tb3Rlcl9pZCI6IjI5IiwiZXhwIjoxNTIxNzk4NDI5LCJidXNpbmVzc2VzIjpbeyJpZCI6NDIsImFkZHJlc3NlcyI6WzEwMCwxNDYsMTYxXX0seyJpZCI6NTYsImFkZHJlc3NlcyI6WzE1MV19XX0.gbOMLR4NAUxKTpHgIS2caBAjxfKDEjweS9ZnR3ETPU6hRa5G1gciHRmlOwLlRWxGpdbRkoECjiqJFBvFCtSuDyoLctfFh1qR4x0-SA8IkBnsvhy2KFjcOSBUE_P7-acSisew9lw0DtO_a5xrIJb4hsLZLD7KLsTTe3_rF2XpQ0F7Svi4PWoxEYHLjumIg5HW6S14H_GQDiykYScjgx_uNuDp_s4Dw0808d63ioK51pzieYkihg38W-C6HXezS3yZqXjm8R4H_wqV37EtBy8m3xyhm31GLy9ZyClb_x-oE9pWCwAkiEra0142lIEJf21yfbhurtwEABnrxyJxnEqmsg";
     public int ids;
     MarketingData marketingData = new MarketingData();
     /*
@@ -40,7 +40,7 @@ public class MarketingTest {
         Assert.assertEquals(22.00,marketing.getLatitude());
         Assert.assertEquals("2018-03-18T11:50:30.000", marketing.getBeginTime());
         Assert.assertEquals("2018-04-15T11:45:30.000",marketing.getEndTime());
-        /*Assert.assertEquals(true, marketing.isActive());*/
+        Assert.assertEquals(true, marketing.isActive());
         Assert.assertEquals(1, marketing.getLinks().size());
         Assert.assertEquals(1, marketing.getLinks().get(0).getSocialTypeId());
         Assert.assertEquals("http://facebook.com",marketing.getLinks().get(0).getUrl());
