@@ -101,5 +101,28 @@ public class DepartmentTest {
         Department department = departmentResponse1.data;
         Assert.assertEquals(true,department.isActive());
     }
+    @Test
+    public void F_DeleteDepartment(){
+        ResponseBody response = given()
+                .contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().delete(baseURL+"/"+Ids);
+        DepartmentErrors departmentResponse = new Gson().fromJson(response.asString(),  DepartmentErrors.class);
+        Assert.assertEquals(true,departmentResponse.isSuccess());
+        Assert.assertEquals(true,departmentResponse.isData());
+
+        ResponseBody responseBody = given()
+                .contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().get(baseURL+"/"+Ids);
+        DepartmentErrors departmentResponse1 = new Gson().fromJson(responseBody.asString(),DepartmentErrors.class);
+        Department department = departmentResponse1.error;
+        Assert.assertEquals("Department does not exist",department.getErrorDescription());
+        Assert.assertEquals("DepartmentsService.Service",department.getErrorSource());
+    }
 
 }

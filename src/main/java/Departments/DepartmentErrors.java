@@ -3,6 +3,16 @@ package Departments;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class DepartmentErrors {
+    Department error;
+
+    public Department getError() {
+        return error;
+    }
+
+    public void setError(Department error) {
+        this.error = error;
+    }
+
     @JsonProperty("isSuccess")
     private boolean data;
     private  String id;

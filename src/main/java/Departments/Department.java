@@ -15,8 +15,24 @@ public class Department {
     private int addressId;
     private List<Integer> tables;
     private int id;
+    private String errorDescription;
+    private String errorSource;
 
+    public String getErrorSource() {
+        return errorSource;
+    }
 
+    public void setErrorSource(String errorSource) {
+        this.errorSource = errorSource;
+    }
+
+    public String getErrorDescription() {
+        return errorDescription;
+    }
+
+    public void setErrorDescription(String errorDescription) {
+        this.errorDescription = errorDescription;
+    }
 
     public int getId() {
         return id;
