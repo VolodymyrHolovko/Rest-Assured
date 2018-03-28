@@ -2,6 +2,7 @@ package Departments;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.gson.annotations.SerializedName;
+import org.json.simple.JSONObject;
 
 import java.util.List;
 
@@ -13,10 +14,12 @@ public class Department {
     private boolean isActive;
     private String name;
     private int addressId;
-    private List<Integer> tables;
+    private List<Object> tables;
     private int id;
     private String errorDescription;
     private String errorSource;
+
+
 
     public String getErrorSource() {
         return errorSource;
@@ -42,9 +45,7 @@ public class Department {
         this.id = id;
     }
 
-    public List<Integer> getTables() {
-        return tables;
-    }
+
 
     public int getTypeId() {
         return typeId;
@@ -86,7 +87,11 @@ public class Department {
         this.addressId = addressId;
     }
 
-    public void setTables(List<Integer> tables) {
+    public List<Object> getTables() {
+        return tables;
+    }
+
+    public void setTables(List<Object> tables) {
         this.tables = tables;
     }
 }
