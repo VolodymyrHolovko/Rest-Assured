@@ -11,7 +11,7 @@ public class DepartmentData  {
         department.setMain(false);
         department.setActive(true);
         department.setName(name);
-        department.setAddressId(121);
+        department.setAddressId(23);
         return department;
     }
     public Department UpdateDepartment(String name,int id){

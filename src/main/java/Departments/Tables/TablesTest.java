@@ -29,7 +29,7 @@ public class TablesTest {
 @BeforeClass
     public void getDepartmentId(){
     DepartmentTest departmentTest = new DepartmentTest();
-    this.DepartmentId=departmentTest.A_GreateDepartment();
+    this.DepartmentId = departmentTest.getId();
 }
 
 @Test

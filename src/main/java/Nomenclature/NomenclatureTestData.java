@@ -7,6 +7,7 @@ import java.util.ArrayList;
 public class NomenclatureTestData {
     public Nomenclature type1SupportSelling() {
         Nomenclature nomenclature = new Nomenclature();
+        nomenclature.setAddressId(23);
         nomenclature.setArticle(null);
         nomenclature.setEstablishmentId(1);
         nomenclature.setActive(true);
@@ -37,13 +38,14 @@ public class NomenclatureTestData {
         nomenclature.setDimensionId(1);
         nomenclature.setTagId(1);
         ArrayList<Integer> tax = new ArrayList<>();
-        tax.add(1);
+//        tax.add(1);
         nomenclature.setTaxesIds(tax);
         return nomenclature;
     }
 
     public Nomenclature updateModel(String article){
         Nomenclature nomenclatureUpdate = type1SupportSelling();
+
         nomenclatureUpdate.setArticle(article);
         nomenclatureUpdate.setEstablishmentId(1);
         nomenclatureUpdate.setKitchenName("kitchenName1");

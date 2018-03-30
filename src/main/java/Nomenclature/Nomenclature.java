@@ -3,6 +3,7 @@ package Nomenclature;
 import java.util.List;
 
 public class Nomenclature {
+    private int addressId;
     private int establishmentId;
     private String article;
     private String kitchenName;
@@ -37,6 +38,14 @@ public class Nomenclature {
     private String descriptions;
     private List<Integer> taxesIds;
     private NomenclaturePortion portion;
+
+    public int getAddressId() {
+        return addressId;
+    }
+
+    public void setAddressId(int addressId) {
+        this.addressId = addressId;
+    }
 
     public NomenclaturePortion getPortion() {
         return portion;
