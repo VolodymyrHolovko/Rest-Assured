@@ -9,6 +9,15 @@ public class Tables {
     private int departmentId;
     private int capacity;
     private int id;
+    private String beaconId;
+
+    public String getBeaconId() {
+        return beaconId;
+    }
+
+    public void setBeaconId(String beaconId) {
+        this.beaconId = beaconId;
+    }
 
     public int getId() {
         return id;

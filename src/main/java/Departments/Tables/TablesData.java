@@ -20,4 +20,10 @@ public class TablesData {
         tables.setId(tableId);
         return tables;
     }
+    public Tables setBeaconId(int tableId,String beaconId){
+        Tables tables = new Tables();
+        tables.setBeaconId(beaconId);
+        tables.setId(tableId);
+        return tables;
+    }
 }
