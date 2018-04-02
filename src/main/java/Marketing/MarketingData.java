@@ -9,6 +9,7 @@ public class MarketingData {
     public Marketing addNewMarketing() {
         Marketing marketing = new Marketing();
         marketing.setEstablishmentId(1);
+        marketing.setBusinessId(42);
         marketing.setTitle("title");
         marketing.setDescription("description");
         marketing.setPathToPhoto("media/201803/eNOt8jcLD1hC7hP0.jpg");
@@ -19,7 +20,6 @@ public class MarketingData {
         marketing.setBeginTime("2018-03-18T11:50:30.000");
         marketing.setEndTime("2018-04-15T11:45:30.000");
         marketing.setActive(true);
-        marketing.setBusinessId(17);
         List<WorkSchedule> workSchedules = new ArrayList<WorkSchedule>();
         WorkSchedule workSchedule = new WorkSchedule();
         workSchedule.setStartTime(1521472003);

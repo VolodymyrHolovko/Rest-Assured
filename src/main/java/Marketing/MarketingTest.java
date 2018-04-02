@@ -10,12 +10,9 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import static com.jayway.restassured.RestAssured.given;
-
 public class MarketingTest {
     String baseURI = "http://staging.eservia.com:8002/api/v0.0/Marketings";
-
-    String token = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJib29raW5nLnByb21vdGVyIiwiYXVkIjoiYm9va2luZy5wcm9tb3RlciIsImlhdCI6MTUyMTcxMjAyOSwibmJmIjoxNTIxNzEyMDI5LCJwcm9tb3Rlcl9pZCI6IjI5IiwiZXhwIjoxNTIxNzk4NDI5LCJidXNpbmVzc2VzIjpbeyJpZCI6NDIsImFkZHJlc3NlcyI6WzEwMCwxNDYsMTYxXX0seyJpZCI6NTYsImFkZHJlc3NlcyI6WzE1MV19XX0.gbOMLR4NAUxKTpHgIS2caBAjxfKDEjweS9ZnR3ETPU6hRa5G1gciHRmlOwLlRWxGpdbRkoECjiqJFBvFCtSuDyoLctfFh1qR4x0-SA8IkBnsvhy2KFjcOSBUE_P7-acSisew9lw0DtO_a5xrIJb4hsLZLD7KLsTTe3_rF2XpQ0F7Svi4PWoxEYHLjumIg5HW6S14H_GQDiykYScjgx_uNuDp_s4Dw0808d63ioK51pzieYkihg38W-C6HXezS3yZqXjm8R4H_wqV37EtBy8m3xyhm31GLy9ZyClb_x-oE9pWCwAkiEra0142lIEJf21yfbhurtwEABnrxyJxnEqmsg";
-
+    String token = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJib29raW5nLnByb21vdGVyIiwiYXVkIjoiYm9va2luZy5wcm9tb3RlciIsImlhdCI6MTUyMjY2NTIzMiwibmJmIjoxNTIyNjY1MjMyLCJwcm9tb3Rlcl9pZCI6IjI5IiwiZXhwIjoxNTIyNzUxNjMyLCJidXNpbmVzc2VzIjpbeyJpZCI6NDIsImFkZHJlc3NlcyI6WzEwMCwxNDYsMTYxLDE4OV19LHsiaWQiOjU2LCJhZGRyZXNzZXMiOlsxNTFdfV19.Vl7pKboMfKfMdlISJtwBZoizGyGoqSfPIxewDPTY_L2FNx4Zh2XIuCXEiu-ZmKvUtF2ELDPsR3f-6m_tlTV0iyEPHXJQWYTOVe1bH3XzwyqN0_wfgkgJGk8DyCWu93SzYdurxfS3E2v39T6fZu8MqScLWwzkGWkWEVTAPE8zL_FfbJQ6EwsRDn51GaatJD_auE10cBw969l4KzvPbmwe6hQa3jamjBKOvwaCDpQQxAI3P29djZ9RkxZnG8pdP75rJkeeFiLQLGBAGrO0UG_yDX7K5N6BKsOlgAJinXVJnPYxlIlzGXrH_7Cz7JjdAK0Bnsr2BEVpFrkkrubyg2Y1vg";
     public int ids;
     MarketingData marketingData = new MarketingData();
     /*
@@ -30,12 +27,12 @@ public class MarketingTest {
                 .header("Authorization", token)
                 .header("EstablishmentContextId", "1")
                 .body(marketingData.addNewMarketing())
-
                 .when().post(baseURI).thenReturn().body();
         MarketingResponse marketingResponse = new Gson().fromJson(response.asString(), MarketingResponse.class);
         Marketing marketing = marketingResponse.data;
-        //System.out.println(response.asString());
+        System.out.println(response.asString());
         this.ids = marketing.getId();
+        Assert.assertEquals(42, marketing.getBusinessId());
         Assert.assertEquals("title", marketing.getTitle());
         Assert.assertEquals("description", marketing.getDescription());
         Assert.assertEquals("media/201803/eNOt8jcLD1hC7hP0.jpg", marketing.getPathToPhoto());
@@ -82,22 +79,49 @@ public class MarketingTest {
         Assert.assertEquals(1520765319,marketingupdate.getWorkSchedule().get(0).getStartTime());
         Assert.assertEquals(1521370119,marketingupdate.getWorkSchedule().get(0).getEndTime());
     }
+    @Test
+    public  void C_getMarketingById() {
+        ResponseBody response = given().contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .header("EstablishmentContextId", "1")
+                .when().get(baseURI+ "/" + ids).thenReturn().body();
+        System.out.println("asdasdad"+response.asString());
+        MarketingResponse marketingResponse = new Gson().fromJson(response.asString(), MarketingResponse.class);
+        Marketing marketingGet = marketingResponse.data;
+        Assert.assertEquals(ids, marketingGet.getId());
+        Assert.assertEquals("title_update", marketingGet.getTitle());
+        Assert.assertEquals("description_update", marketingGet.getDescription());
+        Assert.assertEquals("media/201803/mhGdSTf7kdT0LfdS.jpg", marketingGet.getPathToPhoto());
+        Assert.assertEquals(2, marketingGet.getMarketingTypeId());
+        Assert.assertEquals("adress_update", marketingGet.getAddress());
+        Assert.assertEquals(24.00, marketingGet.getLongitude());
+        Assert.assertEquals(25.00, marketingGet.getLatitude());
+        Assert.assertEquals("2018-03-29T11:55:33.000", marketingGet.getBeginTime());
+        Assert.assertEquals("2018-03-30T11:42:32.000", marketingGet.getEndTime());
+        Assert.assertEquals(false, marketingGet.isActive());
+        Assert.assertEquals(1,marketingGet.getLinks().size());
+        Assert.assertEquals(2,marketingGet.getLinks().get(0).getSocialTypeId());
+        Assert.assertEquals("http://www.instagram.com/",marketingGet.getLinks().get(0).getUrl());
+        Assert.assertEquals(1,marketingGet.getWorkSchedule().size());
+        Assert.assertEquals(2,marketingGet.getWorkSchedule().get(0).getDay());
+        Assert.assertEquals(1520765319,marketingGet.getWorkSchedule().get(0).getStartTime());
+        Assert.assertEquals(1521370119,marketingGet.getWorkSchedule().get(0).getEndTime());
+    }
      @Test
-    public void C_deleteMarketing() {
+    public void D_deleteMarketing() {
     String deleteUrl = baseURI+"/"+ids;
     ResponseBody response = given().contentType(ContentType.JSON)
             .header("Authorization", token)
             .header("EstablishmentContextId", "1")
             .when().delete(deleteUrl).thenReturn().body();
-         System.out.println(response.asString());
-
-          ResponseBody responseGet = given().contentType(ContentType.JSON)
+            System.out.println(response.asString());
+        ResponseBody responseGet = given().contentType(ContentType.JSON)
                  .header("Authorization", token)
                  .header("EstablishmentContextId", "1")
                  .when().get(deleteUrl).thenReturn().body();
-           Error errors = new Gson().fromJson(responseGet.asString(), Error.class);
-           System.out.println(responseGet.asString());
-         //Marketing marketingdeleteCheck = marketingResponse.data;
-         //Assert.assertEquals("Marketing does not exist", marketingResponse.getErrorDescription());
+         MarketingErrors errors = new Gson().fromJson(responseGet.asString(), MarketingErrors.class);
+         System.out.println(responseGet.asString());
+         Assert.assertEquals("success", errors.getDescription());
+         Assert.assertEquals(true, errors.isSuccess());
      }
 }
