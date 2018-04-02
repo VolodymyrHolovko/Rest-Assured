@@ -5,6 +5,7 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 public class Marketing {
+    public int businessId;
     private int id;
     private int establishmentId;
     private String title;
@@ -21,8 +22,13 @@ public class Marketing {
     private List<Link> links;
     private List<WorkSchedule> workSchedule;
 
+    public int getBusinessId() {
+        return businessId;
+    }
 
-
+    public void setBusinessId(int businessId) {
+        this.businessId = businessId;
+    }
 
     public int getId() {
         return id;
