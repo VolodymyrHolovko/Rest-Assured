@@ -1,7 +1,5 @@
 package Marketing;
 
-import org.json.JSONArray;
-import org.json.simple.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,5 +1,6 @@
 package Marketing;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
@@ -16,7 +17,7 @@ public class Marketing {
     private double latitude;
     private String beginTime;
     private String endTime;
-    @SerializedName("isActive")
+    @JsonProperty("isActive")
     private boolean isActive;
     private List<Link> links;
     private List<WorkSchedule> workSchedule;
