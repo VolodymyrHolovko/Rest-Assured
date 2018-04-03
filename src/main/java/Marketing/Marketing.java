@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 public class Marketing {
-    public int businessId;
+    private int businessId;
     private int id;
     private int establishmentId;
     private String title;

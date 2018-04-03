@@ -8,7 +8,6 @@ import com.jayway.restassured.http.ContentType;
 import com.jayway.restassured.response.ResponseBody;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-
 import static com.jayway.restassured.RestAssured.given;
 public class MarketingTest {
     String baseURI = "http://staging.eservia.com:8002/api/v0.0/Marketings";
