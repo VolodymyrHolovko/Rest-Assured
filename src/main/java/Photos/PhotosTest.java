@@ -1,13 +1,10 @@
 package Photos;
 
-import com.google.gson.Gson;
 import com.jayway.restassured.builder.MultiPartSpecBuilder;
 import com.jayway.restassured.filter.log.RequestLoggingFilter;
-import com.jayway.restassured.http.ContentType;
 import com.jayway.restassured.response.ResponseBody;
-import com.jayway.restassured.specification.MultiPartSpecification;
 import org.testng.annotations.Test;
-import sun.text.resources.FormatData;
+
 import java.io.File;
 
 import static com.jayway.restassured.RestAssured.given;
