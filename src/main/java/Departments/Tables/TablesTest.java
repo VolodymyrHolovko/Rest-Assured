@@ -1,18 +1,15 @@
 package Departments.Tables;
 
-import Departments.DepartmentResponse;
 import Departments.DepartmentTest;
 import com.google.gson.Gson;
-import com.ibm.icu.impl.UResource;
 import com.jayway.restassured.filter.log.RequestLoggingFilter;
 import com.jayway.restassured.filter.log.ResponseLoggingFilter;
 import com.jayway.restassured.http.ContentType;
 import com.jayway.restassured.response.ResponseBody;
-import javafx.scene.control.Tab;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import token.GetToken;
+import Auth.GetToken;
 
 import java.time.LocalTime;
 
@@ -20,8 +17,7 @@ import static com.jayway.restassured.RestAssured.given;
 
 public class TablesTest {
     TablesData tablesData = new TablesData();
-    GetToken getToken = new GetToken();
-    String token = getToken.GetToken();
+    String token;
     String code = LocalTime.now().toString();
     int DepartmentId;
     int TableId;
@@ -29,8 +25,10 @@ public class TablesTest {
 
     @BeforeClass
     public void getDepartmentId(){
-    DepartmentTest departmentTest = new DepartmentTest();
-    this.DepartmentId = departmentTest.getId();
+        GetToken getToken = new GetToken();
+        this.token = getToken.GetFinallyToken();
+        DepartmentTest departmentTest = new DepartmentTest();
+        this.DepartmentId = departmentTest.getId(token);
 }
 
     @Test
@@ -109,5 +107,19 @@ public class TablesTest {
         TableResponse tableResponse = new Gson().fromJson(responseBody.asString(),TableResponse.class);
         Tables tables = tableResponse.data;
         Assert.assertEquals(code,tables.getCode());
+    }
+    @Test
+    public void F_deleteTableId(){
+        ResponseBody responseBody = given().
+                contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .when().delete(baseURL+"/"+TableId).thenReturn().body();
+        ResponseBody responseBody1= given().
+                contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .when().get(baseURL+"/"+TableId).thenReturn().body();
+        TableResponse tableResponse = new Gson().fromJson(responseBody1.asString(),TableResponse.class);
+        Tables tables = tableResponse.error;
+        Assert.assertEquals("Table does not exist",tables.getErrorDescription());
     }
 }

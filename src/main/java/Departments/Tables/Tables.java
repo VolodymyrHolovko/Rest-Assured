@@ -10,6 +10,15 @@ public class Tables {
     private int capacity;
     private int id;
     private String beaconId;
+    private String errorDescription;
+
+    public String getErrorDescription() {
+        return errorDescription;
+    }
+
+    public void setErrorDescription(String errorDescription) {
+        this.errorDescription = errorDescription;
+    }
 
     public String getBeaconId() {
         return beaconId;

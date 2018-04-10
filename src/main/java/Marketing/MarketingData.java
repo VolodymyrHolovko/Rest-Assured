@@ -9,7 +9,7 @@ public class MarketingData {
     public Marketing addNewMarketing() {
         Marketing marketing = new Marketing();
         marketing.setEstablishmentId(1);
-        marketing.setBusinessId(42);
+        marketing.setBusinessId(1);
         marketing.setTitle("title");
         marketing.setDescription("description");
         marketing.setPathToPhoto("media/201803/eNOt8jcLD1hC7hP0.jpg");
