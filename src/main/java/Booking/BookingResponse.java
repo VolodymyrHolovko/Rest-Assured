@@ -10,4 +10,13 @@ public class BookingResponse {
     public void setData(Booking data) {
         this.data = data;
     }
+    Booking tablesIds;
+
+    public Booking getTablesIds() {
+        return tablesIds;
+    }
+
+    public void setTablesIds(Booking tablesIds) {
+        this.tablesIds = tablesIds;
+    }
 }

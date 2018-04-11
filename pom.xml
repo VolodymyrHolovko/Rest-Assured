@@ -1,12 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
+
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+    <properties>
+        <aspectj.version>1.8.10</aspectj.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
 
     <groupId>New</groupId>
     <artifactId>Rest</artifactId>
     <version>1.0-SNAPSHOT</version>
+
     <build>
         <pluginManagement>
             <plugins>
@@ -22,6 +28,26 @@
                         </targer>
                     </configuration>
                 </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>2.20</version>
+                    <configuration>
+                        <suiteXmlFiles>
+                            <suiteXmlFile>TestNG.xml</suiteXmlFile>
+                        </suiteXmlFiles>
+                        <argLine>
+                            -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
+                        </argLine>
+                    </configuration>
+                    <dependencies>
+                        <dependency>
+                            <groupId>org.aspectj</groupId>
+                            <artifactId>aspectjweaver</artifactId>
+                            <version>${aspectj.version}</version>
+                        </dependency>
+                    </dependencies>
+                </plugin>
             </plugins>
         </pluginManagement>
         <plugins>
@@ -35,6 +61,8 @@
             </plugin>
         </plugins>
     </build>
+
+
     <dependencies>
     <dependency>
         <groupId>com.jayway.restassured</groupId>
@@ -120,6 +148,7 @@
             <artifactId>byte-buddy</artifactId>
             <version>1.7.9</version>
         </dependency>
+<<<<<<< HEAD
         <!-- https://mvnrepository.com/artifact/javax.ws.rs/jsr311-api -->
         <dependency>
             <groupId>javax.ws.rs</groupId>
@@ -127,6 +156,16 @@
             <version>0.11</version>
         </dependency>
 
+=======
+        <dependency>
+            <groupId>io.qameta.allure</groupId>
+            <artifactId>allure-testng</artifactId>
+            <version>2.0-BETA19</version>
+        </dependency>
+
+
+>>>>>>> Maks
     </dependencies>
+
 
 </project>

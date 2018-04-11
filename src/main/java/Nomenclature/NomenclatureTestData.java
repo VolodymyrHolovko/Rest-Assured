@@ -7,7 +7,7 @@ import java.util.ArrayList;
 public class NomenclatureTestData {
     public Nomenclature type1SupportSelling() {
         Nomenclature nomenclature = new Nomenclature();
-        nomenclature.setAddressId(23);
+        nomenclature.setAddressId(2);
         nomenclature.setArticle(null);
         nomenclature.setEstablishmentId(1);
         nomenclature.setActive(true);

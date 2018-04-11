@@ -1,25 +1,58 @@
 package Booking;
 
+import Auth.GetToken;
+import Departments.Department;
+import Departments.DepartmentResponse;
+import Departments.Tables.TableResponse;
+import Departments.Tables.Tables;
+import Departments.Tables.TablesTest;
+import Departments.Tables.TablesData;
+import Departments.DepartmentData;
 import com.google.gson.Gson;
+import com.jayway.restassured.filter.log.RequestLoggingFilter;
+import com.jayway.restassured.filter.log.ResponseLoggingFilter;
 import com.jayway.restassured.http.ContentType;
 import com.jayway.restassured.response.ResponseBody;
+import org.testng.Assert;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+
+import java.time.LocalTime;
 
 import static com.jayway.restassured.RestAssured.given;
 
 public class BookingTest {
-    String baseURI = "http://staging.eservia.com:8005/api/v0.0/Bookings/";
-    String token = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJib29raW5nLnByb21vdGVyIiwiYXVkIjoiYm9va2luZy5wcm9tb3RlciIsImlhdCI6MTUyMjE0MjE2OCwibmJmIjoxNTIyMTQyMTY4LCJwcm9tb3Rlcl9pZCI6IjI5IiwiZXhwIjoxNTIyMjI4NTY4LCJidXNpbmVzc2VzIjpbeyJpZCI6NDIsImFkZHJlc3NlcyI6WzEwMCwxNDYsMTYxLDE4OV19LHsiaWQiOjU2LCJhZGRyZXNzZXMiOlsxNTFdfV19.Cfg8Aq9wkXAU2QHBlYq2Qi4pewaWl4if3GvMgQrfrhr52LD9WY_TaiLy5onLyxR839LrfHwhBrznbLAhP8VjEcqSd_GQQ1YML2i5e8JEjmYsXeMbKgklpEfwA5fOq-3_THrBQEkCm6IFFDACDN7pQRWWIDfQtrHLv2lPl3mjPNQirGC0vVVfFngJ10Enw_w1HpPMEzbmOE5SFbmBqJpmo1e3pAmMn6xpympkeOBGegTgn6F2Sf-1-nWcaC9ILurAVtH_C22553aG1iUGJrUTDiSdvOUX4Q-oSOSWhMtS5jPqDKXpkNU9rWsZzQzER5K11UfE9uv5nmUUOdHltAenqA";
+    String baseURI = "http://staging.eservia.com:8005/api/v0.0/Bookings";
+    String token;
+    int TableId;
+    int DEpIds;
     public  int id;
     BookingData bookingData = new BookingData();
 
+@BeforeClass
+    public void getToken() {
+        GetToken getToken = new GetToken();
+        this.token = getToken.GetFinallyToken();
+    }
     @Test
     public void addBookingAdmin() {
         ResponseBody response = given().contentType(ContentType.JSON)
                 .header("Authorization", token)
                 .header("EstablishmentContextId", "1")
-                .body(bookingData.addBookingAdmin())
-                .when().post(baseURI+ "/" +"Admin").thenReturn().body();
-        BookingResponse bookingResponse = new Gson().fromJson(response.asString(), BookingResponse.class);  
+                .body(bookingData.addBookingAdmin(TableId, DEpIds))
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().post(baseURI+ "/" + "Admin").thenReturn().body();
+        BookingResponse bookingResponse = new Gson().fromJson(response.asString(), BookingResponse.class);
+        Booking booking = bookingResponse.data;
+        System.out.println(response.asString());
+        this.id = booking.getId();
+        Assert.assertEquals(101,booking.getDepartmentId());
+        Assert.assertEquals(114,booking.getTableIds().get(0).intValue());
+        Assert.assertEquals(3,booking.getPeopleCount());
+        Assert.assertEquals("хочу живої музики без мертвих музикантів", booking.getRequestDescription());
+        Assert.assertEquals("2018-04-12T18:55:33.000", booking.getBookingDateTime());
+        Assert.assertEquals("2018-04-12T19:40:33.000", booking.getBookingEndTime());
+        Assert.assertEquals(1, booking.getAddressId());
     }
 }
