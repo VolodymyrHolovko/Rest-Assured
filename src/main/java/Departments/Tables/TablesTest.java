@@ -28,7 +28,7 @@ public class TablesTest {
         GetToken getToken = new GetToken();
         this.token = getToken.GetFinallyToken();
         DepartmentTest departmentTest = new DepartmentTest();
-        this.DepartmentId = departmentTest.getId(token);
+        this.DepartmentId = departmentTest.getId();
 }
 
     @Test
@@ -84,20 +84,19 @@ public class TablesTest {
     }
 
     @Test
-    public void D_getTableId(){
+    public void D_getTableId() {
         ResponseBody responseBody = given().
                 contentType(ContentType.JSON)
                 .header("Authorization", token)
-                .when().get(baseURL+"/"+TableId).thenReturn().body();
-        TableResponse tableResponse = new Gson().fromJson(responseBody.asString(),TableResponse.class);
+                .when().get(baseURL + "/" + TableId).thenReturn().body();
+        TableResponse tableResponse = new Gson().fromJson(responseBody.asString(), TableResponse.class);
         Tables tables = tableResponse.data;
-        Assert.assertEquals(code,tables.getCode());
-        Assert.assertEquals(DepartmentId,tables.getDepartmentId());
-        Assert.assertEquals(TableId,tables.getId());
-        Assert.assertEquals(false,tables.isBookingAvailable());
-        Assert.assertEquals(code,tables.getBeaconId());
+        Assert.assertEquals(code, tables.getCode());
+        Assert.assertEquals(DepartmentId, tables.getDepartmentId());
+        Assert.assertEquals(TableId, tables.getId());
+        Assert.assertEquals(false, tables.isBookingAvailable());
+        Assert.assertEquals(code, tables.getBeaconId());
     }
-
     @Test
     public void E_getTableByBeaconId(){
         ResponseBody responseBody = given().
