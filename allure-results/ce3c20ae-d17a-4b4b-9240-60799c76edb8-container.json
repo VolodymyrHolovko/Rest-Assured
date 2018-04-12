@@ -1,0 +1,1 @@
+{"uuid":"ce3c20ae-d17a-4b4b-9240-60799c76edb8","name":"Customers.CustomersTests","start":1523521845102,"stop":1523521945387,"children":["08d55f83-9f04-47ed-bb12-41ca510ab5d3","ce7989bd-45ec-4c6d-aa16-b06341f25a7a"],"befores":[{"name":"getToken","status":"passed","stage":"finished","description":"","start":1523521845508,"stop":1523521865069}]}

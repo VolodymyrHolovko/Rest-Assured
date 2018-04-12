@@ -1,7 +1,11 @@
 package Customers;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import java.util.ArrayList;
+
 public class Customers {
-    private int eserviaId;
+    private String eserviaId;
     private String firstName;
     private String lastName;
     private String middleName;
@@ -11,8 +15,33 @@ public class Customers {
     private String phoneNumber;
     private String email;
     private int businessId;
+    @JsonProperty
+    private String id;
 
-    public int getId() {
+    private String errorDescription;
+
+
+    public String getErrorDescription() {
+        return errorDescription;
+    }
+
+    public void setErrorDescription(String errorDescription) {
+        this.errorDescription = errorDescription;
+    }
+
+
+
+
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getEserviaId() {
         return eserviaId;
     }
 
@@ -52,7 +81,7 @@ public class Customers {
         return businessId;
     }
 
-    public void setId(int eserviaId) {
+    public void setEserviaId(String eserviaId) {
         this.eserviaId = eserviaId;
     }
 
