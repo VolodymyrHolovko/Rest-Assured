@@ -19,10 +19,10 @@ public class DepartmentTest {
     String name = (LocalTime.now()).toString();
     int Ids;
     DepartmentData departmentsData = new DepartmentData();
-    String token;
+    public String token;
 
     @BeforeClass
-    public void getToken(){
+    public void setup(){
         GetToken getToken = new GetToken();
         this.token = getToken.GetFinallyToken();
     }

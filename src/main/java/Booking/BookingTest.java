@@ -25,27 +25,40 @@ import static com.jayway.restassured.RestAssured.given;
 
 public class BookingTest {
     String baseURI = "http://staging.eservia.com:8005/api/v0.0/Bookings";
+    String baseURLTables = "http://staging.eservia.com:8009/api/v0.0/Tables";
     String token;
-    int TableId= 114;
-    int DEpIds= 101;
+    String code = LocalTime.now().toString();
+    int TableId;
+    int DEpIds;
     public int id;
     BookingData bookingData = new BookingData();
+    TablesData tablesData = new TablesData();
 
     @BeforeClass
     public void getToken() {
         GetToken getToken = new GetToken();
         this.token = getToken.GetFinallyToken();
-    }
-    @BeforeMethod
-    public void getDepartment() {
         DepartmentTest getDepartment = new DepartmentTest();
+        getDepartment.token = token;
         this.DEpIds = getDepartment.getId();
 
-        /*TablesTest getTable = new TablesTest();
-        this.TableId=getTable.D_getTableId();*/
+
     }
     @Test
-    public void addBookingAdmin() {
+    public void A_createTable(){
+        ResponseBody response = given()
+                .contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .body(tablesData.createTable(DEpIds, code))
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().post(baseURLTables).thenReturn().body();
+        TableResponse tableResponse= new Gson().fromJson(response.asString(),  TableResponse.class);
+        Tables tables = tableResponse.data;
+        this.TableId = tables.getId();
+    }
+    @Test
+    public void B_addBookingAdmin() {
         ResponseBody response = given().contentType(ContentType.JSON)
                 .header("Authorization", token)
                 .header("EstablishmentContextId", "1")
@@ -61,15 +74,15 @@ public class BookingTest {
         Assert.assertEquals(TableId,booking.getTableIds().get(0).intValue());
         Assert.assertEquals(3,booking.getPeopleCount());
         Assert.assertEquals("хочу живої музики без мертвих музикантів", booking.getRequestDescription());
-        Assert.assertEquals("2018-04-14T18:55:33.000", booking.getBookingDateTime());
-        Assert.assertEquals("2018-04-14T19:40:33.000", booking.getBookingEndTime());
-        Assert.assertEquals(1, booking.getAddressId());
+        Assert.assertEquals("2018-04-14T10:55:33.000", booking.getBookingDateTime());
+        Assert.assertEquals("2018-04-14T12:40:33.000", booking.getBookingEndTime());
+        Assert.assertEquals(2, booking.getAddressId());
     }
     @Test
-    public void updateBookingAdmin() {
+    public void C_updateBookingAdmin() {
         ResponseBody response = given().contentType(ContentType.JSON)
                 .header("Authorization", token)
-                .body(bookingData.updateBookingAdmin(id))
+                .body(bookingData.updateBookingAdmin(id, TableId, DEpIds))
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter())
                 .when().put(baseURI+ "/" + "Admin").thenReturn().body();
@@ -81,13 +94,13 @@ public class BookingTest {
         Assert.assertEquals(TableId,bookingUpdate.getTableIds().get(0).intValue());
         Assert.assertEquals(2, bookingUpdate.getPeopleCount());
         Assert.assertEquals("а сєводня в завтрашній дєнь", bookingUpdate.getRequestDescription());
-        Assert.assertEquals("2018-03-30T13:55:33.000", bookingUpdate.getBookingDateTime());
-        Assert.assertEquals("2018-03-30T14:55:33.000", bookingUpdate.getBookingEndTime());
-        Assert.assertEquals(1, bookingUpdate.getAddressId());
+        Assert.assertEquals("2018-04-14T11:55:33.000", bookingUpdate.getBookingDateTime());
+        Assert.assertEquals("2018-04-14T14:40:33.000", bookingUpdate.getBookingEndTime());
+        Assert.assertEquals(2, bookingUpdate.getAddressId());
         Assert.assertEquals(false, bookingUpdate.isPreviousBookingAvailable());
     }
     @Test
-    public void getBookingIdAdmin() {
+    public void D_getBookingIdAdmin() {
         ResponseBody response = given().contentType(ContentType.JSON)
                 .header("Authorization", token)
                 .filter(new ResponseLoggingFilter())
