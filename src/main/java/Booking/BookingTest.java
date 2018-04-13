@@ -1,14 +1,10 @@
 package Booking;
 
 import Auth.GetToken;
-import Departments.Department;
-import Departments.DepartmentResponse;
 import Departments.DepartmentTest;
 import Departments.Tables.TableResponse;
 import Departments.Tables.Tables;
-import Departments.Tables.TablesTest;
 import Departments.Tables.TablesData;
-import Departments.DepartmentData;
 import com.google.gson.Gson;
 import com.jayway.restassured.filter.log.RequestLoggingFilter;
 import com.jayway.restassured.filter.log.ResponseLoggingFilter;
@@ -16,11 +12,8 @@ import com.jayway.restassured.http.ContentType;
 import com.jayway.restassured.response.ResponseBody;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-
 import java.time.LocalTime;
-
 import static com.jayway.restassured.RestAssured.given;
 
 public class BookingTest {
@@ -41,8 +34,6 @@ public class BookingTest {
         DepartmentTest getDepartment = new DepartmentTest();
         getDepartment.token = token;
         this.DEpIds = getDepartment.getId();
-
-
     }
     @Test
     public void A_createTable(){
@@ -56,6 +47,7 @@ public class BookingTest {
         TableResponse tableResponse= new Gson().fromJson(response.asString(),  TableResponse.class);
         Tables tables = tableResponse.data;
         this.TableId = tables.getId();
+        //for an ability to have a free table for booking at same time
     }
     @Test
     public void B_addBookingAdmin() {
@@ -82,7 +74,7 @@ public class BookingTest {
     public void C_updateBookingAdmin() {
         ResponseBody response = given().contentType(ContentType.JSON)
                 .header("Authorization", token)
-                .body(bookingData.updateBookingAdmin(id, TableId, DEpIds))
+                .body(bookingData.updateBookingAdmin(TableId, DEpIds, id))
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter())
                 .when().put(baseURI+ "/" + "Admin").thenReturn().body();
@@ -103,18 +95,20 @@ public class BookingTest {
     public void D_getBookingIdAdmin() {
         ResponseBody response = given().contentType(ContentType.JSON)
                 .header("Authorization", token)
+                .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter())
-                .when().get(baseURI+ id + "Admin").thenReturn().body();
+                .when().get(baseURI+ "/" +id + "/" + "Admin").thenReturn().body();
         BookingResponse bookingResponse = new Gson().fromJson(response.asString(), BookingResponse.class);
         Booking bookingIdGet = bookingResponse.data;
+        System.out.println(response);
         Assert.assertEquals(id, bookingIdGet.getId());
         Assert.assertEquals(DEpIds, bookingIdGet.getDepartmentId());
-        Assert.assertEquals(TableId, bookingIdGet.getTableIds());
+        Assert.assertEquals(TableId, bookingIdGet.getTableIds().get(0).intValue());
         Assert.assertEquals(2, bookingIdGet.getPeopleCount());
         Assert.assertEquals("а сєводня в завтрашній дєнь", bookingIdGet.getRequestDescription());
-        Assert.assertEquals("2018-03-30T13:55:33.000", bookingIdGet.getBookingDateTime());
-        Assert.assertEquals("2018-03-30T14:55:33.000", bookingIdGet.getBookingEndTime());
-        Assert.assertEquals(1, bookingIdGet.getAddressId());
+        Assert.assertEquals("2018-04-14T11:55:33.000", bookingIdGet.getBookingDateTime());
+        Assert.assertEquals("2018-04-14T14:40:33.000", bookingIdGet.getBookingEndTime());
+        Assert.assertEquals(2, bookingIdGet.getAddressId());
         Assert.assertEquals(false, bookingIdGet.isPreviousBookingAvailable());
     }
 }
