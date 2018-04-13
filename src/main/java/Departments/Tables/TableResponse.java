@@ -1,7 +1,7 @@
 package Departments.Tables;
 
 public class TableResponse {
-    Tables data;
+    public Tables data;
     Tables error;
 
     public Tables getData() {

@@ -14,7 +14,7 @@ public class GetToken {
     String sessionId;
 
 String baseURL = "http://staging.eservia.com:8003/api/v0.0/Auth/";
-
+@Test
     public String GetFinallyToken() {
         ResponseBody responseBody = given().
                 contentType(ContentType.JSON)
@@ -34,7 +34,6 @@ String baseURL = "http://staging.eservia.com:8003/api/v0.0/Auth/";
         Auth auth1 = authResponse1.data;
         String token1 = "Bearer "+auth1.getToken();
         return token1;
-
     }
 
 

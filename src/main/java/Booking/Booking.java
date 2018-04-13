@@ -1,5 +1,7 @@
 package Booking;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.List;
 
 public class Booking {
@@ -10,6 +12,25 @@ public class Booking {
     private String bookingDateTime;
     private String bookingEndTime;
     private int addressId;
+    private int id;
+    @JsonProperty("previousBookingAvailable")
+    private boolean previousBookingAvailable;
+
+    public boolean isPreviousBookingAvailable() {
+        return previousBookingAvailable;
+    }
+
+    public void setPreviousBookingAvailable(boolean previousBookingAvailable) {
+        this.previousBookingAvailable = previousBookingAvailable;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public int getDepartmentId() {
         return departmentId;
