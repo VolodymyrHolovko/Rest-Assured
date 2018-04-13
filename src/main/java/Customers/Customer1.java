@@ -15,9 +15,9 @@ public class Customer1 {
         return id;
     }
 
-    public ArrayList<Integer> getBusinesses() {
-        return businesses;
-    }
+//    public ArrayList<Integer> getBusinesses() {
+//        return businesses;
+//    }
 
     public void setId(String id) {
         this.id = id;

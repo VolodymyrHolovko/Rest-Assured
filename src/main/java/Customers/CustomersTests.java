@@ -83,7 +83,6 @@ public class CustomersTests {
                 .filter(new ResponseLoggingFilter())
                 .when().get(baseURL+"?pageIndex=0&pageSize=10").thenReturn().body();
         CustomersResponse customersResponse = new Gson().fromJson(response.asString(),  CustomersResponse.class);
-        Customers customers = customersResponse.data;
         Assert.assertEquals(true,customersResponse.isSuccess());
     }
 
