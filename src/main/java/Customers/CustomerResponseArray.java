@@ -1,9 +1,21 @@
 package Customers;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.ArrayList;
 
-public class CustomerDataArray {
+public class CustomerResponseArray {
     ArrayList<Customers> data;
+    @JsonProperty
+    private  boolean isSuccess;
+
+    public boolean isSuccess() {
+        return isSuccess;
+    }
+
+    public void setSuccess(boolean success) {
+        isSuccess = success;
+    }
 
     public ArrayList<Customers> getData() {
         return data;

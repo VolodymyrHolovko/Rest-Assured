@@ -82,8 +82,9 @@ public class CustomersTests {
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter())
                 .when().get(baseURL+"?pageIndex=0&pageSize=10").thenReturn().body();
-        CustomersResponse customersResponse = new Gson().fromJson(response.asString(),  CustomersResponse.class);
+        CustomerResponseArray customersResponse = new Gson().fromJson(response.asString(),  CustomerResponseArray.class);
         Assert.assertEquals(true,customersResponse.isSuccess());
+
     }
 
     @Test
@@ -95,9 +96,14 @@ public class CustomersTests {
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter())
                 .when().patch(baseURL).thenReturn().body();
-        CustomerData1 customersResponse = new Gson().fromJson(response.asString(),  CustomerData1.class);
-        Customer1 customers = customersResponse.data;
-        Assert.assertEquals(true,customers.isBlocked());
+
+        ResponseBody response1 = given()
+                .contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().get(baseURL+"/"+id).thenReturn().body();
+        
 
     }
 
@@ -109,9 +115,7 @@ public class CustomersTests {
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter())
                 .when().delete(baseURL+"/"+id).thenReturn().body();
-        CustomersResponse customersResponse = new Gson().fromJson(response.asString(),  CustomersResponse.class);
-        Customers customers = customersResponse.data;
-        Assert.assertEquals(true, customersResponse.isSuccess());
+
 
         ResponseBody response1 = given()
                 .contentType(ContentType.JSON)
@@ -121,6 +125,6 @@ public class CustomersTests {
                 .when().get(baseURL+"/"+id).thenReturn().body();
         CustomersResponse customersResponse1 = new Gson().fromJson(response1.asString(),  CustomersResponse.class);
         Customers customers1 = customersResponse1.error;
-        Assert.assertEquals("Customer does not exist",customers.getErrorDescription());
+        Assert.assertEquals("Customer does not exist",customers1.getErrorDescription());
     }
 }

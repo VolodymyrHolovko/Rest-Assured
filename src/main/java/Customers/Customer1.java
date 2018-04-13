@@ -9,15 +9,16 @@ public class Customer1 {
     private boolean isBlocked;
     @JsonProperty
     private String id;
+    @JsonProperty
     private ArrayList<Integer> businesses;
 
     public String getId() {
         return id;
     }
 
-//    public ArrayList<Integer> getBusinesses() {
-//        return businesses;
-//    }
+    public ArrayList<Integer> getBusinesses() {
+        return businesses;
+    }
 
     public void setId(String id) {
         this.id = id;
