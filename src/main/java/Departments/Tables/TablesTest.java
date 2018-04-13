@@ -28,7 +28,9 @@ public class TablesTest {
         GetToken getToken = new GetToken();
         this.token = getToken.GetFinallyToken();
         DepartmentTest departmentTest = new DepartmentTest();
+        departmentTest.token = token;
         this.DepartmentId = departmentTest.getId();
+
 }
 
     @Test
