@@ -103,7 +103,7 @@ public class CustomersTests {
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter())
                 .when().get(baseURL+"/"+id).thenReturn().body();
-        
+
 
     }
 
