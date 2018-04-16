@@ -1,7 +1,5 @@
 package Booking;
 
-import Departments.Tables.TablesTest;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,5 +31,9 @@ public class BookingData {
         updateBookingAdm.setAddressId(2);
         updateBookingAdm.setPreviousBookingAvailable(false);
         return updateBookingAdm;
+    }
+    public Booking addBookingSettings() {
+        Booking addsettings = new Booking();
+        return addsettings;
     }
 }

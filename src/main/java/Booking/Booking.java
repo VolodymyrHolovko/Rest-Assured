@@ -13,6 +13,7 @@ public class Booking {
     private String bookingEndTime;
     private int addressId;
     private int id;
+
     @JsonProperty("previousBookingAvailable")
     private boolean previousBookingAvailable;
 
@@ -87,4 +88,5 @@ public class Booking {
     public void setAddressId(int addressId) {
         this.addressId = addressId;
     }
+
 }
