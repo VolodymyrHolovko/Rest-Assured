@@ -1,4 +1,6 @@
-package Nomenclature;
+package Nomenclature.Nomenclatures;
+
+import Nomenclature.Nomenclatures.Nomenclature;
 
 import static java.lang.Integer.parseInt;
 import java.util.ArrayList;

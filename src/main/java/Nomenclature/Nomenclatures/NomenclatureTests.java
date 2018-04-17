@@ -1,6 +1,12 @@
-package Nomenclature;
+package Nomenclature.Nomenclatures;
 
 import Auth.GetToken;
+import Nomenclature.Nomenclatures.Nomenclature;
+import Nomenclature.Nomenclatures.NomenclatureResponse;
+import Nomenclature.Nomenclatures.NomenclatureTestData;
+import Nomenclature.Portion.NomenclaturePortion;
+import Nomenclature.Portion.NomenclaturePortionTestData;
+import Nomenclature.Sizes.*;
 import com.jayway.restassured.filter.log.RequestLoggingFilter;
 import com.jayway.restassured.filter.log.ResponseLoggingFilter;
 import com.google.gson.Gson;
@@ -21,7 +27,9 @@ public class NomenclatureTests {
     public String article;
     NomenclatureTestData nomenclatureTestData = new NomenclatureTestData();
     NomenclaturePortionTestData nomenclaturePortionTestData = new NomenclaturePortionTestData();
+    SizeData sizeData = new SizeData();
     String token;
+    int sizeId;
 
     @BeforeClass
     public void getToken(){
@@ -146,6 +154,13 @@ public class NomenclatureTests {
 
     @Test
     public void E_addPortion() {
+        String update = baseURI+"/"+ids;
+        ResponseBody respons = given().contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .header("EstablishmentContextId", "1")
+                .body(nomenclatureTestData.updateModel(article))
+                .when().put(update).thenReturn().body();
+
         ResponseBody response = given().contentType(ContentType.JSON)
                 .header("Authorization", token)
                 .header("EstablishmentContextId", "1")
@@ -181,4 +196,94 @@ public class NomenclatureTests {
         NomenclaturePortion nomenclatureResponse1 = nomenclatureResponse.data.getPortion();
         Assert.assertEquals(null,nomenclatureResponse1);
     }
-}
+    @Test
+    public void F_createSize(){
+        ResponseBody respons = given().contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .header("EstablishmentContextId", "1")
+                .body(nomenclatureTestData.type1SupportSelling())
+                .when().post(baseURI).thenReturn().body();
+        NomenclatureResponse nomenclatureResponse  = new Gson().fromJson(respons.asString(),  NomenclatureResponse.class);
+        Nomenclature nomenclature = nomenclatureResponse.data;
+        int id = parseInt(nomenclature.getId());
+
+        ResponseBody response = given().contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .header("EstablishmentContextId", "1")
+                .body(sizeData.createSize(id))
+                .when().post("http://staging.eservia.com:8008/api/v0.0/Sizes").thenReturn().body();
+        SizeResponse sizeResponse = new Gson().fromJson(response.asString(),  SizeResponse.class);
+        Size size = sizeResponse.getData();
+        this.sizeId = size.getId();
+        Assert.assertEquals(10, size.getSize());
+        Assert.assertEquals(21, size.getPrice());
+        Assert.assertEquals(1, size.getSizeTypeId());
+        Assert.assertEquals(2, size.getWriteOffIndex());
+        Assert.assertEquals("XL", size.getPresentationName());
+    }
+
+    @Test
+    public void  G_updateSize(){
+        ResponseBody response = given().contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .header("EstablishmentContextId", "1")
+                .body(sizeData.updateSize())
+                .when().put("http://staging.eservia.com:8008/api/v0.0/Sizes/"+sizeId).thenReturn().body();
+        SizeResponse sizeResponse = new Gson().fromJson(response.asString(),  SizeResponse.class);
+        Size size = sizeResponse.getData();
+        Assert.assertEquals(12, size.getSize());
+        Assert.assertEquals(22, size.getPrice());
+        Assert.assertEquals(3, size.getWriteOffIndex());
+        Assert.assertEquals("L", size.getPresentationName());
+    }
+
+
+    @Test
+    public void H_deactivateSize(){
+        ResponseBody response = given().contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .header("EstablishmentContextId", "1")
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().patch("http://staging.eservia.com:8008/api/v0.0/Sizes/"+sizeId+"/Deactivate").thenReturn().body();
+        SizeBoolean sizeResponse = new Gson().fromJson(response.asString(),  SizeBoolean.class);
+        Assert.assertEquals("success", sizeResponse.getDescription());
+    }
+
+    @Test
+    public void I_activateSize(){
+        ResponseBody response = given().contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .header("EstablishmentContextId", "1")
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().patch("http://staging.eservia.com:8008/api/v0.0/Sizes/"+sizeId+"/Activate").thenReturn().body();
+        SizeBoolean sizeResponse = new Gson().fromJson(response.asString(),  SizeBoolean.class);
+        Assert.assertEquals("success", sizeResponse.getDescription());
+    }
+    @Test
+    public void J_deleteSize() {
+        ResponseBody response = given().contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .header("EstablishmentContextId", "1")
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().delete("http://staging.eservia.com:8008/api/v0.0/Sizes/" + sizeId).thenReturn().body();
+
+        ResponseBody respons = given().contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .header("EstablishmentContextId", "1")
+                .body(sizeData.updateSize())
+                .when().put("http://staging.eservia.com:8008/api/v0.0/Sizes/"+sizeId).thenReturn().body();
+        SizeResponse sizeResponse = new Gson().fromJson(respons.asString(),  SizeResponse.class);
+        SizeError sizeError = sizeResponse.getError();
+        Assert.assertEquals("NomenclatureSizeDoesNotExist", sizeError.getErrorDescription());
+    }
+    @Test
+    public void K_deleteNomenclature() {
+        ResponseBody response = given().contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .header("EstablishmentContextId", "1")
+                .when().delete(baseURI + "/" + ids).thenReturn().body();
+    }
+    }
