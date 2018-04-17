@@ -164,6 +164,7 @@ public class NomenclatureTests {
         Assert.assertEquals(3,nomenclatureResponse1.getStep());
         Assert.assertEquals(10,nomenclatureResponse1.getMinimumPrice());
     }
+
     @Test
     public void E_deletePortion() {
         ResponseBody response = given().contentType(ContentType.JSON)
@@ -179,6 +180,5 @@ public class NomenclatureTests {
         NomenclatureResponse nomenclatureResponse = new Gson().fromJson(response1.asString(),NomenclatureResponse.class);
         NomenclaturePortion nomenclatureResponse1 = nomenclatureResponse.data.getPortion();
         Assert.assertEquals(null,nomenclatureResponse1);
-
     }
 }
