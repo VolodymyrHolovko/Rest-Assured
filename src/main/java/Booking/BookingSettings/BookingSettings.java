@@ -27,7 +27,7 @@ public class BookingSettings {
     }
 
     public void setWorkScheduleList(WorkSchedule workScheduleList) {
-        this.workScheduleList = workScheduleList;
+        this.workScheduleList = (List<WorkSchedule>) workScheduleList;
     }
 
     public int getId() {
