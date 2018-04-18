@@ -1,0 +1,1 @@
+{"uuid":"26595f95-aaf6-4b91-945c-873e84cf925a","name":"Photos.PhotosTest","start":1523956658165,"stop":1523956664782,"children":["5cda56e5-e01d-492a-863f-f459fa0fef6d"],"befores":[{"name":"getToken","status":"passed","stage":"finished","description":"","start":1523956658294,"stop":1523956664271}]}

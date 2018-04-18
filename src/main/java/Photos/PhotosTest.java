@@ -4,6 +4,7 @@ import Auth.GetToken;
 import com.google.gson.Gson;
 import com.jayway.restassured.builder.MultiPartSpecBuilder;
 import com.jayway.restassured.filter.log.RequestLoggingFilter;
+import com.jayway.restassured.filter.log.ResponseLoggingFilter;
 import com.jayway.restassured.http.ContentType;
 import com.jayway.restassured.response.ResponseBody;
 import com.jayway.restassured.specification.MultiPartSpecification;
@@ -29,24 +30,15 @@ public class PhotosTest {
     @Test
     public void addPhotoFromFolder() {
         ResponseBody response = given()
-                .multiPart(new MultiPartSpecBuilder(new File("/Users/volodymyr_holovko/Pictures/604.jpg"))
-                        .fileName("my_image.jpg")
-                        // controlName is the name of the
-                        // RequestParam associated with the
-                        // MultipartFile[] array
-                        .controlName("file")
-                        .mimeType("image/jpg")
-                        .build())
-               // .header("Authorization", Auth)
-                /*.body(photosData.addPhotosFromFolder())*/
+                .contentType("multiparts/jpg")
+                .accept("application/json")
+                .header("Authorization", token)
                 .filter(new RequestLoggingFilter())
-                .when().post(baseUrl).thenReturn().body();
-        //Photos addPhotoFolder = new Gson().fromJson(response.asString(), Photos.class);
+                .filter(new ResponseLoggingFilter())
+                .multiPart(new File("C:\\Users\\User\\Desktop.квартира.png"))
+                .post("http://staging.eservia.com:8001/api/v0.0/Photo/FormData")
+                .getBody();
         System.out.println(response.asString());
-
-
-
-
     }
 }
 
