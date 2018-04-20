@@ -1,4 +1,7 @@
-package Nomenclature;
+package Nomenclature.Nomenclatures;
+
+import Nomenclature.Nomenclatures.Nomenclature;
+import Nomenclature.Sizes.Size;
 
 public class NomenclatureResponse {
     Nomenclature data;

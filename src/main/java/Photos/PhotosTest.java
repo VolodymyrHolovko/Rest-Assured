@@ -2,8 +2,8 @@ package Photos;
 
 import com.jayway.restassured.builder.MultiPartSpecBuilder;
 import com.jayway.restassured.filter.log.RequestLoggingFilter;
+import com.jayway.restassured.filter.log.ResponseLoggingFilter;
 import com.jayway.restassured.response.ResponseBody;
-import org.testng.annotations.Test;
 
 import java.io.File;
 
@@ -29,13 +29,11 @@ public class PhotosTest {
                // .header("Authorization", token)
                 /*.body(photosData.addPhotosFromFolder())*/
                 .filter(new RequestLoggingFilter())
-                .when().post(baseUrl).thenReturn().body();
-        //Photos addPhotoFolder = new Gson().fromJson(response.asString(), Photos.class);
+                .filter(new ResponseLoggingFilter())
+                .multiPart(new File("C:\\Users\\User\\Desktop.квартира.png"))
+                .post("http://staging.eservia.com:8001/api/v0.0/Photo/FormData")
+                .getBody();
         System.out.println(response.asString());
-
-
-
-
     }
 }
 

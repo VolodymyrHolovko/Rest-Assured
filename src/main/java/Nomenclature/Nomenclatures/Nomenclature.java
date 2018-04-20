@@ -1,4 +1,6 @@
-package Nomenclature;
+package Nomenclature.Nomenclatures;
+
+import Nomenclature.Portion.NomenclaturePortion;
 
 import java.util.List;
 

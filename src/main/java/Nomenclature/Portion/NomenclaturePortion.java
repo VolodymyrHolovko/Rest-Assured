@@ -1,4 +1,4 @@
-package Nomenclature;
+package Nomenclature.Portion;
 
 public class NomenclaturePortion {
     private int minimum;

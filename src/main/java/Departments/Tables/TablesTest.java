@@ -104,11 +104,14 @@ public class TablesTest {
         ResponseBody responseBody = given().
                 contentType(ContentType.JSON)
                 .header("Authorization", token)
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
                 .when().get(baseURL+"/Beacon/"+code).thenReturn().body();
         TableResponse tableResponse = new Gson().fromJson(responseBody.asString(),TableResponse.class);
         Tables tables = tableResponse.data;
         Assert.assertEquals(code,tables.getCode());
     }
+
     @Test
     public void F_deleteTableId(){
         ResponseBody responseBody = given().

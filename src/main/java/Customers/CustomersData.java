@@ -1,6 +1,8 @@
 package Customers;
 
+
 import java.util.ArrayList;
+import java.util.List;
 
 public class CustomersData {
 
@@ -43,9 +45,9 @@ public class CustomersData {
 
     public Customer1 blockCustomer(String eserviaId){
         Customer1 customers = new Customer1();
-        ArrayList<Integer> businesses  = new ArrayList<>();
-        businesses.add(1);
-        customers.setBusinesses(businesses);
+        ArrayList<Integer> busines = new ArrayList<>();
+        busines.add(1);
+        customers.setBusinesses(busines);
         customers.setId(eserviaId);
         return customers;
     }

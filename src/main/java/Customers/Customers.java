@@ -21,26 +21,6 @@ public class Customers {
     private String errorDescription;
 
 
-    public String getErrorDescription() {
-        return errorDescription;
-    }
-
-    public void setErrorDescription(String errorDescription) {
-        this.errorDescription = errorDescription;
-    }
-
-
-
-
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
     public String getEserviaId() {
         return eserviaId;
     }
@@ -81,6 +61,14 @@ public class Customers {
         return businessId;
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public String getErrorDescription() {
+        return errorDescription;
+    }
+
     public void setEserviaId(String eserviaId) {
         this.eserviaId = eserviaId;
     }
@@ -119,5 +107,13 @@ public class Customers {
 
     public void setBusinessId(int businessId) {
         this.businessId = businessId;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setErrorDescription(String errorDescription) {
+        this.errorDescription = errorDescription;
     }
 }

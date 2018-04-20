@@ -1,4 +1,6 @@
-package Nomenclature;
+package Nomenclature.Nomenclatures;
+
+import Nomenclature.Nomenclatures.Nomenclature;
 
 import static java.lang.Integer.parseInt;
 import java.util.ArrayList;
@@ -20,7 +22,6 @@ public class NomenclatureTestData {
         nomenclature.setWeightInKilos(3);
         nomenclature.setHeatLoss(3);
         nomenclature.setColdLoss(3);
-        nomenclature.setSupportSelling(true);
         nomenclature.setSupportExtensioning(true);
         nomenclature.setPrintOnCheck(true);
         nomenclature.setPrintToKitchen(true);
@@ -57,7 +58,6 @@ public class NomenclatureTestData {
         nomenclatureUpdate.setWeightInKilos(4);
         nomenclatureUpdate.setHeatLoss(4);
         nomenclatureUpdate.setColdLoss(4);
-        nomenclatureUpdate.setSupportSelling(false);
         nomenclatureUpdate.setSupportExtensioning(false);
         nomenclatureUpdate.setPrintOnCheck(false);
         nomenclatureUpdate.setPrintToKitchen(false);
