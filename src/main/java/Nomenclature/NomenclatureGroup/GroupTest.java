@@ -38,7 +38,6 @@ public class GroupTest {
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter())
                 .when().post(baseURI).thenReturn().body();
-        System.out.println(response.asString());
         Group group  = new Gson().fromJson(response.asString(),  Group.class);
         GroupResponse groupResponse = group.data;
         this.ids = groupResponse.getId();
@@ -49,9 +48,113 @@ public class GroupTest {
         Assert.assertEquals(1, groupResponse.getDefaultSellingMethodId());
         Assert.assertEquals("TestGroup", groupResponse.getName());
         Assert.assertEquals("My tests", groupResponse.getDescription());
-        Assert.assertEquals("My tests", groupResponse.getDescription());
         Assert.assertEquals("#443322", groupResponse.getColorHex());
         Assert.assertEquals("Images/201710/file636449551149284980.png", groupResponse.getIconPath());
 
+    }
+
+    @Test
+    public void B_updateNomenclature() {
+        ResponseBody response = given().contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .header("EstablishmentContextId", "1")
+                .body(groupData.updateGroup())
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().put(baseURI+"/"+ids).thenReturn().body();
+        Group group  = new Gson().fromJson(response.asString(),  Group.class);
+        GroupResponse groupResponse = group.data;
+
+        Assert.assertEquals(1, groupResponse.getParentId());
+        Assert.assertEquals(2, groupResponse.getDefaultDimensionId());
+        Assert.assertEquals(2, groupResponse.getDefaultDebitingMethodId());
+        Assert.assertEquals(2, groupResponse.getDefaultSellingMethodId());
+        Assert.assertEquals("TestGroup2", groupResponse.getName());
+        Assert.assertEquals("My tests2", groupResponse.getDescription());
+        Assert.assertEquals("#443323", groupResponse.getColorHex());
+        Assert.assertEquals("Images/201710/file636449551671201110.png", groupResponse.getIconPath());
+    }
+
+    @Test
+    public void C_deactivateNomenclature() {
+        ResponseBody response = given().contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .header("EstablishmentContextId", "1")
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().patch(baseURI+"/"+ids+"/Deactivate").thenReturn().body();
+
+
+        ResponseBody respons = given().contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .header("EstablishmentContextId", "1")
+                .body(groupData.updateGroup())
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().get(baseURI+"/"+ids+"?addressId=2").thenReturn().body();
+        Group group  = new Gson().fromJson(respons.asString(),  Group.class);
+        GroupResponse groupResponse = group.data;
+
+        Assert.assertEquals(false,groupResponse.isActive());
+        Assert.assertEquals(1, groupResponse.getParentId());
+        Assert.assertEquals(2, groupResponse.getDefaultDimensionId());
+        Assert.assertEquals(2, groupResponse.getDefaultDebitingMethodId());
+        Assert.assertEquals(2, groupResponse.getDefaultSellingMethodId());
+        Assert.assertEquals("TestGroup2", groupResponse.getName());
+        Assert.assertEquals("My tests2", groupResponse.getDescription());
+        Assert.assertEquals("#443323", groupResponse.getColorHex());
+        Assert.assertEquals("Images/201710/file636449551671201110.png", groupResponse.getIconPath());
+    }
+
+    @Test
+    public void D_ActivateNomenclature() {
+        ResponseBody response = given().contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .header("EstablishmentContextId", "1")
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().patch(baseURI+"/"+ids+"/Activate").thenReturn().body();
+
+
+        ResponseBody respons = given().contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .header("EstablishmentContextId", "1")
+                .body(groupData.updateGroup())
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().get(baseURI+"/"+ids+"?addressId=2").thenReturn().body();
+        Group group  = new Gson().fromJson(respons.asString(),  Group.class);
+        GroupResponse groupResponse = group.data;
+
+        Assert.assertEquals(true,groupResponse.isActive());
+        Assert.assertEquals(1, groupResponse.getParentId());
+        Assert.assertEquals(2, groupResponse.getDefaultDimensionId());
+        Assert.assertEquals(2, groupResponse.getDefaultDebitingMethodId());
+        Assert.assertEquals(2, groupResponse.getDefaultSellingMethodId());
+        Assert.assertEquals("TestGroup2", groupResponse.getName());
+        Assert.assertEquals("My tests2", groupResponse.getDescription());
+        Assert.assertEquals("#443323", groupResponse.getColorHex());
+        Assert.assertEquals("Images/201710/file636449551671201110.png", groupResponse.getIconPath());
+    }
+    @Test
+    public void F_DeleteNomenclature() {
+        ResponseBody response = given().contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .header("EstablishmentContextId", "1")
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().delete(baseURI+"/"+ids).thenReturn().body();
+
+
+        ResponseBody respons = given().contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .header("EstablishmentContextId", "1")
+                .body(groupData.updateGroup())
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().get(baseURI+"/"+ids+"?addressId=2").thenReturn().body();
+        Errors error  = new Gson().fromJson(respons.asString(),  Errors.class);
+        Errors errors = error.error;
+        Assert.assertEquals("NomenclatureGroupDoesNotExist",errors.getErrorDescription());
     }
 }

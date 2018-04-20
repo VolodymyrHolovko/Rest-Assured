@@ -4,6 +4,7 @@ import com.jayway.restassured.builder.MultiPartSpecBuilder;
 import com.jayway.restassured.filter.log.RequestLoggingFilter;
 import com.jayway.restassured.filter.log.ResponseLoggingFilter;
 import com.jayway.restassured.response.ResponseBody;
+import org.testng.annotations.Test;
 
 import java.io.File;
 
@@ -15,10 +16,10 @@ public class PhotosTest {
     PhotosData photosData = new PhotosData();
 
 
-   // @Test
+   @Test
     public void addPhotoFromFolder() {
         ResponseBody response = given()
-                .multiPart(new MultiPartSpecBuilder(new File("/Users/volodymyr_holovko/Pictures/604.jpg"))
+                .multiPart(new MultiPartSpecBuilder(new File("C:\\Users\\User\\Desktop\\статус.png"))
                         .fileName("my_image.jpg")
                         // controlName is the name of the
                         // RequestParam associated with the
@@ -30,7 +31,6 @@ public class PhotosTest {
                 /*.body(photosData.addPhotosFromFolder())*/
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter())
-                .multiPart(new File("C:\\Users\\User\\Desktop.квартира.png"))
                 .post("http://staging.eservia.com:8001/api/v0.0/Photo/FormData")
                 .getBody();
         System.out.println(response.asString());

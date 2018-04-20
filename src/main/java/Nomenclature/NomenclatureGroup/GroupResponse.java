@@ -1,7 +1,10 @@
 package Nomenclature.NomenclatureGroup;
 
-public class GroupResponse {
+import com.fasterxml.jackson.annotation.JsonProperty;
 
+public class GroupResponse {
+    @JsonProperty
+    private  boolean isActive;
     private int id;
     private int parentId;
     private int tagId;
@@ -13,6 +16,14 @@ public class GroupResponse {
     private String colorHex;
     private String iconPath;
     private boolean isSuccess;
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
+    }
 
     public int getId() {
         return id;
