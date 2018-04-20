@@ -110,6 +110,7 @@ public class TablesTest {
         Tables tables = tableResponse.data;
         Assert.assertEquals(code,tables.getCode());
     }
+
     @Test
     public void F_deleteTableId(){
         ResponseBody responseBody = given().

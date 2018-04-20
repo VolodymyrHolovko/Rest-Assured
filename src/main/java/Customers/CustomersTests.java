@@ -19,11 +19,13 @@ public class CustomersTests {
     String token;
     CustomersData customersData = new CustomersData();
     String id;
+
     @BeforeClass
     public void getToken(){
         GetToken getToken = new GetToken();
         this.token = getToken.GetFinallyToken();
     }
+
     @Test
     public void A_CreateCustomer() {
         ResponseBody response = given()
@@ -43,6 +45,7 @@ public class CustomersTests {
         Assert.assertEquals("+380679296215",customers.getPhoneNumber());
         Assert.assertEquals("lutkovec@gmail.com",customers.getEmail());
     }
+
     @Test
     public void B_UpdateCustomer() {
         ResponseBody response = given()
@@ -58,6 +61,7 @@ public class CustomersTests {
         Assert.assertEquals("Permission denied",customers.getErrorDescription());
 
     }
+
     @Test
     public void C_GetCustomer() {
         ResponseBody response = given()
@@ -74,6 +78,7 @@ public class CustomersTests {
         Assert.assertEquals("+380679296215",customers.getPhoneNumber());
         Assert.assertEquals("lutkovec@gmail.com",customers.getEmail());
     }
+
     @Test
     public void D_GetCustomers() {
         ResponseBody response = given()
@@ -103,8 +108,6 @@ public class CustomersTests {
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter())
                 .when().get(baseURL+"/"+id).thenReturn().body();
-
-
     }
 
     @Test
