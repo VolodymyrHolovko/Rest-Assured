@@ -4,7 +4,7 @@ import Nomenclature.Nomenclatures.Nomenclature;
 import Nomenclature.Sizes.Size;
 
 public class NomenclatureResponse {
-    Nomenclature data;
+    public Nomenclature data;
 
     public Nomenclature getData() {
         return data;

@@ -18,57 +18,91 @@ import static com.jayway.restassured.RestAssured.given;
 
 public class SizeTests {
     String baseURI = "http://staging.eservia.com:8008/api/v0.0/Sizes";
-    public String ids;
+    public int ids;
     public String article;
+    NomenclatureTestData nomenclatureTestData = new NomenclatureTestData();
     SizeData sizeData = new SizeData();
     String token;
     int sizeId;
-    int idd;
 
     @BeforeClass
     public void getToken(){
         GetToken getToken = new GetToken();
         this.token = getToken.GetFinallyToken();
-    }
 
-    @Test
-    public void A_createSize() {
         ResponseBody response = given().contentType(ContentType.JSON)
                 .header("Authorization", token)
                 .header("EstablishmentContextId", "1")
-                .body(sizeData.createSize())
-                .filter(new RequestLoggingFilter())
-                .filter(new ResponseLoggingFilter())
-                .when().post(baseURI).thenReturn().body();
+                .body(nomenclatureTestData.type1SupportSelling())
+                .when().post("http://staging.eservia.com:8008/api/v0.0/Nomenclature").thenReturn().body();
         System.out.println(response.asString());
         NomenclatureResponse nomenclatureResponse  = new Gson().fromJson(response.asString(),  NomenclatureResponse.class);
         Nomenclature nomenclature = nomenclatureResponse.data;
-        this.ids = nomenclature.getId();
-        this.article =nomenclature.getArticle();
-        //Assert.assertEquals(23,nomenclature.getAddressId());
-        Assert.assertEquals("kitchenName", nomenclature.getKitchenName());
-        Assert.assertEquals("shortName", nomenclature.getShortName());
-        Assert.assertEquals("publicName", nomenclature.getPublicName());
-        Assert.assertEquals("barCode", nomenclature.getBarCode());
-        Assert.assertEquals("recipe", nomenclature.getRecipe());
-        Assert.assertEquals("description", nomenclature.getDescription());
-        Assert.assertEquals(3, nomenclature.getWeightInKilos());
-        Assert.assertEquals(3, nomenclature.getHeatLoss());
-        Assert.assertEquals(3, nomenclature.getColdLoss());
-        Assert.assertEquals(true, nomenclature.isPrintOnCheck());
-        Assert.assertEquals(true, nomenclature.isSupportExtensioning());
-        Assert.assertEquals(4456, nomenclature.getPreparingTime());
-        Assert.assertEquals(4456, nomenclature.getRushPreparingTime());
-        Assert.assertEquals(1, nomenclature.getMaxExtensions());
-        Assert.assertEquals(1, nomenclature.getDebitMethodId());
-        Assert.assertEquals(1, nomenclature.getNomenclatureTypeId());
-        Assert.assertEquals(1, nomenclature.getCookingPriorityId());
-        Assert.assertEquals(1, nomenclature.getSaleMethodId());
-        Assert.assertEquals(1, nomenclature.getTasteGroupId());
-        Assert.assertEquals(1, nomenclature.getSpecialGroupId());
-        Assert.assertEquals(1, nomenclature.getSupportedOrderTypes());
-        Assert.assertEquals(1, nomenclature.getDimensionId());
-        // Assert.assertEquals(1, nomenclature.getTaxesIds().size());
-        //Assert.assertEquals(1, nomenclature.getTaxesIds().get(0).intValue());
+        this.ids =  Integer.parseInt(nomenclature.getId());
+
     }
+    @Test
+    public void A_createSize(){
+        ResponseBody response = given().contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .header("EstablishmentContextId", "1")
+                .body(sizeData.createSize(ids))
+                .when().post(baseURI).thenReturn().body();
+        SizeResponse sizeResponse  = new Gson().fromJson(response.asString(),  SizeResponse.class);
+        Size size = sizeResponse.data;
+        this.sizeId=size.getId();
+        Assert.assertEquals(10, size.getSize());
+        Assert.assertEquals(21, size.getPrice());
+        Assert.assertEquals(1, size.getSizeTypeId());
+        Assert.assertEquals(2,size.getWriteOffIndex());
+        Assert.assertEquals("XL", size.getPresentationName());
+    }
+
+    @Test
+    public void B_updateSize() {
+        ResponseBody response = given().contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .header("EstablishmentContextId", "1")
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .body(sizeData.updateSize())
+                .when().put(baseURI+"/"+sizeId).thenReturn().body();
+        SizeResponse sizeResponse = new Gson().fromJson(response.asString(), SizeResponse.class);
+        Size size = sizeResponse.data;
+        Assert.assertEquals(12, size.getSize());
+        Assert.assertEquals(22, size.getPrice());
+        Assert.assertEquals(3, size.getWriteOffIndex());
+        Assert.assertEquals("L", size.getPresentationName());
+    }
+
+    @Test
+    public void C_ActivateSize() {
+        ResponseBody response = given().contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .header("EstablishmentContextId", "1")
+                .when().patch(baseURI+"/"+sizeId+"/Activate").thenReturn().body();
+        SizeBoolean sizeBoolean = new Gson().fromJson(response.asString(), SizeBoolean.class);
+        Assert.assertEquals("success", sizeBoolean.getDescription());
+    }
+
+    @Test
+    public void D_DeactivateSize() {
+        ResponseBody response = given().contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .header("EstablishmentContextId", "1")
+                .when().delete(baseURI+"/"+sizeId+"/Deactivate").thenReturn().body();
+        SizeBoolean sizeBoolean = new Gson().fromJson(response.asString(), SizeBoolean.class);
+        Assert.assertEquals("success", sizeBoolean.getDescription());
+    }
+
+    @Test
+    public void E_deleteSize() {
+        ResponseBody response = given().contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .header("EstablishmentContextId", "1")
+                .when().delete(baseURI+"/"+sizeId).thenReturn().body();
+        SizeBoolean sizeBoolean = new Gson().fromJson(response.asString(), SizeBoolean.class);
+        Assert.assertEquals("success", sizeBoolean.getDescription());
+    }
+
 }
