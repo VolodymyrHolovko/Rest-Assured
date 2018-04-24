@@ -17,7 +17,7 @@ import static com.jayway.restassured.RestAssured.given;
 
 public class TablesTest {
     TablesData tablesData = new TablesData();
-    String token;
+    public String token;
     String code = LocalTime.now().toString();
     int DepartmentId;
     int TableId;
@@ -113,7 +113,7 @@ public class TablesTest {
     }
 
     @Test
-    public void F_deleteTableId(){
+    public void F_deleteTableId(int tableId){
         ResponseBody responseBody = given().
                 contentType(ContentType.JSON)
                 .header("Authorization", token)

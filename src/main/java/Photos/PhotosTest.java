@@ -16,7 +16,7 @@ public class PhotosTest {
     PhotosData photosData = new PhotosData();
 
 
-   @Test
+  // @Test
     public void addPhotoFromFolder() {
         ResponseBody response = given()
                 .multiPart(new MultiPartSpecBuilder(new File("C:\\Users\\User\\Desktop\\статус.png"))

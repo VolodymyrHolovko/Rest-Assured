@@ -9,10 +9,13 @@ public class Booking {
     private List<Integer> tableIds;
     private int peopleCount;
     private String requestDescription;
+    private String responseDescription;
     private String bookingDateTime;
     private String bookingEndTime;
     private int addressId;
     private int id;
+    private int statusId;
+
 
     @JsonProperty("previousBookingAvailable")
     private boolean previousBookingAvailable;
@@ -23,6 +26,22 @@ public class Booking {
 
     public void setPreviousBookingAvailable(boolean previousBookingAvailable) {
         this.previousBookingAvailable = previousBookingAvailable;
+    }
+
+    public String getResponseDescription() {
+        return responseDescription;
+    }
+
+    public int getStatusId() {
+        return statusId;
+    }
+
+    public void setStatusId(int statusId) {
+        this.statusId = statusId;
+    }
+
+    public void setResponseDescription(String responseDescription) {
+        this.responseDescription = responseDescription;
     }
 
     public int getId() {

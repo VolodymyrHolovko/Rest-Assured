@@ -76,4 +76,9 @@ public class BookingSettingsData {
 
         return addSettings;
     }
+    public BookingSettings updateBookingSettings(int id) {
+        BookingSettings updateSettings = new BookingSettings();
+        updateSettings.setId(id);
+        return updateSettings;
+    }
 }
