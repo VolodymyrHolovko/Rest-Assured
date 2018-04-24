@@ -11,6 +11,15 @@ public class Tables {
     private int id;
     private String beaconId;
     private String errorDescription;
+    private int statusId;
+
+    public int getStatusId() {
+        return statusId;
+    }
+
+    public void setStatusId(int statusId) {
+        this.statusId = statusId;
+    }
 
     public String getErrorDescription() {
         return errorDescription;
