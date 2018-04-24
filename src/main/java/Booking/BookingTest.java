@@ -86,13 +86,8 @@ public class BookingTest {
         Assert.assertEquals(TableId,booking.getTableIds().get(0).intValue());
         Assert.assertEquals(3,booking.getPeopleCount());
         Assert.assertEquals("хочу живої музики без мертвих музикантів", booking.getRequestDescription());
-<<<<<<< HEAD
-        Assert.assertEquals("2018-06-24T10:55:33.000", booking.getBookingDateTime());
-        Assert.assertEquals("2018-06-24T12:40:33.000", booking.getBookingEndTime());
-=======
         Assert.assertEquals("2018-04-26T10:55:33.000", booking.getBookingDateTime());
         Assert.assertEquals("2018-04-26T12:40:33.000", booking.getBookingEndTime());
->>>>>>> v_holovko
         Assert.assertEquals(2, booking.getAddressId());
     }
     @Test
@@ -111,13 +106,9 @@ public class BookingTest {
         Assert.assertEquals(TableId,bookingUpdate.getTableIds().get(0).intValue());
         Assert.assertEquals(2, bookingUpdate.getPeopleCount());
         Assert.assertEquals("а сєводня в завтрашній дєнь", bookingUpdate.getRequestDescription());
-<<<<<<< HEAD
-        Assert.assertEquals("2018-06-24T11:55:33.000", bookingUpdate.getBookingDateTime());
-        Assert.assertEquals("2018-06-24T14:40:33.000", bookingUpdate.getBookingEndTime());
-=======
         Assert.assertEquals("2018-04-26T11:55:33.000", bookingUpdate.getBookingDateTime());
         Assert.assertEquals("2018-04-26T14:40:33.000", bookingUpdate.getBookingEndTime());
->>>>>>> v_holovko
+
         Assert.assertEquals(2, bookingUpdate.getAddressId());
         Assert.assertEquals(false, bookingUpdate.isPreviousBookingAvailable());
     }
@@ -136,13 +127,8 @@ public class BookingTest {
         Assert.assertEquals(TableId, bookingIdGet.getTableIds().get(0).intValue());
         Assert.assertEquals(2, bookingIdGet.getPeopleCount());
         Assert.assertEquals("а сєводня в завтрашній дєнь", bookingIdGet.getRequestDescription());
-<<<<<<< HEAD
-        Assert.assertEquals("2018-06-24T11:55:33.000", bookingIdGet.getBookingDateTime());
-        Assert.assertEquals("2018-06-24T14:40:33.000", bookingIdGet.getBookingEndTime());
-=======
         Assert.assertEquals("2018-04-26T11:55:33.000", bookingIdGet.getBookingDateTime());
         Assert.assertEquals("2018-04-26T14:40:33.000", bookingIdGet.getBookingEndTime());
->>>>>>> v_holovko
         Assert.assertEquals(2, bookingIdGet.getAddressId());
         Assert.assertEquals(false, bookingIdGet.isPreviousBookingAvailable());
     }
@@ -164,6 +150,6 @@ public class BookingTest {
     public void deleteTable() {
         TablesTest deleteTable = new TablesTest();
         deleteTable.token = token;
-        deleteTable.F_deleteTableId(TableId);
+        deleteTable.F_deleteTableId();
     }
 }

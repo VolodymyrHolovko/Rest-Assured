@@ -113,17 +113,17 @@ public class TablesTest {
     }
 
     @Test
-    public void F_deleteTableId(int tableId){
+    public void F_deleteTableId() {
         ResponseBody responseBody = given().
                 contentType(ContentType.JSON)
                 .header("Authorization", token)
-                .when().delete(baseURL+"/"+TableId).thenReturn().body();
-        ResponseBody responseBody1= given().
+                .when().delete(baseURL + "/" + TableId).thenReturn().body();
+        ResponseBody responseBody1 = given().
                 contentType(ContentType.JSON)
                 .header("Authorization", token)
-                .when().get(baseURL+"/"+TableId).thenReturn().body();
-        TableResponse tableResponse = new Gson().fromJson(responseBody1.asString(),TableResponse.class);
+                .when().get(baseURL + "/" + TableId).thenReturn().body();
+        TableResponse tableResponse = new Gson().fromJson(responseBody1.asString(), TableResponse.class);
         Tables tables = tableResponse.error;
-        Assert.assertEquals("Table does not exist",tables.getErrorDescription());
+        Assert.assertEquals("Table does not exist", tables.getErrorDescription());
     }
 }
