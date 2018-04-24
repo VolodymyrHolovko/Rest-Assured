@@ -25,7 +25,7 @@ public class NomenclatureTestData {
         nomenclature.setSupportExtensioning(true);
         nomenclature.setPrintOnCheck(true);
         nomenclature.setPrintToKitchen(true);
-        nomenclature.setParentId(1);
+        nomenclature.setParentId(13);
         nomenclature.setPreparingTime(4456);
         nomenclature.setRushPreparingTime(4456);
         nomenclature.setMaxExtensions(1);

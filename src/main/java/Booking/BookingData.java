@@ -12,8 +12,8 @@ public class BookingData {
         bookingAdmin.setTableIds(tableIds);
         bookingAdmin.setPeopleCount(3);
         bookingAdmin.setRequestDescription("хочу живої музики без мертвих музикантів");
-        bookingAdmin.setBookingDateTime("2018-04-24T10:55:33.000");
-        bookingAdmin.setBookingEndTime("2018-04-24T12:40:33.000");
+        bookingAdmin.setBookingDateTime("2018-06-24T10:55:33.000");
+        bookingAdmin.setBookingEndTime("2018-06-24T12:40:33.000");
         bookingAdmin.setAddressId(2);
         return bookingAdmin;
     }
@@ -26,8 +26,8 @@ public class BookingData {
         updateBookingAdm.setTableIds(tableIds);
         updateBookingAdm.setPeopleCount(2);
         updateBookingAdm.setRequestDescription("а сєводня в завтрашній дєнь");
-        updateBookingAdm.setBookingDateTime("2018-04-25T11:55:33.000");
-        updateBookingAdm.setBookingEndTime("2018-04-25T14:40:33.000");
+        updateBookingAdm.setBookingDateTime("2018-06-24T11:55:33.000");
+        updateBookingAdm.setBookingEndTime("2018-06-24T14:40:33.000");
         updateBookingAdm.setAddressId(2);
         updateBookingAdm.setPreviousBookingAvailable(false);
         return updateBookingAdm;
