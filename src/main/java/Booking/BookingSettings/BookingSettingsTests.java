@@ -14,6 +14,7 @@ import static com.jayway.restassured.RestAssured.given;
 public class BookingSettingsTests {
     String baseURI = "http://staging.eservia.com:8005/api/v0.0/BookingSettings";
     String token;
+    String adressId ="?addressId=2";
     int id;
     BookingSettingsData bookingSettingsData = new BookingSettingsData();
 
@@ -73,4 +74,30 @@ public class BookingSettingsTests {
         Assert.assertEquals(2, updateBookingSettings.getAddressId());
         Assert.assertEquals(7, updateBookingSettings.getWorkSchedule().size());
     }
+    @Test
+    public void C_getBookingSettings() {
+        ResponseBody response = given().contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().get(baseURI+adressId).thenReturn().body();
+        BookingSettingsResponse bookingSettingsResponse = new Gson().fromJson(response.asString(), BookingSettingsResponse.class);
+        BookingSettings getBookingSettings = bookingSettingsResponse.data;
+        System.out.println(response.asString());
+        Assert.assertEquals(id, getBookingSettings.getId());
+        Assert.assertEquals(true, getBookingSettings.isAutomaticBookingConfirmation());
+        Assert.assertEquals(true, getBookingSettings.isAutomaticBookingRejection());
+        Assert.assertEquals(61, getBookingSettings.getMaxAmountOfDaysAdvanceForBooking());
+        Assert.assertEquals(3600015, getBookingSettings.getAvailableTimeForCreateBooking());
+        Assert.assertEquals(12, getBookingSettings.getMaxAmountPeopleForBooking());
+        Assert.assertEquals(1800010, getBookingSettings.getAvailableTimeForEditBooking());
+        Assert.assertEquals(3600016, getBookingSettings.getMinimumDurationOfBooking());
+        Assert.assertEquals(300017, getBookingSettings.getServiceTimeAfterBookingEnd());
+        Assert.assertEquals(true, getBookingSettings.isBookingIsAllowed());
+        Assert.assertEquals("Europe/Kiev", getBookingSettings.getIdTimeZone());
+        Assert.assertEquals(2, getBookingSettings.getAddressId());
+        Assert.assertEquals(7, getBookingSettings.getWorkSchedule().size());
+    }
+
 }
+
