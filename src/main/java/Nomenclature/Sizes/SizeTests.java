@@ -46,6 +46,8 @@ public class SizeTests {
         ResponseBody response = given().contentType(ContentType.JSON)
                 .header("Authorization", token)
                 .header("EstablishmentContextId", "1")
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
                 .body(sizeData.createSize(ids))
                 .when().post(baseURI).thenReturn().body();
         SizeResponse sizeResponse  = new Gson().fromJson(response.asString(),  SizeResponse.class);
@@ -80,6 +82,8 @@ public class SizeTests {
         ResponseBody response = given().contentType(ContentType.JSON)
                 .header("Authorization", token)
                 .header("EstablishmentContextId", "1")
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
                 .when().patch(baseURI+"/"+sizeId+"/Activate").thenReturn().body();
         SizeBoolean sizeBoolean = new Gson().fromJson(response.asString(), SizeBoolean.class);
         Assert.assertEquals("success", sizeBoolean.getDescription());
@@ -90,7 +94,9 @@ public class SizeTests {
         ResponseBody response = given().contentType(ContentType.JSON)
                 .header("Authorization", token)
                 .header("EstablishmentContextId", "1")
-                .when().delete(baseURI+"/"+sizeId+"/Deactivate").thenReturn().body();
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().patch(baseURI+"/"+sizeId+"/Deactivate").thenReturn().body();
         SizeBoolean sizeBoolean = new Gson().fromJson(response.asString(), SizeBoolean.class);
         Assert.assertEquals("success", sizeBoolean.getDescription());
     }
@@ -100,6 +106,8 @@ public class SizeTests {
         ResponseBody response = given().contentType(ContentType.JSON)
                 .header("Authorization", token)
                 .header("EstablishmentContextId", "1")
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
                 .when().delete(baseURI+"/"+sizeId).thenReturn().body();
         SizeBoolean sizeBoolean = new Gson().fromJson(response.asString(), SizeBoolean.class);
         Assert.assertEquals("success", sizeBoolean.getDescription());
