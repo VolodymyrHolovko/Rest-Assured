@@ -35,17 +35,42 @@ public class BookingSettingsTests {
         System.out.println(response.asString());
         this.id = bookingSettings.getId();
         Assert.assertEquals(id, bookingSettings.getId());
-        Assert.assertEquals(false, bookingSettings.isAutomaticBookingConfirmation());
+        Assert.assertEquals(true, bookingSettings.isAutomaticBookingConfirmation());
         Assert.assertEquals(true, bookingSettings.isAutomaticBookingRejection());
-        Assert.assertEquals(60, bookingSettings.getMaxAmountOfDaysAdvanceForBooking());
-        Assert.assertEquals(1800000, bookingSettings.getAvailableTimeForEditBooking());
-        Assert.assertEquals(10, bookingSettings.getMaxAmountPeopleForBooking());
-        Assert.assertEquals(1800000, bookingSettings.getAvailableTimeForEditBooking());
-        Assert.assertEquals(3600000, bookingSettings.getMinimumDurationOfBooking());
-        Assert.assertEquals(300000, bookingSettings.getServiceTimeAfterBookingEnd());
+        Assert.assertEquals(61, bookingSettings.getMaxAmountOfDaysAdvanceForBooking());
+        Assert.assertEquals(3600015, bookingSettings.getAvailableTimeForCreateBooking());
+        Assert.assertEquals(12, bookingSettings.getMaxAmountPeopleForBooking());
+        Assert.assertEquals(1800010, bookingSettings.getAvailableTimeForEditBooking());
+        Assert.assertEquals(3600016, bookingSettings.getMinimumDurationOfBooking());
+        Assert.assertEquals(300017, bookingSettings.getServiceTimeAfterBookingEnd());
         Assert.assertEquals(true, bookingSettings.isBookingIsAllowed());
         Assert.assertEquals("Europe/Kiev", bookingSettings.getIdTimeZone());
         Assert.assertEquals(2, bookingSettings.getAddressId());
         Assert.assertEquals(7, bookingSettings.getWorkSchedule().size());
+    }
+    @Test
+    public void B_updateBookingSettings() {
+        ResponseBody response = given().contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .body(bookingSettingsData.updateBookingSettings(id))
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().put(baseURI).thenReturn().body();
+        BookingSettingsResponse bookingSettingsResponse = new Gson().fromJson(response.asString(), BookingSettingsResponse.class);
+        BookingSettings updateBookingSettings = bookingSettingsResponse.data;
+        System.out.println(response.asString());
+        Assert.assertEquals(id, updateBookingSettings.getId());
+        Assert.assertEquals(true, updateBookingSettings.isAutomaticBookingConfirmation());
+        Assert.assertEquals(true, updateBookingSettings.isAutomaticBookingRejection());
+        Assert.assertEquals(61, updateBookingSettings.getMaxAmountOfDaysAdvanceForBooking());
+        Assert.assertEquals(3600015, updateBookingSettings.getAvailableTimeForCreateBooking());
+        Assert.assertEquals(12, updateBookingSettings.getMaxAmountPeopleForBooking());
+        Assert.assertEquals(1800010, updateBookingSettings.getAvailableTimeForEditBooking());
+        Assert.assertEquals(3600016, updateBookingSettings.getMinimumDurationOfBooking());
+        Assert.assertEquals(300017, updateBookingSettings.getServiceTimeAfterBookingEnd());
+        Assert.assertEquals(true, updateBookingSettings.isBookingIsAllowed());
+        Assert.assertEquals("Europe/Kiev", updateBookingSettings.getIdTimeZone());
+        Assert.assertEquals(2, updateBookingSettings.getAddressId());
+        Assert.assertEquals(7, updateBookingSettings.getWorkSchedule().size());
     }
 }
