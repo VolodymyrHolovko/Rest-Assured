@@ -1,15 +1,11 @@
-package Nomenclature.Option;
+package Nomenclature.Option.Group;
 
 import Auth.GetToken;
-import Nomenclature.Nomenclatures.Nomenclature;
-import Nomenclature.Nomenclatures.NomenclatureResponse;
-import Nomenclature.Nomenclatures.NomenclatureTestData;
-import Nomenclature.Sizes.Size;
-import Nomenclature.Sizes.SizeData;
-import Nomenclature.Sizes.SizeResponse;
+import Nomenclature.Option.Group.OptionGroup;
+import Nomenclature.Option.Group.OptionGroupBoolean;
+import Nomenclature.Option.Group.OptionGroupData;
+import Nomenclature.Option.Group.OptionGroupResponse;
 import com.google.gson.Gson;
-import com.jayway.restassured.filter.log.RequestLoggingFilter;
-import com.jayway.restassured.filter.log.ResponseLoggingFilter;
 import com.jayway.restassured.http.ContentType;
 import com.jayway.restassured.response.ResponseBody;
 import org.testng.Assert;

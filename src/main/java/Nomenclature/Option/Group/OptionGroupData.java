@@ -1,4 +1,6 @@
-package Nomenclature.Option;
+package Nomenclature.Option.Group;
+
+import Nomenclature.Option.Group.OptionGroup;
 
 public class OptionGroupData {
     public OptionGroup createOptionGroup(){

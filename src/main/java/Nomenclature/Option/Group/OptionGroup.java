@@ -1,4 +1,4 @@
-package Nomenclature.Option;
+package Nomenclature.Option.Group;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

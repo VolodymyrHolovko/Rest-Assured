@@ -1,4 +1,4 @@
-package Nomenclature.Option;
+package Nomenclature.Option.Group;
 
 public class OptionGroupBoolean {
     private String description;
