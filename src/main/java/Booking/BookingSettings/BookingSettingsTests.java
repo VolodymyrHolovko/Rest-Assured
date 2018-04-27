@@ -38,7 +38,7 @@ public class BookingSettingsTests {
         Assert.assertEquals(id, bookingSettings.getId());
         Assert.assertEquals(true, bookingSettings.isAutomaticBookingConfirmation());
         Assert.assertEquals(true, bookingSettings.isAutomaticBookingRejection());
-        Assert.assertEquals(61, bookingSettings.getMaxAmountOfDaysAdvanceForBooking());
+        Assert.assertEquals(50, bookingSettings.getMaxAmountOfDaysAdvanceForBooking());
         Assert.assertEquals(3600015, bookingSettings.getAvailableTimeForCreateBooking());
         Assert.assertEquals(12, bookingSettings.getMaxAmountPeopleForBooking());
         Assert.assertEquals(1800010, bookingSettings.getAvailableTimeForEditBooking());
@@ -63,7 +63,7 @@ public class BookingSettingsTests {
         Assert.assertEquals(id, updateBookingSettings.getId());
         Assert.assertEquals(true, updateBookingSettings.isAutomaticBookingConfirmation());
         Assert.assertEquals(true, updateBookingSettings.isAutomaticBookingRejection());
-        Assert.assertEquals(61, updateBookingSettings.getMaxAmountOfDaysAdvanceForBooking());
+        Assert.assertEquals(50, updateBookingSettings.getMaxAmountOfDaysAdvanceForBooking());
         Assert.assertEquals(3600015, updateBookingSettings.getAvailableTimeForCreateBooking());
         Assert.assertEquals(12, updateBookingSettings.getMaxAmountPeopleForBooking());
         Assert.assertEquals(1800010, updateBookingSettings.getAvailableTimeForEditBooking());
@@ -87,7 +87,7 @@ public class BookingSettingsTests {
         Assert.assertEquals(id, getBookingSettings.getId());
         Assert.assertEquals(true, getBookingSettings.isAutomaticBookingConfirmation());
         Assert.assertEquals(true, getBookingSettings.isAutomaticBookingRejection());
-        Assert.assertEquals(61, getBookingSettings.getMaxAmountOfDaysAdvanceForBooking());
+        Assert.assertEquals(50, getBookingSettings.getMaxAmountOfDaysAdvanceForBooking());
         Assert.assertEquals(3600015, getBookingSettings.getAvailableTimeForCreateBooking());
         Assert.assertEquals(12, getBookingSettings.getMaxAmountPeopleForBooking());
         Assert.assertEquals(1800010, getBookingSettings.getAvailableTimeForEditBooking());
