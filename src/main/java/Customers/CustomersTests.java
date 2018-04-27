@@ -117,8 +117,6 @@ public class CustomersTests {
                 .when().get("http://staging.eservia.com:8010/api/v0.0/Customers/Select?PhoneNumber=%2B38067&PromoterId=1&PageIndex=0&PageSize=100").thenReturn().body();
         CustomerResponseArray customersResponse = new Gson().fromJson(response.asString(),  CustomerResponseArray.class);
         Assert.assertEquals(true,customersResponse.isSuccess());
-
-        Assert.assertEquals(true,customersResponse.data.size()>1);
     }
 
     @Test
