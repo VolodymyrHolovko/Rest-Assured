@@ -1,7 +1,5 @@
 package Booking.BookingSettings;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,7 +8,7 @@ public class BookingSettingsData {
         BookingSettings addSettings = new BookingSettings();
         addSettings.setAutomaticBookingConfirmation(true);
         addSettings.setAutomaticBookingRejection(true);
-        addSettings.setMaxAmountOfDaysAdvanceForBooking(61);
+        addSettings.setMaxAmountOfDaysAdvanceForBooking(50);
         addSettings.setAvailableTimeForEditBooking(1800010);
         addSettings.setMaxAmountPeopleForBooking(12);
         addSettings.setAvailableTimeForCreateBooking(3600015);
@@ -74,7 +72,7 @@ public class BookingSettingsData {
         updateSettings.setId(id);
         updateSettings.setAutomaticBookingConfirmation(true);
         updateSettings.setAutomaticBookingRejection(true);
-        updateSettings.setMaxAmountOfDaysAdvanceForBooking(61);
+        updateSettings.setMaxAmountOfDaysAdvanceForBooking(50);
         updateSettings.setAvailableTimeForEditBooking(1800010);
         updateSettings.setMaxAmountPeopleForBooking(12);
         updateSettings.setAvailableTimeForCreateBooking(3600015);

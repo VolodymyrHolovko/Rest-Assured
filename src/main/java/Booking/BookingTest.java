@@ -16,20 +16,19 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import java.time.LocalTime;
+
+
 import static com.jayway.restassured.RestAssured.given;
 
 public class BookingTest {
     String baseURI = "http://staging.eservia.com:8005/api/v0.0/Bookings";
     String baseURLTables = "http://staging.eservia.com:8009/api/v0.0/Tables";
-    String freeTableURL = "http://staging.eservia.com:8005/api/v0.0/Bookings/Admin/FreeTables?";
     String token;
     String code = LocalTime.now().toString();
-    String capacity = "Capacity=10";
-    String from = "From=2018-02-23T12:55:33.000";
-    String to = "To=2018-04-27T19:55:33.000";
-    String adressId = "AddressId=2";
     int TableId;
     int DepIds;
+    String dateTime;
+    String endTime;
     public int id;
     BookingData bookingData = new BookingData();
     TablesData tablesData = new TablesData();
@@ -56,19 +55,6 @@ public class BookingTest {
         this.TableId = tables.getId();
         //for an ability to have a free table for booking at same time
     }
-    //@Test
-    public void B_bookingAdminFreeTables() {
-        ResponseBody response = given()
-                .contentType(ContentType.JSON)
-                .header("Authorization", token)
-                .filter(new RequestLoggingFilter())
-                .filter(new ResponseLoggingFilter())
-                .when().get(freeTableURL+capacity+"&"+adressId+"&"+from+"&"+to).thenReturn().body();
-        TableResponse tableResponse= new Gson().fromJson(response.asString(), TableResponse.class);
-        Tables tables = tableResponse.data;
-        Assert.assertEquals(1, tables.getStatusId());
-        Assert.assertEquals(true, tables.isBookingAvailable());
-    }
     @Test
     public void C_addBookingAdmin() {
         ResponseBody response = given().contentType(ContentType.JSON)
@@ -81,13 +67,15 @@ public class BookingTest {
         BookingResponse bookingResponse = new Gson().fromJson(response.asString(), BookingResponse.class);
         Booking booking = bookingResponse.data;
         System.out.println(response.asString());
+        this.dateTime = booking.getBookingDateTime();
+        this.endTime = booking.getBookingEndTime();
         this.id = booking.getId();
         Assert.assertEquals(DepIds,booking.getDepartmentId());
         Assert.assertEquals(TableId,booking.getTableIds().get(0).intValue());
-        Assert.assertEquals(3,booking.getPeopleCount());
+        Assert.assertEquals(2,booking.getPeopleCount());
         Assert.assertEquals("хочу живої музики без мертвих музикантів", booking.getRequestDescription());
-        Assert.assertEquals("2018-04-26T10:55:33.000", booking.getBookingDateTime());
-        Assert.assertEquals("2018-04-26T12:40:33.000", booking.getBookingEndTime());
+        Assert.assertEquals(dateTime, booking.getBookingDateTime());
+        Assert.assertEquals(endTime, booking.getBookingEndTime());
         Assert.assertEquals(2, booking.getAddressId());
     }
     @Test
@@ -101,13 +89,15 @@ public class BookingTest {
         BookingResponse bookingResponse = new Gson().fromJson(response.asString(), BookingResponse.class);
         Booking bookingUpdate = bookingResponse.data;
         System.out.println(response.asString());
+        this.dateTime = bookingUpdate.getBookingDateTime();
+        this.endTime = bookingUpdate.getBookingEndTime();
         Assert.assertEquals(id, bookingUpdate.getId());
         Assert.assertEquals(DepIds, bookingUpdate.getDepartmentId());
         Assert.assertEquals(TableId,bookingUpdate.getTableIds().get(0).intValue());
         Assert.assertEquals(2, bookingUpdate.getPeopleCount());
         Assert.assertEquals("а сєводня в завтрашній дєнь", bookingUpdate.getRequestDescription());
-        Assert.assertEquals("2018-04-26T11:55:33.000", bookingUpdate.getBookingDateTime());
-        Assert.assertEquals("2018-04-26T14:40:33.000", bookingUpdate.getBookingEndTime());
+        Assert.assertEquals(dateTime, bookingUpdate.getBookingDateTime());
+        Assert.assertEquals(endTime, bookingUpdate.getBookingEndTime());
 
         Assert.assertEquals(2, bookingUpdate.getAddressId());
         Assert.assertEquals(false, bookingUpdate.isPreviousBookingAvailable());
@@ -122,13 +112,15 @@ public class BookingTest {
         BookingResponse bookingResponse = new Gson().fromJson(response.asString(), BookingResponse.class);
         Booking bookingIdGet = bookingResponse.data;
         System.out.println(response);
+        this.dateTime = bookingIdGet.getBookingDateTime();
+        this.endTime = bookingIdGet.getBookingEndTime();
         Assert.assertEquals(id, bookingIdGet.getId());
         Assert.assertEquals(DepIds, bookingIdGet.getDepartmentId());
         Assert.assertEquals(TableId, bookingIdGet.getTableIds().get(0).intValue());
         Assert.assertEquals(2, bookingIdGet.getPeopleCount());
         Assert.assertEquals("а сєводня в завтрашній дєнь", bookingIdGet.getRequestDescription());
-        Assert.assertEquals("2018-04-26T11:55:33.000", bookingIdGet.getBookingDateTime());
-        Assert.assertEquals("2018-04-26T14:40:33.000", bookingIdGet.getBookingEndTime());
+        Assert.assertEquals(dateTime, bookingIdGet.getBookingDateTime());
+        Assert.assertEquals(endTime, bookingIdGet.getBookingEndTime());
         Assert.assertEquals(2, bookingIdGet.getAddressId());
         Assert.assertEquals(false, bookingIdGet.isPreviousBookingAvailable());
     }
