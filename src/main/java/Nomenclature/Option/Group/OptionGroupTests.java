@@ -18,7 +18,7 @@ public class OptionGroupTests {
     String baseURI = "http://staging.eservia.com:8008/api/v0.0/Options/Groups";
     OptionGroupData optionGroupData= new OptionGroupData();
     String token;
-    int optionGroupId;
+    public int optionGroupId;
 
     @BeforeClass
     public void getToken(){
@@ -104,6 +104,9 @@ public class OptionGroupTests {
                 .when().delete(baseURI+"/"+optionGroupId).thenReturn().body();
         OptionGroupBoolean optionGroupBoolean= new Gson().fromJson(response.asString(),  OptionGroupBoolean.class);
         Assert.assertEquals("success",optionGroupBoolean.getDescription());
+    }
+    public int J_returnId(){
+        return  optionGroupId;
     }
 
 

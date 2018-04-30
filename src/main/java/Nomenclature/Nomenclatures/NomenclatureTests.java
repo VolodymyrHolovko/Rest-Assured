@@ -344,4 +344,7 @@ public class NomenclatureTests {
                 .filter(new ResponseLoggingFilter())
                 .when().delete(baseURI + "/" + ids).thenReturn().body();
     }
+    public String L_returnId(){
+        return ids;
+    }
     }

@@ -9,7 +9,7 @@ public class Option {
     private String name;
     private int parentId;
     private boolean isFree;
-    private List<nomenclatureOptions> nomenclatureOptions;
+    private List<NomenclatureOptions> nomenclatureOptions;
 
     public int getAddressId() {
         return addressId;
@@ -31,12 +31,20 @@ public class Option {
         return parentId;
     }
 
+    public boolean isFree(boolean b) {
+        return isFree;
+    }
+
     public boolean isFree() {
         return isFree;
     }
 
-    public List<Option.nomenclatureOptions> getNomenclatureOptions() {
+    public List<NomenclatureOptions> getNomenclatureOptions() {
         return nomenclatureOptions;
+    }
+
+    public void setNomenclatureOptions(List<NomenclatureOptions> nomenclatureOptions) {
+        this.nomenclatureOptions = nomenclatureOptions;
     }
 
     public void setAddressId(int addressId) {
@@ -63,19 +71,17 @@ public class Option {
         isFree = free;
     }
 
-    public void setNomenclatureOptions(List<Option.nomenclatureOptions> nomenclatureOptions) {
-        this.nomenclatureOptions = nomenclatureOptions;
-    }
 
-    public static class nomenclatureOptions {
-        private int nomenclatureId;
+
+    public static class NomenclatureOptions {
+        private String nomenclatureId;
         private int minQuantity;
         private int maxQuantity;
         private int defaultQuantity;
         private boolean printIfDefaultQuantity;
         private boolean isConstant;
 
-        public int getNomenclatureId() {
+        public String getNomenclatureId() {
             return nomenclatureId;
         }
 
@@ -99,7 +105,15 @@ public class Option {
             return isConstant;
         }
 
-        public void setNomenclatureId(int nomenclatureId) {
+        public boolean isPrintIfDefaultQuantity(boolean b) {
+            return printIfDefaultQuantity;
+        }
+
+        public boolean isConstant(boolean b) {
+            return isConstant;
+        }
+
+        public void setNomenclatureId(String nomenclatureId) {
             this.nomenclatureId = nomenclatureId;
         }
 
