@@ -39,8 +39,8 @@ public class SizeTests {
         NomenclatureResponse nomenclatureResponse  = new Gson().fromJson(response.asString(),  NomenclatureResponse.class);
         Nomenclature nomenclature = nomenclatureResponse.data;
         this.ids =  Integer.parseInt(nomenclature.getId());
-
     }
+
     @Test
     public void A_createSize(){
         ResponseBody response = given().contentType(ContentType.JSON)

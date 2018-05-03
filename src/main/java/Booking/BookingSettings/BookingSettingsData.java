@@ -11,7 +11,7 @@ public class BookingSettingsData {
         addSettings.setMaxAmountOfDaysAdvanceForBooking(50);
         addSettings.setAvailableTimeForEditBooking(1800010);
         addSettings.setMaxAmountPeopleForBooking(12);
-        addSettings.setAvailableTimeForCreateBooking(3600000);
+        addSettings.setAvailableTimeForCreateBooking(3600015);
         addSettings.setMinimumDurationOfBooking(3600016);
         addSettings.setServiceTimeAfterBookingEnd(300017);
         addSettings.setBookingIsAllowed(true);
@@ -75,7 +75,7 @@ public class BookingSettingsData {
         updateSettings.setMaxAmountOfDaysAdvanceForBooking(50);
         updateSettings.setAvailableTimeForEditBooking(1800000);
         updateSettings.setMaxAmountPeopleForBooking(12);
-        updateSettings.setAvailableTimeForCreateBooking(3600000);
+        updateSettings.setAvailableTimeForCreateBooking(3600015);
         updateSettings.setMinimumDurationOfBooking(3600000);
         updateSettings.setServiceTimeAfterBookingEnd(300000);
         updateSettings.setBookingIsAllowed(true);
