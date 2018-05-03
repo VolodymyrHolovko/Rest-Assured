@@ -96,7 +96,7 @@ public class MarketingTest {
         Assert.assertEquals("description", marketingGetCustomer.getDescription());
         Assert.assertEquals("media/201803/eNOt8jcLD1hC7hP0.jpg", marketingGetCustomer.getPathToPhoto());
         Assert.assertEquals("address", marketingGetCustomer.getAddress());
-        Assert.assertEquals(2,marketingGetCustomer.getMarketingTypeId());
+        Assert.assertEquals( 2,marketingGetCustomer.getMarketingTypeId());
         Assert.assertEquals(23.00,marketingGetCustomer.getLongitude());
         Assert.assertEquals(22.00,marketingGetCustomer.getLatitude());
         Assert.assertEquals("2018-03-18T11:50:30.000", marketingGetCustomer.getBeginTime());

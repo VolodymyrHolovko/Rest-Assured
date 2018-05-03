@@ -105,6 +105,7 @@ public class OptionGroupTests {
         OptionGroupBoolean optionGroupBoolean= new Gson().fromJson(response.asString(),  OptionGroupBoolean.class);
         Assert.assertEquals("success",optionGroupBoolean.getDescription());
     }
+
     public int J_returnId(){
         return  optionGroupId;
     }
