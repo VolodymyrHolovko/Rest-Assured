@@ -86,7 +86,7 @@ public class TablesTest {
     }
 
     @Test
-    public void D_getTableId() {
+    public int D_getTableId(int tableId) {
         ResponseBody responseBody = given().
                 contentType(ContentType.JSON)
                 .header("Authorization", token)
@@ -98,6 +98,7 @@ public class TablesTest {
         Assert.assertEquals(TableId, tables.getId());
         Assert.assertEquals(false, tables.isBookingAvailable());
         Assert.assertEquals(code, tables.getBeaconId());
+        return tableId;
     }
     @Test
     public void E_getTableByBeaconId(){

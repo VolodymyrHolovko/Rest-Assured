@@ -41,11 +41,6 @@
                         </argLine>
                     </configuration>
                     <dependencies>
-                        <dependency>
-                            <groupId>org.aspectj</groupId>
-                            <artifactId>aspectjweaver</artifactId>
-                            <version>${aspectj.version}</version>
-                        </dependency>
                     </dependencies>
                 </plugin>
             </plugins>
@@ -148,7 +143,7 @@
             <artifactId>byte-buddy</artifactId>
             <version>1.7.9</version>
         </dependency>
-<<<<<<< HEAD
+
         <!-- https://mvnrepository.com/artifact/javax.ws.rs/jsr311-api -->
         <dependency>
             <groupId>javax.ws.rs</groupId>
@@ -156,15 +151,10 @@
             <version>0.11</version>
         </dependency>
 
-=======
-        <dependency>
-            <groupId>io.qameta.allure</groupId>
-            <artifactId>allure-testng</artifactId>
-            <version>2.0-BETA19</version>
-        </dependency>
+        
 
 
->>>>>>> Maks
+
     </dependencies>
 
 
