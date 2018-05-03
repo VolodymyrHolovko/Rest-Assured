@@ -6,8 +6,8 @@ import java.util.List;
 public class BookingSettingsData {
     public BookingSettings addBookingSettings() {
         BookingSettings addSettings = new BookingSettings();
-        addSettings.setAutomaticBookingConfirmation(true);
-        addSettings.setAutomaticBookingRejection(true);
+        addSettings.setAutomaticBookingConfirmation(false);
+        addSettings.setAutomaticBookingRejection(false);
         addSettings.setMaxAmountOfDaysAdvanceForBooking(50);
         addSettings.setAvailableTimeForEditBooking(1800010);
         addSettings.setMaxAmountPeopleForBooking(12);
@@ -70,8 +70,8 @@ public class BookingSettingsData {
     public BookingSettings updateBookingSettings(int id) {
         BookingSettings updateSettings = new BookingSettings();
         updateSettings.setId(id);
-        updateSettings.setAutomaticBookingConfirmation(true);
-        updateSettings.setAutomaticBookingRejection(true);
+        updateSettings.setAutomaticBookingConfirmation(false);
+        updateSettings.setAutomaticBookingRejection(false);
         updateSettings.setMaxAmountOfDaysAdvanceForBooking(50);
         updateSettings.setAvailableTimeForEditBooking(1800000);
         updateSettings.setMaxAmountPeopleForBooking(12);

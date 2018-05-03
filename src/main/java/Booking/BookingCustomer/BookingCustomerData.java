@@ -23,7 +23,7 @@ public class BookingCustomerData {
         List<Integer> tableIds = new ArrayList<>();
         tableIds.add(TableIds);
         bookingCustomer.setTableIds(tableIds);
-        bookingCustomer.setPeopleCount(2);
+        bookingCustomer.setPeopleCount(1);
         bookingCustomer.setRequestDescription("це мій букінг кастомера");
         bookingCustomer.setBookingDateTime(dateTime);
         bookingCustomer.setBookingEndTime(endTime);

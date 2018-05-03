@@ -17,6 +17,16 @@ public class BookingCustomer {
     private int statusId;
     @JsonProperty("previousBookingAvailable")
     private boolean previousBookingAvailable;
+    @JsonProperty("isArchived")
+    private boolean isArchived;
+
+    public boolean isArchived() {
+        return isArchived;
+    }
+
+    public void setArchived(boolean archived) {
+        isArchived = archived;
+    }
 
     public int getDepartmentId() {
         return departmentId;

@@ -4,7 +4,7 @@ public class AuthUserData {
     public AuthUser signIn() {
         AuthUser sign = new AuthUser();
         sign.setPassword("12345678");
-        sign.getUsername("+380935732673");
+        sign.setUsername("+380935732673");
         return sign;
     }
 }
