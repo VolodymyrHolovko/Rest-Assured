@@ -83,6 +83,16 @@ public class OptionTests {
         Assert.assertEquals(1,option.getNomenclatureOptions().get(0).getDefaultQuantity());
         Assert.assertEquals(true,option.getNomenclatureOptions().get(0).isPrintIfDefaultQuantity());
         Assert.assertEquals(true,option.getNomenclatureOptions().get(0).isConstant());
+
+        ResponseBody responsee = given().contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .header("EstablishmentContextId", "1")
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().get("http://staging.eservia.com:8008/api/v0.0/Options/Groups/"+optionGroupId).thenReturn().body();
+        OptionLeafs optionLeafs= new Gson().fromJson(responsee.asString(), OptionLeafs.class);
+        OptionLeafs optionLeafs1=optionLeafs.data;
+        Assert.assertEquals(1,optionLeafs1.getLeafs().size());
     }
 
     @Test
