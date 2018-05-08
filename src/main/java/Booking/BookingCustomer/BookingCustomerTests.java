@@ -28,7 +28,7 @@ public class BookingCustomerTests {
     String baseURI = "http://staging.eservia.com:8005/api/v0.0/Bookings";
     String baseURLTables = "http://staging.eservia.com:8009/api/v0.0/Tables";
     String code =LocalTime.now().toString();
-    String tokenCust = "Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJiODA5OTNkZi0zMmZhLTRhYTAtYmVlZS0xMmYzZGExYmVjMjgiLCJ1bmlxdWVfbmFtZSI6IiszODA5MzU3MzI2NzMiLCJpYXQiOjE1MjUzNTQ0NjEsImdpdmVuX25hbWUiOiJWb2xvZHlteXIiLCJmYW1pbHlfbmFtZSI6IkhvbG92a28iLCJlbWFpbCI6InZvbG9keW15ci5ob2xvdmtvQG1hZ25pc2UuY29tIiwiZ2VuZGVyIjoibWFsZSIsIm5iZiI6MTUyNTM1NDQ2MSwiZXhwIjoxNTI1MzU2MjYxLCJpc3MiOiJlc2VydmlhIiwiYXVkIjoiZXNlcnZpYSJ9.XL1DoS6fCc9hu-MQlkQeq6Ei-MN9c3HAskJzTluSt8xenfCzf5qXsQwII6upIFc-YV2hzWBws0Td8aiBlb4Uw34WTOJ0CefljDOZV4det6fZnfyH-fdwzStjHiNu5B__pL781qxBUHWkkN3tED9xlmJL2mTie0uVP0madLNvWshVgSc0Hmt9XftwwoJuGmk4cpR_17xoYOnYkU9nbpwcfkhlmvNRtJfzPo-XT4Tx5ALCAScfeU5U3w15_xzDjvTyXe1hKgJA_r3U4asi12rVVcIL3tWHg2hgIjPJrv0M-wdIpL7ZVXi_oLzepDKdvbYPx9Fd-gl-v1NAthDKAObkYg";
+    String tokenCust = "Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJiODA5OTNkZi0zMmZhLTRhYTAtYmVlZS0xMmYzZGExYmVjMjgiLCJ1bmlxdWVfbmFtZSI6IiszODA5MzU3MzI2NzMiLCJpYXQiOjE1MjU3NzM3MDcsImdpdmVuX25hbWUiOiJWb2xvZHlteXIiLCJmYW1pbHlfbmFtZSI6IkhvbG92a28iLCJlbWFpbCI6InZvbG9keW15ci5ob2xvdmtvQG1hZ25pc2UuY29tIiwiZ2VuZGVyIjoibWFsZSIsIm5iZiI6MTUyNTc3MzcwNywiZXhwIjoxNTI1Nzc1NTA3LCJpc3MiOiJlc2VydmlhIiwiYXVkIjoiZXNlcnZpYSJ9.JmhFUcOfOg1QEDvPnh_J7mwGENtZWXO7cBOIRffhcjHe7_XYc5Z_s1uSq0cBP6qejfQfIBZXNRXwfi8QbNPK02smAV-9ni930amSDGAGs5_IoBvFVXpq-JE_8LzJtbz3VOAC5aYnZOYQElr6PO1Gh3kbEsIiEF6kH3MEopcqYlakDyyn6OyW5JvlJZ86YwowtK2OFlm7WknU81K9vmRoKmvpWYFR92SllQC5VTd2zOHLjr0ho-jlYTcIYYSOWzdtt-_NgsnP3BenEEd7GzMnyl0eUhnZ7vGjDXIqm7t8DygF0yFm6SMoOvqAbAz9BVocGPI3Rh28koFCT8oXnE2vcg";
     String token;
     String dateTime;
     String endTime;
@@ -37,6 +37,7 @@ public class BookingCustomerTests {
     int DepIds;
     BookingCustomerData bookingCustomerData = new BookingCustomerData();
     TablesData tablesData = new TablesData();
+    BookingTest bookingTest = new BookingTest();
 
     @BeforeClass
     public void getToken() {
@@ -69,7 +70,7 @@ public class BookingCustomerTests {
                 .filter(new ResponseLoggingFilter())
                 .when().post(baseURI+ "/" +"Customer").thenReturn().body();
         BookingCustomerResponse bookingResponse = new Gson().fromJson(response.asString(), BookingCustomerResponse.class);
-        BookingCustomer bookingCustomer =bookingResponse.data;
+        BookingCustomer bookingCustomer = bookingResponse.data;
         System.out.println(response.asString());
         this.dateTime = bookingCustomer.getBookingDateTime();
         this.endTime = bookingCustomer.getBookingEndTime();
@@ -84,6 +85,44 @@ public class BookingCustomerTests {
         Assert.assertEquals(endTime, bookingCustomer.getBookingEndTime());
         Assert.assertEquals("це мій букінг кастомера", bookingCustomer.getRequestDescription());
         Assert.assertEquals(false, bookingCustomer.isArchived());
+
+    }
+    @Test
+    public void C_updateBookingCustomer() {
+        ResponseBody response = given().contentType(ContentType.JSON)
+                .header("Authorization", tokenCust)
+                .body(bookingCustomerData.updateBookingCustomer(TableId, DepIds, id))
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().put(baseURI+ "/" +"Customer").thenReturn().body();
+        BookingCustomerResponse bookingResponse = new Gson().fromJson(response.asString(), BookingCustomerResponse.class);
+        BookingCustomer bookingCustomerUpdate = bookingResponse.data;
+        System.out.println(response.asString());
+        this.dateTime = bookingCustomerUpdate.getBookingDateTime();
+        this.endTime = bookingCustomerUpdate.getBookingEndTime();
+        this.id = bookingCustomerUpdate.getId();
+        Assert.assertEquals(2, bookingCustomerUpdate.getAddressId());
+        Assert.assertEquals(DepIds, bookingCustomerUpdate.getDepartmentId());
+        //Assert.assertEquals(TableId, bookingCustomer.getTables().get(0).intValue());
+        Assert.assertEquals(2, bookingCustomerUpdate.getPeopleCount());
+        Assert.assertEquals(1, bookingCustomerUpdate.getStatusId());
+        Assert.assertEquals(id, bookingCustomerUpdate.getId());
+        Assert.assertEquals(dateTime, bookingCustomerUpdate.getBookingDateTime());
+        Assert.assertEquals(endTime, bookingCustomerUpdate.getBookingEndTime());
+        Assert.assertEquals("це мій букінг кастомера, який я редагую", bookingCustomerUpdate.getRequestDescription());
+        Assert.assertEquals(false, bookingCustomerUpdate.isArchived());
+        Assert.assertEquals(false, bookingCustomerUpdate.isPreviousBookingAvailable());
+    }
+    @Test
+    public  void D_bookingCustomerReject() {
+        ResponseBody response = given().contentType(ContentType.JSON)
+                .header("Authorization", tokenCust)
+                .body(bookingCustomerData.bookingCustomerReject(id))
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().patch(baseURI+ "/" + "Customer"+ "/" +"Reject").thenReturn().body();
+
+
 
     }
     @AfterClass

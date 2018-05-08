@@ -125,13 +125,13 @@ public class BookingTest {
         Assert.assertEquals(false, bookingIdGet.isPreviousBookingAvailable());
     }
     @Test
-    public  void F_bookingAdminReject() {
+    public void F_bookingAdminReject() {
         ResponseBody response = given().contentType(ContentType.JSON)
                 .header("Authorization", token)
                 .body(bookingData.bookingAdminReject(id, DepIds))
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter())
-                .when().patch(baseURI+ "/"+ "Admin" + "/" +"Reject");
+                .when().patch(baseURI+ "/"+ "Admin" + "/" +"Reject").thenReturn().body();
         BookingResponse bookingResponse = new Gson().fromJson(response.asString(), BookingResponse.class);
         Booking bookingReject = bookingResponse.data;
         System.out.println(response.asString());
