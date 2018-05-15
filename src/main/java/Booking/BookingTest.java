@@ -29,6 +29,10 @@ public class BookingTest {
     int DepIds;
     String dateTime;
     String endTime;
+    String capacity = "?Capacity=5";
+    String departmentId = "&DepartmentId=";
+    String from = "&From=2018-02-08T14:55:43.000";
+    String to = "&To=2018-06-08T14:55:43.000";
     public int id;
     BookingData bookingData = new BookingData();
     TablesData tablesData = new TablesData();
@@ -54,6 +58,18 @@ public class BookingTest {
         Tables tables = tableResponse.data;
         this.TableId = tables.getId();
         //for an ability to have a free table for booking at same time
+    }
+    //@Test
+    public void bookingAdminFreeTables() {
+        ResponseBody response = given()
+                .contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().get(baseURI+ "/" + "Admin"+ "/" + "FreeTables" + capacity + departmentId + DepIds + from + to).thenReturn().body();
+        //Booking bookingResponse = new Gson().fromJson(response.asString(), Booking.class);
+        //Booking bookingFreeTables = bookingResponse.data;
+        //System.out.println(response.asString());
     }
     @Test
     public void C_addBookingAdmin() {
