@@ -114,16 +114,43 @@ public class BookingCustomerTests {
         Assert.assertEquals(false, bookingCustomerUpdate.isPreviousBookingAvailable());
     }
     @Test
-    public  void D_bookingCustomerReject() {
+    public void D_getBookingIdCustomer() {
+        ResponseBody response = given().contentType(ContentType.JSON)
+                .header("Authorization", tokenCust)
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().get(baseURI+ "/" + id + "/" +"Customer").thenReturn().body();
+        BookingCustomerResponse bookingCustomerResponse = new Gson().fromJson(response.asString(), BookingCustomerResponse.class);
+        BookingCustomer getBookingCustomer = bookingCustomerResponse.data;
+        System.out.println(response.asString());
+        this.dateTime = getBookingCustomer.getBookingDateTime();
+        this.endTime = getBookingCustomer.getBookingEndTime();
+        this.id = getBookingCustomer.getId();
+        Assert.assertEquals(2, getBookingCustomer.getAddressId());
+        Assert.assertEquals(DepIds, getBookingCustomer.getDepartmentId());
+        //Assert.assertEquals(TableId, bookingCustomer.getTables().get(0).intValue());
+        Assert.assertEquals(2, getBookingCustomer.getPeopleCount());
+        Assert.assertEquals(1, getBookingCustomer.getStatusId());
+        Assert.assertEquals(id, getBookingCustomer.getId());
+        Assert.assertEquals(dateTime, getBookingCustomer.getBookingDateTime());
+        Assert.assertEquals(endTime, getBookingCustomer.getBookingEndTime());
+        Assert.assertEquals("це мій букінг кастомера, який я редагую", getBookingCustomer.getRequestDescription());
+        Assert.assertEquals(false, getBookingCustomer.isArchived());
+        Assert.assertEquals(false, getBookingCustomer.isPreviousBookingAvailable());
+    }
+    @Test
+    public  void E_bookingCustomerReject() {
         ResponseBody response = given().contentType(ContentType.JSON)
                 .header("Authorization", tokenCust)
                 .body(bookingCustomerData.bookingCustomerReject(id))
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter())
                 .when().patch(baseURI+ "/" + "Customer"+ "/" +"Reject").thenReturn().body();
-
-
-
+        BookingCustomerResponse bookingCustomerResponse = new Gson().fromJson(response.asString(), BookingCustomerResponse.class);
+        BookingCustomer bookingReject = bookingCustomerResponse.data;
+        System.out.println(response.asString());
+        Assert.assertEquals(3, bookingReject.getStatusId());
+        Assert.assertEquals("я передумав", bookingReject.getResponseDescription());
     }
     @AfterClass
     public void deleteTable() {
