@@ -14,11 +14,16 @@ public class OrderItem {
         return items;
     }
 
+    public void setItems(List<OrderItem.items> items) {
+        this.items = items;
+
+    }
+
     public void setPrice(int price) {
         this.price = price;
     }
 
-    private class items{
+    public static class items {
         private int nomenclatureId;
         private int amount;
         private int size;
@@ -46,7 +51,7 @@ public class OrderItem {
             return description;
         }
 
-        public List<OrderItem.extensions> getExtensions() {
+        public List<OrderItem.items.extensions> getExtensions() {
             return extensions;
         }
 
@@ -70,11 +75,11 @@ public class OrderItem {
             this.description = description;
         }
 
-        public void setExtensions(List<OrderItem.extensions> extensions) {
+        public void setExtensions(List<OrderItem.items.extensions> extensions) {
             this.extensions = extensions;
         }
-    }
-        private class extensions{
+
+        public static class extensions {
             private int extensionId;
             private int optionId;
             private int amount;
@@ -103,4 +108,5 @@ public class OrderItem {
                 this.amount = amount;
             }
         }
+    }
 }

@@ -58,7 +58,7 @@ public class DepartmentTest {
         DepartmentResponse departmentResponse = new Gson().fromJson(response.asString(),  DepartmentResponse.class);
         Department department = departmentResponse.data;
         this.Ids = department.getId();
-        Assert.assertEquals(2,department.getTypeId());
+        Assert.assertEquals(1,department.getTypeId());
         Assert.assertEquals(false,department.isMain());
         Assert.assertEquals(true,department.isActive());
         Assert.assertEquals(2,department.getAddressId());
@@ -132,7 +132,7 @@ public class DepartmentTest {
         DepartmentErrors departmentResponse1 = new Gson().fromJson(responseBody.asString(),DepartmentErrors.class);
         Department department = departmentResponse1.error;
         Assert.assertEquals("Department does not exist",department.getErrorDescription());
-        Assert.assertEquals("DepartmentsService.Service",department.getErrorSource());
+        Assert.assertEquals("DepartmentsService.Common",department.getErrorSource());
     }
 
     @Test
