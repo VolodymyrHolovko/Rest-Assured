@@ -1,4 +1,4 @@
-package _BookingREST.AuthBusiness;
+package BookingREST.AuthBusiness;
 
 import com.google.gson.Gson;
 import com.jayway.restassured.filter.log.RequestLoggingFilter;

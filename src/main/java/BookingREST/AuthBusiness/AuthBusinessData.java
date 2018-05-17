@@ -1,4 +1,4 @@
-package _BookingREST.AuthBusiness;
+package BookingREST.AuthBusiness;
 
 public class AuthBusinessData {
     public AuthBusiness authBisiness() {

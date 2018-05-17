@@ -1,6 +1,6 @@
-package _BookingREST.Promoter;
+package BookingREST.Promoter;
 
-import _BookingREST.AuthBusiness.AuthBusinessTest;
+import BookingREST.AuthBusiness.AuthBusinessTest;
 import com.github.javafaker.Faker;
 import com.google.gson.Gson;
 import com.jayway.restassured.filter.log.RequestLoggingFilter;

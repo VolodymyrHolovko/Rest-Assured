@@ -1,4 +1,4 @@
-package _BookingREST.Promoter;
+package BookingREST.Promoter;
 
 public class PromoterResponse {
     Promoter data;

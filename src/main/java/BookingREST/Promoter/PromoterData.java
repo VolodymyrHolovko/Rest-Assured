@@ -1,4 +1,4 @@
-package _BookingREST.Promoter;
+package BookingREST.Promoter;
 
 public class PromoterData {
     public Promoter addPromoters(String firstName, String lastName, String email, String phone) {
