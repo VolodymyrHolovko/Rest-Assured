@@ -58,7 +58,7 @@ public class DepartmentTest {
         DepartmentResponse departmentResponse = new Gson().fromJson(response.asString(),  DepartmentResponse.class);
         Department department = departmentResponse.data;
         this.Ids = department.getId();
-        Assert.assertEquals(1,department.getTypeId());
+        Assert.assertEquals(2,department.getTypeId());
         Assert.assertEquals(false,department.isMain());
         Assert.assertEquals(true,department.isActive());
         Assert.assertEquals(2,department.getAddressId());
