@@ -96,7 +96,7 @@ public class Option {
 
 
     public static class NomenclatureOptions {
-        private String nomenclatureId;
+        private int nomenclatureId;
         private int minQuantity;
         private int maxQuantity;
         private int defaultQuantity;
@@ -105,7 +105,7 @@ public class Option {
         @JsonProperty
         private boolean isConstant;
 
-        public String getNomenclatureId() {
+        public int getNomenclatureId() {
             return nomenclatureId;
         }
 
@@ -137,7 +137,7 @@ public class Option {
             return isConstant;
         }
 
-        public void setNomenclatureId(String nomenclatureId) {
+        public void setNomenclatureId(int nomenclatureId) {
             this.nomenclatureId = nomenclatureId;
         }
 

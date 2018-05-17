@@ -24,7 +24,7 @@ import static com.jayway.restassured.RestAssured.given;
 
 public class OptionTests {
     String baseURI = "http://staging.eservia.com:8008/api/v0.0/Options";
-    public String nomenclatureId;
+    public int nomenclatureId;
     OptionGroupData optionGroupData = new OptionGroupData();
     OptionData optionData= new OptionData();
     private  int optionGroupId;
@@ -56,7 +56,7 @@ public class OptionTests {
         System.out.println(response.asString());
         NomenclatureResponse nomenclatureResponse  = new Gson().fromJson(respons.asString(),  NomenclatureResponse.class);
         Nomenclature nomenclature = nomenclatureResponse.data;
-        this.nomenclatureId = nomenclature.getId();
+        this.nomenclatureId = Integer.parseInt(nomenclature.getId());
 
     }
 

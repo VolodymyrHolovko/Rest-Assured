@@ -7,7 +7,7 @@ import java.time.LocalDate;
 public class DepartmentData  {
     public Department CreatePreparingDepartments(String name) {
         Department department = new Department();
-        department.setTypeId(1);
+        department.setTypeId(2);
         department.setMain(false);
         department.setActive(true);
         department.setName(name);

@@ -19,4 +19,14 @@ public class SizeData {
         size.setPresentationName("L");
         return size;
     }
+    public Size createSizeExtension(int id){
+        Size size = new Size();
+        size.setNomenclatureId(id);
+        size.setSize(10);
+        size.setPrice(21);
+        size.setSizeTypeId(2);
+        size.setWriteOffIndex(2);
+        size.setPresentationName("XL");
+        return size;
+    }
 }

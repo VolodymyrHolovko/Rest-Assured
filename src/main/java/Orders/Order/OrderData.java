@@ -5,7 +5,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class OrderData {
-    public Order createNewOrder(int tableId, String nomenclatureId, int departmentId, int optionId, long menuVersion,String initializationId,int extensionId ){
+    public Order createNewOrder(int tableId, int nomenclatureId, int departmentId,
+                                int optionId, long menuVersion,String initializationId,
+                                int extensionId ){
         Order order = new Order();
         order.setWaiterId("52d95859-a6cf-4d6d-b507-9d4720947075");
         order.setTableId(tableId);
@@ -15,14 +17,14 @@ public class OrderData {
         order.setInitializationId(initializationId);
         order.setDescription("Цей прекрасний ордер повинен бути виконаним");
         order.setOrderTypeId(1);
-        order.setTotalPrice(1);
-        order.setToBePreparedAtTime("2018-05-18 08:0000");
+        order.setTotalPrice(21);
+        order.setToBePreparedAtTime("2018-05-30T12:18:25");
 
         List<Order.orderItems> orderItems = new ArrayList<>();
         Order.orderItems orderItem = new Order.orderItems ();
         orderItem.setNomenclatureId(nomenclatureId);
         orderItem.setAmount(1);
-        orderItem.setAmount(10);
+        orderItem.setSize(10);
         orderItem.setInitializationId(initializationId);
         orderItem.setDescription("Цей прекрасний айтем повинен бути виконаним");
 

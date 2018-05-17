@@ -104,14 +104,14 @@ public class Order {
     }
 
     public static class orderItems {
-        private String nomenclatureId;
+        private int nomenclatureId;
         private int amount;
         private int size;
         private String initializationId;
         private String description;
         private List<extensions> extensions;
 
-        public String getNomenclatureId() {
+        public int getNomenclatureId() {
             return nomenclatureId;
         }
 
@@ -133,7 +133,7 @@ public class Order {
 
 
 
-        public void setNomenclatureId(String nomenclatureId) {
+        public void setNomenclatureId(int nomenclatureId) {
             this.nomenclatureId = nomenclatureId;
         }
 
