@@ -17,7 +17,7 @@ public class DepartmentData  {
     public Department UpdateDepartment(String name,int id){
         Department department = CreatePreparingDepartments(name);
         department.setId(id);
-        department.setTypeId(1);
+        department.setTypeId(2);
         department.setActive(true);
         department.setName(name);
         return department;
