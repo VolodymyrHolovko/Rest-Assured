@@ -12,8 +12,8 @@ public class Order {
     private String description;
     private int orderTypeId;
     private int totalPrice;
-    private int toBePreparedAtTime;
-    private List<orderItems> orderItemsList;
+    private String toBePreparedAtTime;
+    private List<orderItems> orderItems;
 
     public String getWaiterId() {
         return waiterId;
@@ -51,12 +51,12 @@ public class Order {
         return totalPrice;
     }
 
-    public int getToBePreparedAtTime() {
+    public String getToBePreparedAtTime() {
         return toBePreparedAtTime;
     }
 
-    public List<orderItems> getOrderItemsList() {
-        return orderItemsList;
+    public List<orderItems> getOrderItems() {
+        return orderItems;
     }
 
     public void setWaiterId(String waiterId) {
@@ -95,23 +95,23 @@ public class Order {
         this.totalPrice = totalPrice;
     }
 
-    public void setToBePreparedAtTime(int toBePreparedAtTime) {
+    public void setToBePreparedAtTime(String toBePreparedAtTime) {
         this.toBePreparedAtTime = toBePreparedAtTime;
     }
 
-    public void setOrderItemsList(List<orderItems> orderItemsList) {
-        this.orderItemsList = orderItemsList;
+    public void setOrderItems(List<orderItems> orderItems) {
+        this.orderItems = orderItems;
     }
 
-    private class orderItems{
-        private int nomenclatureId;
+    public static class orderItems {
+        private String nomenclatureId;
         private int amount;
         private int size;
         private String initializationId;
         private String description;
-        private List<extensions> orderItemsList;
+        private List<extensions> extensions;
 
-        public int getNomenclatureId() {
+        public String getNomenclatureId() {
             return nomenclatureId;
         }
 
@@ -131,11 +131,9 @@ public class Order {
             return description;
         }
 
-        public List<extensions> getOrderItemsList() {
-            return orderItemsList;
-        }
 
-        public void setNomenclatureId(int nomenclatureId) {
+
+        public void setNomenclatureId(String nomenclatureId) {
             this.nomenclatureId = nomenclatureId;
         }
 
@@ -155,39 +153,42 @@ public class Order {
             this.description = description;
         }
 
-        public void setOrderItemsList(List<extensions> orderItemsList) {
-            this.orderItemsList = orderItemsList;
+        public List<Order.orderItems.extensions> getExtensions() {
+            return extensions;
+        }
+
+        public void setExtensions(List<Order.orderItems.extensions> extensions) {
+            this.extensions = extensions;
+        }
+
+        public static class extensions {
+            private int extensionId;
+            private int optionId;
+            private int amount;
+
+            public int getExtensionId() {
+                return extensionId;
+            }
+
+            public int getOptionId() {
+                return optionId;
+            }
+
+            public int getAmount() {
+                return amount;
+            }
+
+            public void setExtensionId(int extensionId) {
+                this.extensionId = extensionId;
+            }
+
+            public void setOptionId(int optionId) {
+                this.optionId = optionId;
+            }
+
+            public void setAmount(int amount) {
+                this.amount = amount;
+            }
         }
     }
-
-    private class extensions{
-        private int extensionId;
-        private int optionId;
-        private int amount;
-
-        public int getExtensionId() {
-            return extensionId;
-        }
-
-        public int getOptionId() {
-            return optionId;
-        }
-
-        public int getAmount() {
-            return amount;
-        }
-
-        public void setExtensionId(int extensionId) {
-            this.extensionId = extensionId;
-        }
-
-        public void setOptionId(int optionId) {
-            this.optionId = optionId;
-        }
-
-        public void setAmount(int amount) {
-            this.amount = amount;
-        }
-    }
-
 }

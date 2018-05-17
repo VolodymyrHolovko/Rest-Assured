@@ -78,7 +78,7 @@ public class TablesTest {
                 .body(tablesData.setBeaconId(TableId,code))
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter())
-                .when().put(baseURL+"/SetBeacon").thenReturn().body();
+                .when().patch(baseURL+"/SetBeacon").thenReturn().body();
         TableResponse tableResponse= new Gson().fromJson(response.asString(),  TableResponse.class);
         Tables tables = tableResponse.data;
         Assert.assertEquals(TableId,tables.getId());
