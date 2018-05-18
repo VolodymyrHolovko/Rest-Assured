@@ -39,7 +39,7 @@ import java.util.Random;
 import static com.jayway.restassured.RestAssured.given;
 
 public class OrderTests {
-
+        int orderFirstId;
         String name = (LocalTime.now()).toString();
         String code = LocalTime.now().toString();
         int departmentId;
@@ -63,6 +63,7 @@ public class OrderTests {
         OptionData  optionData = new OptionData();
         OrderData orderData = new OrderData();
         OptionPatchOptionData optionPatchOptionData = new OptionPatchOptionData();
+        OrderItemStatusData orderItemStatusData = new OrderItemStatusData();
         public String token;
         Random random = new Random();
         int a = random.nextInt(8999)+1000;
@@ -187,6 +188,7 @@ public class OrderTests {
                     .when().post("http://auth.staging.eservia.com:8006/api/v0.0/Orders").thenReturn().body();
             OrderResponse orderResponse= new Gson().fromJson(orderRespons.asString(), OrderResponse.class);
             Order order  = orderResponse.getData();
+            this.orderFirstId = order.getId();
             this.orderItemId = order.getOrderItems().get(0).getId();
             Assert.assertEquals("e1159ff5-5b09-489f-8949-122e59c4ec44",order.getWaiterId());
             Assert.assertEquals(tableId,order.getTableId());
@@ -274,16 +276,16 @@ public class OrderTests {
     public void D_CookingOrderItemStus(){
         ResponseBody pickUp = given().contentType(ContentType.JSON)
                 .header("Authorization", token)
-                .body(orderStatuses.changeOrderStatus("Cooking"))
+                .body(orderItemStatusData.changeStatus("Cooking"))
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter())
-                .when().patch("http://staging.eservia.com:8006/api/v0.0/Orders/"+orderId+"/Items/"+orderItemId).thenReturn().body();
+                .when().patch("http://staging.eservia.com:8006/api/v0.0/Orders/"+orderFirstId+"/Items/"+orderItemId).thenReturn().body();
 
         ResponseBody get = given().contentType(ContentType.JSON)
                 .header("Authorization", token)
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter())
-                .when().get("http://staging.eservia.com:8006/api/v0.0/Orders/"+orderId).thenReturn().body();
+                .when().get("http://staging.eservia.com:8006/api/v0.0/Orders/"+orderFirstId).thenReturn().body();
         OrderResponse orderResponse1= new Gson().fromJson(get.asString(), OrderResponse.class);
         Order orders  = orderResponse1.getData();
         Assert.assertEquals(4,orders.getOrderItems().get(0).getStatusId());
@@ -293,16 +295,16 @@ public class OrderTests {
     public void F_ReadyOrderItemStus(){
         ResponseBody pickUp = given().contentType(ContentType.JSON)
                 .header("Authorization", token)
-                .body(orderStatuses.changeOrderStatus("Ready"))
+                .body(orderItemStatusData.changeStatus("Ready"))
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter())
-                .when().patch("http://staging.eservia.com:8006/api/v0.0/Orders/"+orderId+"/Items/"+orderItemId).thenReturn().body();
+                .when().patch("http://staging.eservia.com:8006/api/v0.0/Orders/"+orderFirstId+"/Items/"+orderItemId).thenReturn().body();
 
         ResponseBody get = given().contentType(ContentType.JSON)
                 .header("Authorization", token)
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter())
-                .when().get("http://staging.eservia.com:8006/api/v0.0/Orders/"+orderId).thenReturn().body();
+                .when().get("http://staging.eservia.com:8006/api/v0.0/Orders/"+orderFirstId).thenReturn().body();
         OrderResponse orderResponse1= new Gson().fromJson(get.asString(), OrderResponse.class);
         Order orders  = orderResponse1.getData();
         Assert.assertEquals(5,orders.getOrderItems().get(0).getStatusId());
@@ -312,16 +314,16 @@ public class OrderTests {
     public void G_DeliveredOrderItemStus(){
         ResponseBody pickUp = given().contentType(ContentType.JSON)
                 .header("Authorization", token)
-                .body(orderStatuses.changeOrderStatus("Delivered"))
+                .body(orderItemStatusData.changeStatus("Delivered"))
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter())
-                .when().patch("http://staging.eservia.com:8006/api/v0.0/Orders/"+orderId+"/Items/"+orderItemId).thenReturn().body();
+                .when().patch("http://staging.eservia.com:8006/api/v0.0/Orders/"+orderFirstId+"/Items/"+orderItemId).thenReturn().body();
 
         ResponseBody get = given().contentType(ContentType.JSON)
                 .header("Authorization", token)
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter())
-                .when().get("http://staging.eservia.com:8006/api/v0.0/Orders/"+orderId).thenReturn().body();
+                .when().get("http://staging.eservia.com:8006/api/v0.0/Orders/"+orderFirstId).thenReturn().body();
         OrderResponse orderResponse1= new Gson().fromJson(get.asString(), OrderResponse.class);
         Order orders  = orderResponse1.getData();
         Assert.assertEquals(6,orders.getOrderItems().get(0).getStatusId());
