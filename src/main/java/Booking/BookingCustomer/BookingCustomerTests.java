@@ -18,6 +18,8 @@ import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+import org.apache.log4j.Logger;
+
 
 import java.time.LocalTime;
 
@@ -28,7 +30,7 @@ public class BookingCustomerTests {
     String baseURI = "http://staging.eservia.com:8005/api/v0.0/Bookings";
     String baseURLTables = "http://staging.eservia.com:8009/api/v0.0/Tables";
     String code =LocalTime.now().toString();
-    String tokenCust = "Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJhODI3MjgzOS1lNTZjLTRlY2QtODU1ZC04MDJkMDg1NmZlNDUiLCJ1bmlxdWVfbmFtZSI6IiszODA5Nzk4MTI4NTkiLCJpYXQiOjE1MjY1NDE2NzksImdpdmVuX25hbWUiOiJWb2xvZHlteXIiLCJmYW1pbHlfbmFtZSI6IkhvbG92a28iLCJlbWFpbCI6InZvbG9keW15ci5ob2xvdmtvQG1hZ25pc2UuY29tIiwibmJmIjoxNTI2NTQxNjc5LCJleHAiOjE1MjY1NDM0NzksImlzcyI6ImVzZXJ2aWEiLCJhdWQiOiJlc2VydmlhIn0.CGSIjMyd9ZrY6r00oZS7XZ7cV4RPB71rA4hLp39kDTanUGT_LsSLyjFZL8cYPA1krI6X7wV73YjeJxopILwAFkLy-lgfzEyyDJZA4gdHqjseVWhLOkExIhHGa6wEs2b4XZtKAB1GeCue1RRvslh_UyUjmJWa5m8k0f8L25MRC4qe2_BSjb0JdfhjbivEGGWd71ByWNGG43ElNEWh0FDdECTxRd2l7okRNEWsGmNUdR2-TEpIrdzxgkzO9TLzDy9thkVIw33pnt90yO6qiEHTVCeaGrrMUBU6UoiC5LUnXErbaKPidXX1L-IxxmCNJROJrGEBhb9LpgCggzmdKHw-Jw";
+    String tokenCust;
     String token;
     String dateTime;
     String endTime;
@@ -37,12 +39,13 @@ public class BookingCustomerTests {
     int DepIds;
     BookingCustomerData bookingCustomerData = new BookingCustomerData();
     TablesData tablesData = new TablesData();
-    BookingTest bookingTest = new BookingTest();
 
     @BeforeClass
     public void getToken() {
         GetToken getToken = new GetToken();
         this.token = getToken.GetFinallyToken();
+        GetUserToken getUserToken = new  GetUserToken();
+        this.tokenCust = getUserToken.GetUserToken();
         DepartmentTest getDepartment = new DepartmentTest();
         getDepartment.token = token;
         this.DepIds = getDepartment.getId();
