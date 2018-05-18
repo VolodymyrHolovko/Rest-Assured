@@ -18,6 +18,10 @@ public class PromoterTest {
     String token;
     String baseURI = "http://213.136.86.27:8083/api/v1.0/promoters/";
     Faker faker = new Faker();
+    String firstNameUpdate = faker.name().firstName();
+    String lastNameUpdate = faker.name().lastName();
+    String emailUpdate = faker.name().firstName()+"@mail.com";
+    String phoneUpdate = faker.regexify("+380[0-9]{9}");
     String firstName = faker.name().firstName();
     String lastName = faker.name().lastName();
     String email = faker.name().firstName()+"@mail.com";
@@ -49,8 +53,83 @@ public class PromoterTest {
         Assert.assertEquals(lastName, addPromoter.getLast_name());
         Assert.assertEquals(phone, addPromoter.getPhone());
         Assert.assertEquals(email, addPromoter.getEmail());
-        Assert.assertEquals("http://staging.eservia.com/image/media/201805/3YnaXlHgoss1oryE.jpg", addPromoter.getPhoto());
-        Assert.assertEquals(1, addPromoter.getStatus());
+        Assert.assertEquals("http://staging.eservia.com/image/media/201805/U82NZUzFnOvCzOSf.jpg", addPromoter.getPhoto());
+        Assert.assertEquals(0, addPromoter.getStatus());
+    }
+
+    @Test
+    public void B_updatePromoter() {
+        ResponseBody response = given()
+                .contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .body(promoterData.updatePromoters(firstNameUpdate, lastNameUpdate, emailUpdate, phoneUpdate))
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().put(baseURI + id + "/").thenReturn().body();
+        PromoterResponse promoterResponse = new Gson().fromJson(response.asString(), PromoterResponse.class);
+        Promoter updatePromoter = promoterResponse.data;
+        System.out.println(response.asString());
+        Assert.assertEquals(firstNameUpdate, updatePromoter.getFirst_name());
+        Assert.assertEquals(lastNameUpdate, updatePromoter.getLast_name());
+        Assert.assertEquals(emailUpdate, updatePromoter.getEmail());
+        Assert.assertEquals(phoneUpdate, updatePromoter.getPhone());
+        Assert.assertEquals("http://staging.eservia.com/image/media/201805/5CMjoBr5A3tvTHRv", updatePromoter.getPhoto());
+        Assert.assertEquals(0, updatePromoter.getStatus());
+
+    }
+    @Test
+    public void C_changePromotersPassword() {
+        ResponseBody response = given()
+                .contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .body(promoterData.changePasswords())
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().post(baseURI + id + "/" + "password").thenReturn().body();
+        System.out.println(response.asString());
+
+    }
+    @Test
+    public void D_activatePromoter() {
+        ResponseBody response = given()
+                .contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().patch(baseURI + id + "/" + "activate" + "/").thenReturn().body();
+        PromoterResponse promoterResponse = new Gson().fromJson(response.asString(), PromoterResponse.class);
+        Promoter activatePromoter = promoterResponse.data;
+        Assert.assertEquals(1, activatePromoter.getStatus());
+    }
+    @Test
+    public void E_getPromoterId() {
+        ResponseBody response = given()
+                .contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().get(baseURI + id + "/").thenReturn().body();
+        PromoterResponse promoterResponse = new Gson().fromJson(response.asString(), PromoterResponse.class);
+        Promoter getPromoter = promoterResponse.data;
+        Assert.assertEquals(id, getPromoter.getId());
+        Assert.assertEquals(firstNameUpdate, getPromoter.getFirst_name());
+        Assert.assertEquals(lastNameUpdate, getPromoter.getLast_name());
+        Assert.assertEquals(emailUpdate, getPromoter.getEmail());
+        Assert.assertEquals(phoneUpdate, getPromoter.getPhone());
+        Assert.assertEquals("http://staging.eservia.com/image/media/201805/5CMjoBr5A3tvTHRv", getPromoter.getPhoto());
+        Assert.assertEquals(1, getPromoter.getStatus());
+    }
+    @Test
+    public void F_deactivatePromoter() {
+        ResponseBody response = given()
+                .contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().patch(baseURI + id + "/" + "deactivate" + "/").thenReturn().body();
+        PromoterResponse promoterResponse = new Gson().fromJson(response.asString(), PromoterResponse.class);
+        Promoter activatePromoter = promoterResponse.data;
+        Assert.assertEquals(0, activatePromoter.getStatus());
     }
     @AfterClass
     public void deletePromoter() {
