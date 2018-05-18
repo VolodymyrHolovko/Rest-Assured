@@ -248,7 +248,6 @@ public class OrderTests {
                 .filter(new ResponseLoggingFilter())
                 .when().get("http://staging.eservia.com:8006/api/v0.0/Orders/"+orderId).thenReturn().body();
 
-
         OrderResponse orderResponse1= new Gson().fromJson(get.asString(), OrderResponse.class);
         Order order  = orderResponse1.getData();
         Assert.assertEquals("52d95859-a6cf-4d6d-b507-9d4720947075",order.getCashierId());
