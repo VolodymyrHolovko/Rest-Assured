@@ -8,8 +8,23 @@ public class PromoterData {
         addPromoter.setEmail(email);
         addPromoter.setPhone(phone);
         addPromoter.setPassword("12345678");
-        addPromoter.setPhoto("http://staging.eservia.com/image/media/201805/3YnaXlHgoss1oryE.jpg");
-        addPromoter.setStatus(1);
+        addPromoter.setPhoto("http://staging.eservia.com/image/media/201805/U82NZUzFnOvCzOSf.jpg");
+        addPromoter.setStatus(0);
         return  addPromoter;
+    }
+    public Promoter updatePromoters(String firstNameUpdate, String lastNameUpdate, String emailUpdate, String phoneUpdate) {
+        Promoter updatePromoter = new Promoter();
+        updatePromoter.setFirst_name(firstNameUpdate);
+        updatePromoter.setLast_name(lastNameUpdate);
+        updatePromoter.setEmail(emailUpdate);
+        updatePromoter.setPhone(phoneUpdate);
+        updatePromoter.setPhoto("http://staging.eservia.com/image/media/201805/5CMjoBr5A3tvTHRv");
+        return updatePromoter;
+    }
+    public Promoter changePasswords() {
+        Promoter changePassword = new Promoter();
+        changePassword.setOld_password("12345678");
+        changePassword.setPassword("123456789");
+        return changePassword;
     }
 }
