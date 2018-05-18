@@ -16,6 +16,15 @@ public class Order {
     private String toBePreparedAtTime;
     private List<orderItems> orderItems;
     private String cashierId;
+    private int orderStatusId;
+
+    public int getOrderStatusId() {
+        return orderStatusId;
+    }
+
+    public void setOrderStatusId(int orderStatusId) {
+        this.orderStatusId = orderStatusId;
+    }
 
     public String getCashierId() {
         return cashierId;
@@ -122,12 +131,30 @@ public class Order {
     }
 
     public static class orderItems {
+        private int statusId;
+        private int id;
         private int nomenclatureId;
         private int amount;
         private int size;
         private String initializationId;
         private String description;
         private List<extensions> extensions;
+
+        public int getId() {
+            return id;
+        }
+
+        public void setId(int id) {
+            this.id = id;
+        }
+
+        public int getStatusId() {
+            return statusId;
+        }
+
+        public void setStatusId(int statusId) {
+            this.statusId = statusId;
+        }
 
         public int getNomenclatureId() {
             return nomenclatureId;

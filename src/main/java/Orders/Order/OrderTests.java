@@ -52,6 +52,8 @@ public class OrderTests {
         int optionGroupId;
         int optionId;
         int orderId;
+        int orderItemId;
+        OrderStatusesData orderStatuses = new OrderStatusesData();
         DepartmentData departmentsData = new DepartmentData();
         TablesData tablesData = new TablesData();
         MenuData menuData = new MenuData();
@@ -185,6 +187,7 @@ public class OrderTests {
                     .when().post("http://auth.staging.eservia.com:8006/api/v0.0/Orders").thenReturn().body();
             OrderResponse orderResponse= new Gson().fromJson(orderRespons.asString(), OrderResponse.class);
             Order order  = orderResponse.getData();
+            this.orderItemId = order.getOrderItems().get(0).getId();
             Assert.assertEquals("e1159ff5-5b09-489f-8949-122e59c4ec44",order.getWaiterId());
             Assert.assertEquals(tableId,order.getTableId());
             Assert.assertEquals(departmentId,order.getDepartmentId());
@@ -234,7 +237,6 @@ public class OrderTests {
     }
 
     @Test
-
     public void C_chackoutOrder(){
         ResponseBody res = given().contentType(ContentType.JSON)
                 .header("Authorization", token)
@@ -268,9 +270,103 @@ public class OrderTests {
         Assert.assertEquals(1,order.getOrderItems().get(0).getExtensions().get(0).getAmount());
     }
 
+    @Test
+    public void D_CookingOrderItemStus(){
+        ResponseBody pickUp = given().contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .body(orderStatuses.changeOrderStatus("Cooking"))
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().patch("http://staging.eservia.com:8006/api/v0.0/Orders/"+orderId+"/Items/"+orderItemId).thenReturn().body();
 
-        @AfterClass
+        ResponseBody get = given().contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().get("http://staging.eservia.com:8006/api/v0.0/Orders/"+orderId).thenReturn().body();
+        OrderResponse orderResponse1= new Gson().fromJson(get.asString(), OrderResponse.class);
+        Order orders  = orderResponse1.getData();
+        Assert.assertEquals(4,orders.getOrderItems().get(0).getStatusId());
+    }
 
+    @Test
+    public void F_ReadyOrderItemStus(){
+        ResponseBody pickUp = given().contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .body(orderStatuses.changeOrderStatus("Ready"))
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().patch("http://staging.eservia.com:8006/api/v0.0/Orders/"+orderId+"/Items/"+orderItemId).thenReturn().body();
+
+        ResponseBody get = given().contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().get("http://staging.eservia.com:8006/api/v0.0/Orders/"+orderId).thenReturn().body();
+        OrderResponse orderResponse1= new Gson().fromJson(get.asString(), OrderResponse.class);
+        Order orders  = orderResponse1.getData();
+        Assert.assertEquals(5,orders.getOrderItems().get(0).getStatusId());
+    }
+
+    @Test
+    public void G_DeliveredOrderItemStus(){
+        ResponseBody pickUp = given().contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .body(orderStatuses.changeOrderStatus("Delivered"))
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().patch("http://staging.eservia.com:8006/api/v0.0/Orders/"+orderId+"/Items/"+orderItemId).thenReturn().body();
+
+        ResponseBody get = given().contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().get("http://staging.eservia.com:8006/api/v0.0/Orders/"+orderId).thenReturn().body();
+        OrderResponse orderResponse1= new Gson().fromJson(get.asString(), OrderResponse.class);
+        Order orders  = orderResponse1.getData();
+        Assert.assertEquals(6,orders.getOrderItems().get(0).getStatusId());
+    }
+
+    @Test
+    public void H_paidOrderStus(){
+        ResponseBody pickUp = given().contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .body(orderStatuses.changeOrderStatus("Paid"))
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().patch("http://staging.eservia.com:8006/api/v0.0/Orders/"+orderId+"/Status").thenReturn().body();
+
+        ResponseBody get = given().contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().get("http://staging.eservia.com:8006/api/v0.0/Orders/"+orderId).thenReturn().body();
+        OrderResponse orderResponse1= new Gson().fromJson(get.asString(), OrderResponse.class);
+        Order orders  = orderResponse1.getData();
+        Assert.assertEquals(4,orders.getOrderStatusId());
+    }
+
+    @Test
+    public void I_closedOrderStus(){
+        ResponseBody pickUp = given().contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .body(orderStatuses.changeOrderStatus("Closed"))
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().patch("http://staging.eservia.com:8006/api/v0.0/Orders/"+orderId+"/Status").thenReturn().body();
+
+        ResponseBody get = given().contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().get("http://staging.eservia.com:8006/api/v0.0/Orders/"+orderId).thenReturn().body();
+        OrderResponse orderResponse1= new Gson().fromJson(get.asString(), OrderResponse.class);
+        Order orders  = orderResponse1.getData();
+        Assert.assertEquals(5,orders.getOrderStatusId());
+    }
+
+
+    @AfterClass
         public void deleteCreateditems(){
             ResponseBody table = given().contentType(ContentType.JSON)
                     .header("Authorization", token)
