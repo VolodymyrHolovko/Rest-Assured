@@ -29,6 +29,7 @@ import com.jayway.restassured.filter.log.ResponseLoggingFilter;
 import com.jayway.restassured.http.ContentType;
 import com.jayway.restassured.response.ResponseBody;
 import org.testng.Assert;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -50,6 +51,7 @@ public class OrderTests {
         int sizeIdExtension;
         int optionGroupId;
         int optionId;
+        int orderId;
         DepartmentData departmentsData = new DepartmentData();
         TablesData tablesData = new TablesData();
         MenuData menuData = new MenuData();
@@ -174,14 +176,126 @@ public class OrderTests {
         }
 
         @Test
-        public void CreateOrder() {
-            ResponseBody optionresponse = given().contentType(ContentType.JSON)
+        public void A_createOrder() {
+            ResponseBody orderRespons = given().contentType(ContentType.JSON)
                     .header("Authorization", token)
                     .body(orderData.createNewOrder(tableId, nomenclatureId, departmentId,optionId,menuVersion,initialization, nomenclatureIdSizeExtensions))
                     .filter(new RequestLoggingFilter())
                     .filter(new ResponseLoggingFilter())
                     .when().post("http://auth.staging.eservia.com:8006/api/v0.0/Orders").thenReturn().body();
-            System.out.println(2);
+            OrderResponse orderResponse= new Gson().fromJson(orderRespons.asString(), OrderResponse.class);
+            Order order  = orderResponse.getData();
+            Assert.assertEquals("e1159ff5-5b09-489f-8949-122e59c4ec44",order.getWaiterId());
+            Assert.assertEquals(tableId,order.getTableId());
+            Assert.assertEquals(departmentId,order.getDepartmentId());
+            Assert.assertEquals(initialization,order.getInitializationId());
+            Assert.assertEquals("Цей прекрасний ордер повинен бути виконаним",order.getDescription());
+            Assert.assertEquals(1,order.getOrderTypeId());
+            Assert.assertEquals(42,order.getTotalPrice());
+            Assert.assertEquals(nomenclatureId,order.getOrderItems().get(0).getNomenclatureId());
+            Assert.assertEquals(2,order.getOrderItems().get(0).getAmount());
+            Assert.assertEquals(10,order.getOrderItems().get(0).getSize());
+            Assert.assertEquals(initialization,order.getOrderItems().get(0).getInitializationId());
+            Assert.assertEquals("Цей прекрасний айтем повинен бути виконаним",order.getOrderItems().get(0).getDescription());
+            Assert.assertEquals(nomenclatureIdSizeExtensions,order.getOrderItems().get(0).getExtensions().get(0).getExtensionId());
+            Assert.assertEquals(optionId,order.getOrderItems().get(0).getExtensions().get(0).getOptionId());
+            Assert.assertEquals(1,order.getOrderItems().get(0).getExtensions().get(0).getAmount());
+        }
+
+    @Test
+    public void B_pickUpOrder(){
+        int a = random.nextInt(8999)+1000;
+        int b = random.nextInt(8999)+1000;
+        this.initialization = "6f81303a-"+a+"-"+b+"-83f9-7927b927d2cf";
+        ResponseBody orderRespons = given().contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .body(orderData.withoutWaiter(tableId, nomenclatureId, departmentId,optionId,menuVersion,initialization, nomenclatureIdSizeExtensions))
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().post("http://auth.staging.eservia.com:8006/api/v0.0/Orders").thenReturn().body();
+        OrderResponse orderResponse= new Gson().fromJson(orderRespons.asString(), OrderResponse.class);
+        Order order  = orderResponse.getData();
+        this.orderId=order.getId();
+
+            ResponseBody pickUp = given().contentType(ContentType.JSON)
+                    .header("Authorization", token)
+                    .filter(new RequestLoggingFilter())
+                    .filter(new ResponseLoggingFilter())
+                    .when().patch("http://staging.eservia.com:8006/api/v0.0/Orders/"+orderId+"/PickUp").thenReturn().body();
+
+        ResponseBody get = given().contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().get("http://staging.eservia.com:8006/api/v0.0/Orders/"+orderId).thenReturn().body();
+        OrderResponse orderResponse1= new Gson().fromJson(get.asString(), OrderResponse.class);
+        Order orders  = orderResponse1.getData();
+        Assert.assertEquals(initialization,orders.getInitializationId());
+    }
+
+    @Test
+
+    public void C_chackoutOrder(){
+        ResponseBody res = given().contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().post("http://staging.eservia.com:8006/api/v0.0/Orders/"+orderId+"/Checkout").thenReturn().body();
+
+        ResponseBody get = given().contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().get("http://staging.eservia.com:8006/api/v0.0/Orders/"+orderId).thenReturn().body();
+
+
+        OrderResponse orderResponse1= new Gson().fromJson(get.asString(), OrderResponse.class);
+        Order order  = orderResponse1.getData();
+        Assert.assertEquals("52d95859-a6cf-4d6d-b507-9d4720947075",order.getCashierId());
+        Assert.assertEquals("52d95859-a6cf-4d6d-b507-9d4720947075",order.getWaiterId());
+        Assert.assertEquals(tableId,order.getTableId());
+        Assert.assertEquals(departmentId,order.getDepartmentId());
+        Assert.assertEquals(initialization,order.getInitializationId());
+        Assert.assertEquals("Цей прекрасний ордер повинен бути виконаним",order.getDescription());
+        Assert.assertEquals(1,order.getOrderTypeId());
+        Assert.assertEquals(42,order.getTotalPrice());
+        Assert.assertEquals(nomenclatureId,order.getOrderItems().get(0).getNomenclatureId());
+        Assert.assertEquals(2,order.getOrderItems().get(0).getAmount());
+        Assert.assertEquals(10,order.getOrderItems().get(0).getSize());
+        Assert.assertEquals(initialization,order.getOrderItems().get(0).getInitializationId());
+        Assert.assertEquals("Цей прекрасний айтем повинен бути виконаним",order.getOrderItems().get(0).getDescription());
+        Assert.assertEquals(nomenclatureIdSizeExtensions,order.getOrderItems().get(0).getExtensions().get(0).getExtensionId());
+        Assert.assertEquals(optionId,order.getOrderItems().get(0).getExtensions().get(0).getOptionId());
+        Assert.assertEquals(1,order.getOrderItems().get(0).getExtensions().get(0).getAmount());
+    }
+
+
+        @AfterClass
+
+        public void deleteCreateditems(){
+            ResponseBody table = given().contentType(ContentType.JSON)
+                    .header("Authorization", token)
+                    .filter(new RequestLoggingFilter())
+                    .filter(new ResponseLoggingFilter())
+                    .when().delete("http://staging.eservia.com:8009/api/v0.0/Tables/"+tableId).thenReturn().body();
+
+            ResponseBody department = given().contentType(ContentType.JSON)
+                    .header("Authorization", token)
+                    .filter(new RequestLoggingFilter())
+                    .filter(new ResponseLoggingFilter())
+                    .when().delete("http://staging.eservia.com:8009/api/v0.0/Departments/"+departmentId).thenReturn().body();
+
+            ResponseBody nomenclature = given().contentType(ContentType.JSON)
+                    .header("Authorization", token)
+                    .filter(new RequestLoggingFilter())
+                    .filter(new ResponseLoggingFilter())
+                    .when().delete("http://staging.eservia.com:8008/api/v0.0/Nomenclature/"+nomenclatureId).thenReturn().body();
+
+            ResponseBody extension = given().contentType(ContentType.JSON)
+                    .header("Authorization", token)
+                    .filter(new RequestLoggingFilter())
+                    .filter(new ResponseLoggingFilter())
+                    .when().delete("http://staging.eservia.com:8008/api/v0.0/Nomenclature/"+nomenclatureIdSizeExtensions).thenReturn().body();
         }
     }
 

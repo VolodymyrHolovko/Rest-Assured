@@ -3,6 +3,7 @@ package Orders.Order;
 import java.util.List;
 
 public class Order {
+    private int id;
     private String waiterId;
     private int tableId;
     private int addressId;
@@ -14,6 +15,23 @@ public class Order {
     private int totalPrice;
     private String toBePreparedAtTime;
     private List<orderItems> orderItems;
+    private String cashierId;
+
+    public String getCashierId() {
+        return cashierId;
+    }
+
+    public void setCashierId(String cashierId) {
+        this.cashierId = cashierId;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getWaiterId() {
         return waiterId;
@@ -130,8 +148,6 @@ public class Order {
         public String getDescription() {
             return description;
         }
-
-
 
         public void setNomenclatureId(int nomenclatureId) {
             this.nomenclatureId = nomenclatureId;
