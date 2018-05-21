@@ -136,10 +136,8 @@ public class CustomersTests {
                 .filter(new ResponseLoggingFilter())
                 .when().get(baseURL+"/"+id).thenReturn().body();
         CustomersResponse customersResponse1 = new Gson().fromJson(response1.asString(),  CustomersResponse.class);
-        Customers customers = customersResponse1.data;
-        Assert.assertEquals("Lutkovec1",customers.getLastName());
-        Assert.assertEquals("Vasylovych1",customers.getMiddleName());
-        Assert.assertEquals("+380679296215",customers.getPhoneNumber());
-        Assert.assertEquals("lutkovec1@gmail.com",customers.getEmail());
+        Customers customers = customersResponse1.error;
+        Assert.assertEquals("Customer does not exist",customers.getErrorDescription());
+
     }
 }
