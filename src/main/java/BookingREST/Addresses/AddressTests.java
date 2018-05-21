@@ -1,22 +1,14 @@
-package Addresses;
+package BookingREST.Addresses;
 
-import Auth.GetToken;
 import BookingREST.AuthBusiness.AuthBusinessTest;
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import com.jayway.restassured.filter.log.RequestLoggingFilter;
 import com.jayway.restassured.filter.log.ResponseLoggingFilter;
 import com.jayway.restassured.http.ContentType;
-import com.jayway.restassured.response.Response;
 import com.jayway.restassured.response.ResponseBody;
-import jdk.nashorn.internal.runtime.JSONListAdapter;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.util.List;
 
 import static com.jayway.restassured.RestAssured.given;
 

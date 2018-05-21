@@ -1,4 +1,4 @@
-package Addresses;
+package BookingREST.Addresses;
 
 public class AddressResponse {
     Address data;
