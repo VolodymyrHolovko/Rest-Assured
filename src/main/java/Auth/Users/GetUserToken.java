@@ -12,7 +12,7 @@ import static com.jayway.restassured.RestAssured.given;
 public class GetUserToken {
     AuthUserData authUserData = new AuthUserData();
     public String token;
-    String baseURL = "https://auth.staging.eservia.com/api/v0.0/Auth/SignIn";
+    String baseURL = "http://auth.staging.eservia.com/api/v0.0/Auth/SignIn";
 
     @Test
     public String GetUserToken() {
