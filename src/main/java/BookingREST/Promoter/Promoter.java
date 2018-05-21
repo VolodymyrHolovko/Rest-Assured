@@ -9,6 +9,15 @@ public class Promoter {
     private String photo;
     private int status;
     private int id;
+    private String old_password;
+
+    public String getOld_password() {
+        return old_password;
+    }
+
+    public void setOld_password(String old_password) {
+        this.old_password = old_password;
+    }
 
     public int getId() {
         return id;

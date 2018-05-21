@@ -22,6 +22,7 @@ import Nomenclature.Option.Option.OptionResponse;
 import Nomenclature.Sizes.Size;
 import Nomenclature.Sizes.SizeData;
 import Nomenclature.Sizes.SizeResponse;
+import Orders.OrderItem.OrderItemData;
 import com.google.gson.Gson;
 import com.ibm.icu.impl.UResource;
 import com.jayway.restassured.filter.log.RequestLoggingFilter;
@@ -53,6 +54,7 @@ public class OrderTests {
         int optionId;
         int orderId;
         int orderItemId;
+        OrderItemData orderItemData = new OrderItemData();
         OrderStatusesData orderStatuses = new OrderStatusesData();
         DepartmentData departmentsData = new DepartmentData();
         TablesData tablesData = new TablesData();
@@ -367,6 +369,95 @@ public class OrderTests {
         Assert.assertEquals(5,orders.getOrderStatusId());
     }
 
+    @Test
+    public void G_addOrderItem(){
+        int a = random.nextInt(8999)+1000;
+        int b = random.nextInt(8999)+1000;
+        this.initialization = "6f81303a-"+a+"-"+b+"-83f9-7927b927d2cf";
+        ResponseBody pickUp = given().contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .body(orderItemData.addOrderItem(nomenclatureId,initialization,nomenclatureIdSizeExtensions,optionId))
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().post("http://staging.eservia.com:8006/api/v0.0/Orders/"+orderId+"/Items").thenReturn().body();
+
+        ResponseBody get = given().contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().get("http://staging.eservia.com:8006/api/v0.0/Orders/"+orderId).thenReturn().body();
+        OrderResponse orderResponse1= new Gson().fromJson(get.asString(), OrderResponse.class);
+        Order orders  = orderResponse1.getData();
+        this.orderItemId = orders.getOrderItems().get(0).getId();
+        Assert.assertEquals(nomenclatureId,orders.getOrderItems().get(1).getNomenclatureId());
+        Assert.assertEquals(1,orders.getOrderItems().get(1).getAmount());
+        Assert.assertEquals(10,orders.getOrderItems().get(1).getSize());
+        Assert.assertEquals(initialization,orders.getOrderItems().get(1).getInitializationId());
+        Assert.assertEquals("Додайту цю страву до замовлення",orders.getOrderItems().get(1).getDescription());
+        Assert.assertEquals(nomenclatureIdSizeExtensions,orders.getOrderItems().get(0).getExtensions().get(0).getExtensionId());
+        Assert.assertEquals(optionId,orders.getOrderItems().get(0).getExtensions().get(0).getOptionId());
+        Assert.assertEquals(1,orders.getOrderItems().get(0).getExtensions().get(0).getAmount());
+    }
+
+    @Test
+    public void K_CookingOrderItemStatus() {
+        ResponseBody pickUp = given().contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .body(orderItemStatusData.changeStatus("Cooking"))
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().patch("http://staging.eservia.com:8006/api/v0.0/Orders/" + orderId + "/Items/" + orderItemId).thenReturn().body();
+
+        ResponseBody get = given().contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().get("http://staging.eservia.com:8006/api/v0.0/Orders/" + orderId).thenReturn().body();
+        OrderResponse orderResponse1 = new Gson().fromJson(get.asString(), OrderResponse.class);
+        Order orders = orderResponse1.getData();
+        Assert.assertEquals(4, orders.getOrderItems().get(0).getStatusId());
+
+    }
+
+    @Test
+    public void L_ReadyOrderItemStatus() {
+        ResponseBody pickUp = given().contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .body(orderItemStatusData.changeStatus("Ready"))
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().patch("http://staging.eservia.com:8006/api/v0.0/Orders/" + orderId + "/Items/" + orderItemId).thenReturn().body();
+
+        ResponseBody get = given().contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().get("http://staging.eservia.com:8006/api/v0.0/Orders/" + orderId).thenReturn().body();
+        OrderResponse orderResponse1 = new Gson().fromJson(get.asString(), OrderResponse.class);
+        Order orders = orderResponse1.getData();
+        Assert.assertEquals(5, orders.getOrderItems().get(0).getStatusId());
+
+    }
+
+    @Test
+    public void M_DeliveredOrderItemStatus() {
+        ResponseBody pickUp = given().contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .body(orderItemStatusData.changeStatus("Delivered"))
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().patch("http://staging.eservia.com:8006/api/v0.0/Orders/" + orderId + "/Items/" + orderItemId).thenReturn().body();
+
+        ResponseBody get = given().contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().get("http://staging.eservia.com:8006/api/v0.0/Orders/" + orderId).thenReturn().body();
+        OrderResponse orderResponse1 = new Gson().fromJson(get.asString(), OrderResponse.class);
+        Order orders = orderResponse1.getData();
+        Assert.assertEquals(6, orders.getOrderItems().get(0).getStatusId());
+
+    }
 
     @AfterClass
         public void deleteCreateditems(){

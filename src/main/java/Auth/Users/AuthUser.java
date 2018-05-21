@@ -21,7 +21,7 @@ public class AuthUser {
         this.password = password;
     }
 
-    public String getUsername(String s) {
+    public String getUsername() {
         return username;
     }
 

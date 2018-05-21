@@ -6,7 +6,7 @@ import java.util.List;
 public class OrderItemData {
     public OrderItem addOrderItem(int nomenclatureId, String initializationId, int extensionId, int optionId ){
         OrderItem orderItem = new OrderItem();
-        orderItem.setPrice(1);
+        orderItem.setPrice(21);
 
         List<OrderItem.items> item =  new ArrayList<>();
         OrderItem.items items = new OrderItem.items();
