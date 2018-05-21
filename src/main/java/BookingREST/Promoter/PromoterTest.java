@@ -54,7 +54,7 @@ public class PromoterTest {
         Assert.assertEquals(phone, addPromoter.getPhone());
         Assert.assertEquals(email, addPromoter.getEmail());
         Assert.assertEquals("http://staging.eservia.com/image/media/201805/U82NZUzFnOvCzOSf.jpg", addPromoter.getPhoto());
-        Assert.assertEquals(0, addPromoter.getStatus());
+        Assert.assertEquals(1, addPromoter.getStatus());
     }
 
     @Test
@@ -74,7 +74,7 @@ public class PromoterTest {
         Assert.assertEquals(emailUpdate, updatePromoter.getEmail());
         Assert.assertEquals(phoneUpdate, updatePromoter.getPhone());
         Assert.assertEquals("http://staging.eservia.com/image/media/201805/5CMjoBr5A3tvTHRv", updatePromoter.getPhoto());
-        Assert.assertEquals(0, updatePromoter.getStatus());
+        Assert.assertEquals(1, updatePromoter.getStatus());
 
     }
     @Test
@@ -90,7 +90,19 @@ public class PromoterTest {
 
     }
     @Test
-    public void D_activatePromoter() {
+    public void D_deactivatePromoter() {
+        ResponseBody response = given()
+                .contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().patch(baseURI + id + "/" + "deactivate" + "/").thenReturn().body();
+        PromoterResponse promoterResponse = new Gson().fromJson(response.asString(), PromoterResponse.class);
+        Promoter activatePromoter = promoterResponse.data;
+        Assert.assertEquals(0, activatePromoter.getStatus());
+    }
+    @Test
+    public void E_activatePromoter() {
         ResponseBody response = given()
                 .contentType(ContentType.JSON)
                 .header("Authorization", token)
@@ -102,7 +114,7 @@ public class PromoterTest {
         Assert.assertEquals(1, activatePromoter.getStatus());
     }
     @Test
-    public void E_getPromoterId() {
+    public void F_getPromoterId() {
         ResponseBody response = given()
                 .contentType(ContentType.JSON)
                 .header("Authorization", token)
@@ -119,20 +131,9 @@ public class PromoterTest {
         Assert.assertEquals("http://staging.eservia.com/image/media/201805/5CMjoBr5A3tvTHRv", getPromoter.getPhoto());
         Assert.assertEquals(1, getPromoter.getStatus());
     }
+
     @Test
-    public void F_deactivatePromoter() {
-        ResponseBody response = given()
-                .contentType(ContentType.JSON)
-                .header("Authorization", token)
-                .filter(new RequestLoggingFilter())
-                .filter(new ResponseLoggingFilter())
-                .when().patch(baseURI + id + "/" + "deactivate" + "/").thenReturn().body();
-        PromoterResponse promoterResponse = new Gson().fromJson(response.asString(), PromoterResponse.class);
-        Promoter activatePromoter = promoterResponse.data;
-        Assert.assertEquals(0, activatePromoter.getStatus());
-    }
-    @Test
-    public void deletePromoter() {
+    public void G_deletePromoter() {
         ResponseBody response = given()
                 .contentType(ContentType.JSON)
                 .header("Authorization", token)
