@@ -131,7 +131,7 @@ public class PromoterTest {
         Promoter activatePromoter = promoterResponse.data;
         Assert.assertEquals(0, activatePromoter.getStatus());
     }
-    @AfterClass
+    @Test
     public void deletePromoter() {
         ResponseBody response = given()
                 .contentType(ContentType.JSON)
