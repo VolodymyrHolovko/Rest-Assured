@@ -7,6 +7,9 @@ import BookingREST.Promoter.PromoterResponse;
 import BookingREST.Sector.Sector;
 import BookingREST.Sector.SectorData;
 import BookingREST.Sector.SectorResponse;
+import BookingREST.Strategy.Strategy;
+import BookingREST.Strategy.StrategyData;
+import BookingREST.Strategy.StrategyResponse;
 import com.github.javafaker.Faker;
 import com.google.gson.Gson;
 import com.jayway.restassured.filter.log.RequestLoggingFilter;
@@ -24,16 +27,20 @@ public class BusinessesTests {
     SectorData sectorData = new SectorData();
     BusinesessData businesessData = new BusinesessData();
     PromoterData promoterData = new PromoterData();
-    String baseUrl = "http://213.136.86.27:8083/api/v1.0/sectors/";
+    StrategyData strategyData = new StrategyData();
+    String baseUrl = "http://213.136.86.27:8083/api/v1.0/businesses/";
 
     Faker faker = new Faker();
     String sectorName = faker.name().firstName().toLowerCase();
     String firstName = faker.name().firstName();
     String lastName = faker.name().lastName();
+    String name = faker.name().firstName();
+    String alias = faker.name().firstName();
     String email = faker.name().firstName()+"@mail.com";
     String phone = faker.regexify("+380[0-9]{9}");
     int sectorId;
     int promoterId;
+    int strategyId;
     @BeforeClass
     public void getToken() {
         AuthBusinessTest getToken = new AuthBusinessTest();
@@ -60,11 +67,28 @@ public class BusinessesTests {
         PromoterResponse promoterResponse = new Gson().fromJson(response.asString(), PromoterResponse.class);
         Promoter addPromoter = promoterResponse.getData();
         this.promoterId = addPromoter.getId();
+
+        ResponseBody responses = given()
+                .contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .body(strategyData.addPromoters(name))
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().post("http://213.136.86.27:8083/api/v1.0/strategies/").thenReturn().body();
+        StrategyResponse strategyResponse = new Gson().fromJson(responses.asString(), StrategyResponse.class);
+        Strategy addStrategy = strategyResponse.getData();
+        System.out.println(response.asString());
+        this.strategyId = addStrategy.getId();
     }
 
     @Test
     public void A_createSector(){
-
-
+        ResponseBody response = given()
+                .contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .body(businesessData.createBusinesses(promoterId,strategyId,sectorId,alias))
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().post("http://213.136.86.27:8083/api/v1.0/businesses/").thenReturn().body();
     }
 }
