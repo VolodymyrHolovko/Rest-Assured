@@ -2,7 +2,6 @@ package Booking.BookingCustomer;
 
 import Auth.GetToken;
 import Auth.Users.GetUserToken;
-import Booking.BookingTest;
 import Departments.DepartmentTest;
 import Departments.Tables.TableResponse;
 import Departments.Tables.Tables;
@@ -12,18 +11,12 @@ import com.google.gson.Gson;
 import com.jayway.restassured.filter.log.RequestLoggingFilter;
 import com.jayway.restassured.filter.log.ResponseLoggingFilter;
 import com.jayway.restassured.http.ContentType;
-import com.jayway.restassured.response.Response;
 import com.jayway.restassured.response.ResponseBody;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import org.apache.log4j.Logger;
-
-
 import java.time.LocalTime;
-
-import static com.jayway.restassured.RestAssured.get;
 import static com.jayway.restassured.RestAssured.given;
 
 public class BookingCustomerTests {
@@ -161,6 +154,4 @@ public class BookingCustomerTests {
         deleteTable.token = token;
         deleteTable.F_deleteTableId();
     }
-
-
 }

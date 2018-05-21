@@ -37,8 +37,8 @@ public class BookingCustomerData {
         Date date = new Date();
         long addTwoHours = date.getTime() + TimeUnit.MINUTES.toMillis(130);
         long addThreeHours = date.getTime() + TimeUnit.MINUTES.toMillis(260);
-        String dateTime = dateFormat.format(new Date(addTwoHours));
-        String endTime = dateFormat.format(new Date(addThreeHours));
+        String dateTimeUpdate = dateFormat.format(new Date(addTwoHours));
+        String endTimeUpdate = dateFormat.format(new Date(addThreeHours));
         updateBooking.setDepartmentId(DepId);
         List<Integer> tableIds = new ArrayList<>();
         tableIds.add(TableId);
@@ -46,8 +46,8 @@ public class BookingCustomerData {
         updateBooking.setId(id);
         updateBooking.setPeopleCount(2);
         updateBooking.setRequestDescription("це мій букінг кастомера, який я редагую");
-        updateBooking.setBookingDateTime(dateTime);
-        updateBooking.setBookingEndTime(endTime);
+        updateBooking.setBookingDateTime(dateTimeUpdate);
+        updateBooking.setBookingEndTime(endTimeUpdate);
         updateBooking.setAddressId(2);
         updateBooking.setPreviousBookingAvailable(false);
 
