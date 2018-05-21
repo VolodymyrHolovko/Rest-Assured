@@ -26,7 +26,9 @@ public class CustomersData {
         customers.setSex("Male");
         customers.setPhoneNumber("+380679296215");
         customers.setEmail("lutkovec@gmail.com");
-        customers.setBusinessId(1);
+        ArrayList<Integer> tax = new ArrayList<>();
+
+        customers.setBusinesses(tax);
         return  customers;
     }
 
@@ -38,8 +40,9 @@ public class CustomersData {
         customers.setMiddleName("Vasylovych1");
         customers.setPhotoPath("media/201804/lxCWRpLL1Vm5Uz52.jpg");
         customers.setSex("Female");
-        customers.setPhoneNumber("+380679296216");
         customers.setEmail("lutkovec1@gmail.com");
+        ArrayList<Integer> tax = new ArrayList<>();
+        customers.setBusinesses(tax);
         return customers;
     }
 

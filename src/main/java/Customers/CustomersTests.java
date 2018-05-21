@@ -43,7 +43,6 @@ public class CustomersTests {
         Assert.assertEquals("Vasylovych",customers.getMiddleName());
         Assert.assertEquals("media/201804/lxCWRpLL1Vm5Uz5y.jpg",customers.getPhotoPath());
         Assert.assertEquals("+380679296215",customers.getPhoneNumber());
-        Assert.assertEquals("lutkovec@gmail.com",customers.getEmail());
     }
 
     @Test
@@ -56,9 +55,11 @@ public class CustomersTests {
                 .filter(new ResponseLoggingFilter())
                 .when().put(baseURL).thenReturn().body();
         CustomersResponse customersResponse = new Gson().fromJson(response.asString(),  CustomersResponse.class);
-        Customers customers = customersResponse.error;
-        Assert.assertEquals(null,customersResponse.data);
-        Assert.assertEquals("Permission denied",customers.getErrorDescription());
+        Customers customers = customersResponse.data;
+        Assert.assertEquals("Max1",customers.getFirstName());
+        Assert.assertEquals("Lutkovec1",customers.getLastName());
+        Assert.assertEquals("Vasylovych1",customers.getMiddleName());
+        Assert.assertEquals("lutkovec1@gmail.com",customers.getEmail());
 
     }
 
@@ -72,11 +73,10 @@ public class CustomersTests {
                 .when().get(baseURL+"/"+id).thenReturn().body();
         CustomersResponse customersResponse = new Gson().fromJson(response.asString(),  CustomersResponse.class);
         Customers customers = customersResponse.data;
-        Assert.assertEquals("Lutkovec",customers.getLastName());
-        Assert.assertEquals("Vasylovych",customers.getMiddleName());
-        Assert.assertEquals("media/201804/lxCWRpLL1Vm5Uz5y.jpg",customers.getPhotoPath());
+        Assert.assertEquals("Lutkovec1",customers.getLastName());
+        Assert.assertEquals("Vasylovych1",customers.getMiddleName());
         Assert.assertEquals("+380679296215",customers.getPhoneNumber());
-        Assert.assertEquals("lutkovec@gmail.com",customers.getEmail());
+        Assert.assertEquals("lutkovec1@gmail.com",customers.getEmail());
     }
 
     @Test
@@ -136,7 +136,10 @@ public class CustomersTests {
                 .filter(new ResponseLoggingFilter())
                 .when().get(baseURL+"/"+id).thenReturn().body();
         CustomersResponse customersResponse1 = new Gson().fromJson(response1.asString(),  CustomersResponse.class);
-        Customers customers1 = customersResponse1.error;
-        Assert.assertEquals("Customer does not exist",customers1.getErrorDescription());
+        Customers customers = customersResponse1.data;
+        Assert.assertEquals("Lutkovec1",customers.getLastName());
+        Assert.assertEquals("Vasylovych1",customers.getMiddleName());
+        Assert.assertEquals("+380679296215",customers.getPhoneNumber());
+        Assert.assertEquals("lutkovec1@gmail.com",customers.getEmail());
     }
 }

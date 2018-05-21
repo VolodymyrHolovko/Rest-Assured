@@ -3,6 +3,7 @@ package Customers;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Customers {
     private String eserviaId;
@@ -14,7 +15,7 @@ public class Customers {
     private String sex;
     private String phoneNumber;
     private String email;
-    private int businessId;
+    private List<Integer> businesses;
     @JsonProperty
     private String id;
 
@@ -57,9 +58,6 @@ public class Customers {
         return email;
     }
 
-    public int getBusinessId() {
-        return businessId;
-    }
 
     public String getId() {
         return id;
@@ -105,8 +103,12 @@ public class Customers {
         this.email = email;
     }
 
-    public void setBusinessId(int businessId) {
-        this.businessId = businessId;
+    public List<Integer> getBusinesses() {
+        return businesses;
+    }
+
+    public void setBusinesses(List<Integer> businesses) {
+        this.businesses = businesses;
     }
 
     public void setId(String id) {
