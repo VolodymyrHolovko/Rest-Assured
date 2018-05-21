@@ -42,11 +42,24 @@ public class StrategyTests {
         System.out.println(response.asString());
         this.id = addStrategy.getId();
         Assert.assertEquals(name, addStrategy.getStrategy());
-        Assert.assertEquals(0, addStrategy.getStatus());
+        Assert.assertEquals(1, addStrategy.getStatus());
         Assert.assertEquals(id, addStrategy.getId());
     }
     @Test
-    public void B_activateStrategy() {
+    public void B_deactivateStrategy() {
+        ResponseBody response = given()
+                .contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().patch(baseURI + id + "/" + "deactivate" + "/").thenReturn().body();
+        StrategyResponse strategyResponse = new Gson().fromJson(response.asString(), StrategyResponse.class);
+        Strategy activateStrategy = strategyResponse.data;
+        Assert.assertEquals(0, activateStrategy.getStatus());
+    }
+
+    @Test
+    public void C_activateStrategy() {
         ResponseBody response = given()
                 .contentType(ContentType.JSON)
                 .header("Authorization", token)
@@ -71,19 +84,8 @@ public class StrategyTests {
         Assert.assertEquals(1, getStrategyId.getStatus());
         Assert.assertEquals(id, getStrategyId.getId());
     }
+
     @Test
-    public void D_deactivateStrategy() {
-        ResponseBody response = given()
-                .contentType(ContentType.JSON)
-                .header("Authorization", token)
-                .filter(new RequestLoggingFilter())
-                .filter(new ResponseLoggingFilter())
-                .when().patch(baseURI + id + "/" + "deactivate" + "/").thenReturn().body();
-        StrategyResponse strategyResponse = new Gson().fromJson(response.asString(), StrategyResponse.class);
-        Strategy activateStrategy = strategyResponse.data;
-        Assert.assertEquals(0, activateStrategy.getStatus());
-    }
-    @AfterClass
     public void deleteStrategy() {
         ResponseBody response = given()
                 .contentType(ContentType.JSON)
