@@ -9,7 +9,7 @@ public class PromoterData {
         addPromoter.setPhone(phone);
         addPromoter.setPassword("12345678");
         addPromoter.setPhoto("http://staging.eservia.com/image/media/201805/U82NZUzFnOvCzOSf.jpg");
-        addPromoter.setStatus(0);
+        addPromoter.setStatus(1);
         return  addPromoter;
     }
     public Promoter updatePromoters(String firstNameUpdate, String lastNameUpdate, String emailUpdate, String phoneUpdate) {
