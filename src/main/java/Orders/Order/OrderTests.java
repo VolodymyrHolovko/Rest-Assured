@@ -456,7 +456,25 @@ public class OrderTests {
         OrderResponse orderResponse1 = new Gson().fromJson(get.asString(), OrderResponse.class);
         Order orders = orderResponse1.getData();
         Assert.assertEquals(6, orders.getOrderItems().get(0).getStatusId());
+    }
 
+    @Test
+    public void O_DeliveredOrderItemStatus() {
+        ResponseBody pickUp = given().contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .body(orderItemStatusData.changeStatus("Problem"))
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().patch("http://staging.eservia.com:8006/api/v0.0/Orders/" + orderId + "/Items/" + orderItemId).thenReturn().body();
+
+        ResponseBody get = given().contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().get("http://staging.eservia.com:8006/api/v0.0/Orders/" + orderId).thenReturn().body();
+        OrderResponse orderResponse1 = new Gson().fromJson(get.asString(), OrderResponse.class);
+        Order orders = orderResponse1.getData();
+        Assert.assertEquals(7, orders.getOrderItems().get(0).getStatusId());
     }
 
     @AfterClass
