@@ -24,9 +24,9 @@ public class CategoryData {
     }
     public Category addCategoryToBusinessId(int id) {
         Category addToBusiness = new Category();
-        List<Integer> categoryIds = new ArrayList<>();
-        categoryIds.add(id);
-        addToBusiness.setCategoryIds(categoryIds);
+        List<Integer> categories = new ArrayList<>();
+        categories.add(id);
+        addToBusiness.setCategories(categories);
         return  addToBusiness;
     }
 }

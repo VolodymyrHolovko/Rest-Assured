@@ -1,6 +1,12 @@
 package BookingREST.Category;
 
 import BookingREST.AuthBusiness.AuthBusinessTest;
+import BookingREST.Businesses.BusinesessData;
+import BookingREST.Businesses.BusinesessResponse;
+import BookingREST.Businesses.Businesses;
+import BookingREST.Promoter.Promoter;
+import BookingREST.Promoter.PromoterData;
+import BookingREST.Promoter.PromoterResponse;
 import BookingREST.Sector.Sector;
 import BookingREST.Sector.SectorData;
 import BookingREST.Sector.SectorResponse;
@@ -25,6 +31,8 @@ String token;
 String baseURL = "http://213.136.86.27:8083/api/v1.0/categories/";
 String baseUrlSector = "http://213.136.86.27:8083/api/v1.0/sectors/";
 String baseURIStrategy = "http://213.136.86.27:8083/api/v1.0/strategies/";
+String baseURLPromoter = "http://213.136.86.27:8083/api/v1.0/promoters/";
+String baseURLBusiness = "http://213.136.86.27:8083/api/v1.0/businesses/";
 Faker faker = new Faker();
 public int id;
 String category = faker.name().firstName().toLowerCase();
@@ -32,11 +40,21 @@ String sectorName = faker.name().firstName().toLowerCase();
 String name = faker.name().firstName().toLowerCase();
 String enName = faker.name().title().toLowerCase();
 String enNameUpdate = faker.name().title().toLowerCase();
+String alias = faker.name().firstName();
+String firstName = faker.name().firstName();
+String lastName = faker.name().lastName();
+String email = faker.name().firstName()+"@mail.com";
+String phone = faker.regexify("+380[0-9]{9}");
+int promoterId;
 int sector_id;
 int strategy_id;
+int businessId;
+int categoryToBusinessId;
 CategoryData categoryData = new CategoryData();
 SectorData sectorData = new SectorData();
 StrategyData strategyData = new StrategyData();
+BusinesessData businesessData = new BusinesessData();
+PromoterData promoterData = new PromoterData();
 
     @BeforeClass
     public void getToken() {
@@ -64,6 +82,28 @@ StrategyData strategyData = new StrategyData();
         StrategyResponse strategyResponse = new Gson().fromJson(responseStrategy.asString(), StrategyResponse.class);
         Strategy addStrategy = strategyResponse.data;
         this.strategy_id = addStrategy.getId();
+
+        ResponseBody responsePromoter = given()
+                .contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .body(promoterData.addPromoters(firstName, lastName, email, phone))
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().post(baseURLPromoter).thenReturn().body();
+        PromoterResponse promoterResponse = new Gson().fromJson(responsePromoter.asString(), PromoterResponse.class);
+        Promoter addPromoter = promoterResponse.getData();
+        this.promoterId = addPromoter.getId();
+
+        ResponseBody responseBusiness = given()
+                .contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .body(businesessData.createBusinesses(promoterId,strategy_id,sector_id,alias))
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().post(baseURLBusiness).thenReturn().body();
+        BusinesessResponse businesessResponse= new Gson().fromJson(responseBusiness.asString(), BusinesessResponse.class);
+        Businesses businesses= businesessResponse.data;
+        this.businessId = businesses.getId();
 }
     @Test
     public void A_createCategory() {
@@ -135,6 +175,58 @@ StrategyData strategyData = new StrategyData();
         Assert.assertEquals(1, getCategory.getStatus());
         Assert.assertEquals(true, getCategory.getCreated_at().startsWith("2018"));
         Assert.assertEquals(true, getCategory.getUpdated_at().startsWith("2018"));
+    }
+    @Test
+    public void E_addBusinessIdCategory() {
+        ResponseBody response = given()
+                .contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .body(categoryData.addCategoryToBusinessId(id))
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().post(baseURLBusiness + businessId + "/" + "categories/").thenReturn().body();
+        CategoryBusinessResponse categoryBusinessResponse = new Gson().fromJson(response.asString(), CategoryBusinessResponse.class);
+        Category addCategoryToBusiness = categoryBusinessResponse.data.get(0);
+        this.categoryToBusinessId = addCategoryToBusiness.getId();
+        Assert.assertEquals(categoryToBusinessId, addCategoryToBusiness.getId());
+        Assert.assertEquals(businessId, addCategoryToBusiness.getBusiness_id());
+        Assert.assertEquals(id, addCategoryToBusiness.getCategory_id());
+    }
+    @Test
+    public void F_getBusinessIdCategory() {
+        ResponseBody response = given()
+                .contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().get(baseURLBusiness + businessId + "/" + "categories/").thenReturn().body();
+        CategoryBusinessResponse categoryBusinessResponse = new Gson().fromJson(response.asString(), CategoryBusinessResponse.class);
+        Category getCategoryToBusiness = categoryBusinessResponse.data.get(0);
+        Assert.assertEquals(id, getCategoryToBusiness.getId());
+        Assert.assertEquals(category, getCategoryToBusiness.getCategory());
+        Assert.assertEquals(sector_id, getCategoryToBusiness.getSector_id());
+        Assert.assertEquals(strategy_id, getCategoryToBusiness.getStrategy_id());
+        Assert.assertEquals(enNameUpdate, getCategoryToBusiness.getName_en());
+        Assert.assertEquals("раша-па*аша", getCategoryToBusiness.getName_ru());
+        Assert.assertEquals("категорія оновлена", getCategoryToBusiness.getName_uk());
+        Assert.assertEquals(1, getCategoryToBusiness.getStatus());
+        Assert.assertEquals(true, getCategoryToBusiness.getCreated_at().startsWith("2018"));
+        Assert.assertEquals(true, getCategoryToBusiness.getUpdated_at().startsWith("2018"));
+    }
+    @Test
+    public void G_getBusinessIdCategoryRelations() {
+        ResponseBody response = given()
+                .contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().get(baseURLBusiness + businessId + "/" + "categories/relations/").thenReturn().body();
+        CategoryBusinessResponse categoryBusinessResponse = new Gson().fromJson(response.asString(), CategoryBusinessResponse.class);
+        Category getCategoryToBusinessRelations = categoryBusinessResponse.data.get(0);
+        this.categoryToBusinessId = getCategoryToBusinessRelations.getId();
+        Assert.assertEquals(categoryToBusinessId, getCategoryToBusinessRelations.getId());
+        Assert.assertEquals(businessId, getCategoryToBusinessRelations.getBusiness_id());
+        Assert.assertEquals(id, getCategoryToBusinessRelations.getCategory_id());
     }
     
 }

@@ -13,14 +13,32 @@ public class Category {
     private int id;
     private String created_at;
     private String updated_at;
-    private List<Integer> categoryIds;
+    private List<Integer> categories;
+    private int business_id;
+    private int category_id;
 
-    public List<Integer> getCategoryIds() {
-        return categoryIds;
+    public int getCategory_id() {
+        return category_id;
     }
 
-    public void setCategoryIds(List<Integer> categoryIds) {
-        this.categoryIds = categoryIds;
+    public void setCategory_id(int category_id) {
+        this.category_id = category_id;
+    }
+
+    public int getBusiness_id() {
+        return business_id;
+    }
+
+    public void setBusiness_id(int business_id) {
+        this.business_id = business_id;
+    }
+
+    public List<Integer> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(List<Integer> categories) {
+        this.categories = categories;
     }
 
     public String getUpdated_at() {
