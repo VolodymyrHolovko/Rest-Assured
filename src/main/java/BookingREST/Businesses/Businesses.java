@@ -17,6 +17,24 @@ public class Businesses {
     String logo;
     String link_instagram;
     String link_facebook;
+    int id;
+    boolean is_searchable;
+
+    public boolean isIs_searchable() {
+        return is_searchable;
+    }
+
+    public void setIs_searchable(boolean is_searchable) {
+        this.is_searchable = is_searchable;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public int getPromoter_id() {
         return promoter_id;
