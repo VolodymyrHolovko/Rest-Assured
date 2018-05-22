@@ -28,4 +28,18 @@ public class GetUserToken {
         String userToken = "Bearer " + authUser.getToken();
         return userToken;
     }
+
+    @Test
+    public String GetUserId() {
+        ResponseBody responseBody = given().
+                contentType(ContentType.JSON)
+                .body(authUserData.signIn())
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().post(baseURL).thenReturn().body();
+        AuthUserResponse authUserResponse = new Gson().fromJson(responseBody.asString(), AuthUserResponse.class);
+        AuthUser authUser = authUserResponse.data;
+        String userId = authUser.getUserId();
+        return userId;
+    }
 }

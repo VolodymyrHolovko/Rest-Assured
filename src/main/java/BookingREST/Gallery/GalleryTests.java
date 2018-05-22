@@ -35,6 +35,7 @@ public class GalleryTests {
     }
 
 
+
     @Test
     public void A_addGallery(){
         ResponseBody response = given()

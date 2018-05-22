@@ -1,8 +1,12 @@
 package BookingREST.Businesses;
 
+import Auth.GetToken;
+import Auth.Users.GetUserToken;
 import BookingREST.Addresses.Address;
 import BookingREST.Addresses.AddressResponse;
 import BookingREST.AuthBusiness.AuthBusinessTest;
+import BookingREST.Favorites.Favorites;
+import BookingREST.Favorites.FavoritesResponse;
 import BookingREST.Promoter.Promoter;
 import BookingREST.Promoter.PromoterData;
 import BookingREST.Promoter.PromoterResponse;
@@ -44,10 +48,22 @@ public class BusinessesTests {
     int promoterId;
     int strategyId;
     int businessId;
-    @BeforeClass
-    public void getToken() {
-        AuthBusinessTest getToken = new AuthBusinessTest();
-        this.token = getToken.GetAdminToken();
+    int favoritesId;
+    String usertoken;
+    String uesrId;
+
+
+        @BeforeClass
+        public void tokens(){
+            GetUserToken getUserToken= new GetUserToken();
+            this.usertoken = getUserToken.GetUserToken();
+
+            GetUserToken getUserToken1= new GetUserToken();
+            this.uesrId = getUserToken1.GetUserId();
+
+            AuthBusinessTest getToken = new AuthBusinessTest();
+            this.token = getToken.GetAdminToken();
+
 
         ResponseBody respons = given()
                 .contentType(ContentType.JSON)
@@ -123,7 +139,6 @@ public class BusinessesTests {
                 .when().put("http://213.136.86.27:8083/api/v1.0/businesses/"+businessId+"/").thenReturn().body();
         BusinesessResponse businesessResponse= new Gson().fromJson(response.asString(), BusinesessResponse.class);
         Businesses businesses= businesessResponse.data;
-        this.businessId = businesses.getId();
 
         Assert.assertEquals("maximum1",businesses.getName());
         Assert.assertEquals("Створимо цей заклад на благо людства1",businesses.getShort_description());
@@ -145,7 +160,6 @@ public class BusinessesTests {
                 .when().get("http://213.136.86.27:8083/api/v1.0/businesses/"+businessId+"/").thenReturn().body();
         BusinesessResponse businesessResponse= new Gson().fromJson(response.asString(), BusinesessResponse.class);
         Businesses businesses= businesessResponse.data;
-        this.businessId = businesses.getId();
 
         Assert.assertEquals("maximum1",businesses.getName());
         Assert.assertEquals("Створимо цей заклад на благо людства1",businesses.getShort_description());
@@ -167,7 +181,6 @@ public class BusinessesTests {
                 .when().patch("http://213.136.86.27:8083/api/v1.0/businesses/"+businessId+"/verify/").thenReturn().body();
         BusinesessResponse businesessResponse= new Gson().fromJson(response.asString(), BusinesessResponse.class);
         Businesses businesses= businesessResponse.data;
-        this.businessId = businesses.getId();
 
         Assert.assertEquals(true,businesses.is_verified);
     }
@@ -182,13 +195,12 @@ public class BusinessesTests {
                 .when().patch("http://213.136.86.27:8083/api/v1.0/businesses/"+businessId+"/display/").thenReturn().body();
         BusinesessResponse businesessResponse= new Gson().fromJson(response.asString(), BusinesessResponse.class);
         Businesses businesses= businesessResponse.data;
-        this.businessId = businesses.getId();
 
         Assert.assertEquals(true,businesses.is_searchable);
     }
 
     @Test
-    public void F_displayBusines(){
+    public void F_hideBusines(){
         ResponseBody response = given()
                 .contentType(ContentType.JSON)
                 .header("Authorization", token)
@@ -197,7 +209,6 @@ public class BusinessesTests {
                 .when().patch("http://213.136.86.27:8083/api/v1.0/businesses/"+businessId+"/hide/").thenReturn().body();
         BusinesessResponse businesessResponse= new Gson().fromJson(response.asString(), BusinesessResponse.class);
         Businesses businesses= businesessResponse.data;
-        this.businessId = businesses.getId();
 
         Assert.assertEquals(false,businesses.is_searchable);
     }
@@ -234,12 +245,58 @@ public class BusinessesTests {
     }
 
     @Test
-    public void I_deleteBusines() {
+    public void I_addToFavoriteBusines() {
+        ResponseBody response = given().contentType(ContentType.JSON)
+                .header("Authorization", usertoken)
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().post("http://213.136.86.27:8083/api/v1.0/businesses/" + businessId + "/favorites/").thenReturn().body();
+        FavoritesResponse favoritesResponse= new Gson().fromJson(response.asString(), FavoritesResponse.class);
+        Favorites favorites = favoritesResponse.getData().get(0);
+        this.favoritesId = favorites.getObject_id();
+    }
+
+    @Test
+    public void J_getFavoriteBusines() {
+        ResponseBody response = given().contentType(ContentType.JSON)
+                .header("Authorization", usertoken)
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().get("http://213.136.86.27:8083/api/v1.0/businesses/" + businessId + "/favorites/").thenReturn().body();
+        FavoritesResponse favoritesResponse= new Gson().fromJson(response.asString(), FavoritesResponse.class);
+        Favorites favorites = favoritesResponse.getData().get(0);
+        Assert.assertEquals(favoritesId,favorites.getObject_id());
+    }
+
+    @Test
+    public void K_getUserFavoriteBusines() {
+        ResponseBody response = given().contentType(ContentType.JSON)
+                .header("Authorization", usertoken)
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().get("http://213.136.86.27:8083/api/v1.0/users/" + uesrId + "/favorites/").thenReturn().body();
+        FavoritesResponse favoritesResponse= new Gson().fromJson(response.asString(), FavoritesResponse.class);
+        Favorites favorites = favoritesResponse.getData().get(0);
+    }
+
+    @Test
+    public void L_deleteFavoriteBusines() {
+        ResponseBody response = given().contentType(ContentType.JSON)
+                .header("Authorization", usertoken)
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().delete("http://213.136.86.27:8083/api/v1.0/businesses/" + businessId + "/favorites/").thenReturn().body();
+        FavoritesResponse favoritesResponse= new Gson().fromJson(response.asString(), FavoritesResponse.class);
+        Favorites favorites = favoritesResponse.getData().get(0);
+        this.favoritesId = favorites.getObject_id();
+    }
+
+    @Test
+    public void M_deleteBusines() {
         ResponseBody response = given().contentType(ContentType.JSON).header("Authorization", token).filter(new RequestLoggingFilter()).filter(new ResponseLoggingFilter()).when().delete("http://213.136.86.27:8083/api/v1.0/businesses/" + businessId + "/").thenReturn().body();
         BusinesessResponse businesessResponse = new Gson().fromJson(response.asString(), BusinesessResponse.class);
         Businesses businesses = businesessResponse.data;
         this.businessId = businesses.getId();
     }
 
-
-}
+    }
