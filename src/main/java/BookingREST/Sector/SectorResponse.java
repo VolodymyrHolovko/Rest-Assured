@@ -1,7 +1,7 @@
 package BookingREST.Sector;
 
 public class SectorResponse {
-    Sector data;
+    public Sector data;
 
     public Sector getData() {
         return data;

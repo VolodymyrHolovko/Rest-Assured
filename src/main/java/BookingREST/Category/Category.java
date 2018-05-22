@@ -1,5 +1,7 @@
 package BookingREST.Category;
 
+import java.util.List;
+
 public class Category {
     private String category;
     private int sector_id;
@@ -9,6 +11,33 @@ public class Category {
     private String name_uk;
     private int status;
     private int id;
+    private String created_at;
+    private String updated_at;
+    private List<Integer> categoryIds;
+
+    public List<Integer> getCategoryIds() {
+        return categoryIds;
+    }
+
+    public void setCategoryIds(List<Integer> categoryIds) {
+        this.categoryIds = categoryIds;
+    }
+
+    public String getUpdated_at() {
+        return updated_at;
+    }
+
+    public void setUpdated_at(String updated_at) {
+        this.updated_at = updated_at;
+    }
+
+    public String getCreated_at() {
+        return created_at;
+    }
+
+    public void setCreated_at(String created_at) {
+        this.created_at = created_at;
+    }
 
     public String getCategory() {
         return category;
