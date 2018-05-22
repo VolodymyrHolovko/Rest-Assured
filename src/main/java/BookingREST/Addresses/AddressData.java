@@ -1,4 +1,4 @@
-package Addresses;
+package BookingREST.Addresses;
 
 public class AddressData {
     public Address CreateAddress(int business_id){
