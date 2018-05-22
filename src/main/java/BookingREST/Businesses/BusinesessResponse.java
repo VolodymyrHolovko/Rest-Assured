@@ -1,7 +1,7 @@
 package BookingREST.Businesses;
 
 public class BusinesessResponse {
-    Businesses data;
+    public Businesses data;
 
     public Businesses getData() {
         return data;

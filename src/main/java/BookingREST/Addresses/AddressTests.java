@@ -14,7 +14,7 @@ import static com.jayway.restassured.RestAssured.given;
 
 public class AddressTests {
 
-    private  String token;
+    private String token;
     private  String baseURL = "http://213.136.86.27:8083/api/v1.0/addresses/";
     int businessId = 84;
     int Ids;
