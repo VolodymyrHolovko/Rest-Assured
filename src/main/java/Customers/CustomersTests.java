@@ -15,7 +15,7 @@ import org.testng.annotations.Test;
 import static com.jayway.restassured.RestAssured.given;
 
 public class CustomersTests {
-    String baseURL="http://staging.eservia.com:8010/api/v0.0/Customers";
+    String baseURL="http://staging.eservia.com:8010/api/v0.0/PromoterCustomers";
     String token;
     CustomersData customersData = new CustomersData();
     String id;
@@ -109,15 +109,7 @@ public class CustomersTests {
                 .filter(new ResponseLoggingFilter())
                 .when().get(baseURL+"/"+id).thenReturn().body();
     }
-    @Test
-    public void F_SelectCustomers(){
-        ResponseBody response = given()
-                .contentType(ContentType.JSON)
-                .header("Authorization", token)
-                .when().get("http://staging.eservia.com:8010/api/v0.0/Customers/Select?PhoneNumber=%2B38067&PromoterId=1&PageIndex=0&PageSize=100").thenReturn().body();
-        CustomerResponseArray customersResponse = new Gson().fromJson(response.asString(),  CustomerResponseArray.class);
-        Assert.assertEquals(true,customersResponse.isSuccess());
-    }
+
 
     @Test
     public void G_DeleteCustomer() {
@@ -127,7 +119,6 @@ public class CustomersTests {
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter())
                 .when().delete(baseURL+"/"+id).thenReturn().body();
-
 
         ResponseBody response1 = given()
                 .contentType(ContentType.JSON)

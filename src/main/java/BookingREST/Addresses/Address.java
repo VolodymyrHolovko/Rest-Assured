@@ -1,8 +1,4 @@
-package Addresses;
-
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.google.gson.annotations.SerializedName;
-import org.json.simple.JSONObject;
+package BookingREST.Addresses;
 
 public class Address {
 

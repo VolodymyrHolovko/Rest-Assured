@@ -1,31 +1,31 @@
-package Addresses;
+package BookingREST.Addresses;
 
-import Auth.GetToken;
 import BookingREST.AuthBusiness.AuthBusinessTest;
 import com.google.gson.Gson;
+<<<<<<< HEAD:src/main/java/Addresses/AddressTests.java
 import com.google.gson.JsonObject;
 import com.jayway.restassured.RestAssured;
+=======
+>>>>>>> e0e0a0b8565e8783d12ba650324e3d41af974275:src/main/java/BookingREST/Addresses/AddressTests.java
 import com.jayway.restassured.filter.log.RequestLoggingFilter;
 import com.jayway.restassured.filter.log.ResponseLoggingFilter;
 import com.jayway.restassured.http.ContentType;
-import com.jayway.restassured.response.Response;
 import com.jayway.restassured.response.ResponseBody;
+<<<<<<< HEAD:src/main/java/Addresses/AddressTests.java
 import com.jayway.restassured.response.ResponseBodyData;
 import com.jayway.restassured.specification.RequestSpecification;
 import jdk.nashorn.internal.runtime.JSONListAdapter;
+=======
+>>>>>>> e0e0a0b8565e8783d12ba650324e3d41af974275:src/main/java/BookingREST/Addresses/AddressTests.java
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.util.List;
 
 import static com.jayway.restassured.RestAssured.given;
 
 public class AddressTests {
 
-    private  String token;
+    private String token;
     private  String baseURL = "http://213.136.86.27:8083/api/v1.0/addresses/";
     int businessId = 1;
     int Ids;
@@ -156,9 +156,19 @@ public class AddressTests {
         Assert.assertEquals("EkfQstGD0LvQuNGG0Y8g0JLQsNC00LjQvNCwINCT0LXRgtGM0LzQsNC90LAsIDcsINCa0LjRl9CyLCDQo9C60YDQsNGX0L3QsA",address.getPlace_hash());
         }
 
+    @Test
+    public void F_ActivateAddress(){
+        ResponseBody response = given()
+                .contentType(ContentType.JSON)
+                .header("Authorization",token)
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().get("http://213.136.86.27:8083/api/v1.0/businesses/1/addresses/").thenReturn().body();
+    }
+
 
     @Test
-    public void F_DeleteAddress(){
+    public void G_DeleteAddress(){
         ResponseBody response = given()
                 .contentType(ContentType.JSON)
                 .header("Authorization", token)
