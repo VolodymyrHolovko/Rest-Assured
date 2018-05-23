@@ -20,6 +20,7 @@ import com.jayway.restassured.filter.log.ResponseLoggingFilter;
 import com.jayway.restassured.http.ContentType;
 import com.jayway.restassured.response.ResponseBody;
 import org.testng.Assert;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -295,5 +296,40 @@ PromoterData promoterData = new PromoterData();
         CategoryResponse categoryResponse = new Gson().fromJson(response.asString(), CategoryResponse.class);
         Category deletedCategory = categoryResponse.data;
         Assert.assertEquals(true, deletedCategory.getDeleted_at().startsWith("2018"));
+    }
+    @AfterClass
+    public void deleteAllFromBeforeClass() {
+        ResponseBody respons = given()
+                .contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .body(sectorData.updateSector())
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().delete(baseUrlSector+sector_id+"/").thenReturn().body();
+        System.out.println(respons.asString());
+
+        ResponseBody response = given()
+                .contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().delete(baseURIStrategy + strategy_id + "/").thenReturn().body();
+        System.out.println(response.asString());
+
+        ResponseBody responseprom = given()
+                .contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().delete(baseURLPromoter + promoterId + "/").thenReturn().body();
+        System.out.println(responseprom.asString());
+
+        ResponseBody responseBusin = given()
+                .contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().delete(baseURLBusiness + businessId + "/").thenReturn().body();
+        System.out.println(responseBusin);
     }
 }
