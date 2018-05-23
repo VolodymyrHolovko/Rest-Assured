@@ -1,6 +1,4 @@
-package Plans;
-
-import Plans.PlanSettings;
+package BookingREST.Plans;
 
 public class PlanSettingsResponse {
     PlanSettings data;
