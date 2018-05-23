@@ -16,6 +16,15 @@ public class Category {
     private List<Integer> categories;
     private int business_id;
     private int category_id;
+    private String deleted_at;
+
+    public String getDeleted_at() {
+        return deleted_at;
+    }
+
+    public void setDeleted_at(String deleted_at) {
+        this.deleted_at = deleted_at;
+    }
 
     public int getCategory_id() {
         return category_id;
