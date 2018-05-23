@@ -2,10 +2,13 @@ package Departments.Tables;
 
 import Departments.DepartmentTest;
 import com.google.gson.Gson;
+import com.jayway.restassured.RestAssured;
 import com.jayway.restassured.filter.log.RequestLoggingFilter;
 import com.jayway.restassured.filter.log.ResponseLoggingFilter;
 import com.jayway.restassured.http.ContentType;
+import com.jayway.restassured.response.Response;
 import com.jayway.restassured.response.ResponseBody;
+import com.jayway.restassured.specification.RequestSpecification;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -68,6 +71,16 @@ public class TablesTest {
         Assert.assertEquals(DepartmentId,tables.getDepartmentId());
         Assert.assertEquals(2,tables.getCapacity());
         Assert.assertEquals(TableId,tables.getId());
+    }
+    @Test
+    public void getAllDepartments(){
+        RequestSpecification httpRequest = RestAssured.given()
+                .contentType(ContentType.JSON)
+                .header("Authorization",token)
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter());
+        Response response = httpRequest.get("http://staging.eservia.com:8009/api/v0.0/Tables?DepartmentId="+DepartmentId+"&AddressId=2");
+        Assert.assertEquals(200,response.getStatusCode());
     }
 
     @Test

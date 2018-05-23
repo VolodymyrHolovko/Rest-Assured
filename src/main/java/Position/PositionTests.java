@@ -3,11 +3,13 @@ package Position;
 import Auth.GetToken;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.jayway.restassured.RestAssured;
 import com.jayway.restassured.filter.log.RequestLoggingFilter;
 import com.jayway.restassured.filter.log.ResponseLoggingFilter;
 import com.jayway.restassured.http.ContentType;
 import com.jayway.restassured.response.Response;
 import com.jayway.restassured.response.ResponseBody;
+import com.jayway.restassured.specification.RequestSpecification;
 import jdk.nashorn.internal.runtime.JSONListAdapter;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
@@ -91,6 +93,17 @@ public class PositionTests {
         Assert.assertEquals("Free",position.getScheduleType());
         Assert.assertEquals(400, position.getSalary());
         Assert.assertEquals(900, position.getPrepaidExpense());
+    }
+
+    @Test
+    public void getAllPosition(){
+        RequestSpecification httpRequest = RestAssured.given()
+                .contentType(ContentType.JSON)
+                .header("Authorization",token)
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter());
+        Response response = httpRequest.get("http://staging.eservia.com:8003/api/v0.0/Positions");
+        Assert.assertEquals(200,response.getStatusCode());
     }
     @Test
     public void D_GetPosition(){
