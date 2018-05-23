@@ -1,4 +1,4 @@
-package Plans;
+package BookingREST.Plans;
 
 public class PlanResponse {
     Plan data;

@@ -1,8 +1,7 @@
-package Plans;
+package BookingREST.Plans;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.gson.annotations.SerializedName;
-import org.json.simple.JSONObject;
 
 public class PlanSettings {
 

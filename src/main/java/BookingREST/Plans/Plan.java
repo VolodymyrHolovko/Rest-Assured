@@ -1,8 +1,4 @@
-package Plans;
-
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.google.gson.annotations.SerializedName;
-import org.json.simple.JSONObject;
+package BookingREST.Plans;
 
 public class Plan {
     private int id;

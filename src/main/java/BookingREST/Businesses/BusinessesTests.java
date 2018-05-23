@@ -7,6 +7,7 @@ import BookingREST.Addresses.AddressResponse;
 import BookingREST.AuthBusiness.AuthBusinessTest;
 import BookingREST.Favorites.Favorites;
 import BookingREST.Favorites.FavoritesResponse;
+import BookingREST.Plans.Plan;
 import BookingREST.Promoter.Promoter;
 import BookingREST.Promoter.PromoterData;
 import BookingREST.Promoter.PromoterResponse;
@@ -22,9 +23,11 @@ import com.jayway.restassured.filter.log.RequestLoggingFilter;
 import com.jayway.restassured.filter.log.ResponseLoggingFilter;
 import com.jayway.restassured.http.ContentType;
 import com.jayway.restassured.response.ResponseBody;
+import com.jayway.restassured.specification.RequestSpecification;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+import com.jayway.restassured.response.Response;
 
 import static com.jayway.restassured.RestAssured.given;
 
@@ -213,6 +216,9 @@ public class BusinessesTests {
         Assert.assertEquals(false,businesses.is_searchable);
     }
 
+
+
+
     @Test
     public void G_promoterBusines(){
         this.alias = faker.name().firstName();
@@ -290,6 +296,8 @@ public class BusinessesTests {
         Favorites favorites = favoritesResponse.getData().get(0);
         this.favoritesId = favorites.getObject_id();
     }
+
+
 
     @Test
     public void M_deleteBusines() {

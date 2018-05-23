@@ -1,7 +1,4 @@
-package Plans;
-
-import Plans.Plan;
-import Plans.PlanSettings;
+package BookingREST.Plans;
 
 public class PlanSettingsData {
     public PlanSettings UpdatePlanSettings(){
