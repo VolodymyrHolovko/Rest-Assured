@@ -20,11 +20,11 @@ public class PromoterTest {
     Faker faker = new Faker();
     String firstNameUpdate = faker.name().firstName();
     String lastNameUpdate = faker.name().lastName();
-    String emailUpdate = faker.name().firstName()+"@mail.com";
+    String emailUpdate = faker.name().firstName().hashCode()+"@mail.com";
     String phoneUpdate = faker.regexify("+380[0-9]{9}");
     String firstName = faker.name().firstName();
     String lastName = faker.name().lastName();
-    String email = faker.name().firstName()+"@mail.com";
+    String email = faker.name().firstName().hashCode()+"@mail.com";
     String phone = faker.regexify("+380[0-9]{9}");
     public int id;
     PromoterData promoterData = new  PromoterData();
