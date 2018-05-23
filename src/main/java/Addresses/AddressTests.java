@@ -4,11 +4,14 @@ import Auth.GetToken;
 import BookingREST.AuthBusiness.AuthBusinessTest;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.jayway.restassured.RestAssured;
 import com.jayway.restassured.filter.log.RequestLoggingFilter;
 import com.jayway.restassured.filter.log.ResponseLoggingFilter;
 import com.jayway.restassured.http.ContentType;
 import com.jayway.restassured.response.Response;
 import com.jayway.restassured.response.ResponseBody;
+import com.jayway.restassured.response.ResponseBodyData;
+import com.jayway.restassured.specification.RequestSpecification;
 import jdk.nashorn.internal.runtime.JSONListAdapter;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
@@ -24,7 +27,7 @@ public class AddressTests {
 
     private  String token;
     private  String baseURL = "http://213.136.86.27:8083/api/v1.0/addresses/";
-    int businessId = 84;
+    int businessId = 1;
     int Ids;
     AddressData addressData = new AddressData();
 
@@ -47,7 +50,7 @@ public class AddressTests {
         AddressResponse addressResponse = new Gson().fromJson(response.asString(), AddressResponse.class);
         Address address = addressResponse.data;
         this.Ids = address.getId();
-        Assert.assertEquals(1,address.getBusiness_id());
+        Assert.assertEquals(businessId,address.getBusiness_id());
         Assert.assertEquals("Київ",address.getCity());
         Assert.assertEquals("вулиця Миколи Грінченка",address.getStreet());
         Assert.assertEquals("28",address.getNumber());
@@ -72,7 +75,7 @@ public class AddressTests {
         AddressResponse addressResponse = new Gson().fromJson(response.asString(),AddressResponse.class);
         Address address = addressResponse.data;
         this.Ids = address.getId();
-        Assert.assertEquals(1,address.getBusiness_id());
+        Assert.assertEquals(businessId,address.getBusiness_id());
         Assert.assertEquals("Київ",address.getCity());
         Assert.assertEquals("вулиця Вадима Гетьмана",address.getStreet());
         Assert.assertEquals("7",address.getNumber());
@@ -95,7 +98,7 @@ public class AddressTests {
         AddressResponse addressResponse = new Gson().fromJson(response.asString(),AddressResponse.class);
         Address address = addressResponse.data;
         this.Ids = address.getId();
-        Assert.assertEquals(1,address.getBusiness_id());
+        Assert.assertEquals(businessId,address.getBusiness_id());
         Assert.assertEquals("Київ",address.getCity());
         Assert.assertEquals("вулиця Вадима Гетьмана",address.getStreet());
         Assert.assertEquals("7",address.getNumber());
@@ -128,7 +131,6 @@ public class AddressTests {
         Assert.assertEquals("+380977777777", address.getPhone());
         Assert.assertEquals("Біля чогосьіншого",address.getMark());
         Assert.assertEquals("EkfQstGD0LvQuNGG0Y8g0JLQsNC00LjQvNCwINCT0LXRgtGM0LzQsNC90LAsIDcsINCa0LjRl9CyLCDQo9C60YDQsNGX0L3QsA",address.getPlace_hash());
-
     }
 
 
@@ -173,8 +175,35 @@ public class AddressTests {
                         .filter(new ResponseLoggingFilter())
                         .when().get(baseURL+Ids+"/").thenReturn().body();
                 AddressResponse addressGetResponse = new Gson().fromJson(response.asString(),AddressResponse.class);
-                Address addressGet = addressResponse.data;
-                Assert.assertEquals(1, address.getBusiness_id());
+                Address addressGet = addressGetResponse.data;
+                Assert.assertEquals(businessId, address.getBusiness_id());
                 Assert.assertEquals(true, address.getDeleted_at().startsWith("2018"));
                 }
+
+
+    @Test
+    public void G_GetAllAddresses(){
+        RequestSpecification httpRequest = RestAssured.given()
+                .contentType(ContentType.JSON)
+                .header("Authorization",token)
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter());
+        Response response = httpRequest.get(baseURL);
+        Assert.assertEquals(200,response.getStatusCode());
+    }
+
+    @Test
+    public void H_GetBusinessAddresses(){
+        RequestSpecification httpRequest = RestAssured.given()
+                .contentType(ContentType.JSON)
+                .header("Authorization",token)
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter());
+        Response response = httpRequest.get("http://213.136.86.27:8083/api/v1.0/businesses/"+businessId+"/addresses/");
+        Assert.assertEquals(200,response.getStatusCode());
+    }
+
+
+
+
 }
