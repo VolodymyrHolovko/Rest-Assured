@@ -177,7 +177,26 @@ PromoterData promoterData = new PromoterData();
         Assert.assertEquals(true, getCategory.getUpdated_at().startsWith("2018"));
     }
     @Test
-    public void E_addBusinessIdCategory() {
+    public void E_getCategory() {
+        ResponseBody response = given()
+                .contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().get(baseURL + "?strategy_id=" + strategy_id).thenReturn().body();
+        CategoryBusinessResponse categoryResponse = new Gson().fromJson(response.asString(), CategoryBusinessResponse.class);
+        Category getCategory = categoryResponse.data.get(0);
+        Assert.assertEquals(category, getCategory.getCategory());
+        Assert.assertEquals(sector_id, getCategory.getSector_id());
+        Assert.assertEquals(strategy_id, getCategory.getStrategy_id());
+        Assert.assertEquals(enNameUpdate, getCategory.getName_en());
+        Assert.assertEquals("раша-па*аша", getCategory.getName_ru());
+        Assert.assertEquals("категорія оновлена", getCategory.getName_uk());
+        Assert.assertEquals(1, getCategory.getStatus());
+
+    }
+    @Test
+    public void F_addBusinessIdCategory() {
         ResponseBody response = given()
                 .contentType(ContentType.JSON)
                 .header("Authorization", token)
@@ -193,7 +212,7 @@ PromoterData promoterData = new PromoterData();
         Assert.assertEquals(id, addCategoryToBusiness.getCategory_id());
     }
     @Test
-    public void F_getBusinessIdCategory() {
+    public void G_getBusinessIdCategory() {
         ResponseBody response = given()
                 .contentType(ContentType.JSON)
                 .header("Authorization", token)
@@ -214,7 +233,7 @@ PromoterData promoterData = new PromoterData();
         Assert.assertEquals(true, getCategoryToBusiness.getUpdated_at().startsWith("2018"));
     }
     @Test
-    public void G_getBusinessIdCategoryRelations() {
+    public void H_getBusinessIdCategoryRelations() {
         ResponseBody response = given()
                 .contentType(ContentType.JSON)
                 .header("Authorization", token)
@@ -228,5 +247,53 @@ PromoterData promoterData = new PromoterData();
         Assert.assertEquals(businessId, getCategoryToBusinessRelations.getBusiness_id());
         Assert.assertEquals(id, getCategoryToBusinessRelations.getCategory_id());
     }
-    
+    @Test
+    public void I_deleteBusinessIdCategory() {
+        ResponseBody response = given()
+                .contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .body(categoryData.addCategoryToBusinessId(id))
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().delete(baseURLBusiness + businessId + "/" + "categories/").thenReturn().body();
+        CategoryBusinessResponse categoryBusinessResponse = new Gson().fromJson(response.asString(), CategoryBusinessResponse.class);
+        Category deleteCategoryToBusiness = categoryBusinessResponse.data.get(0);
+        Assert.assertEquals(categoryToBusinessId, deleteCategoryToBusiness.getId());
+        Assert.assertEquals(id, deleteCategoryToBusiness.getCategory_id());
+
+        ResponseBody responseget = given()
+                .contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().get(baseURLBusiness + businessId + "/" + "categories/").thenReturn().body();
+        CategoryBusinessResponse categoryResponse = new Gson().fromJson(responseget.asString(), CategoryBusinessResponse.class);
+        int getDeleted = categoryResponse.data.size();
+        System.out.println(getDeleted);
+        Assert.assertEquals(0, getDeleted);
+    }
+    @Test
+    public void J_deactivateCategory() {
+        ResponseBody response = given()
+                .contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().patch(baseURL + id + "/" + "deactivate/").thenReturn().body();
+        CategoryResponse categoryResponse = new Gson().fromJson(response.asString(), CategoryResponse.class);
+        Category deactivateCategory = categoryResponse.data;
+        Assert.assertEquals(0, deactivateCategory.getStatus());
+    }
+    @Test
+    public void K_deleteCategory() {
+        ResponseBody response = given()
+                .contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().delete(baseURL + id + "/").thenReturn().body();
+        CategoryResponse categoryResponse = new Gson().fromJson(response.asString(), CategoryResponse.class);
+        Category deletedCategory = categoryResponse.data;
+        Assert.assertEquals(true, deletedCategory.getDeleted_at().startsWith("2018"));
+    }
 }

@@ -2,21 +2,17 @@ package BookingREST.Addresses;
 
 import BookingREST.AuthBusiness.AuthBusinessTest;
 import com.google.gson.Gson;
-<<<<<<< HEAD:src/main/java/Addresses/AddressTests.java
 import com.google.gson.JsonObject;
 import com.jayway.restassured.RestAssured;
-=======
->>>>>>> e0e0a0b8565e8783d12ba650324e3d41af974275:src/main/java/BookingREST/Addresses/AddressTests.java
 import com.jayway.restassured.filter.log.RequestLoggingFilter;
 import com.jayway.restassured.filter.log.ResponseLoggingFilter;
 import com.jayway.restassured.http.ContentType;
+import com.jayway.restassured.response.Response;
 import com.jayway.restassured.response.ResponseBody;
-<<<<<<< HEAD:src/main/java/Addresses/AddressTests.java
 import com.jayway.restassured.response.ResponseBodyData;
 import com.jayway.restassured.specification.RequestSpecification;
 import jdk.nashorn.internal.runtime.JSONListAdapter;
-=======
->>>>>>> e0e0a0b8565e8783d12ba650324e3d41af974275:src/main/java/BookingREST/Addresses/AddressTests.java
+
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
