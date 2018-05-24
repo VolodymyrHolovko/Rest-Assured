@@ -18,7 +18,7 @@ import static com.jayway.restassured.RestAssured.given;
 
 public class ContactTests {
     private String token;
-    private String baseURL = "http://213.136.86.27:8083/api/v1.0/contact/";
+    private String baseURL = "http://213.136.86.27:8083/api/v1.0/contacts/";
     ContactData contactData = new ContactData();
 
 
@@ -30,23 +30,16 @@ public class ContactTests {
 
     @Test
     public void A_SendContact(){
-        ResponseBody response = given()
+
+
+        RequestSpecification httpRequest = given()
                 .contentType(ContentType.JSON)
-                .header("Authorization", token)
+                .header("Authorization",token)
                 .body(contactData.ContactLetter())
                 .filter(new RequestLoggingFilter())
-                .filter(new ResponseLoggingFilter())
-                .when().post(baseURL).thenReturn().body();
-        ContactResponse contactResponse = new Gson().fromJson(response.asString(), ContactResponse.class);
-        Contact contact = contactResponse.data;
-        Assert.assertEquals("+380971234567",contact.getPhone());
-        Assert.assertEquals("testmail@mail.com",contact.getEmail());
-        Assert.assertEquals("testname",contact.getName());
-        Assert.assertEquals("Subject",contact.getSubject());
-        Assert.assertEquals("Message",contact.getMessage());
-
-
-
+                .filter(new ResponseLoggingFilter());
+        Response response = httpRequest.post(baseURL);
+        Assert.assertEquals(200,response.getStatusCode());
     }
 
 
