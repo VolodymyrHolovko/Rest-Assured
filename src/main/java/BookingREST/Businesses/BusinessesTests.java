@@ -340,13 +340,13 @@ public class BusinessesTests {
     }
 
     @AfterClass
-
-
     public void deleteBefore() {
-        ResponseBody response = given().contentType(ContentType.JSON).header("Authorization", usertoken).filter(new RequestLoggingFilter()).filter(new ResponseLoggingFilter()).when().get("http://213.136.86.27:8083/api/v1.0/promoters/" + promoterId).thenReturn().body();
+        ResponseBody responses = given().contentType(ContentType.JSON).header("Authorization", token).when().delete("http://213.136.86.27:8083/api/v1.0/plans/"+planId).thenReturn().body();
 
-        ResponseBody response1 = given().contentType(ContentType.JSON).header("Authorization", usertoken).filter(new RequestLoggingFilter()).filter(new ResponseLoggingFilter()).when().get("http://213.136.86.27:8083/api/v1.0/sector/" + sectorId).thenReturn().body();
+        ResponseBody response = given().contentType(ContentType.JSON).header("Authorization", usertoken).when().get("http://213.136.86.27:8083/api/v1.0/promoters/" + promoterId).thenReturn().body();
 
-        ResponseBody response2 = given().contentType(ContentType.JSON).header("Authorization", usertoken).filter(new RequestLoggingFilter()).filter(new ResponseLoggingFilter()).when().get("http://213.136.86.27:8083/api/v1.0/strategy/" + strategyId).thenReturn().body();
+        ResponseBody response1 = given().contentType(ContentType.JSON).header("Authorization", usertoken).when().get("http://213.136.86.27:8083/api/v1.0/sector/" + sectorId).thenReturn().body();
+
+        ResponseBody response2 = given().contentType(ContentType.JSON).header("Authorization", usertoken).when().get("http://213.136.86.27:8083/api/v1.0/strategy/" + strategyId).thenReturn().body();
     }
     }
