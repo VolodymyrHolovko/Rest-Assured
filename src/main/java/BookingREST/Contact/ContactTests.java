@@ -18,7 +18,7 @@ import static com.jayway.restassured.RestAssured.given;
 
 public class ContactTests {
     private String token;
-    private String baseURL = "http://213.136.86.27:8083/api/v1.0/contact/"
+    private String baseURL = "http://213.136.86.27:8083/api/v1.0/contact/";
     ContactData contactData = new ContactData();
 
 
