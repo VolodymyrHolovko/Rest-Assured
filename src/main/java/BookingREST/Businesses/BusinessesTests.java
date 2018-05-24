@@ -29,6 +29,7 @@ import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+import com.jayway.restassured.response.Response;
 
 import static com.jayway.restassured.RestAssured.given;
 
@@ -242,6 +243,9 @@ public class BusinessesTests {
         Assert.assertEquals(false,businesses.is_searchable);
     }
 
+
+
+
     @Test
     public void G_promoterBusines(){
         this.alias = faker.name().firstName();
@@ -330,6 +334,8 @@ public class BusinessesTests {
         Favorites favorites = favoritesResponse.getData().get(0);
         this.favoritesId = favorites.getObject_id();
     }
+
+
 
     @Test
     public void M_deleteBusines() {
