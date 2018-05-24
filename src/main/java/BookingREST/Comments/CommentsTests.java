@@ -1,5 +1,6 @@
 package BookingREST.Comments;
 
+import Auth.Users.GetUserToken;
 import BookingREST.AuthBusiness.AuthBusinessTest;
 import BookingREST.Businesses.BusinesessData;
 import BookingREST.Businesses.BusinesessResponse;
@@ -19,6 +20,7 @@ import com.jayway.restassured.filter.log.RequestLoggingFilter;
 import com.jayway.restassured.filter.log.ResponseLoggingFilter;
 import com.jayway.restassured.http.ContentType;
 import com.jayway.restassured.response.ResponseBody;
+import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -26,6 +28,7 @@ import static com.jayway.restassured.RestAssured.given;
 
 public class CommentsTests {
     String baseUrl="http://213.136.86.27:8083/api/v1.0/promoters/";
+    String usertoken;
     String token;
     int sector_id;
     int strategy_id;
@@ -36,16 +39,20 @@ public class CommentsTests {
     String firstName = faker.name().firstName();
     String lastName = faker.name().lastName();
     String name = faker.name().firstName();
-    String alias = faker.name().firstName();
+    String alias = faker.name().firstName().toLowerCase();
     String email = faker.name().firstName()+"@smail.com";
     String phone = faker.regexify("+380[0-9]{9}");
     SectorData sectorData = new SectorData();
+    CommentData commentData = new CommentData();
     StrategyData strategyData = new StrategyData();
     PromoterData promoterData = new PromoterData();
     BusinesessData businesessData = new BusinesessData();
 
     @BeforeClass
     public void beforeClass(){
+        GetUserToken getUserToken= new GetUserToken();
+        this.usertoken = getUserToken.GetUserToken();
+
         AuthBusinessTest getToken = new AuthBusinessTest();
         this.token = getToken.GetAdminToken();
 
@@ -70,14 +77,6 @@ public class CommentsTests {
         this.businessId =businesses.getId();
 }
 
-@Test
-    public void createComment(){
-    ResponseBody responseSector = given().contentType(ContentType.JSON)
-            .header("Authorization", token)
-            .filter(new RequestLoggingFilter())
-            .filter(new ResponseLoggingFilter()).when()
-            .post("http://213.136.86.27:8083/api/v1.0/comments/").thenReturn().body();
 
-}
 
 }

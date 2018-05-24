@@ -14,18 +14,24 @@ public class PlanData {
     }
 
 public Plan UpdatePlan(int planId){
-    Plan plan = CreatePlan();
-    plan.setName("updatedPlanName");
-    plan.setDescription("updatedPlanDescription");
-    plan.setPrice(800);
-    plan.setCurrency("USD");
-    plan.setInterval(3000);
-    plan.setIs_unique(true);
-    return plan;
+        Plan plan = CreatePlan();
+        plan.setName("updatedPlanName");
+        plan.setDescription("updatedPlanDescription");
+        plan.setPrice(800);
+        plan.setCurrency("USD");
+        plan.setInterval(3000);
+        plan.setIs_unique(true);
+        return plan;
     }
 
-
-
-
-
+    public Plan freePlan(int planId){
+        Plan plan = CreatePlan();
+        plan.setName("updatedPlanName");
+        plan.setDescription("updatedPlanDescription");
+        plan.setPrice(0);
+        plan.setCurrency("USD");
+        plan.setInterval(3000);
+        plan.setIs_unique(true);
+        return plan;
+    }
 }
