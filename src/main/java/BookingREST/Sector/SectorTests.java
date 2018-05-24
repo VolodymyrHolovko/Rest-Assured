@@ -23,7 +23,7 @@ public class SectorTests {
     int id;
 
     Faker faker = new Faker();
-    String sectorName = faker.name().firstName().toLowerCase();
+    String sectorName = faker.name().nameWithMiddle().toLowerCase();
     @BeforeClass
     public void getToken() {
         AuthBusinessTest getToken = new AuthBusinessTest();

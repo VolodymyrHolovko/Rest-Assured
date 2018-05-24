@@ -3,6 +3,7 @@ package BookingREST.Businesses;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Businesses {
+    int plan_id;
     int promoter_id;
     int strategy_id;
     int sector_id;
@@ -18,6 +19,15 @@ public class Businesses {
     String link_instagram;
     String link_facebook;
     int id;
+
+    public int getPlan_id() {
+        return plan_id;
+    }
+
+    public void setPlan_id(int plan_id) {
+        this.plan_id = plan_id;
+    }
+
     boolean is_searchable;
 
     public boolean isIs_searchable() {

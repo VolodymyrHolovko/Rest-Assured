@@ -1,13 +1,11 @@
 package BookingREST.Businesses;
 
-import Auth.GetToken;
 import Auth.Users.GetUserToken;
-import BookingREST.Addresses.Address;
-import BookingREST.Addresses.AddressResponse;
 import BookingREST.AuthBusiness.AuthBusinessTest;
 import BookingREST.Favorites.Favorites;
 import BookingREST.Favorites.FavoritesResponse;
 import BookingREST.Plans.Plan;
+import BookingREST.Plans.PlanResponse;
 import BookingREST.Promoter.Promoter;
 import BookingREST.Promoter.PromoterData;
 import BookingREST.Promoter.PromoterResponse;
@@ -17,14 +15,18 @@ import BookingREST.Sector.SectorResponse;
 import BookingREST.Strategy.Strategy;
 import BookingREST.Strategy.StrategyData;
 import BookingREST.Strategy.StrategyResponse;
+import BookingREST.Plans.PlanData;
 import com.github.javafaker.Faker;
 import com.google.gson.Gson;
+import com.jayway.restassured.RestAssured;
 import com.jayway.restassured.filter.log.RequestLoggingFilter;
 import com.jayway.restassured.filter.log.ResponseLoggingFilter;
 import com.jayway.restassured.http.ContentType;
+import com.jayway.restassured.response.Response;
 import com.jayway.restassured.response.ResponseBody;
 import com.jayway.restassured.specification.RequestSpecification;
 import org.testng.Assert;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import com.jayway.restassured.response.Response;
@@ -37,6 +39,7 @@ public class BusinessesTests {
     BusinesessData businesessData = new BusinesessData();
     PromoterData promoterData = new PromoterData();
     StrategyData strategyData = new StrategyData();
+    PlanData planData = new PlanData();
     String baseUrl = "http://213.136.86.27:8083/api/v1.0/businesses/";
 
     Faker faker = new Faker();
@@ -52,6 +55,7 @@ public class BusinessesTests {
     int strategyId;
     int businessId;
     int favoritesId;
+    int planId;
     String usertoken;
     String uesrId;
 
@@ -101,6 +105,17 @@ public class BusinessesTests {
         Strategy addStrategy = strategyResponse.getData();
         System.out.println(response.asString());
         this.strategyId = addStrategy.getId();
+
+            ResponseBody responseess = given()
+                    .contentType(ContentType.JSON)
+                    .header("Authorization", token)
+                    .body(planData.CreatePlan())
+                    .filter(new RequestLoggingFilter())
+                    .filter(new ResponseLoggingFilter())
+                    .when().post("http://213.136.86.27:8083/api/v1.0/plans/").thenReturn().body();
+            PlanResponse planResponse = new  Gson().fromJson(responseess.asString(), PlanResponse.class);
+            Plan plan = planResponse.getData();
+            this.planId = plan.getId();
     }
 
     @Test
@@ -129,6 +144,17 @@ public class BusinessesTests {
         Assert.assertEquals("http://staging.eservia.com/image/media/201805/jAgUxCmshMJuFrFl.png",businesses.getLogo());
         Assert.assertEquals("https://www.instagram.com/original.cv/?hl=ru",businesses.getLink_instagram());
         Assert.assertEquals("https://www.facebook.com/max.lutkovec",businesses.getLink_facebook());
+    }
+
+    @Test
+    public void Ba_subscribePlan(){
+        ResponseBody respons = given()
+                .contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().patch("http://213.136.86.27:8083/api/v1.0/businesses/"+businessId+"/plans/"+planId+"/subscribe/").thenReturn().body();
+
     }
 
     @Test
@@ -164,6 +190,7 @@ public class BusinessesTests {
         BusinesessResponse businesessResponse= new Gson().fromJson(response.asString(), BusinesessResponse.class);
         Businesses businesses= businesessResponse.data;
 
+        Assert.assertEquals(planId, businesses.getPlan_id());
         Assert.assertEquals("maximum1",businesses.getName());
         Assert.assertEquals("Створимо цей заклад на благо людства1",businesses.getShort_description());
         Assert.assertEquals("Стара піцерія1",businesses.getDescription());
@@ -286,6 +313,17 @@ public class BusinessesTests {
     }
 
     @Test
+    public void getAllBusiness(){
+            RequestSpecification httpRequest = RestAssured.given()
+                    .contentType(ContentType.JSON)
+                    .header("Authorization",token)
+                    .filter(new RequestLoggingFilter())
+                    .filter(new ResponseLoggingFilter());
+            Response response = httpRequest.get(baseUrl);
+            Assert.assertEquals(200,response.getStatusCode());
+    }
+
+    @Test
     public void L_deleteFavoriteBusines() {
         ResponseBody response = given().contentType(ContentType.JSON)
                 .header("Authorization", usertoken)
@@ -307,4 +345,14 @@ public class BusinessesTests {
         this.businessId = businesses.getId();
     }
 
+    @AfterClass
+
+
+    public void deleteBefore() {
+        ResponseBody response = given().contentType(ContentType.JSON).header("Authorization", usertoken).filter(new RequestLoggingFilter()).filter(new ResponseLoggingFilter()).when().get("http://213.136.86.27:8083/api/v1.0/promoters/" + promoterId).thenReturn().body();
+
+        ResponseBody response1 = given().contentType(ContentType.JSON).header("Authorization", usertoken).filter(new RequestLoggingFilter()).filter(new ResponseLoggingFilter()).when().get("http://213.136.86.27:8083/api/v1.0/sector/" + sectorId).thenReturn().body();
+
+        ResponseBody response2 = given().contentType(ContentType.JSON).header("Authorization", usertoken).filter(new RequestLoggingFilter()).filter(new ResponseLoggingFilter()).when().get("http://213.136.86.27:8083/api/v1.0/strategy/" + strategyId).thenReturn().body();
+    }
     }
