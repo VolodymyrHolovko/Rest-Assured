@@ -5,6 +5,7 @@ import BookingREST.AuthBusiness.AuthBusinessTest;
 import BookingREST.Businesses.BusinesessData;
 import BookingREST.Businesses.BusinesessResponse;
 import BookingREST.Businesses.Businesses;
+import BookingREST.Businesses.CreateBusiness;
 import BookingREST.Promoter.Promoter;
 import BookingREST.Promoter.PromoterData;
 import BookingREST.Promoter.PromoterResponse;
@@ -30,51 +31,22 @@ public class CommentsTests {
     String baseUrl="http://213.136.86.27:8083/api/v1.0/promoters/";
     String usertoken;
     String token;
-    int sector_id;
-    int strategy_id;
-    int promoterId;
     int businessId;
-    Faker faker = new Faker();
-    String sectorName = faker.name().firstName().toLowerCase();
-    String firstName = faker.name().firstName();
-    String lastName = faker.name().lastName();
-    String name = faker.name().firstName();
-    String alias = faker.name().firstName().toLowerCase();
-    String email = faker.name().firstName()+"@smail.com";
-    String phone = faker.regexify("+380[0-9]{9}");
-    SectorData sectorData = new SectorData();
-    CommentData commentData = new CommentData();
-    StrategyData strategyData = new StrategyData();
-    PromoterData promoterData = new PromoterData();
-    BusinesessData businesessData = new BusinesessData();
+    CreateBusiness createBusiness = new CreateBusiness();
+
+
 
     @BeforeClass
     public void beforeClass(){
+        businessId = createBusiness.validBusiness();
+        
         GetUserToken getUserToken= new GetUserToken();
         this.usertoken = getUserToken.GetUserToken();
 
         AuthBusinessTest getToken = new AuthBusinessTest();
         this.token = getToken.GetAdminToken();
 
-    ResponseBody responseSector = given().contentType(ContentType.JSON).header("Authorization", token).body(sectorData.createSector(sectorName)).filter(new RequestLoggingFilter()).filter(new ResponseLoggingFilter()).when().post("http://213.136.86.27:8083/api/v1.0/sectors/").thenReturn().body();
-    SectorResponse sectorResponse = new Gson().fromJson(responseSector.asString(), SectorResponse.class);
-    Sector sector = sectorResponse.data;
-        this.sector_id =sector.getId();
 
-    ResponseBody responseStrategy = given().contentType(ContentType.JSON).header("Authorization", token).body(strategyData.addPromoters(name)).filter(new RequestLoggingFilter()).filter(new ResponseLoggingFilter()).when().post("http://213.136.86.27:8083/api/v1.0/strategies/").thenReturn().body();
-    StrategyResponse strategyResponse = new Gson().fromJson(responseStrategy.asString(), StrategyResponse.class);
-    Strategy addStrategy = strategyResponse.data;
-        this.strategy_id =addStrategy.getId();
-
-    ResponseBody responsePromoter = given().contentType(ContentType.JSON).header("Authorization", token).body(promoterData.addPromoters(firstName, lastName, email, phone)).filter(new RequestLoggingFilter()).filter(new ResponseLoggingFilter()).when().post("http://213.136.86.27:8083/api/v1.0/promoters/").thenReturn().body();
-    PromoterResponse promoterResponse = new Gson().fromJson(responsePromoter.asString(), PromoterResponse.class);
-    Promoter addPromoter = promoterResponse.getData();
-        this.promoterId =addPromoter.getId();
-
-    ResponseBody responseBusiness = given().contentType(ContentType.JSON).header("Authorization", token).body(businesessData.createBusinesses(promoterId, strategy_id, sector_id, alias)).filter(new RequestLoggingFilter()).filter(new ResponseLoggingFilter()).when().post("http://213.136.86.27:8083/api/v1.0/businesses/").thenReturn().body();
-    BusinesessResponse businesessResponse = new Gson().fromJson(responseBusiness.asString(), BusinesessResponse.class);
-    Businesses businesses = businesessResponse.data;
-        this.businessId =businesses.getId();
 }
 
 

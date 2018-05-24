@@ -75,6 +75,7 @@ public class BusinessesTests {
             GetUserToken getUserToken1= new GetUserToken();
             this.uesrId = getUserToken1.GetUserId();
 
+
             AuthBusinessTest getToken = new AuthBusinessTest();
             this.token = getToken.GetAdminToken();
 
@@ -231,19 +232,6 @@ public class BusinessesTests {
         Businesses businesses= businesessResponse.data;
 
         Assert.assertEquals(true,businesses.is_verified);
-    }
-
-    @Test
-    public void E_createComment(){
-        ResponseBody response = given().contentType(ContentType.JSON)
-                .header("Authorization", usertoken)
-                .body(commentData.createComment(businessId))
-                .filter(new RequestLoggingFilter())
-                .filter(new ResponseLoggingFilter()).when()
-                .post("http://213.136.86.27:8083/api/v1.0/comments/").thenReturn().body();
-        CommentsResponse commentsResponse= new Gson().fromJson(response.asString(), CommentsResponse.class);
-        Comments comments = commentsResponse.getData();
-        Assert.assertEquals(businessId,comments.getBusiness_id());
     }
 
     @Test
