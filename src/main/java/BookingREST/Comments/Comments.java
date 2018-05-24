@@ -5,7 +5,18 @@ import java.util.List;
 public class Comments {
     int business_id;
     String comment;
+    float rating;
+    String user_id;
     List<rating_payload> rating_payload;
+
+
+    public float getRating() {
+        return rating;
+    }
+
+    public void setRating(float rating) {
+        this.rating = rating;
+    }
 
     public int getBusiness_id() {
         return business_id;
@@ -33,7 +44,7 @@ public class Comments {
         this.rating_payload = rating_payload;
     }
 
-    public class rating_payload{
+    public static class rating_payload{
         int convenience;
         int purity;
         int quality;
