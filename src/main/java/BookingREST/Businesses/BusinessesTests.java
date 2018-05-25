@@ -338,8 +338,8 @@ public class BusinessesTests {
                     .header("Authorization",token)
                     .filter(new RequestLoggingFilter())
                     .filter(new ResponseLoggingFilter());
-            Response response = httpRequest.get(baseUrl);
-            Assert.assertEquals(200,response.getStatusCode());
+        Response response = httpRequest.get(baseUrl);
+        Assert.assertEquals(200,response.getStatusCode());
     }
 
 
