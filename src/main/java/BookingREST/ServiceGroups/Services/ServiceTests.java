@@ -32,7 +32,8 @@ public class ServiceTests {
         String token;
         private String baseURL = "http://213.136.86.27:8084/api/v1.0/services/";
         private String baseURLServiceGroups = "http://213.136.86.27:8084/api/v1.0/service-groups/";
-        private String baseURLAddresses = "http://213.136.86.27:8083/api/v1.0/addresses/";
+        private String baseURLAddresses8083 = "http://213.136.86.27:8083/api/v1.0/addresses/";
+        private String baseURLAddresses8084 = "http://213.136.86.27:8084/api/v1.0/addresses/";
         int Ids;
         int businessID;
         int serviceGroupID;
@@ -67,7 +68,7 @@ public class ServiceTests {
                 .body(addressData.CreateAddress(businessID))
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter())
-                .when().post(baseURL).thenReturn().body();
+                .when().post(baseURLAddresses8083).thenReturn().body();
         AddressResponse addressResponse = new Gson().fromJson(response.asString(), AddressResponse.class);
         Address address = addressResponse.data;
         this.addressID = address.getId();
@@ -213,7 +214,7 @@ public class ServiceTests {
                 .body("{ \"services\": [ "+Ids+" ] }")
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter())
-                .when().post(baseURLAddresses+addressID+"/services/").thenReturn().body();
+                .when().post(baseURLAddresses8084+addressID+"/services/").thenReturn().body();
                 Map<String, Integer> data = response.jsonPath().getMap("data[0]");
                 System.out.println(data.get("service_id"));
                 //Assert.assertEquals(Ids,data.get("service_id"));
