@@ -3,17 +3,24 @@ package BookingREST.Staffs;
 import Auth.Users.GetUserToken;
 import BookingREST.Addresses.Address;
 import BookingREST.AuthBusiness.AuthBusinessTest;
+import BookingREST.Businesses.BusinesessResponse;
+import BookingREST.Businesses.Businesses;
+import BookingREST.Businesses.BusinessesTests;
 import BookingREST.Businesses.CreateBusiness;
 import BookingREST.Comments.CommentData;
 import BookingREST.Comments.Comments;
 import BookingREST.Comments.CommentsResponse;
 import com.github.javafaker.Faker;
 import com.google.gson.Gson;
+import com.jayway.restassured.RestAssured;
 import com.jayway.restassured.filter.log.RequestLoggingFilter;
 import com.jayway.restassured.filter.log.ResponseLoggingFilter;
 import com.jayway.restassured.http.ContentType;
+import com.jayway.restassured.response.Response;
 import com.jayway.restassured.response.ResponseBody;
+import com.jayway.restassured.specification.RequestSpecification;
 import org.testng.Assert;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -32,7 +39,7 @@ public class StaffTests {
     int addresId;
     StaffData staffData = new StaffData();
     CreateBusiness createBusiness = new CreateBusiness();
-
+    BusinessesTests businessesTests = new BusinessesTests();
 
 
     @BeforeClass
@@ -93,4 +100,76 @@ public class StaffTests {
         Assert.assertEquals("Паріхмахєр",staff.getPosition());
         Assert.assertEquals("Підстрижу по повній",staff.getDescription());
     }
-}
+
+    @Test
+    public void C_DeactivateStaff(){
+        ResponseBody response = given()
+                .contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().patch(baseUrl+staffId+"/deactivate").thenReturn().body();
+
+        ResponseBody respons = given()
+                .contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().get(baseUrl+staffId+"/").thenReturn().body();
+        StaffResponse staffResponse= new Gson().fromJson(respons.asString(), StaffResponse.class);
+        Staff staff= staffResponse.data;
+        Assert.assertEquals(0,staff.getStatus());
+    }
+
+    @Test
+    public void D_ActivateStaff(){
+        ResponseBody response = given()
+                .contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().patch(baseUrl+staffId+"/activate").thenReturn().body();
+
+        ResponseBody respons = given()
+                .contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().get(baseUrl+staffId+"/").thenReturn().body();
+        StaffResponse staffResponse= new Gson().fromJson(respons.asString(), StaffResponse.class);
+        Staff staff= staffResponse.data;
+        Assert.assertEquals(1,staff.getStatus());
+    }
+
+    @Test
+    public void E_getAllStaffs(){
+        RequestSpecification httpRequest = RestAssured.given()
+                .contentType(ContentType.JSON)
+                .header("Authorization",token)
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter());
+        Response response = httpRequest.get(baseUrl);
+        Assert.assertEquals(200,response.getStatusCode());
+    }
+    
+
+    @Test
+    public void G_DeleteStaff() {
+        RequestSpecification httpRequest = RestAssured.given()
+                .contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter());
+        Response response = httpRequest.get(baseUrl+staffId+"/");
+        Assert.assertEquals(200,response.getStatusCode());
+    }
+
+    @AfterClass
+    public  void deleteBeforee(){
+            ResponseBody response = given().contentType(ContentType.JSON).header("Authorization", token).filter(new RequestLoggingFilter()).filter(new ResponseLoggingFilter()).when().delete("http://213.136.86.27:8083/api/v1.0/businesses/" + businessId + "/").thenReturn().body();
+            BusinesessResponse businesessResponse = new Gson().fromJson(response.asString(), BusinesessResponse.class);
+            Businesses businesses = businesessResponse.data;
+            this.businessId = businesses.getId();
+        }
+    }
+
