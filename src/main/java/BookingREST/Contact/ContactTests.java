@@ -30,8 +30,6 @@ public class ContactTests {
 
     @Test
     public void A_SendContact(){
-
-
         RequestSpecification httpRequest = given()
                 .contentType(ContentType.JSON)
                 .header("Authorization",token)

@@ -3,12 +3,28 @@ package BookingREST.Comments;
 import java.util.List;
 
 public class Comments {
+    int id;
     int business_id;
     String comment;
     float rating;
     String user_id;
-    List<rating_payload> rating_payload;
+    RatingPayload rating_payload;
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(String user_id) {
+        this.user_id = user_id;
+    }
 
     public float getRating() {
         return rating;
@@ -36,15 +52,15 @@ public class Comments {
         this.comment = comment;
     }
 
-    public List<Comments.rating_payload> getRating_payload() {
+    public RatingPayload getRating_payload() {
         return rating_payload;
     }
 
-    public void setRating_payload(List<Comments.rating_payload> rating_payload) {
+    public void setRating_payload(RatingPayload rating_payload) {
         this.rating_payload = rating_payload;
     }
 
-    public static class rating_payload{
+    public static class RatingPayload {
         int convenience;
         int purity;
         int quality;

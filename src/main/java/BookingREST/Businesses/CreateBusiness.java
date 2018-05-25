@@ -1,7 +1,9 @@
 package BookingREST.Businesses;
 
 import Auth.Users.GetUserToken;
+import BookingREST.Addresses.Address;
 import BookingREST.Addresses.AddressData;
+import BookingREST.Addresses.AddressResponse;
 import BookingREST.AuthBusiness.AuthBusinessTest;
 import BookingREST.Comments.CommentData;
 import BookingREST.Plans.Plan;
@@ -43,14 +45,14 @@ public class CreateBusiness {
     String firstName = faker.name().firstName();
     String lastName = faker.name().lastName();
     String name = faker.name().firstName();
-    String alias = faker.name().firstName();
-    String email = faker.name().firstName()+"@mail.com";
+    String alias = faker.name().firstName()+"a";
+    String email = faker.name().firstName()+"@mail.com"+"a";
     String phone = faker.regexify("+380[0-9]{9}");
     int sectorId;
     int promoterId;
     int strategyId;
     int businessId;
-    int favoritesId;
+    int adressId;
     int planId;
     String usertoken;
     String uesrId;
@@ -152,6 +154,10 @@ public class CreateBusiness {
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter())
                 .when().post("http://213.136.86.27:8083/api/v1.0/addresses/").thenReturn().body();
+        AddressResponse addressResponse= new Gson().fromJson(responseessa.asString(), AddressResponse.class);
+        Address address= addressResponse.getData();
+        this.adressId = address.getId();
+
 
         ResponseBody response1 = given()
                 .contentType(ContentType.JSON)
@@ -164,5 +170,9 @@ public class CreateBusiness {
 
         Assert.assertEquals(true,businesses1.is_verified);
         return businessId;
+    }
+
+    public int W_returnAdressId(){
+        return  adressId;
     }
 }
