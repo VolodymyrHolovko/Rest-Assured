@@ -219,6 +219,37 @@ public class ServiceTests {
 
     //I, J - get and detach services from address
 
+    @Test
+    public void I_GetServicesByAddress(){
+        ResponseBody response = given()
+                .contentType(ContentType.JSON)
+                .header("Authorization",token)
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().get(baseURLAddresses8084+addressID+"/services/").thenReturn().body();
+        AddressServicesResponse addressServicesResponse = new Gson().fromJson(response.asString(), AddressServicesResponse.class);
+        List<Service> addressServices = addressServicesResponse.getData();
+        Assert.assertEquals(Ids,addressServices.get(0).getService_id());
+        Assert.assertEquals(additionalServiceID,addressServices.get(1).getService_id());
+    }
+
+
+
+
+    @Test
+    public void DetachServicesFromAddress(){
+        ResponseBody response = given()
+                .contentType(ContentType.JSON)
+                .header("Authorization",token)
+                .body("{ \"services\": [ "+Ids+" ] }")
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().delete(baseURLAddresses8084+addressID+"/services/").thenReturn().body();
+        AddressServicesResponse addressServicesResponse = new Gson().fromJson(response.asString(), AddressServicesResponse.class);
+        List<Service> addressServices = addressServicesResponse.getData();
+        Assert.assertEquals(additionalServiceID,addressServices.get(0).getService_id());
+    }
+
 
 
 
