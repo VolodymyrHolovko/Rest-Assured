@@ -2,6 +2,7 @@ package BookingREST.ServiceGroups;
 
 
 import BookingREST.AuthBusiness.AuthBusinessTest;
+import BookingREST.Businesses.CreateBusiness;
 import com.google.gson.Gson;
 import com.jayway.restassured.RestAssured;
 import com.jayway.restassured.filter.log.RequestLoggingFilter;
@@ -20,18 +21,20 @@ import static com.jayway.restassured.RestAssured.given;
 
 
 public class ServiceGroupTests {
-    private String token = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJidXNpbmVzcy5wcm9tb3RlciIsImlhdCI6MTUyNzE1MDg5MCwiZXhwIjoxNTI3MTU0NDkwLCJuYmYiOjE1MjcxNTA4OTAsImp0aSI6IlJZMnR6cDJWaTlHc0hmbzEiLCJzdWIiOjIxLCJwcnYiOiI4NjQ0MmUzNDE2Y2NlOWVkMmI1NjhhOTAxZTJmMTExZjUzMjlmNDc1IiwiYnVzaW5lc3NlcyI6W3siaWQiOjgwLCJhZGRyZXNzZXMiOls3Ml19LHsiaWQiOjg0LCJhZGRyZXNzZXMiOls3Myw3Niw3OSw5MSw5MiwxMDQsMTA1LDEwNl19LHsiaWQiOjg1LCJhZGRyZXNzZXMiOltdfSx7ImlkIjo5MSwiYWRkcmVzc2VzIjpbXX1dfQ.S-MFahI10SnbDvFDsdscH6vsGniO0fI8KdUAWTF6k_niJbmZKeseVVPO-AbQs1WeY7h7NfXOIf7bnRJbWa7bAQyE73sk-jUeupF157bRwjsS6NvKHmQUZ22nejAZCsEASPxIXEARUMUbL8cnbYL1ukG1b2JWh6QxO4NCFTo6V9IX3SdXmMdRr5ftPjnmfdG2OxQcj5nmFnJJswGjHoPJs-5Xbofc0ShyyLZXLdpmhvyywGljtsTO3aIB0-2kgW8J6kBDiwSD_HEL8rzlPNIJN2iqrFlhGA9Fwkz-B68SOtDXGAl17L2fEKxpABxMgEox8293xfekFcjnHf0QO5EY_g";
+    String token;
     private String baseURL = "http://213.136.86.27:8084/api/v1.0/service-groups/";
     int Ids;
-    int businessID = 84;
+    int businessID;
     ServiceGroupData serviceGroupData = new ServiceGroupData();
+    CreateBusiness createBusiness = new CreateBusiness();
 
 
-   /* @BeforeClass
+    @BeforeClass
     public void getToken() {
+        businessID = createBusiness.validBusiness();
         AuthBusinessTest authBusinessTest = new AuthBusinessTest();
         this.token = authBusinessTest.GetAdminToken();
-    }*/
+    }
 
 
     @Test
@@ -84,7 +87,21 @@ public class ServiceGroupTests {
     }
 
     @Test
-    public void D_DeleteServicesGroup(){
+    public void D_GetAllServiceGroups(){
+        RequestSpecification httpRequest = RestAssured.given()
+                .contentType(ContentType.JSON)
+                .header("Authorization",token)
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter());
+        Response response = httpRequest.get(baseURL);
+        Assert.assertEquals(200,response.getStatusCode());
+
+
+    }
+
+
+    @Test
+    public void E_DeleteServicesGroup(){
         ResponseBody response = given()
                 .contentType(ContentType.JSON)
                 .header("Authorization", token)
@@ -113,18 +130,7 @@ public class ServiceGroupTests {
     }
 
 
-    @Test
-    public void GetAllServiceGroups(){
-        RequestSpecification httpRequest = RestAssured.given()
-                .contentType(ContentType.JSON)
-                .header("Authorization",token)
-                .filter(new RequestLoggingFilter())
-                .filter(new ResponseLoggingFilter());
-        Response response = httpRequest.get(baseURL);
-        Assert.assertEquals(200,response.getStatusCode());
 
-
-    }
 
 
 
