@@ -215,10 +215,6 @@ public class ServiceTests {
     }
 
 
-
-
-    //I, J - get and detach services from address
-
     @Test
     public void I_GetServicesByAddress(){
         ResponseBody response = given()
@@ -229,15 +225,13 @@ public class ServiceTests {
                 .when().get(baseURLAddresses8084+addressID+"/services/").thenReturn().body();
         AddressServicesResponse addressServicesResponse = new Gson().fromJson(response.asString(), AddressServicesResponse.class);
         List<Service> addressServices = addressServicesResponse.getData();
-        Assert.assertEquals(Ids,addressServices.get(0).getService_id());
-        Assert.assertEquals(additionalServiceID,addressServices.get(1).getService_id());
+        Assert.assertEquals(Ids,addressServices.get(0).getId());
+        Assert.assertEquals(additionalServiceID,addressServices.get(1).getId());
     }
 
 
-
-
     @Test
-    public void DetachServicesFromAddress(){
+    public void J_DetachServicesFromAddress(){
         ResponseBody response = given()
                 .contentType(ContentType.JSON)
                 .header("Authorization",token)
@@ -247,10 +241,8 @@ public class ServiceTests {
                 .when().delete(baseURLAddresses8084+addressID+"/services/").thenReturn().body();
         AddressServicesResponse addressServicesResponse = new Gson().fromJson(response.asString(), AddressServicesResponse.class);
         List<Service> addressServices = addressServicesResponse.getData();
-        Assert.assertEquals(additionalServiceID,addressServices.get(0).getService_id());
+        Assert.assertEquals(additionalServiceID,addressServices.get(0).getId());
     }
-
-
 
 
 }
