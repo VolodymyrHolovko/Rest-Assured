@@ -24,6 +24,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 
+import java.util.List;
 import java.util.Map;
 
 import static com.jayway.restassured.RestAssured.given;
@@ -35,6 +36,7 @@ public class ServiceTests {
         private String baseURLAddresses8083 = "http://213.136.86.27:8083/api/v1.0/addresses/";
         private String baseURLAddresses8084 = "http://213.136.86.27:8084/api/v1.0/addresses/";
         int Ids;
+        int additionalServiceID;
         int businessID;
         int serviceGroupID;
         int addressID;
@@ -60,29 +62,10 @@ public class ServiceTests {
         ServiceGroupResponse serviceGroupResponse = new Gson().fromJson(response.asString(), ServiceGroupResponse.class);
         ServiceGroup serviceGroup = serviceGroupResponse.data;
         this.serviceGroupID = serviceGroup.getId();
+        addressID=createBusiness.W_returnAdressId();
+        }
 
-        AddressData addressData = new AddressData();
-        ResponseBody responseAddress = given()
-                .contentType(ContentType.JSON)
-                .header("Authorization", token)
-                .body(addressData.CreateAddress(businessID))
-                .filter(new RequestLoggingFilter())
-                .filter(new ResponseLoggingFilter())
-                .when().post(baseURLAddresses8083).thenReturn().body();
-        AddressResponse addressResponse = new Gson().fromJson(response.asString(), AddressResponse.class);
-        Address address = addressResponse.data;
-        this.addressID = address.getId();
-
-
-
-    }
-
-
-
-
-
-
-        @Test
+    @Test
         public void A_CreateService(){
             ResponseBody response = given()
                     .contentType(ContentType.JSON)
@@ -103,9 +86,17 @@ public class ServiceTests {
             Assert.assertEquals(1,service.getStatus());
 
 
-
+        ResponseBody responseAdditionalService = given()
+                .contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .body(serviceData.CreateService(businessID,serviceGroupID))
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().post(baseURL).thenReturn().body();
+        ServiceResponse serviceAdditionalResponse = new Gson().fromJson(responseAdditionalService.asString(), ServiceResponse.class);
+        Service additionalService = serviceAdditionalResponse.data;
+        additionalServiceID = additionalService.getId();
     }
-
 
     @Test
     public void B_UpdateService(){
@@ -123,9 +114,6 @@ public class ServiceTests {
         Assert.assertEquals(30,service.getDuration());
         Assert.assertEquals(800,service.getPrice());
         Assert.assertEquals("USD",service.getCurrency());
-
-
-
     }
 
 
@@ -146,8 +134,6 @@ public class ServiceTests {
         Assert.assertEquals(800,service.getPrice());
         Assert.assertEquals("USD",service.getCurrency());
         Assert.assertEquals(1,service.getStatus());
-
-
     }
 
     @Test
@@ -167,8 +153,6 @@ public class ServiceTests {
         Assert.assertEquals(800,service.getPrice());
         Assert.assertEquals("USD",service.getCurrency());
         Assert.assertEquals(0,service.getStatus());
-
-
     }
 
 
@@ -189,8 +173,6 @@ public class ServiceTests {
         Assert.assertEquals(800,service.getPrice());
         Assert.assertEquals("USD",service.getCurrency());
         Assert.assertEquals(1,service.getStatus());
-
-
     }
 
     @Test
@@ -202,25 +184,40 @@ public class ServiceTests {
                 .filter(new ResponseLoggingFilter());
         Response response = httpRequest.get(baseURL);
         Assert.assertEquals(200,response.getStatusCode());
-
-
     }
 
     @Test
-    public void G_AttachServiceToAddress(){
+    public void G_GetServicesByServiceGroup(){
+        ResponseBody response = given()
+                .contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .when().get(baseURLServiceGroups+serviceGroupID+"/services/").thenReturn().body();
+        AddressServicesResponse addressServicesResponse = new Gson().fromJson(response.asString(), AddressServicesResponse.class);
+        List<Service> addressServices = addressServicesResponse.getData();
+        Assert.assertEquals(Ids,addressServices.get(0).getId());
+        Assert.assertEquals(additionalServiceID,addressServices.get(1).getId());
+    }
+
+
+    @Test
+    public void H_AttachServiceToAddress(){
         ResponseBody response = given()
                 .contentType(ContentType.JSON)
                 .header("Authorization",token)
-                .body("{ \"services\": [ "+Ids+" ] }")
+                .body("{ \"services\": [ "+Ids+","+additionalServiceID+" ] }")
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter())
                 .when().post(baseURLAddresses8084+addressID+"/services/").thenReturn().body();
-                Map<String, Integer> data = response.jsonPath().getMap("data[0]");
-                System.out.println(data.get("service_id"));
-                //Assert.assertEquals(Ids,data.get("service_id"));
+                 AddressServicesResponse addressServicesResponse = new Gson().fromJson(response.asString(), AddressServicesResponse.class);
+                 List<Service> addressServices = addressServicesResponse.getData();
+                 Assert.assertEquals(Ids,addressServices.get(0).getService_id());
+                 Assert.assertEquals(additionalServiceID,addressServices.get(1).getService_id());
     }
 
-    //H, I - get and detach services
+
+
+
+    //I, J - get and detach services from address
 
 
 

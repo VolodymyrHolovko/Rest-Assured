@@ -1,5 +1,7 @@
 package BookingREST.ServiceGroups.Services;
 
+import java.util.List;
+
 public class Service {
 
 
@@ -12,6 +14,7 @@ public class Service {
     private String currency;
     private int status;
     private String deleted_at;
+    private int service_id;
 
     public int getId() {
         return id;
@@ -84,4 +87,17 @@ public class Service {
     public void setDeleted_at(String deleted_at) {
         this.deleted_at = deleted_at;
     }
+
+    public int getService_id() {
+        return service_id;
+    }
+
+    public void setService_id(int service_id) {
+        this.service_id = service_id;
+    }
+
+
+
+
+
 }
