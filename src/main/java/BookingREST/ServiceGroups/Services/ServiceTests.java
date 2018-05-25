@@ -11,6 +11,10 @@ import BookingREST.Businesses.CreateBusiness;
 import BookingREST.ServiceGroups.ServiceGroup;
 import BookingREST.ServiceGroups.ServiceGroupData;
 import BookingREST.ServiceGroups.ServiceGroupResponse;
+import BookingREST.Staffs.Staff;
+import BookingREST.Staffs.StaffData;
+import BookingREST.Staffs.StaffResponse;
+import com.github.javafaker.Faker;
 import com.google.gson.Gson;
 import com.jayway.restassured.RestAssured;
 import com.jayway.restassured.filter.log.RequestLoggingFilter;
@@ -35,6 +39,8 @@ public class ServiceTests {
         private String baseURLServiceGroups = "http://213.136.86.27:8084/api/v1.0/service-groups/";
         private String baseURLAddresses8083 = "http://213.136.86.27:8083/api/v1.0/addresses/";
         private String baseURLAddresses8084 = "http://213.136.86.27:8084/api/v1.0/addresses/";
+        private String baseURLStaff = "http://213.136.86.27:8084/api/v1.0/staffs/";
+        int staffId;
         int Ids;
         int additionalServiceID;
         int businessID;
@@ -42,6 +48,11 @@ public class ServiceTests {
         int addressID;
         ServiceData serviceData = new ServiceData();
         CreateBusiness createBusiness = new CreateBusiness();
+
+        Faker faker = new Faker();
+        String email = faker.name().firstName()+"@mail.com"+"a";
+        String phone = faker.regexify("+380[0-9]{9}");
+        StaffData staffData = new StaffData();
 
 
 
@@ -63,6 +74,17 @@ public class ServiceTests {
         ServiceGroup serviceGroup = serviceGroupResponse.data;
         this.serviceGroupID = serviceGroup.getId();
         addressID=createBusiness.W_returnAdressId();
+
+        ResponseBody respons = given()
+                .contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .body(staffData.createStaff(businessID,addressID,phone,email))
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().post(baseURLStaff).thenReturn().body();
+        StaffResponse staffResponse= new Gson().fromJson(respons.asString(), StaffResponse.class);
+        Staff staff= staffResponse.data;
+        this.staffId = staff.getId();
         }
 
     @Test
@@ -239,6 +261,54 @@ public class ServiceTests {
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter())
                 .when().delete(baseURLAddresses8084+addressID+"/services/").thenReturn().body();
+        AddressServicesResponse addressServicesResponse = new Gson().fromJson(response.asString(), AddressServicesResponse.class);
+        List<Service> addressServices = addressServicesResponse.getData();
+        Assert.assertEquals(additionalServiceID,addressServices.get(0).getId());
+    }
+
+
+
+
+
+    @Test
+    public void K_AttachServiceToStaff(){
+        ResponseBody response = given()
+                .contentType(ContentType.JSON)
+                .header("Authorization",token)
+                .body("{ \"services\": [ "+Ids+","+additionalServiceID+" ] }")
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().post(baseURLStaff+staffId+"/services/").thenReturn().body();
+        AddressServicesResponse addressServicesResponse = new Gson().fromJson(response.asString(), AddressServicesResponse.class);
+        List<Service> addressServices = addressServicesResponse.getData();
+        Assert.assertEquals(Ids,addressServices.get(0).getService_id());
+        Assert.assertEquals(additionalServiceID,addressServices.get(1).getService_id());
+    }
+
+    @Test
+    public void L_GetServicesByStaff(){
+        ResponseBody response = given()
+                .contentType(ContentType.JSON)
+                .header("Authorization",token)
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().get(baseURLStaff+staffId+"/services/").thenReturn().body();
+        AddressServicesResponse addressServicesResponse = new Gson().fromJson(response.asString(), AddressServicesResponse.class);
+        List<Service> addressServices = addressServicesResponse.getData();
+        Assert.assertEquals(Ids,addressServices.get(0).getId());
+        Assert.assertEquals(additionalServiceID,addressServices.get(1).getId());
+    }
+
+
+    @Test
+    public void M_DetachServicesFromStaff(){
+        ResponseBody response = given()
+                .contentType(ContentType.JSON)
+                .header("Authorization",token)
+                .body("{ \"services\": [ "+Ids+" ] }")
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().delete(baseURLStaff+staffId+"/services/").thenReturn().body();
         AddressServicesResponse addressServicesResponse = new Gson().fromJson(response.asString(), AddressServicesResponse.class);
         List<Service> addressServices = addressServicesResponse.getData();
         Assert.assertEquals(additionalServiceID,addressServices.get(0).getId());
