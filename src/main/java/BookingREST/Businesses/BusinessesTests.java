@@ -167,13 +167,7 @@ public class BusinessesTests {
                 .filter(new ResponseLoggingFilter())
                 .when().patch("http://213.136.86.27:8083/api/v1.0/businesses/"+businessId+"/plans/"+planId+"/subscribe/").thenReturn().body();
 
-        ResponseBody responseessa = given()
-                .contentType(ContentType.JSON)
-                .header("Authorization", token)
-                .body(addressData.CreateAddress(businessId))
-                .filter(new RequestLoggingFilter())
-                .filter(new ResponseLoggingFilter())
-                .when().post("http://213.136.86.27:8083/api/v1.0/addresses/").thenReturn().body();
+
     }
 
     @Test
