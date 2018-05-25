@@ -9,7 +9,7 @@ public class ServiceGroupResponse {
         this.data = data;
     }
 
-    ServiceGroup data;
+    public ServiceGroup data;
 
 
 

@@ -1,7 +1,7 @@
 package BookingREST.Addresses;
 
 public class AddressResponse {
-    Address data;
+    public Address data;
 
     public Address getData(){
         return data;
