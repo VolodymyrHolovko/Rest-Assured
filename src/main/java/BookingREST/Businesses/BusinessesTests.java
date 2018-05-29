@@ -1,7 +1,11 @@
 package BookingREST.Businesses;
 
 import Auth.Users.GetUserToken;
+import BookingREST.Addresses.AddressData;
 import BookingREST.AuthBusiness.AuthBusinessTest;
+import BookingREST.Comments.CommentData;
+import BookingREST.Comments.Comments;
+import BookingREST.Comments.CommentsResponse;
 import BookingREST.Favorites.Favorites;
 import BookingREST.Favorites.FavoritesResponse;
 import BookingREST.Plans.Plan;
@@ -16,6 +20,7 @@ import BookingREST.Strategy.Strategy;
 import BookingREST.Strategy.StrategyData;
 import BookingREST.Strategy.StrategyResponse;
 import BookingREST.Plans.PlanData;
+import com.github.javafaker.Address;
 import com.github.javafaker.Faker;
 import com.google.gson.Gson;
 import com.jayway.restassured.RestAssured;
@@ -35,11 +40,13 @@ import static com.jayway.restassured.RestAssured.given;
 
 public class BusinessesTests {
     String token;
+    CommentData commentData = new CommentData();
     SectorData sectorData = new SectorData();
     BusinesessData businesessData = new BusinesessData();
     PromoterData promoterData = new PromoterData();
     StrategyData strategyData = new StrategyData();
     PlanData planData = new PlanData();
+    AddressData addressData = new AddressData();
     String baseUrl = "http://213.136.86.27:8083/api/v1.0/businesses/";
 
     Faker faker = new Faker();
@@ -67,6 +74,7 @@ public class BusinessesTests {
 
             GetUserToken getUserToken1= new GetUserToken();
             this.uesrId = getUserToken1.GetUserId();
+
 
             AuthBusinessTest getToken = new AuthBusinessTest();
             this.token = getToken.GetAdminToken();
@@ -109,13 +117,15 @@ public class BusinessesTests {
             ResponseBody responseess = given()
                     .contentType(ContentType.JSON)
                     .header("Authorization", token)
-                    .body(planData.CreatePlan())
+                    .body(planData.freePlan(businessId))
                     .filter(new RequestLoggingFilter())
                     .filter(new ResponseLoggingFilter())
                     .when().post("http://213.136.86.27:8083/api/v1.0/plans/").thenReturn().body();
             PlanResponse planResponse = new  Gson().fromJson(responseess.asString(), PlanResponse.class);
             Plan plan = planResponse.getData();
             this.planId = plan.getId();
+
+
     }
 
     @Test
@@ -123,7 +133,7 @@ public class BusinessesTests {
         ResponseBody response = given()
                 .contentType(ContentType.JSON)
                 .header("Authorization", token)
-                .body(businesessData.createBusinesses(promoterId,strategyId,sectorId,alias))
+                .body(businesessData.createBusinesses(promoterId,1,sectorId,alias))
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter())
                 .when().post("http://213.136.86.27:8083/api/v1.0/businesses/").thenReturn().body();
@@ -132,7 +142,7 @@ public class BusinessesTests {
         this.businessId = businesses.getId();
 
         Assert.assertEquals(promoterId,businesses.getPromoter_id());
-        Assert.assertEquals(strategyId,businesses.getStrategy_id());
+        Assert.assertEquals(1,businesses.getStrategy_id());
         Assert.assertEquals(sectorId,businesses.getSector_id());
         Assert.assertEquals("maximum",businesses.getName());
         Assert.assertEquals("Створимо цей заклад на благо людства",businesses.getShort_description());
@@ -144,6 +154,8 @@ public class BusinessesTests {
         Assert.assertEquals("http://staging.eservia.com/image/media/201805/jAgUxCmshMJuFrFl.png",businesses.getLogo());
         Assert.assertEquals("https://www.instagram.com/original.cv/?hl=ru",businesses.getLink_instagram());
         Assert.assertEquals("https://www.facebook.com/max.lutkovec",businesses.getLink_facebook());
+
+
     }
 
     @Test
@@ -154,6 +166,7 @@ public class BusinessesTests {
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter())
                 .when().patch("http://213.136.86.27:8083/api/v1.0/businesses/"+businessId+"/plans/"+planId+"/subscribe/").thenReturn().body();
+
 
     }
 
@@ -216,7 +229,7 @@ public class BusinessesTests {
     }
 
     @Test
-    public void E_displayBusines(){
+    public void F_displayBusines(){
         ResponseBody response = given()
                 .contentType(ContentType.JSON)
                 .header("Authorization", token)
@@ -230,7 +243,7 @@ public class BusinessesTests {
     }
 
     @Test
-    public void F_hideBusines(){
+    public void G_hideBusines(){
         ResponseBody response = given()
                 .contentType(ContentType.JSON)
                 .header("Authorization", token)
@@ -247,7 +260,7 @@ public class BusinessesTests {
 
 
     @Test
-    public void G_promoterBusines(){
+    public void H_promoterBusines(){
         this.alias = faker.name().firstName();
         ResponseBody response = given()
                 .contentType(ContentType.JSON)
@@ -265,7 +278,7 @@ public class BusinessesTests {
     }
 
     @Test
-    public void H_promoterBusines(){
+    public void I_promoterBusines(){
         this.alias = faker.name().firstName();
         ResponseBody response = given()
                 .contentType(ContentType.JSON)
@@ -278,7 +291,7 @@ public class BusinessesTests {
     }
 
     @Test
-    public void I_addToFavoriteBusines() {
+    public void J_addToFavoriteBusines() {
         ResponseBody response = given().contentType(ContentType.JSON)
                 .header("Authorization", usertoken)
                 .filter(new RequestLoggingFilter())
@@ -290,7 +303,7 @@ public class BusinessesTests {
     }
 
     @Test
-    public void J_getFavoriteBusines() {
+    public void K_getFavoriteBusines() {
         ResponseBody response = given().contentType(ContentType.JSON)
                 .header("Authorization", usertoken)
                 .filter(new RequestLoggingFilter())
@@ -302,7 +315,7 @@ public class BusinessesTests {
     }
 
     @Test
-    public void K_getUserFavoriteBusines() {
+    public void L_getUserFavoriteBusines() {
         ResponseBody response = given().contentType(ContentType.JSON)
                 .header("Authorization", usertoken)
                 .filter(new RequestLoggingFilter())
@@ -313,18 +326,19 @@ public class BusinessesTests {
     }
 
     @Test
-    public void getAllBusiness(){
+    public void M_getAllBusiness(){
             RequestSpecification httpRequest = RestAssured.given()
                     .contentType(ContentType.JSON)
                     .header("Authorization",token)
                     .filter(new RequestLoggingFilter())
                     .filter(new ResponseLoggingFilter());
-            Response response = httpRequest.get(baseUrl);
-            Assert.assertEquals(200,response.getStatusCode());
+        Response response = httpRequest.get(baseUrl);
+        Assert.assertEquals(200,response.getStatusCode());
     }
 
+
     @Test
-    public void L_deleteFavoriteBusines() {
+    public void N_deleteFavoriteBusines() {
         ResponseBody response = given().contentType(ContentType.JSON)
                 .header("Authorization", usertoken)
                 .filter(new RequestLoggingFilter())
@@ -338,7 +352,7 @@ public class BusinessesTests {
 
 
     @Test
-    public void M_deleteBusines() {
+    public void O_deleteBusines() {
         ResponseBody response = given().contentType(ContentType.JSON).header("Authorization", token).filter(new RequestLoggingFilter()).filter(new ResponseLoggingFilter()).when().delete("http://213.136.86.27:8083/api/v1.0/businesses/" + businessId + "/").thenReturn().body();
         BusinesessResponse businesessResponse = new Gson().fromJson(response.asString(), BusinesessResponse.class);
         Businesses businesses = businesessResponse.data;
@@ -347,12 +361,20 @@ public class BusinessesTests {
 
     @AfterClass
     public void deleteBefore() {
-        ResponseBody responses = given().contentType(ContentType.JSON).header("Authorization", token).when().delete("http://213.136.86.27:8083/api/v1.0/plans/"+planId).thenReturn().body();
+        ResponseBody responses = given().contentType(ContentType.JSON)
+                .header("Authorization", token).when()
+                .delete("http://213.136.86.27:8083/api/v1.0/plans/"+planId).thenReturn().body();
 
-        ResponseBody response = given().contentType(ContentType.JSON).header("Authorization", usertoken).when().get("http://213.136.86.27:8083/api/v1.0/promoters/" + promoterId).thenReturn().body();
+        ResponseBody response = given().contentType(ContentType.JSON)
+                .header("Authorization", usertoken).when()
+                .get("http://213.136.86.27:8083/api/v1.0/promoters/" + promoterId).thenReturn().body();
 
-        ResponseBody response1 = given().contentType(ContentType.JSON).header("Authorization", usertoken).when().get("http://213.136.86.27:8083/api/v1.0/sector/" + sectorId).thenReturn().body();
+        ResponseBody response1 = given().contentType(ContentType.JSON)
+                .header("Authorization", usertoken).when()
+                .get("http://213.136.86.27:8083/api/v1.0/sector/" + sectorId).thenReturn().body();
 
-        ResponseBody response2 = given().contentType(ContentType.JSON).header("Authorization", usertoken).when().get("http://213.136.86.27:8083/api/v1.0/strategy/" + strategyId).thenReturn().body();
+        ResponseBody response2 = given().contentType(ContentType.JSON)
+                .header("Authorization", usertoken).when()
+                .get("http://213.136.86.27:8083/api/v1.0/strategy/" + strategyId).thenReturn().body();
     }
     }

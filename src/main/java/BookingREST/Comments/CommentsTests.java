@@ -1,9 +1,13 @@
 package BookingREST.Comments;
 
+import Auth.Users.GetUserToken;
+import BookingREST.Addresses.Address;
+import BookingREST.Addresses.AddressResponse;
 import BookingREST.AuthBusiness.AuthBusinessTest;
 import BookingREST.Businesses.BusinesessData;
 import BookingREST.Businesses.BusinesessResponse;
 import BookingREST.Businesses.Businesses;
+import BookingREST.Businesses.CreateBusiness;
 import BookingREST.Promoter.Promoter;
 import BookingREST.Promoter.PromoterData;
 import BookingREST.Promoter.PromoterResponse;
@@ -15,69 +19,131 @@ import BookingREST.Strategy.StrategyData;
 import BookingREST.Strategy.StrategyResponse;
 import com.github.javafaker.Faker;
 import com.google.gson.Gson;
+import com.jayway.restassured.RestAssured;
 import com.jayway.restassured.filter.log.RequestLoggingFilter;
 import com.jayway.restassured.filter.log.ResponseLoggingFilter;
 import com.jayway.restassured.http.ContentType;
+import com.jayway.restassured.response.Response;
 import com.jayway.restassured.response.ResponseBody;
+import com.jayway.restassured.specification.RequestSpecification;
+import org.testng.Assert;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import static com.jayway.restassured.RestAssured.given;
 
 public class CommentsTests {
-    String baseUrl="http://213.136.86.27:8083/api/v1.0/promoters/";
+    String baseUrl = "http://213.136.86.27:8083/api/v1.0/comments/";
+    String usertoken;
     String token;
-    int sector_id;
-    int strategy_id;
-    int promoterId;
     int businessId;
-    Faker faker = new Faker();
-    String sectorName = faker.name().firstName().toLowerCase();
-    String firstName = faker.name().firstName();
-    String lastName = faker.name().lastName();
-    String name = faker.name().firstName();
-    String alias = faker.name().firstName();
-    String email = faker.name().firstName()+"@smail.com";
-    String phone = faker.regexify("+380[0-9]{9}");
-    SectorData sectorData = new SectorData();
-    StrategyData strategyData = new StrategyData();
-    PromoterData promoterData = new PromoterData();
-    BusinesessData businesessData = new BusinesessData();
+    int commentId;
+    String userId;
+    CommentData commentData = new CommentData();
+    CreateBusiness createBusiness = new CreateBusiness();
+
+
 
     @BeforeClass
     public void beforeClass(){
+        businessId = createBusiness.validBusiness();
+        
+        GetUserToken getUserToken= new GetUserToken();
+        this.usertoken = getUserToken.GetUserToken();
+
         AuthBusinessTest getToken = new AuthBusinessTest();
         this.token = getToken.GetAdminToken();
 
-    ResponseBody responseSector = given().contentType(ContentType.JSON).header("Authorization", token).body(sectorData.createSector(sectorName)).filter(new RequestLoggingFilter()).filter(new ResponseLoggingFilter()).when().post("http://213.136.86.27:8083/api/v1.0/sectors/").thenReturn().body();
-    SectorResponse sectorResponse = new Gson().fromJson(responseSector.asString(), SectorResponse.class);
-    Sector sector = sectorResponse.data;
-        this.sector_id =sector.getId();
+        GetUserToken getUserToken1= new GetUserToken();
+        this.userId = getUserToken1.GetUserId();
+    }
 
-    ResponseBody responseStrategy = given().contentType(ContentType.JSON).header("Authorization", token).body(strategyData.addPromoters(name)).filter(new RequestLoggingFilter()).filter(new ResponseLoggingFilter()).when().post("http://213.136.86.27:8083/api/v1.0/strategies/").thenReturn().body();
-    StrategyResponse strategyResponse = new Gson().fromJson(responseStrategy.asString(), StrategyResponse.class);
-    Strategy addStrategy = strategyResponse.data;
-        this.strategy_id =addStrategy.getId();
+    @Test
+    public void A_createComment(){
+        ResponseBody respons = given()
+                .contentType(ContentType.JSON)
+                .header("Authorization", usertoken)
+                .body(commentData.createComment(businessId))
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().post(baseUrl).thenReturn().body();
+        CommentsResponse commentsResponse= new Gson().fromJson(respons.asString(), CommentsResponse.class);
+        Comments comments= commentsResponse.data;
+        this.commentId = comments.getId();
+        Assert.assertEquals(7,(int)comments.getRating());
+        Assert.assertEquals(7,comments.getRating_payload().getConvenience());
+        Assert.assertEquals(6,comments.getRating_payload().getPurity());
+        Assert.assertEquals(8,comments.getRating_payload().getQuality());
+    }
 
-    ResponseBody responsePromoter = given().contentType(ContentType.JSON).header("Authorization", token).body(promoterData.addPromoters(firstName, lastName, email, phone)).filter(new RequestLoggingFilter()).filter(new ResponseLoggingFilter()).when().post("http://213.136.86.27:8083/api/v1.0/promoters/").thenReturn().body();
-    PromoterResponse promoterResponse = new Gson().fromJson(responsePromoter.asString(), PromoterResponse.class);
-    Promoter addPromoter = promoterResponse.getData();
-        this.promoterId =addPromoter.getId();
+    @Test
+    public void B_getComment(){
+        ResponseBody respons = given()
+                .contentType(ContentType.JSON)
+                .header("Authorization", usertoken)
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().get(baseUrl+commentId+"/").thenReturn().body();
+        CommentsResponse commentsResponse= new Gson().fromJson(respons.asString(), CommentsResponse.class);
+        Comments comments= commentsResponse.data;
+        this.commentId = comments.getId();
+        Assert.assertEquals(7,(int)comments.getRating());
+        Assert.assertEquals(7,comments.getRating_payload().getConvenience());
+        Assert.assertEquals(6,comments.getRating_payload().getPurity());
+        Assert.assertEquals(8,comments.getRating_payload().getQuality());
+    }
 
-    ResponseBody responseBusiness = given().contentType(ContentType.JSON).header("Authorization", token).body(businesessData.createBusinesses(promoterId, strategy_id, sector_id, alias)).filter(new RequestLoggingFilter()).filter(new ResponseLoggingFilter()).when().post("http://213.136.86.27:8083/api/v1.0/businesses/").thenReturn().body();
-    BusinesessResponse businesessResponse = new Gson().fromJson(responseBusiness.asString(), BusinesessResponse.class);
+    @Test
+    public void C_getAllComments(){
+        RequestSpecification httpRequest = RestAssured.given()
+                .contentType(ContentType.JSON)
+                .header("Authorization",token)
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter());
+        Response response = httpRequest.get(baseUrl);
+        Assert.assertEquals(200,response.getStatusCode());
+    }
+
+    @Test
+    public void D_getUserComment() {
+        RequestSpecification httpRequest = RestAssured.given()
+                .contentType(ContentType.JSON)
+                .header("Authorization",token)
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter());
+        Response response = httpRequest.get("http://213.136.86.27:8083/api/v1.0/users/"+userId+"/comments/");
+        Assert.assertEquals(200,response.getStatusCode());
+    }
+
+    @Test
+    public void E_getAllComments(){
+        RequestSpecification httpRequest = RestAssured.given()
+                .contentType(ContentType.JSON)
+                .header("Authorization",token)
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter());
+        Response response = httpRequest.get("http://213.136.86.27:8083/api/v1.0/businesses/"+businessId+"/comments/");
+        Assert.assertEquals(200,response.getStatusCode());
+    }
+
+    @Test
+    public void F_getComment(){
+        ResponseBody respons = given()
+                .contentType(ContentType.JSON)
+                .header("Authorization", usertoken)
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().delete(baseUrl+commentId+"/").thenReturn().body();
+
+    }
+
+
+
+    @AfterClass
+    public void O_deleteBusines() {
+    ResponseBody response = given().contentType(ContentType.JSON).header("Authorization", token).filter(new RequestLoggingFilter()).filter(new ResponseLoggingFilter()).when().delete("http://213.136.86.27:8083/api/v1.0/businesses/" + businessId + "/").thenReturn().body();
+    BusinesessResponse businesessResponse = new Gson().fromJson(response.asString(), BusinesessResponse.class);
     Businesses businesses = businesessResponse.data;
-        this.businessId =businesses.getId();
-}
-
-@Test
-    public void createComment(){
-    ResponseBody responseSector = given().contentType(ContentType.JSON)
-            .header("Authorization", token)
-            .filter(new RequestLoggingFilter())
-            .filter(new ResponseLoggingFilter()).when()
-            .post("http://213.136.86.27:8083/api/v1.0/comments/").thenReturn().body();
-
-}
-
+    }
 }
