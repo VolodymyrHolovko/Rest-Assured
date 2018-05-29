@@ -263,7 +263,7 @@ public class ServiceTests {
                 .when().delete(baseURLAddresses8084+addressID+"/services/").thenReturn().body();
         AddressServicesResponse addressServicesResponse = new Gson().fromJson(response.asString(), AddressServicesResponse.class);
         List<Service> addressServices = addressServicesResponse.getData();
-        Assert.assertEquals(additionalServiceID,addressServices.get(0).getId());
+        Assert.assertEquals(Ids,addressServices.get(0).getService_id());
     }
 
 
@@ -311,8 +311,9 @@ public class ServiceTests {
                 .when().delete(baseURLStaff+staffId+"/services/").thenReturn().body();
         AddressServicesResponse addressServicesResponse = new Gson().fromJson(response.asString(), AddressServicesResponse.class);
         List<Service> addressServices = addressServicesResponse.getData();
-        Assert.assertEquals(additionalServiceID,addressServices.get(0).getId());
+        Assert.assertEquals(Ids,addressServices.get(0).getService_id());
     }
+
 
 
 }
