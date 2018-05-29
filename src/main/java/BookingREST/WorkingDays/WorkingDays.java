@@ -9,6 +9,24 @@ public class WorkingDays {
     private int object_id;
     @JsonProperty("is_exclusion")
     private boolean is_exclusion;
+    private int id;
+    private String updated_at;
+
+    public String getUpdated_at() {
+        return updated_at;
+    }
+
+    public void setUpdated_at(String updated_at) {
+        this.updated_at = updated_at;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getRule() {
         return rule;

@@ -15,13 +15,25 @@ public class WorkingDaysData {
         Date date = new Date();
         long addTwoHours = date.getTime() + TimeUnit.MINUTES.toMillis(125);
         long addThreeHours = date.getTime() + TimeUnit.MINUTES.toMillis(251);
-        String dateTime = dateFormat.format(new Date(addTwoHours));
-        String endTime = dateFormat.format(new Date(addThreeHours));
+         String dateTime = dateFormat.format(new Date(addTwoHours));
+         String endTime = dateFormat.format(new Date(addThreeHours));
         addWorkindDay.setRule("FREQ=DAILY;DTSTART="+dateTime+";DTEND="+endTime+";INTERVAL=1");
         addWorkindDay.setBusiness_id(business_id);
         addWorkindDay.setObject_type("address");
         addWorkindDay.setObject_id(object_id);
         addWorkindDay.setIs_exclusion(false);
      return addWorkindDay;
+    }
+    public WorkingDays updateWorkingDays() {
+        WorkingDays updateWorkingDay = new WorkingDays();
+        DateFormat dateFormat = new SimpleDateFormat(D_F_T, Locale.getDefault());
+        Date date = new Date();
+        long addTwoHours = date.getTime() + TimeUnit.MINUTES.toMillis(129);
+        long addThreeHours = date.getTime() + TimeUnit.MINUTES.toMillis(259);
+        String dateTimeUpdate = dateFormat.format(new Date(addTwoHours));
+        String endTimeUpdate = dateFormat.format(new Date(addThreeHours));
+        updateWorkingDay.setRule("FREQ=DAILY;DTSTART="+dateTimeUpdate+";DTEND="+endTimeUpdate+";INTERVAL=1");
+        updateWorkingDay.setIs_exclusion(true);
+        return updateWorkingDay;
     }
 }

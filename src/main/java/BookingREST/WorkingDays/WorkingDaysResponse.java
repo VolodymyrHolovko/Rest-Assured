@@ -1,15 +1,13 @@
 package BookingREST.WorkingDays;
 
-import java.util.List;
-
 public class WorkingDaysResponse {
-    List<WorkingDays> data;
+    WorkingDays data;
 
-    public List<WorkingDays> getData() {
+    public WorkingDays getData() {
         return data;
     }
 
-    public void setData(List<WorkingDays> data) {
+    public void setData(WorkingDays data) {
         this.data = data;
     }
 }
