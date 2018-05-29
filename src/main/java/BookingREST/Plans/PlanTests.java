@@ -134,14 +134,6 @@ public class PlanTests {
 
     @Test
     public void F_GetAllPlans(){
-        /*ResponseBodyData response = given()
-                .contentType(ContentType.JSON)
-                .header("Authorization",token)
-                .filter(new RequestLoggingFilter())
-                .filter(new ResponseLoggingFilter())
-                .when().get(baseURL).thenReturn().body();*/
-
-        //RestAssured.baseURI = baseURL;
         RequestSpecification httpRequest = RestAssured.given()
                 .contentType(ContentType.JSON)
                 .header("Authorization",token)
