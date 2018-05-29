@@ -95,8 +95,6 @@ public class ServiceGroupTests {
                 .filter(new ResponseLoggingFilter());
         Response response = httpRequest.get(baseURL);
         Assert.assertEquals(200,response.getStatusCode());
-
-
     }
 
 
@@ -123,14 +121,10 @@ public class ServiceGroupTests {
                 .when().get(baseURL+Ids+"/").thenReturn().body();
         ServiceGroupResponse serviceGroupGetResponse = new Gson().fromJson(response.asString(),ServiceGroupResponse.class);
         ServiceGroup serviceGroupGet = serviceGroupGetResponse.data;
-        Assert.assertEquals(businessID,serviceGroup.getBusiness_id());
-        Assert.assertEquals("UpdatedServicegroupname",serviceGroup.getName());
-        Assert.assertTrue(serviceGroup.getDeleted_at().startsWith("2018"));
-
+        Assert.assertEquals(businessID,serviceGroupGet.getBusiness_id());
+        Assert.assertEquals("UpdatedServicegroupname",serviceGroupGet.getName());
+        Assert.assertTrue(serviceGroupGet.getDeleted_at().startsWith("2018"));
     }
-
-
-
 
 
 

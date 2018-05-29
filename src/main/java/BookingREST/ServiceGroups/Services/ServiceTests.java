@@ -1,13 +1,8 @@
 package BookingREST.ServiceGroups.Services;
 
-import BookingREST.Addresses.Address;
-import BookingREST.Addresses.AddressData;
-import BookingREST.Addresses.AddressResponse;
 import BookingREST.AuthBusiness.AuthBusinessTest;
 import BookingREST.Businesses.CreateBusiness;
 //import org.testng.annotations.BeforeClass;
-import BookingREST.AuthBusiness.AuthBusinessTest;
-import BookingREST.Businesses.CreateBusiness;
 import BookingREST.ServiceGroups.ServiceGroup;
 import BookingREST.ServiceGroups.ServiceGroupData;
 import BookingREST.ServiceGroups.ServiceGroupResponse;
@@ -29,7 +24,6 @@ import org.testng.annotations.Test;
 
 
 import java.util.List;
-import java.util.Map;
 
 import static com.jayway.restassured.RestAssured.given;
 
@@ -46,6 +40,9 @@ public class ServiceTests {
         int businessID;
         int serviceGroupID;
         int addressID;
+        int StaffRelationID;
+        int GroupRelationID;
+        int AddresssRelationID;
         ServiceData serviceData = new ServiceData();
         CreateBusiness createBusiness = new CreateBusiness();
 
@@ -213,11 +210,29 @@ public class ServiceTests {
         ResponseBody response = given()
                 .contentType(ContentType.JSON)
                 .header("Authorization", token)
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
                 .when().get(baseURLServiceGroups+serviceGroupID+"/services/").thenReturn().body();
         AddressServicesResponse addressServicesResponse = new Gson().fromJson(response.asString(), AddressServicesResponse.class);
         List<Service> addressServices = addressServicesResponse.getData();
         Assert.assertEquals(Ids,addressServices.get(0).getId());
         Assert.assertEquals(additionalServiceID,addressServices.get(1).getId());
+    }
+
+
+    @Test
+    public void Ga_GetRelationsByServiceGroup(){
+        ResponseBody response = given()
+                .contentType(ContentType.JSON)
+                .header("Authorization",token)
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().get(baseURLServiceGroups+serviceGroupID+"/services/relations/").thenReturn().body();
+        Integer idsInteger = Ids;
+        Integer additionalIdsInteger = additionalServiceID;
+        Assert.assertTrue(response.asString().contains(idsInteger.toString()));
+        Assert.assertTrue(response.asString().contains(additionalIdsInteger.toString()));
+
     }
 
 
@@ -234,6 +249,7 @@ public class ServiceTests {
                  List<Service> addressServices = addressServicesResponse.getData();
                  Assert.assertEquals(Ids,addressServices.get(0).getService_id());
                  Assert.assertEquals(additionalServiceID,addressServices.get(1).getService_id());
+                 AddresssRelationID = addressServices.get(1).getId();
     }
 
 
@@ -267,7 +283,19 @@ public class ServiceTests {
     }
 
 
-
+    @Test
+    public void Ja_GetServicesRelationsFromAddress(){
+        ResponseBody response = given()
+                .contentType(ContentType.JSON)
+                .header("Authorization",token)
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().get(baseURLAddresses8084+addressID+"/services/relations/").thenReturn().body();
+        AddressServicesResponse addressServicesResponse = new Gson().fromJson(response.asString(), AddressServicesResponse.class);
+        List<Service> addressServices = addressServicesResponse.getData();
+        Assert.assertEquals(additionalServiceID,addressServices.get(0).getService_id());
+        Assert.assertEquals(AddresssRelationID,addressServices.get(0).getId());
+    }
 
 
     @Test
@@ -283,6 +311,7 @@ public class ServiceTests {
         List<Service> addressServices = addressServicesResponse.getData();
         Assert.assertEquals(Ids,addressServices.get(0).getService_id());
         Assert.assertEquals(additionalServiceID,addressServices.get(1).getService_id());
+        StaffRelationID = addressServices.get(1).getId();
     }
 
     @Test
@@ -314,6 +343,46 @@ public class ServiceTests {
         Assert.assertEquals(Ids,addressServices.get(0).getService_id());
     }
 
+    @Test
+    public  void  N_GetRelationsByStaff(){
+        ResponseBody response = given()
+                .contentType(ContentType.JSON)
+                .header("Authorization",token)
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().get(baseURLStaff+staffId+"/services/relations/").thenReturn().body();
+        AddressServicesResponse addressServicesResponse = new Gson().fromJson(response.asString(), AddressServicesResponse.class);
+        List<Service> addressServices = addressServicesResponse.getData();
+        Assert.assertEquals(additionalServiceID,addressServices.get(0).getService_id());
+        Assert.assertEquals(StaffRelationID,addressServices.get(0).getId());
+    }
 
+    @Test
+    public  void  O_DeleteService(){
+        ResponseBody response = given()
+                .contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().delete(baseURL+Ids+"/").thenReturn().body();
+        ServiceResponse serviceResponse = new Gson().fromJson(response.asString(), ServiceResponse.class);
+        Service service = serviceResponse.data;
+        Assert.assertEquals(businessID,service.getBusiness_id());
+        Assert.assertEquals("updatedServiceName",service.getName());
+        Assert.assertTrue(service.getDeleted_at().startsWith("2018"));
+        this.Ids = service.getId();
+
+        ResponseBody responseGet = given()
+                .contentType(ContentType.JSON)
+                .header("Authorization",token)
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().get(baseURL+Ids+"/").thenReturn().body();
+        ServiceResponse serviceGetResponse = new Gson().fromJson(response.asString(),ServiceResponse.class);
+        Service serviceGet = serviceGetResponse.data;
+        Assert.assertEquals(businessID,serviceGet.getBusiness_id());
+        Assert.assertEquals("updatedServiceName",serviceGet.getName());
+        Assert.assertTrue(serviceGet.getDeleted_at().startsWith("2018"));
+    }
 
 }
