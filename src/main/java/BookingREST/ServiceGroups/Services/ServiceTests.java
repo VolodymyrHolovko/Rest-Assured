@@ -71,7 +71,7 @@ public class ServiceTests {
                 .filter(new ResponseLoggingFilter())
                 .when().post(baseURLServiceGroups).thenReturn().body();
         ServiceGroupResponse serviceGroupResponse = new Gson().fromJson(response.asString(), ServiceGroupResponse.class);
-        ServiceGroup serviceGroup = serviceGroupResponse.data;
+        ServiceGroup serviceGroup = serviceGroupResponse.getData();
         this.serviceGroupID = serviceGroup.getId();
         addressID=createBusiness.W_returnAdressId();
 
@@ -83,7 +83,7 @@ public class ServiceTests {
                 .filter(new ResponseLoggingFilter())
                 .when().post(baseURLStaff).thenReturn().body();
         StaffResponse staffResponse= new Gson().fromJson(respons.asString(), StaffResponse.class);
-        Staff staff= staffResponse.data;
+        Staff staff= staffResponse.getData();
         this.staffId = staff.getId();
         }
 
