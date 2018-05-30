@@ -1,1 +1,0 @@
-{"uuid":"ac78b048-7772-4585-8a36-26a43493c9a1","name":"Booking.BookingTest","start":1523516381705,"stop":1523516405919,"children":["3b1e8440-b809-4603-b8b8-74c441003648"],"befores":[{"name":"getToken","status":"passed","stage":"finished","description":"","start":1523516381814,"stop":1523516389199}]}
