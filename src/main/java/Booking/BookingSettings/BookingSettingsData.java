@@ -9,7 +9,7 @@ public class BookingSettingsData {
         addSettings.setAutomaticBookingConfirmation(false);
         addSettings.setAutomaticBookingRejection(false);
         addSettings.setMaxAmountOfDaysAdvanceForBooking(50);
-        addSettings.setAvailableTimeForEditBooking(1800010);
+        addSettings.setAvailableTimeForEditBooking(1800000);
         addSettings.setMaxAmountPeopleForBooking(12);
         addSettings.setAvailableTimeForCreateBooking(3600015);
         addSettings.setMinimumDurationOfBooking(3600016);
