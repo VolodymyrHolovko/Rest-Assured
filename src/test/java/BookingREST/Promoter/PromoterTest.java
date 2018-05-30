@@ -17,12 +17,12 @@ public class PromoterTest {
     String token;
     String baseURI = "http://213.136.86.27:8083/api/v1.0/promoters/";
     Faker faker = new Faker();
-    String firstNameUpdate = faker.name().firstName();
-    String lastNameUpdate = faker.name().lastName();
+    String firstNameUpdate = faker.name().firstName()+faker.name().firstName().toLowerCase();
+    String lastNameUpdate = faker.name().lastName()+faker.name().firstName().toLowerCase();
     String emailUpdate = faker.name().firstName().hashCode()+"@mail.com";
     String phoneUpdate = faker.regexify("+380[0-9]{9}");
-    String firstName = faker.name().firstName();
-    String lastName = faker.name().lastName();
+    String firstName = faker.name().firstName()+faker.name().firstName().toLowerCase();
+    String lastName = faker.name().lastName()+faker.name().firstName().toLowerCase();
     String email = faker.name().firstName().hashCode()+"@mail.com";
     String phone = faker.regexify("+380[0-9]{9}");
     public int id;

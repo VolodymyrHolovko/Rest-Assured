@@ -156,7 +156,7 @@ public class MarketingTest {
                  .when().get(deleteUrl).thenReturn().body();
          MarketingErrors errors = new Gson().fromJson(responseGet.asString(), MarketingErrors.class);
          System.out.println(responseGet.asString());
-         Assert.assertEquals("Marketing does not exist", errors.getDescription());
+         Assert.assertEquals("error", errors.getDescription());
          Assert.assertEquals(false, errors.isSuccess());
      }
 }

@@ -16,7 +16,7 @@ import static com.jayway.restassured.RestAssured.given;
 public class StrategyTests {
     Faker faker = new Faker();
     String baseURI = "http://213.136.86.27:8083/api/v1.0/strategies/";
-    String name = faker.name().firstName().toLowerCase();
+    String name = faker.name().firstName().toLowerCase()+faker.name().firstName().toLowerCase();
     String collectParametr = "collect/?id=" + name;
     String token;
     public int id;
