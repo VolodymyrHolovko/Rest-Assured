@@ -36,4 +36,19 @@ public class WorkingDaysData {
         updateWorkingDay.setIs_exclusion(true);
         return updateWorkingDay;
     }
+    public WorkingDays addWorkingDaysBeauty(int business_id, int object_id2) {
+        WorkingDays addWorkingDayBeauty = new WorkingDays();
+        DateFormat dateFormat = new SimpleDateFormat(D_F_T, Locale.getDefault());
+        Date date = new Date();
+        long addTwoHours = date.getTime() + TimeUnit.MINUTES.toMillis(126);
+        long addThreeHours = date.getTime() + TimeUnit.MINUTES.toMillis(252);
+        String dateTime = dateFormat.format(new Date(addTwoHours));
+        String endTime = dateFormat.format(new Date(addThreeHours));
+        addWorkingDayBeauty.setRule("FREQ=DAILY;DTSTART="+dateTime+";DTEND="+endTime+";INTERVAL=2");
+        addWorkingDayBeauty.setBusiness_id(business_id);
+        addWorkingDayBeauty.setObject_type("staff");
+        addWorkingDayBeauty.setObject_id(object_id2);
+        addWorkingDayBeauty.setIs_exclusion(false);
+        return addWorkingDayBeauty;
+    }
 }
