@@ -1,7 +1,7 @@
 package BookingREST.Staffs;
 
 public class StaffResponse {
-    Staff data;
+    public Staff data;
 
     public Staff getData() {
         return data;
