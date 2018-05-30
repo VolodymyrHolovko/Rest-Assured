@@ -41,12 +41,12 @@ public class CreateBusiness {
     String baseUrl = "http://213.136.86.27:8083/api/v1.0/businesses/";
 
     Faker faker = new Faker();
-    String sectorName = faker.name().firstName().toLowerCase();
+    String sectorName = faker.name().username();
     String firstName = faker.name().firstName();
-    String lastName = faker.name().lastName();
-    String name = faker.name().firstName();
-    String alias = faker.name().firstName()+"a";
-    String email = faker.name().firstName()+"@mail.com"+"a";
+    String lastName = faker.name().username();
+    String name = faker.name().username();
+    String alias = faker.name().firstName().toLowerCase();
+    String email = faker.name().lastName()+"@mail.com";
     String phone = faker.regexify("+380[0-9]{9}");
     int sectorId;
     int promoterId;
