@@ -47,11 +47,11 @@ public class BusinessesTests {
 
     Faker faker = new Faker();
     String sectorName = faker.name().firstName().toLowerCase();
-    String firstName = faker.name().firstName();
-    String lastName = faker.name().lastName();
-    String name = faker.name().firstName();
-    String alias = faker.name().firstName();
-    String email = faker.name().firstName()+"@mail.com";
+    String firstName = faker.name().firstName()+faker.name().firstName();
+    String lastName = faker.name().lastName()+faker.name().firstName();
+    String name = faker.name().firstName()+faker.name().firstName();
+    String alias = faker.name().firstName()+faker.name().firstName();
+    String email = faker.name().firstName()+faker.name().firstName()+"@mail.com";
     String phone = faker.regexify("+380[0-9]{9}");
     int sectorId;
     int promoterId;

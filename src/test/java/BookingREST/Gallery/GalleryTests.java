@@ -2,6 +2,7 @@ package BookingREST.Gallery;
 
 import BookingREST.AuthBusiness.AuthBusinessTest;
 import BookingREST.Businesses.BusinesessData;
+import BookingREST.Businesses.CreateBusiness;
 import com.google.gson.Gson;
 import com.jayway.restassured.filter.log.RequestLoggingFilter;
 import com.jayway.restassured.filter.log.ResponseLoggingFilter;
@@ -17,7 +18,7 @@ public class GalleryTests {
 
     private  String token;
     private  String baseURL = "http://213.136.86.27:8083/api/v1.0/photos/";
-    int businessId = 84;
+    int businessId;
     int galleryId;
     GalleryData galleryData= new GalleryData();
     BusinesessData businesessData = new BusinesessData();
@@ -26,6 +27,8 @@ public class GalleryTests {
     public void getToken(){
         AuthBusinessTest authBusinessTest = new AuthBusinessTest();
         this.token = authBusinessTest.GetAdminToken();
+        CreateBusiness createBusiness = new CreateBusiness();
+        this.businessId =createBusiness.validBusiness();
     }
 
 
