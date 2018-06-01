@@ -28,7 +28,7 @@ public class WorkingDaysTests {
     public int idBeauty;
     String rule;
     Faker faker = new Faker();
-    String email = faker.name().firstName()+"@mail.com"+"a";
+    String email = faker.name().lastName()+"@mail.com"+"a";
     String phone = faker.regexify("+380[0-9]{9}");
     String ruleStaff;
     String ruleStaffUpdated;
@@ -248,5 +248,24 @@ public class WorkingDaysTests {
         WorkingDays getWorkingDayByStaff = workingDaysResponseArray.data.get(0);
         Assert.assertEquals(object_id2, getWorkingDayByStaff.getObject_id());
         Assert.assertEquals("staff", getWorkingDayByStaff.getObject_type());
+    }
+    @Test
+    public void L_deleteWorkingDaysStaffId() {
+        ResponseBody response = given()
+                .contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().delete(baseURLStaff + object_id2 +"/working-days/").thenReturn().body();
+
+        ResponseBody response2 = given()
+                .contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().get(baseURLStaff + object_id2 +"/working-days/").thenReturn().body();
+        WorkingDaysResponseArray workingDaysResponseArray = new Gson().fromJson(response2.asString(), WorkingDaysResponseArray.class);
+        int getWorkingDayByStaff = workingDaysResponseArray.data.size();
+        Assert.assertEquals(getWorkingDayByStaff, 0);
     }
 }

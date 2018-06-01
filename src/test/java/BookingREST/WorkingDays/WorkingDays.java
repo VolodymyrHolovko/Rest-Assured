@@ -67,4 +67,17 @@ public class WorkingDays {
     public void setIs_exclusion(boolean is_exclusion) {
         this.is_exclusion = is_exclusion;
     }
+
+    @Override
+    public String toString() {
+        return "WorkingDays{" +
+                "rule='" + rule + '\'' +
+                ", business_id=" + business_id +
+                ", object_type='" + object_type + '\'' +
+                ", object_id=" + object_id +
+                ", is_exclusion=" + is_exclusion +
+                ", id=" + id +
+                ", updated_at='" + updated_at + '\'' +
+                '}';
+    }
 }
