@@ -75,8 +75,7 @@ public class NomenclatureTests {
         Assert.assertEquals(1, nomenclature.getSpecialGroupId());
         Assert.assertEquals(1, nomenclature.getSupportedOrderTypes());
         Assert.assertEquals(1, nomenclature.getDimensionId());
-       // Assert.assertEquals(1, nomenclature.getTaxesIds().size());
-        //Assert.assertEquals(1, nomenclature.getTaxesIds().get(0).intValue());
+
     }
 
     @Test
@@ -106,10 +105,7 @@ public class NomenclatureTests {
         Assert.assertEquals(2, nomenclature.getDebitMethodId());
         Assert.assertEquals(2, nomenclature.getNomenclatureTypeId());
         Assert.assertEquals(2, nomenclature.getCookingPriorityId());
-        Assert.assertEquals(1, nomenclature.getSaleMethodId());
-        //Assert.assertEquals(2, nomenclature.getTasteGroupId());
-        //Assert.assertEquals(2, nomenclature.getSpecialGroupId());
-        //Assert.assertEquals(2, nomenclature.getSupportedOrderTypes());
+        Assert.assertEquals(2, nomenclature.getSaleMethodId());
         Assert.assertEquals(2, nomenclature.getDimensionId());
     }
 

@@ -87,7 +87,6 @@ public class CustomersTests {
                 .when().get(baseURL+"?pageIndex=0&pageSize=10").thenReturn().body();
         CustomerResponseArray customersResponse = new Gson().fromJson(response.asString(),  CustomerResponseArray.class);
         Assert.assertEquals(true,customersResponse.isSuccess());
-
     }
 
     @Test

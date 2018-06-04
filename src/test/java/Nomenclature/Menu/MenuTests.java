@@ -29,7 +29,8 @@ import static com.jayway.restassured.RestAssured.given;
                     .header("Authorization", token)
                     .filter(new RequestLoggingFilter())
                     .filter(new ResponseLoggingFilter())
-                    .when().get("http://staging.eservia.com:8006/api/v0.0/Menu?AddressId=2").thenReturn().body();
+                    .body(menu.reloadAddressMenu())
+                    .when().post("http://staging.eservia.com:8008/api/v0.0/Menu/Reload").thenReturn().body();
             MenuResponse menuResponse = new Gson().fromJson(response.asString(),  MenuResponse.class);
             Assert.assertEquals("success",menuResponse.isDescription());
         }

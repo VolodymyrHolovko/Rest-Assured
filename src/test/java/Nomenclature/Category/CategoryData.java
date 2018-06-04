@@ -5,7 +5,7 @@ public Category createCategoty( ){
     Category category = new Category();
     category.setDepartmentId(null);
     category.setAddressId(2);
-    category.setParentId(2);
+    category.setParentId(1);
     category.setCategoryTypeId(1);
     category.setName("MaxCreAted");
     category.setDescription("This is the perfect Category");

@@ -144,7 +144,7 @@ public class GroupTest {
         Assert.assertEquals("#443323", groupResponse.getColorHex());
         Assert.assertEquals("Images/201710/file636449551671201110.png", groupResponse.getIconPath());
     }
-    @Test
+   // @Test
     public void F_DeleteNomenclature() {
         ResponseBody response = given().contentType(ContentType.JSON)
                 .header("Authorization", token)

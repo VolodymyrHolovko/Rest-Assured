@@ -50,7 +50,7 @@ public class BusinessesTests {
     String firstName = faker.name().firstName()+faker.name().firstName();
     String lastName = faker.name().lastName()+faker.name().firstName();
     String name = faker.name().firstName()+faker.name().firstName();
-    String alias = faker.name().firstName().toLowerCase()+faker.name().firstName().toLowerCase();
+    String alias = faker.name().firstName().toLowerCase()+faker.name().firstName();
     String email = faker.name().firstName()+faker.name().firstName()+"@mail.com";
     String phone = faker.regexify("+380[0-9]{9}");
     int sectorId;
