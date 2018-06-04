@@ -28,9 +28,11 @@ public class WorkingDaysTests {
     public int idBeauty;
     String rule;
     Faker faker = new Faker();
-    String email = faker.name().firstName()+"@mail.com"+"a";
+    String email = faker.name().lastName()+"@mail.com"+"a";
     String phone = faker.regexify("+380[0-9]{9}");
     String ruleStaff;
+    String ruleStaffUpdated;
+    String getBeautyQuery = "?is_exclusion=1";
     int business_id;
     int object_id;
     int object_id2;
@@ -183,5 +185,87 @@ public class WorkingDaysTests {
         Assert.assertEquals("staff", addWorkingDayBeauty.getObject_type());
         Assert.assertEquals(object_id2, addWorkingDayBeauty.getObject_id());
         Assert.assertEquals(false,addWorkingDayBeauty.isIs_exclusion());
+    }
+    @Test
+    public void H_getWorkingDaysBeautyById() {
+        ResponseBody response = given()
+                .contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().get(baseURLBeauty + idBeauty + "/").thenReturn().body();
+        WorkingDaysResponse workingDaysResponse = new Gson().fromJson(response.asString(), WorkingDaysResponse.class);
+        WorkingDays getWorkingDayBeauty = workingDaysResponse.data;
+        Assert.assertEquals(ruleStaff, getWorkingDayBeauty.getRule());
+        Assert.assertEquals(business_id, getWorkingDayBeauty.getBusiness_id());
+        Assert.assertEquals("staff", getWorkingDayBeauty.getObject_type());
+        Assert.assertEquals(object_id2, getWorkingDayBeauty.getObject_id());
+        Assert.assertEquals(false,getWorkingDayBeauty.isIs_exclusion());
+    }
+    @Test
+    public void I_updateWorkingDaysBeauty() {
+    WorkingDays daysUpdateBeauty = workingDaysData.updateWorkingDaysBeauty(business_id, object_id2);
+        ResponseBody response = given()
+                .contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .body(daysUpdateBeauty)
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().put(baseURLBeauty + idBeauty + "/").thenReturn().body();
+        WorkingDaysResponse workingDaysResponse = new Gson().fromJson(response.asString(), WorkingDaysResponse.class);
+        WorkingDays updateWorkingDayBeauty = workingDaysResponse.data;
+        this.ruleStaffUpdated = updateWorkingDayBeauty.getRule();
+        Assert.assertEquals(idBeauty, updateWorkingDayBeauty.getId());
+        Assert.assertEquals(ruleStaffUpdated, updateWorkingDayBeauty.getRule());
+        Assert.assertEquals(business_id, updateWorkingDayBeauty.getBusiness_id());
+        Assert.assertEquals("staff", updateWorkingDayBeauty.getObject_type());
+        Assert.assertEquals(object_id2, updateWorkingDayBeauty.getObject_id());
+        Assert.assertEquals(true,updateWorkingDayBeauty.isIs_exclusion());
+        Assert.assertEquals(true, updateWorkingDayBeauty.getUpdated_at().startsWith("2018"));
+    }
+    @Test
+    public void J_getWorkingDaysBeautyByQuery() {
+        ResponseBody response = given()
+                .contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().get(baseURLBeauty + getBeautyQuery).thenReturn().body();
+        WorkingDaysResponseArray workingDaysResponseArray = new Gson().fromJson(response.asString(), WorkingDaysResponseArray.class);
+        WorkingDays getWorkingDayByQuery = workingDaysResponseArray.data.get(0);
+        Assert.assertEquals(true,getWorkingDayByQuery.isIs_exclusion());
+        Assert.assertEquals(true, getWorkingDayByQuery.getUpdated_at().startsWith("2018"));
+    }
+    @Test
+    public void K_getWorkingDaysByStaff() {
+        ResponseBody response = given()
+                .contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().get(baseURLStaff + object_id2 +"/working-days/").thenReturn().body();
+        WorkingDaysResponseArray workingDaysResponseArray = new Gson().fromJson(response.asString(), WorkingDaysResponseArray.class);
+        WorkingDays getWorkingDayByStaff = workingDaysResponseArray.data.get(0);
+        Assert.assertEquals(object_id2, getWorkingDayByStaff.getObject_id());
+        Assert.assertEquals("staff", getWorkingDayByStaff.getObject_type());
+    }
+    @Test
+    public void L_deleteWorkingDaysStaffId() {
+        ResponseBody response = given()
+                .contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().delete(baseURLStaff + object_id2 +"/working-days/").thenReturn().body();
+
+        ResponseBody response2 = given()
+                .contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().get(baseURLStaff + object_id2 +"/working-days/").thenReturn().body();
+        WorkingDaysResponseArray workingDaysResponseArray = new Gson().fromJson(response2.asString(), WorkingDaysResponseArray.class);
+        int getWorkingDayByStaff = workingDaysResponseArray.data.size();
+        Assert.assertEquals(getWorkingDayByStaff, 0);
     }
 }
