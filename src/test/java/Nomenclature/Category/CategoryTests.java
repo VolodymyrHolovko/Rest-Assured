@@ -49,7 +49,7 @@ public class CategoryTests {
 
         Assert.assertEquals(null, category.getDepartmentId());
         Assert.assertEquals(2,category.getAddressId());
-        Assert.assertEquals(2,category.getParentId());
+        Assert.assertEquals(1,category.getParentId());
         Assert.assertEquals(1,category.getCategoryTypeId());
         Assert.assertEquals("MaxCreAted",category.getName());
         Assert.assertEquals("This is the perfect Category",category.getDescription());
@@ -72,7 +72,7 @@ public class CategoryTests {
 
         Assert.assertEquals(null, category.getDepartmentId());
         Assert.assertEquals(2,category.getAddressId());
-        Assert.assertEquals(2,category.getParentId());
+        Assert.assertEquals(1,category.getParentId());
         Assert.assertEquals(1,category.getCategoryTypeId());
         Assert.assertEquals("MaxCreAted2",category.getName());
         Assert.assertEquals("This is the perfect Category2",category.getDescription());
@@ -94,7 +94,7 @@ public class CategoryTests {
 
         Assert.assertEquals(null, category.getDepartmentId());
         Assert.assertEquals(2,category.getAddressId());
-        Assert.assertEquals(2,category.getParentId());
+        Assert.assertEquals(1,category.getParentId());
         Assert.assertEquals(1,category.getCategoryTypeId());
         Assert.assertEquals("MaxCreAted2",category.getName());
         Assert.assertEquals("This is the perfect Category2",category.getDescription());
