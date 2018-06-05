@@ -41,7 +41,7 @@ public class StaffTests {
     @BeforeClass
     public void beforeClass(){
         businessId = createBusiness.validBusiness();
-        addresId = createBusiness.W_returnAdressId();
+        addresId = createBusiness.A_returnAdressId();
 
         GetUserToken getUserToken= new GetUserToken();
         this.usertoken = getUserToken.GetUserToken();
