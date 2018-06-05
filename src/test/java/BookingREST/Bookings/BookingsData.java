@@ -8,7 +8,16 @@ public class BookingsData {
         booking.setStaff_id(staff);
         booking.setService_id(service);
         booking.setCustomer_id(customerId);
-        booking.setDate("2018-06-15 17:00:00");
+        booking.setDate("2018-06-25 17:00:00");
+        booking.setComment("");
+        return  booking;
+    }
+
+    public Booking updateBooking(int staff, int service){
+        Booking booking = new Booking();
+        booking.setStaff_id(staff);
+        booking.setService_id(service);
+        booking.setDate("2018-06-25 14:00:00");
         booking.setComment("");
         return  booking;
     }

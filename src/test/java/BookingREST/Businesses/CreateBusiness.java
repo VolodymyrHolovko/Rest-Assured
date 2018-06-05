@@ -206,7 +206,7 @@ public class CreateBusiness {
         Staff staff = staffResponse.getData();
         this.staffId = staff.getId();
 
-        WorkingDays days = workingDaysData.addWorkingDays(businessId, adressId,"address");
+        WorkingDays days = workingDaysData.hardCode(businessId, adressId,"address");
         ResponseBody response7 = given()
                 .contentType(ContentType.JSON)
                 .header("Authorization", token)
@@ -216,7 +216,7 @@ public class CreateBusiness {
                 .when().post("http://213.136.86.27:8083/api/v1.0/working-days/").thenReturn().body();
 
 
-        WorkingDays dayss = workingDaysData.addWorkingDays(businessId, staffId,"staff");
+        WorkingDays dayss = workingDaysData.hardCode(businessId, staffId,"staff");
         ResponseBody response8 = given()
                 .contentType(ContentType.JSON)
                 .header("Authorization", token)
