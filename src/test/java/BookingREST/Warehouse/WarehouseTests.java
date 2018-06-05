@@ -30,6 +30,7 @@ public class WarehouseTests {
     int responsible_id2;
     Faker faker = new Faker();
     String title = faker.name().firstName().toLowerCase();
+    String title2 = faker.name().firstName().toLowerCase();
     String email = faker.name().firstName()+"@mail.com"+"a";
     String phone = faker.regexify("+380[0-9]{9}");
     WarehouseData warehouseData = new WarehouseData();
@@ -92,5 +93,21 @@ public class WarehouseTests {
         Assert.assertEquals(title,getWarhoses.getTitle());
         Assert.assertEquals(true, getWarhoses.getCreated_at().startsWith("2018"));
         Assert.assertEquals(true, getWarhoses.getUpdated_at().startsWith("2018"));
+    }
+    @Test
+    public void C_updateWarehouse() {
+        Warehouse warehouseUpdate = warehouseData.updateWarehouses(responsible_id2, title2);
+        ResponseBody response = given()
+                .contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .body(warehouseUpdate)
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().put(baseURL + id + "/").thenReturn().body();
+        WarehouseResponse warehouseResponse = new Gson().fromJson(response.asString(), WarehouseResponse.class);
+        Warehouse updateWarhoses = warehouseResponse.data;
+        Assert.assertEquals(responsible_id2, updateWarhoses.getResponsible_id());
+        Assert.assertEquals(title2, updateWarhoses.getTitle());
+        Assert.assertEquals(true, updateWarhoses.getUpdated_at().startsWith("2018"));
     }
 }
