@@ -46,7 +46,7 @@ public class BookingsTests {
     }
 
     @Test
-    public void createBooking(){
+    public void A_createBooking(){
         ResponseBody response = given()
                 .contentType(ContentType.JSON)
                 .header("Authorization", token)
@@ -70,7 +70,7 @@ public class BookingsTests {
     }
 
     @Test
-    public void updateBooking(){
+    public void B_updateBooking(){
         ResponseBody response = given()
                 .contentType(ContentType.JSON)
                 .header("Authorization", token)
@@ -93,7 +93,7 @@ public class BookingsTests {
     }
 
     @Test
-    public void getBooking(){
+    public void C_getBooking(){
         ResponseBody response = given()
                 .contentType(ContentType.JSON)
                 .header("Authorization", token)

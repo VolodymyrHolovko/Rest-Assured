@@ -9,9 +9,7 @@ import BookingREST.AuthBusiness.AuthBusinessData;
 import BookingREST.AuthBusiness.AuthBusinessResponse;
 import BookingREST.AuthBusiness.AuthBusinessTest;
 import BookingREST.Comments.CommentData;
-import BookingREST.Plans.Plan;
-import BookingREST.Plans.PlanData;
-import BookingREST.Plans.PlanResponse;
+import BookingREST.Plans.*;
 import BookingREST.Promoter.Promoter;
 import BookingREST.Promoter.PromoterData;
 import BookingREST.Promoter.PromoterResponse;
@@ -57,6 +55,7 @@ public class CreateBusiness {
     PlanData planData = new PlanData();
     WorkingDaysData workingDaysData = new WorkingDaysData();
     AddressData addressData = new AddressData();
+    PlanSettingsData planSettingsData = new PlanSettingsData();
     String baseUrl = "http://213.136.86.27:8083/api/v1.0/businesses/";
 
     Faker faker = new Faker();
@@ -140,6 +139,15 @@ public class CreateBusiness {
         PlanResponse planResponse = new  Gson().fromJson(responseess.asString(), PlanResponse.class);
         Plan plan = planResponse.getData();
         this.planId = plan.getId();
+
+        ResponseBody responser = given()
+                .contentType(ContentType.JSON)
+                .header("Authorization",token)
+                .body(planSettingsData.UpdatePlanSettings())
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().put("http://213.136.86.27:8083/api/v1.0/plans/"+planId+"/settings/").thenReturn().body();
+
 
         ResponseBody responsee = given()
                 .contentType(ContentType.JSON)
