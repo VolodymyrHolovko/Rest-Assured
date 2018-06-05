@@ -15,9 +15,19 @@ import BookingREST.Promoter.PromoterResponse;
 import BookingREST.Sector.Sector;
 import BookingREST.Sector.SectorData;
 import BookingREST.Sector.SectorResponse;
+import BookingREST.ServiceGroups.ServiceGroup;
+import BookingREST.ServiceGroups.ServiceGroupData;
+import BookingREST.ServiceGroups.ServiceGroupResponse;
+import BookingREST.ServiceGroups.Services.Service;
+import BookingREST.ServiceGroups.Services.ServiceData;
+import BookingREST.ServiceGroups.Services.ServiceResponse;
+import BookingREST.Staffs.Staff;
+import BookingREST.Staffs.StaffData;
+import BookingREST.Staffs.StaffResponse;
 import BookingREST.Strategy.Strategy;
 import BookingREST.Strategy.StrategyData;
 import BookingREST.Strategy.StrategyResponse;
+import BookingREST.WorkingDays.WorkingDaysData;
 import com.github.javafaker.Faker;
 import com.google.gson.Gson;
 import com.jayway.restassured.filter.log.RequestLoggingFilter;
@@ -30,12 +40,16 @@ import static com.jayway.restassured.RestAssured.given;
 
 public class CreateBusiness {
     String token;
+    StaffData staffData = new StaffData();
+    ServiceData serviceData = new ServiceData();
+    ServiceGroupData serviceGroupData = new ServiceGroupData();
     CommentData commentData = new CommentData();
     SectorData sectorData = new SectorData();
     BusinesessData businesessData = new BusinesessData();
     PromoterData promoterData = new PromoterData();
     StrategyData strategyData = new StrategyData();
     PlanData planData = new PlanData();
+    WorkingDaysData workingDaysData = new WorkingDaysData();
     AddressData addressData = new AddressData();
     String baseUrl = "http://213.136.86.27:8083/api/v1.0/businesses/";
 
@@ -55,6 +69,9 @@ public class CreateBusiness {
     int planId;
     String usertoken;
     String uesrId;
+    int staffId;
+    int serviceGroupId;
+    int serviceId;
 
     public int validBusiness(){
 
@@ -168,10 +185,52 @@ public class CreateBusiness {
         Businesses businesses1= businesessResponse1.data;
 
         Assert.assertEquals(true,businesses1.is_verified);
+
+
+
+        ResponseBody staffsees = given()
+                .contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .body(staffData.createStaff(businessId,adressId,phone,email))
+                .when().post("http://213.136.86.27:8084/api/v1.0/staffs/").thenReturn().body();
+        StaffResponse staffResponse = new Gson().fromJson(staffsees.asString(), StaffResponse.class);
+        Staff staff = staffResponse.getData();
+        this.staffId = staff.getId();
+
+        ResponseBody response5 = given()
+                .contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .body(serviceGroupData.CreateServiceGroup(businessId))
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().post("http://213.136.86.27:8084/api/v1.0/service-groups/").thenReturn().body();
+        ServiceGroupResponse serviceGroupResponse = new Gson().fromJson(response5.asString(), ServiceGroupResponse.class);
+        ServiceGroup serviceGroup = serviceGroupResponse.data;
+        this.serviceGroupId = serviceGroup.getId();
+
+        ResponseBody response6 = given()
+                .contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .body(serviceData.CreateService(businessId,serviceGroupId))
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().post("http://213.136.86.27:8084/api/v1.0/services/").thenReturn().body();
+        ServiceResponse serviceResponse = new Gson().fromJson(response6.asString(), ServiceResponse.class);
+        Service service = serviceResponse.getData();
+        this.serviceId = service.getId();
+        Assert.assertEquals(businessId,service.getBusiness_id());
         return businessId;
+
+
     }
 
-    public int W_returnAdressId(){
+    public int A_returnAdressId(){
         return  adressId;
+    }
+    public int B_returnStaff(){
+        return  staffId;
+    }
+    public int B_returnService(){
+        return  serviceId;
     }
 }

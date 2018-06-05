@@ -46,7 +46,7 @@ public class WorkingDaysTests {
 
         CreateBusiness getBusiness = new CreateBusiness();
         this.business_id = getBusiness.validBusiness();
-        this.object_id = getBusiness.W_returnAdressId();
+        this.object_id = getBusiness.A_returnAdressId();
 
         ResponseBody respons = given()
                 .contentType(ContentType.JSON)
@@ -62,7 +62,7 @@ public class WorkingDaysTests {
 
     @Test
     public void A_addWorkingDays() {
-        WorkingDays days = workingDaysData.addWorkingDays(business_id, object_id);
+        WorkingDays days = workingDaysData.addWorkingDays(business_id, object_id,"address");
         ResponseBody response = given()
                 .contentType(ContentType.JSON)
                 .header("Authorization", token)

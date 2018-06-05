@@ -260,7 +260,7 @@ public class BusinessesTests {
         this.alias = faker.name().firstName();
         ResponseBody response = given()
                 .contentType(ContentType.JSON)
-                .body(businesessData.promoterBusinesses(strategyId,sectorId,alias))
+                .body(businesessData.promoterBusinesses(strategyId,sectorId,alias+"a"))
                 .header("Authorization", token)
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter())
@@ -269,7 +269,7 @@ public class BusinessesTests {
         Businesses businesses= businesessResponse.data;
 
         Assert.assertEquals(false,businesses.is_searchable);
-        Assert.assertEquals(alias, businesses.getAlias());
+        Assert.assertEquals(alias+"a", businesses.getAlias());
         Assert.assertEquals(true,businesses.getId()>businessId);
     }
 
