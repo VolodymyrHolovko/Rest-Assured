@@ -47,17 +47,7 @@ public class WorkingDaysTests {
         CreateBusiness getBusiness = new CreateBusiness();
         this.business_id = getBusiness.validBusiness();
         this.object_id = getBusiness.A_returnAdressId();
-
-        ResponseBody respons = given()
-                .contentType(ContentType.JSON)
-                .header("Authorization", token)
-                .body(staffData.createStaff(business_id,object_id,phone,email))
-                .filter(new RequestLoggingFilter())
-                .filter(new ResponseLoggingFilter())
-                .when().post(baseURLStaff).thenReturn().body();
-        StaffResponse staffResponse= new Gson().fromJson(respons.asString(), StaffResponse.class);
-        Staff staff= staffResponse.data;
-        this.object_id2 = staff.getId();
+        this.object_id2 = getBusiness.B_returnStaff();
     }
 
     @Test
