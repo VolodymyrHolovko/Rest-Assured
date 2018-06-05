@@ -60,7 +60,7 @@ public class WorkingDaysTests {
 
     @Test
     public void A_addWorkingDays() {
-        WorkingDays days = workingDaysData.addWorkingDays(business_id, object_id);
+        WorkingDays days = workingDaysData.addWorkingDays(business_id, object_id,"address");
         ResponseBody response = given()
                 .contentType(ContentType.JSON)
                 .header("Authorization", token)
