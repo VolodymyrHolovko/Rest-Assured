@@ -8,7 +8,7 @@ public class BookingsData {
         booking.setStaff_id(staff);
         booking.setService_id(service);
         booking.setCustomer_id(customerId);
-        booking.setDate("");
+        booking.setDate("2018-06-15 17:00:00");
         booking.setComment("");
         return  booking;
     }
