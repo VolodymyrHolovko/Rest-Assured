@@ -5,7 +5,7 @@ public class PlanData {
         Plan plan = new Plan();
         plan.setName("tempPlanName");
         plan.setDescription("tempPlanDescription");
-        plan.setPrice(700);
+        plan.setPrice(0);
         plan.setCurrency("UAH");
         plan.setInterval(1000);
         plan.setIs_unique(false);

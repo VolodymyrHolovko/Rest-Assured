@@ -169,6 +169,8 @@ public class CreateBusiness {
 
         Assert.assertEquals(true,businesses1.is_verified);
         return businessId;
+
+
     }
 
     public int W_returnAdressId(){
