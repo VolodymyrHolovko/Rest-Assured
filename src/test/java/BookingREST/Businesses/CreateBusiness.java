@@ -4,6 +4,9 @@ import Auth.Users.GetUserToken;
 import BookingREST.Addresses.Address;
 import BookingREST.Addresses.AddressData;
 import BookingREST.Addresses.AddressResponse;
+import BookingREST.AuthBusiness.AuthBusiness;
+import BookingREST.AuthBusiness.AuthBusinessData;
+import BookingREST.AuthBusiness.AuthBusinessResponse;
 import BookingREST.AuthBusiness.AuthBusinessTest;
 import BookingREST.Comments.CommentData;
 import BookingREST.Plans.Plan;
@@ -27,7 +30,9 @@ import BookingREST.Staffs.StaffResponse;
 import BookingREST.Strategy.Strategy;
 import BookingREST.Strategy.StrategyData;
 import BookingREST.Strategy.StrategyResponse;
+import BookingREST.WorkingDays.WorkingDays;
 import BookingREST.WorkingDays.WorkingDaysData;
+import BookingREST.WorkingDays.WorkingDaysResponse;
 import com.github.javafaker.Faker;
 import com.google.gson.Gson;
 import com.jayway.restassured.filter.log.RequestLoggingFilter;
@@ -40,6 +45,7 @@ import static com.jayway.restassured.RestAssured.given;
 
 public class CreateBusiness {
     String token;
+    AuthBusinessData authBusinessData = new AuthBusinessData();
     StaffData staffData = new StaffData();
     ServiceData serviceData = new ServiceData();
     ServiceGroupData serviceGroupData = new ServiceGroupData();
@@ -72,6 +78,9 @@ public class CreateBusiness {
     int staffId;
     int serviceGroupId;
     int serviceId;
+    String username;
+    String password="12345678";
+    String createdtoken;
 
     public int validBusiness(){
 
@@ -107,6 +116,7 @@ public class CreateBusiness {
         PromoterResponse promoterResponse = new Gson().fromJson(response.asString(), PromoterResponse.class);
         Promoter addPromoter = promoterResponse.getData();
         this.promoterId = addPromoter.getId();
+        this.username = addPromoter.getEmail();
 
         ResponseBody responses = given()
                 .contentType(ContentType.JSON)
@@ -175,6 +185,7 @@ public class CreateBusiness {
         this.adressId = address.getId();
 
 
+
         ResponseBody response1 = given()
                 .contentType(ContentType.JSON)
                 .header("Authorization", token)
@@ -186,8 +197,6 @@ public class CreateBusiness {
 
         Assert.assertEquals(true,businesses1.is_verified);
 
-
-
         ResponseBody staffsees = given()
                 .contentType(ContentType.JSON)
                 .header("Authorization", token)
@@ -196,6 +205,25 @@ public class CreateBusiness {
         StaffResponse staffResponse = new Gson().fromJson(staffsees.asString(), StaffResponse.class);
         Staff staff = staffResponse.getData();
         this.staffId = staff.getId();
+
+        WorkingDays days = workingDaysData.addWorkingDays(businessId, adressId,"address");
+        ResponseBody response7 = given()
+                .contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .body(days)
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().post("http://213.136.86.27:8083/api/v1.0/working-days/").thenReturn().body();
+
+
+        WorkingDays dayss = workingDaysData.addWorkingDays(businessId, staffId,"staff");
+        ResponseBody response8 = given()
+                .contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .body(dayss)
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().post("http://213.136.86.27:8084/api/v1.0/working-days/").thenReturn().body();
 
         ResponseBody response5 = given()
                 .contentType(ContentType.JSON)
@@ -219,6 +247,34 @@ public class CreateBusiness {
         Service service = serviceResponse.getData();
         this.serviceId = service.getId();
         Assert.assertEquals(businessId,service.getBusiness_id());
+
+        ResponseBody responseed = given()
+                .contentType(ContentType.JSON)
+                .header("Authorization",token)
+                .body("{ \"services\": [ "+adressId+","+serviceId+" ] }")
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().post("http://213.136.86.27:8084/api/v1.0/addresses/"+adressId+"/services/").thenReturn().body();
+
+        ResponseBody responsed = given()
+                .contentType(ContentType.JSON)
+                .header("Authorization",token)
+                .body("{ \"services\": [ "+staffId+","+serviceId+" ] }")
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().post("http://213.136.86.27:8084/api/v1.0/staffs/"+staffId+"/services/").thenReturn().body();
+
+        ResponseBody responseBody = given().
+                contentType(ContentType.JSON)
+                .body(authBusinessData.createdPromoter(username,password))
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().post("http://213.136.86.27:8083/api/v1.0/auth/sign-in").thenReturn().body();
+        AuthBusinessResponse authBusinessResponse = new Gson().fromJson(responseBody.asString(), AuthBusinessResponse.class);
+        AuthBusiness authBusiness = authBusinessResponse.getData();
+        this.createdtoken = "Bearer "+authBusiness.getAccess_token();
+
+
         return businessId;
 
 
@@ -232,5 +288,8 @@ public class CreateBusiness {
     }
     public int B_returnService(){
         return  serviceId;
+    }
+    public String B_returncreatedToken(){
+        return  createdtoken;
     }
 }
