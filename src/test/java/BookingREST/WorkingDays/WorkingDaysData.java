@@ -24,6 +24,17 @@ public class WorkingDaysData {
         addWorkindDay.setIs_exclusion(false);
      return addWorkindDay;
     }
+
+    public WorkingDays hardCode(int business_id, int object_id, String objectType) {
+        WorkingDays addWorkindDay = new WorkingDays();
+        addWorkindDay.setRule("FREQ=DAILY;DTSTART=2018-04-17 08:00:00;DTEND=2018-04-17 18:00:00;INTERVAL=1");
+        addWorkindDay.setBusiness_id(business_id);
+        addWorkindDay.setObject_type(objectType);
+        addWorkindDay.setObject_id(object_id);
+        addWorkindDay.setIs_exclusion(false);
+        return addWorkindDay;
+    }
+
     public WorkingDays updateWorkingDays() {
         WorkingDays updateWorkingDay = new WorkingDays();
         DateFormat dateFormat = new SimpleDateFormat(D_F_T, Locale.getDefault());
