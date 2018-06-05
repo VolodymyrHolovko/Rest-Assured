@@ -269,7 +269,7 @@ public class BusinessesTests {
         Businesses businesses= businesessResponse.data;
 
         Assert.assertEquals(false,businesses.is_searchable);
-        Assert.assertEquals(alias, businesses.getAlias());
+        Assert.assertEquals(alias+"a", businesses.getAlias());
         Assert.assertEquals(true,businesses.getId()>businessId);
     }
 
