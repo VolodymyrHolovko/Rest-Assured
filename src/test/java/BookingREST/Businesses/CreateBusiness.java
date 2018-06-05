@@ -27,6 +27,7 @@ import BookingREST.Staffs.StaffResponse;
 import BookingREST.Strategy.Strategy;
 import BookingREST.Strategy.StrategyData;
 import BookingREST.Strategy.StrategyResponse;
+import BookingREST.WorkingDays.WorkingDaysData;
 import com.github.javafaker.Faker;
 import com.google.gson.Gson;
 import com.jayway.restassured.filter.log.RequestLoggingFilter;
@@ -48,6 +49,7 @@ public class CreateBusiness {
     PromoterData promoterData = new PromoterData();
     StrategyData strategyData = new StrategyData();
     PlanData planData = new PlanData();
+    WorkingDaysData workingDaysData = new WorkingDaysData();
     AddressData addressData = new AddressData();
     String baseUrl = "http://213.136.86.27:8083/api/v1.0/businesses/";
 
