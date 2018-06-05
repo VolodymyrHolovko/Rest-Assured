@@ -70,7 +70,7 @@ public class ServiceTests {
         ServiceGroupResponse serviceGroupResponse = new Gson().fromJson(response.asString(), ServiceGroupResponse.class);
         ServiceGroup serviceGroup = serviceGroupResponse.getData();
         this.serviceGroupID = serviceGroup.getId();
-        addressID=createBusiness.W_returnAdressId();
+        addressID=createBusiness.A_returnAdressId();
 
         ResponseBody respons = given()
                 .contentType(ContentType.JSON)
