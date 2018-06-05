@@ -45,7 +45,7 @@ public class PlanTests {
         this.planId = plan.getId();
         Assert.assertEquals("tempPlanName",plan.getName());
         Assert.assertEquals("tempPlanDescription",plan.getDescription());
-        Assert.assertEquals(700,plan.getPrice());
+        Assert.assertEquals(0,plan.getPrice());
         Assert.assertEquals("UAH",plan.getCurrency());
         Assert.assertEquals(1000,plan.getInterval());
         Assert.assertEquals(false,plan.isIs_unique());
