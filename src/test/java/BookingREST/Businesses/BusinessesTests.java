@@ -260,7 +260,7 @@ public class BusinessesTests {
         this.alias = faker.name().firstName();
         ResponseBody response = given()
                 .contentType(ContentType.JSON)
-                .body(businesessData.promoterBusinesses(strategyId,sectorId,alias))
+                .body(businesessData.promoterBusinesses(strategyId,sectorId,alias+"a"))
                 .header("Authorization", token)
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter())
