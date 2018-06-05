@@ -222,7 +222,13 @@ public class CreateBusiness {
 
     }
 
-    public int W_returnAdressId(){
+    public int A_returnAdressId(){
         return  adressId;
+    }
+    public int B_returnStaff(){
+        return  staffId;
+    }
+    public int B_returnService(){
+        return  serviceId;
     }
 }
