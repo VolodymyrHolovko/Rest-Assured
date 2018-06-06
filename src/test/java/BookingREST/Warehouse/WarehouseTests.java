@@ -23,11 +23,13 @@ public class WarehouseTests {
     String token;
     String baseURL = "http://213.136.86.27:8086/api/v1.0/warehouses/";
     String baseURLStaff = "http://213.136.86.27:8084/api/v1.0/staffs/";
+    String baseUrlByBusiness = "http://213.136.86.27:8086/api/v1.0/businesses/";
     public int id;
     int business_id;
     int address_id;
     int responsible_id;
     int responsible_id2;
+    String warehouseQuery = "?address_id=";
     Faker faker = new Faker();
     String title = faker.name().firstName().toLowerCase();
     String title2 = faker.name().firstName().toLowerCase();
@@ -49,7 +51,7 @@ public class WarehouseTests {
                 .contentType(ContentType.JSON)
                 .header("Authorization", token)
                 .body(staffData.createStaff(business_id,address_id,phone,email))
-                .when().post("http://213.136.86.27:8084/api/v1.0/staffs/").thenReturn().body();
+                .when().post(baseURLStaff).thenReturn().body();
         StaffResponse staffResponse = new Gson().fromJson(staffsees.asString(), StaffResponse.class);
         Staff staff = staffResponse.getData();
         this.responsible_id2 = staff.getId();
@@ -110,4 +112,42 @@ public class WarehouseTests {
         Assert.assertEquals(title2, updateWarhoses.getTitle());
         Assert.assertEquals(true, updateWarhoses.getUpdated_at().startsWith("2018"));
     }
+    @Test
+    public void D_getWarehouseByQuery() {
+        ResponseBody response = given()
+                .contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().get(baseURL + warehouseQuery + address_id).thenReturn().body();
+        WarehouseResponseArray warehouseResponseArray = new Gson().fromJson(response.asString(), WarehouseResponseArray.class);
+        Warehouse getByQuery = warehouseResponseArray.data.get(0);
+        Assert.assertEquals(address_id, getByQuery.getAddress_id());
+    }
+    @Test
+    public void E_getWarehouseByBusinessId() {
+        ResponseBody response = given()
+                .contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().get(baseUrlByBusiness + business_id + "/warehouses/").thenReturn().body();
+        WarehouseResponseArray warehouseResponseArray = new Gson().fromJson(response.asString(), WarehouseResponseArray.class);
+        Warehouse getByBusiness = warehouseResponseArray.data.get(0);
+        Assert.assertEquals(business_id, getByBusiness.getBusiness_id());
+    }
+    @Test
+    public void F_deleteWarehouses() {
+        ResponseBody response = given()
+                .contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().delete(baseURL + id + "/").thenReturn().body();
+        WarehouseResponse warehouseResponse = new Gson().fromJson(response.asString(), WarehouseResponse.class);
+        Warehouse deleteWarhoses = warehouseResponse.data;
+        Assert.assertEquals(id, deleteWarhoses.getId());
+        Assert.assertEquals(true, deleteWarhoses.getDeleted_at().startsWith("2018"));
+    }
+
 }
