@@ -9,4 +9,10 @@ public class WarehouseData {
         addWarehouse.setTitle(title);
         return addWarehouse;
     }
+    public Warehouse updateWarehouses(int responsible_id2, String title2) {
+        Warehouse updateWarehouse = new Warehouse();
+        updateWarehouse.setResponsible_id(responsible_id2);
+        updateWarehouse.setTitle(title2);
+        return updateWarehouse;
+    }
 }
