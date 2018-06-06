@@ -115,7 +115,7 @@ public class WorkingDaysTests {
                 .filter(new ResponseLoggingFilter())
                 .when().get(baseURL + "?business_id=" + business_id).thenReturn().body();
         WorkingDaysResponseArray workingDaysResponseArray = new Gson().fromJson(response.asString(), WorkingDaysResponseArray.class);
-        WorkingDays getWorkingDayQuery = workingDaysResponseArray.data.get(0);
+        WorkingDays getWorkingDayQuery = workingDaysResponseArray.data.get(1);
         this.id = getWorkingDayQuery.getId();
         Assert.assertEquals(rule,getWorkingDayQuery.getRule());
         Assert.assertEquals(business_id, getWorkingDayQuery.getBusiness_id());
@@ -134,7 +134,7 @@ public class WorkingDaysTests {
                 .filter(new ResponseLoggingFilter())
                 .when().get(baseUrlByAdress+object_id+"/working-days/").thenReturn().body();
         WorkingDaysResponseArray workingDaysResponseArray = new Gson().fromJson(response.asString(), WorkingDaysResponseArray.class);
-        WorkingDays getWorkingDayByAdress = workingDaysResponseArray.data.get(0);
+        WorkingDays getWorkingDayByAdress = workingDaysResponseArray.data.get(1);
         this.id = getWorkingDayByAdress.getId();
         Assert.assertEquals(rule,getWorkingDayByAdress.getRule());
         Assert.assertEquals(business_id, getWorkingDayByAdress.getBusiness_id());
