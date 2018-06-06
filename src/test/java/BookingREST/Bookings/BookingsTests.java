@@ -127,9 +127,10 @@ public class BookingsTests {
         Assert.assertEquals(false,response.asString().contains("2018-06-25 13:45:00"));
         Assert.assertEquals(false,response.asString().contains("2018-06-25 14:15:00"));
     }
+    
 
     @Test
-    public void E_cancelBooking(){
+    public void F_cancelBooking(){
         ResponseBody response = given()
                 .contentType(ContentType.JSON)
                 .header("Authorization", token)
@@ -151,7 +152,7 @@ public class BookingsTests {
     }
 
     @Test
-    public void F_getFreeTimeSlotsBooking(){
+    public void G_getFreeTimeSlotsBooking(){
         ResponseBody response = given()
                 .contentType(ContentType.JSON)
                 .header("Authorization", token)
