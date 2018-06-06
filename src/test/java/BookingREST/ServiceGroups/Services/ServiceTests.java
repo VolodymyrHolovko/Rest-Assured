@@ -263,8 +263,8 @@ public class ServiceTests {
                 .when().get(baseURLAddresses8084+addressID+"/services/").thenReturn().body();
         AddressServicesResponse addressServicesResponse = new Gson().fromJson(response.asString(), AddressServicesResponse.class);
         List<Service> addressServices = addressServicesResponse.getData();
-        Assert.assertEquals(Ids,addressServices.get(0).getId());
-        Assert.assertEquals(additionalServiceID,addressServices.get(1).getId());
+        Assert.assertEquals(Ids,addressServices.get(1).getId());
+        Assert.assertEquals(additionalServiceID,addressServices.get(2).getId());
     }
 
 
@@ -293,8 +293,8 @@ public class ServiceTests {
                 .when().get(baseURLAddresses8084+addressID+"/services/relations/").thenReturn().body();
         AddressServicesResponse addressServicesResponse = new Gson().fromJson(response.asString(), AddressServicesResponse.class);
         List<Service> addressServices = addressServicesResponse.getData();
-        Assert.assertEquals(additionalServiceID,addressServices.get(0).getService_id());
-        Assert.assertEquals(AddresssRelationID,addressServices.get(0).getId());
+        Assert.assertEquals(additionalServiceID,addressServices.get(1).getService_id());
+        Assert.assertEquals(AddresssRelationID,addressServices.get(1).getId());
     }
 
 
