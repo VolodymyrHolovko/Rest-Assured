@@ -1,7 +1,7 @@
 package BookingREST.Suppliers.SupplierTypes;
 
 public class SupplierTypesResponse {
-    SupplierTypes data;
+    public SupplierTypes data;
 
     public SupplierTypes getData() {
         return data;
