@@ -11,6 +11,7 @@ import com.jayway.restassured.filter.log.RequestLoggingFilter;
 import com.jayway.restassured.filter.log.ResponseLoggingFilter;
 import com.jayway.restassured.http.ContentType;
 import com.jayway.restassured.response.ResponseBody;
+import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -27,10 +28,11 @@ public class SuppliersTests {
     String titleType = faker.name().firstName().toLowerCase();
     String title = faker.name().firstName().toLowerCase();
     String phone = faker.regexify("+380[0-9]{9}");
-    String fax = faker.regexify("+380[0-9]{9}");
+    String fax = faker.regexify("0[0-9]{9}");
     String email = faker.name().lastName()+"@mail.com";
     String address = faker.address().streetAddress();
     String comment = faker.gameOfThrones().dragon();
+    String fax2 = faker.regexify("0[0-9]{9}");
     SuppliersData suppliersData = new SuppliersData();
     SupplierTypesData supplierTypesData = new SupplierTypesData();
 
@@ -63,6 +65,16 @@ public class SuppliersTests {
                 .when().post(baqseURL).thenReturn().body();
         SuppliersResponse suppliersResponse = new Gson().fromJson(response.asString(), SuppliersResponse.class);
         Suppliers addSuppl = suppliersResponse.data;
-        System.out.println(response.asString());
+        this.id =addSuppl.getId();
+        Assert.assertEquals(id, addSuppl.getId());
+        Assert.assertEquals(business_id, addSuppl.getBusiness_id());
+        Assert.assertEquals(supplier_type_id, addSuppl.getSupplier_type_id());
+        Assert.assertEquals(title, addSuppl.getTitle());
+        Assert.assertEquals(phone, addSuppl.getPhone());
+        Assert.assertEquals(fax, addSuppl.getFax());
+        Assert.assertEquals(email, addSuppl.getEmail());
+        Assert.assertEquals(address, addSuppl.getAddress());
+        Assert.assertEquals(comment, addSuppl.getComment());
+        Assert.assertEquals(true, addSuppl.getCreated_at().startsWith("2018"));
     }
 }
