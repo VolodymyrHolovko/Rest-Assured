@@ -28,7 +28,7 @@ public class BookingsTests {
     String usertoken;
     String token;
     String customerId;
-    String userId = "f4423ba3-545b-4cee-ad63-c030f1dbf8e3";
+    String userId = "0af3a970-8793-49dd-843d-498f7c1602de";
 
 
     @BeforeClass
@@ -65,7 +65,7 @@ public class BookingsTests {
         Assert.assertEquals(serviceId,booking.getService_id());
         Assert.assertEquals(20,booking.getDuration());
         Assert.assertEquals(700,booking.getAmount());
-        Assert.assertEquals("f4423ba3-545b-4cee-ad63-c030f1dbf8e3",booking.getCustomer_id());
+        Assert.assertEquals("0af3a970-8793-49dd-843d-498f7c1602de",booking.getCustomer_id());
         Assert.assertEquals(2,booking.getStatus());
         Assert.assertEquals(2,booking.getType());
         Assert.assertEquals("2018-06-25 17:00:00",booking.getDate());
@@ -88,7 +88,7 @@ public class BookingsTests {
         Assert.assertEquals(serviceId,booking.getService_id());
         Assert.assertEquals(20,booking.getDuration());
         Assert.assertEquals(700,booking.getAmount());
-        Assert.assertEquals("f4423ba3-545b-4cee-ad63-c030f1dbf8e3",booking.getCustomer_id());
+        Assert.assertEquals("0af3a970-8793-49dd-843d-498f7c1602de",booking.getCustomer_id());
         Assert.assertEquals(2,booking.getStatus());
         Assert.assertEquals(2,booking.getType());
         Assert.assertEquals("2018-06-25 14:00:00",booking.getDate());
@@ -110,7 +110,7 @@ public class BookingsTests {
         Assert.assertEquals(serviceId,booking.getService_id());
         Assert.assertEquals(20,booking.getDuration());
         Assert.assertEquals(700,booking.getAmount());
-        Assert.assertEquals("f4423ba3-545b-4cee-ad63-c030f1dbf8e3",booking.getCustomer_id());
+        Assert.assertEquals("0af3a970-8793-49dd-843d-498f7c1602de",booking.getCustomer_id());
         Assert.assertEquals(2,booking.getStatus());
         Assert.assertEquals(2,booking.getType());
         Assert.assertEquals("2018-06-25 14:00:00",booking.getDate());
@@ -147,7 +147,7 @@ public class BookingsTests {
         Assert.assertEquals(serviceId,booking.getService_id());
         Assert.assertEquals(20,booking.getDuration());
         Assert.assertEquals(700,booking.getAmount());
-        Assert.assertEquals("f4423ba3-545b-4cee-ad63-c030f1dbf8e3",booking.getCustomer_id());
+        Assert.assertEquals("0af3a970-8793-49dd-843d-498f7c1602de",booking.getCustomer_id());
         Assert.assertEquals(0,booking.getStatus());
         Assert.assertEquals(2,booking.getType());
         Assert.assertEquals("2018-06-25 14:00:00",booking.getDate());

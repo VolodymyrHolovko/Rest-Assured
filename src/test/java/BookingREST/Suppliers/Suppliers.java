@@ -1,16 +1,37 @@
 package BookingREST.Suppliers;
 
-public class Suppliers {
+import java.util.List;
+
+public class Suppliers  {
     private int business_id;
     private int supplier_type_id;
     private String title;
     private String phone;
     private String fax;
     private String email;
+    private int inn;
     private String address;
     private String comment;
     private int id;
     private String created_at;
+    private String updated_at;
+    private String deleted_at;
+
+    public String getDeleted_at() {
+        return deleted_at;
+    }
+
+    public String getUpdated_at() {
+        return updated_at;
+    }
+
+    public int getInn() {
+        return inn;
+    }
+
+    public void setInn(int inn) {
+        this.inn = inn;
+    }
 
     public String getCreated_at() {
         return created_at;
