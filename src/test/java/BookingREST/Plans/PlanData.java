@@ -31,7 +31,7 @@ public Plan UpdatePlan(int planId){
         plan.setPrice(0);
         plan.setCurrency("USD");
         plan.setInterval(3000);
-        plan.setIs_unique(true);
+        plan.setIs_unique(false);
         return plan;
     }
 }

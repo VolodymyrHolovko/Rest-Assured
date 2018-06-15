@@ -41,7 +41,10 @@ import org.testng.Assert;
 
 import static com.jayway.restassured.RestAssured.given;
 
-public class CreateBusiness {
+public class
+
+
+CreateBusiness {
     String token;
     AuthBusinessData authBusinessData = new AuthBusinessData();
     StaffData staffData = new StaffData();

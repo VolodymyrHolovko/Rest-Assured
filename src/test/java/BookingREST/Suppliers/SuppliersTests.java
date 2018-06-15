@@ -27,7 +27,7 @@ public class SuppliersTests {
     String baseURLType = "http://213.136.86.27:8086/api/v1.0/supplier-types/";
     String baseURLByBusiness = "http://213.136.86.27:8086/api/v1.0/businesses/";
     public int id;
-    int business_id;
+    int business_id ;
     int supplier_type_id;
     int supplier_type_id2;
     Faker faker = new Faker();
@@ -211,9 +211,6 @@ public class SuppliersTests {
         SupplierTypesResponse supplierTypesResponse2 = new Gson().fromJson(response3.asString(), SupplierTypesResponse.class);
         SupplierTypes deleteSupplierType2 = supplierTypesResponse2.data;
         Assert.assertEquals(supplier_type_id2, deleteSupplierType2.getId());
-
-
-
 
     }
 }
