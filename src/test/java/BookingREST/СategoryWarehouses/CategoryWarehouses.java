@@ -7,6 +7,11 @@ public class CategoryWarehouses {
     private int id;
     private int nested_level;
     private  String updated_at;
+    private String deleted_at;
+
+    public String getDeleted_at() {
+        return deleted_at;
+    }
 
     public String getUpdated_at() {
         return updated_at;
