@@ -2,9 +2,19 @@ package BookingREST.СategoryWarehouses;
 
 public class CategoryWarehouses {
     private int business_id;
-    private int node_id;
+    private String node_id;
     private String name;
     private int id;
+    private int nested_level;
+    private  String updated_at;
+
+    public String getUpdated_at() {
+        return updated_at;
+    }
+
+    public int getNested_level() {
+        return nested_level;
+    }
 
     public int getBusiness_id() {
         return business_id;
@@ -14,11 +24,12 @@ public class CategoryWarehouses {
         this.business_id = business_id;
     }
 
-    public int getNode_id() {
+
+    public String getNode_id() {
         return node_id;
     }
 
-    public void setNode_id(int node_id) {
+    public void setNode_id(String node_id) {
         this.node_id = node_id;
     }
 
