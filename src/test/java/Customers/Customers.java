@@ -15,7 +15,7 @@ public class Customers {
     private String sex;
     private String phoneNumber;
     private String email;
-    private List<Integer> businesses;
+    private ArrayList<Integer> businesses;
     @JsonProperty
     private String id;
 
@@ -103,11 +103,8 @@ public class Customers {
         this.email = email;
     }
 
-    public List<Integer> getBusinesses() {
-        return businesses;
-    }
 
-    public void setBusinesses(List<Integer> businesses) {
+    public void setBusinesses(ArrayList<Integer> businesses) {
         this.businesses = businesses;
     }
 

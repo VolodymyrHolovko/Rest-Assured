@@ -10,6 +10,8 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import java.util.List;
+
 import static com.jayway.restassured.RestAssured.given;
 
 public class CustomersTests {
@@ -29,7 +31,7 @@ public class CustomersTests {
         ResponseBody response = given()
                 .contentType(ContentType.JSON)
                 .header("Authorization", token)
-                .body(customersData.createCustomer())
+                .body(customersData.createCustomer(1))
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter())
                 .when().post(baseURL).thenReturn().body();
@@ -68,13 +70,13 @@ public class CustomersTests {
                 .header("Authorization", token)
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter())
-                .when().get(baseURL+"/"+id).thenReturn().body();
-        CustomersResponse customersResponse = new Gson().fromJson(response.asString(),  CustomersResponse.class);
-        Customers customers = customersResponse.data;
-        Assert.assertEquals("Lutkovec1",customers.getLastName());
-        Assert.assertEquals("Vasylovych1",customers.getMiddleName());
-        Assert.assertEquals("+380679296215",customers.getPhoneNumber());
-        Assert.assertEquals("lutkovec1@gmail.com",customers.getEmail());
+                .when().get(baseURL+"/ByIds?ids="+id+"&businessId=1").thenReturn().body();
+        CustomerObjectResponse customersResponse = new Gson().fromJson(response.asString(),  CustomerObjectResponse.class);
+        CustomersObject customersObject = customersResponse.getData().get(0);
+        Assert.assertEquals("Lutkovec1",customersObject.getLastName());
+        Assert.assertEquals("Vasylovych1",customersObject.getMiddleName());
+        Assert.assertEquals("+380679296215",customersObject.getPhoneNumber());
+        Assert.assertEquals("lutkovec1@gmail.com",customersObject.getEmail());
     }
 
     @Test
@@ -122,10 +124,10 @@ public class CustomersTests {
                 .header("Authorization", token)
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter())
-                .when().get(baseURL+"/"+id).thenReturn().body();
-        CustomersResponse customersResponse1 = new Gson().fromJson(response1.asString(),  CustomersResponse.class);
-        Customers customers = customersResponse1.error;
-        Assert.assertEquals("Customer does not exist",customers.getErrorDescription());
+                .when().get(baseURL+"/ByIds?ids="+id+"&businessId=1").thenReturn().body();
+        CustomerObjectResponse customerObjectResponse= new Gson().fromJson(response1.asString(),  CustomerObjectResponse.class);
+        Assert.assertEquals(true, customerObjectResponse.getData().isEmpty());
+
 
     }
 }
