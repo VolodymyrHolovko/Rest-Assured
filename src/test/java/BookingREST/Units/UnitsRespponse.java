@@ -1,7 +1,7 @@
 package BookingREST.Units;
 
 public class UnitsRespponse {
-    Units data;
+    public Units data;
 
     public Units getData() {
         return data;

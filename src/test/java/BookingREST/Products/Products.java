@@ -1,10 +1,13 @@
 package BookingREST.Products;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class Products {
     private int business_id;
     private String name;
     private String sku;
     private int category_id;
+    @JsonProperty
     private boolean sale_used;
     private int sale_unit_id;
     private String sale_currency;
@@ -13,6 +16,23 @@ public class Products {
     private int expense_unit_id;
     private String expense_currency;
     private int expense_cost;
+    private int id;
+
+    public boolean isSale_used() {
+        return sale_used;
+    }
+
+    public void setSale_used(boolean sale_used) {
+        this.sale_used = sale_used;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public int getBusiness_id() {
         return business_id;
@@ -46,13 +66,6 @@ public class Products {
         this.category_id = category_id;
     }
 
-    public boolean isSale_used(boolean b) {
-        return sale_used;
-    }
-
-    public void setSale_used(boolean sale_used) {
-        this.sale_used = sale_used;
-    }
 
     public int getSale_unit_id() {
         return sale_unit_id;
