@@ -8,6 +8,15 @@ public class CategoryWarehouses {
     private int nested_level;
     private  String updated_at;
     private String deleted_at;
+    private int idCat;
+
+    public int getIdCat() {
+        return idCat;
+    }
+
+    public void setIdCat(int idCat) {
+        this.idCat = idCat;
+    }
 
     public String getDeleted_at() {
         return deleted_at;

@@ -19,7 +19,7 @@ import static com.jayway.restassured.RestAssured.given;
 
 public class CategoryWarehousesTests {
     int id;
-    String token;
+    public String token;
     int business_id;
     String node_id;
     String baseURL = "http://213.136.86.27:8086/api/v1.0/categories/";
@@ -129,6 +129,7 @@ public class CategoryWarehousesTests {
         Assert.assertEquals(id, deleteCategory. getId());
         Assert.assertEquals(true, deleteCategory.getDeleted_at().contains("2018"));
     }
+
     @AfterClass
     public void deleteAfter() {
         ResponseBody response = given().contentType(ContentType.JSON)
@@ -141,5 +142,6 @@ public class CategoryWarehousesTests {
         Assert.assertEquals(business_id, businesses.getId());
         
     }
+
 
 }
