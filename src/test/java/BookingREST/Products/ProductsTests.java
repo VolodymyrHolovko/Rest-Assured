@@ -96,13 +96,37 @@ public class ProductsTests {
         Assert.assertEquals(name, addProd.getName());
         Assert.assertEquals(sku, addProd.getSku());
         Assert.assertEquals(category_id, addProd.getCategory_id());
-        Assert.assertEquals(true, addProd.isSale_used());
+        Assert.assertEquals(false, addProd.isSale_used());
         Assert.assertEquals(sale_unit_id, addProd.getSale_unit_id());
         Assert.assertEquals(sale_currency, addProd.getSale_currency());
         Assert.assertEquals(sale_cost, addProd.getSale_cost());
-        Assert.assertEquals(true, addProd.isExpense_used());
+        Assert.assertEquals(false, addProd.isExpense_used());
         Assert.assertEquals(expense_unit_id, addProd.getExpense_unit_id());
         Assert.assertEquals(expense_currency, addProd.getExpense_currency());
         Assert.assertEquals(expense_cost, addProd.getExpense_cost());
+    }
+    @Test
+    public void getProductByid() {
+        ResponseBody response = given()
+                .contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().get(baseURL + id + "/").thenReturn().body();
+        ProductsResponse productsResponse = new Gson().fromJson(response.asString(), ProductsResponse.class);
+        Products getById = productsResponse.data;
+        Assert.assertEquals(id, getById.getId());
+        Assert.assertEquals(business_id, getById.getBusiness_id());
+        Assert.assertEquals(name, getById.getName());
+        Assert.assertEquals(sku, getById.getSku());
+        Assert.assertEquals(category_id, getById.getCategory_id());
+        Assert.assertEquals(false, getById.isSale_used());
+        Assert.assertEquals(sale_unit_id, getById.getSale_unit_id());
+        Assert.assertEquals(sale_currency, getById.getSale_currency());
+        Assert.assertEquals(sale_cost, getById.getSale_cost());
+        Assert.assertEquals(false, getById.isExpense_used());
+        Assert.assertEquals(expense_unit_id, getById.getExpense_unit_id());
+        Assert.assertEquals(expense_currency, getById.getExpense_currency());
+        Assert.assertEquals(expense_cost, getById.getExpense_cost());
     }
 }
