@@ -1,6 +1,8 @@
 package BookingREST.Products;
 
 import BookingREST.AuthBusiness.AuthBusinessTest;
+import BookingREST.Businesses.BusinesessResponse;
+import BookingREST.Businesses.Businesses;
 import BookingREST.Businesses.CreateBusiness;
 import BookingREST.Units.Units;
 import BookingREST.Units.UnitsData;
@@ -16,6 +18,7 @@ import com.jayway.restassured.filter.log.ResponseLoggingFilter;
 import com.jayway.restassured.http.ContentType;
 import com.jayway.restassured.response.ResponseBody;
 import org.testng.Assert;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -26,21 +29,31 @@ public class ProductsTests {
     String baseURL = "http://213.136.86.27:8086/api/v1.0/products/";
     String baseURLCategory = "http://213.136.86.27:8086/api/v1.0/categories/";
     String baseURLUnits = "http://213.136.86.27:8086/api/v1.0/units/";
+    String baseURLByBusiness = "http://213.136.86.27:8086/api/v1.0/businesses/";
     String token;
     int business_id;
     int category_id;
+    int category_id2;
     Faker faker = new Faker();
     String nameCategory = faker.name().lastName().toLowerCase();
     String name = faker.food().ingredient();
-    String sku = faker.witcher().location().toUpperCase();
+    String sku = faker.name().firstName().toUpperCase();
     String abbr = faker.app().name().toLowerCase();
     String nameUnit = faker.name().title().toLowerCase();
+    String name2 = faker.food().ingredient();
+    String sku2 = faker.name().firstName().toUpperCase();
     int sale_unit_id;
+    int sale_unit_id2;
     int expense_unit_id;
+    int expense_unit_id2;
     int expense_cost = faker.number().randomDigit();
+    int expense_cost2 = faker.number().randomDigit();
     String expense_currency = "USD";
+    String expense_currency2 = "UAH";
     int sale_cost = faker.number().randomDigit();
+    int sale_cost2= faker.number().randomDigit();
     String sale_currency = "USD";
+    String sale_currency2 = "UAH";
     CategoryWarehousesData categoryWarehousesData = new CategoryWarehousesData();
     UnitsData unitsData = new UnitsData();
     ProductsData productsData = new ProductsData();
@@ -65,21 +78,46 @@ public class ProductsTests {
         CategoryWarehouses addCategory = categoryWarehousesResponse.data;
         this.category_id = addCategory.getId();
 
-        Units addUnitt = unitsData.addUnits(nameUnit, abbr);
+        CategoryWarehouses addCategories2 = categoryWarehousesData.addNewCategory(business_id, nameCategory);
         ResponseBody response2 = given()
+                .contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .body(addCategories2)
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().post(baseURLCategory).thenReturn().body();
+        CategoryWarehousesResponse categoryWarehousesResponse2 = new Gson().fromJson(response2.asString(), CategoryWarehousesResponse.class);
+        CategoryWarehouses addCategory2 = categoryWarehousesResponse2.data;
+        this.category_id2 = addCategory2.getId();
+
+        Units addUnitt = unitsData.addUnits(nameUnit, abbr);
+        ResponseBody response3 = given()
                 .contentType(ContentType.JSON)
                 .header("Authorization", token)
                 .body(addUnitt)
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter())
                 .when().post(baseURLUnits).thenReturn().body();
-        UnitsRespponse unitsRespponse = new Gson().fromJson(response2.asString(), UnitsRespponse.class);
+        UnitsRespponse unitsRespponse = new Gson().fromJson(response3.asString(), UnitsRespponse.class);
         Units addUnitss = unitsRespponse.data;
         this.sale_unit_id = addUnitss.getId();
         this.expense_unit_id = addUnitss.getId();
+
+        Units addUnitt2 = unitsData.addUnits(nameUnit, abbr);
+        ResponseBody response4 = given()
+                .contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .body(addUnitt2)
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().post(baseURLUnits).thenReturn().body();
+        UnitsRespponse unitsRespponse2 = new Gson().fromJson(response4.asString(), UnitsRespponse.class);
+        Units addUnitss2 = unitsRespponse2.data;
+        this.sale_unit_id2 = addUnitss2.getId();
+        this.expense_unit_id2 = addUnitss2.getId();
     }
     @Test
-    public void addProducts() {
+    public void A_addProducts() {
     Products addProductt = productsData.addNewProducts(business_id, name, sku, category_id, sale_unit_id, sale_currency, sale_cost, expense_unit_id, expense_currency, expense_cost);
         ResponseBody response = given()
                 .contentType(ContentType.JSON)
@@ -106,7 +144,7 @@ public class ProductsTests {
         Assert.assertEquals(expense_cost, addProd.getExpense_cost());
     }
     @Test
-    public void getProductByid() {
+    public void B_getProductByid() {
         ResponseBody response = given()
                 .contentType(ContentType.JSON)
                 .header("Authorization", token)
@@ -129,4 +167,122 @@ public class ProductsTests {
         Assert.assertEquals(expense_currency, getById.getExpense_currency());
         Assert.assertEquals(expense_cost, getById.getExpense_cost());
     }
+    @Test
+    public void C_updateProducts() {
+        Products updateProductt = productsData.updateProducts(name2, sku2, category_id2, sale_unit_id2, sale_currency2, sale_cost2, expense_unit_id2, expense_currency2, expense_cost2);
+        ResponseBody response = given()
+                .contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .body(updateProductt)
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().put(baseURL + id + "/").thenReturn().body();
+        ProductsResponse productsResponse = new Gson().fromJson(response.asString(), ProductsResponse.class);
+        Products updateProd = productsResponse.data;
+        Assert.assertEquals(id, updateProd.getId());
+        Assert.assertEquals(business_id, updateProd.getBusiness_id());
+        Assert.assertEquals(name2, updateProd.getName());
+        Assert.assertEquals(sku2, updateProd.getSku());
+        Assert.assertEquals(category_id2, updateProd.getCategory_id());
+        Assert.assertEquals(true, updateProd.isSale_used());
+        Assert.assertEquals(sale_unit_id2, updateProd.getSale_unit_id());
+        Assert.assertEquals(sale_currency2, updateProd.getSale_currency());
+        Assert.assertEquals(sale_cost2, updateProd.getSale_cost());
+        Assert.assertEquals(true, updateProd.isExpense_used());
+        Assert.assertEquals(expense_unit_id2, updateProd.getExpense_unit_id());
+        Assert.assertEquals(expense_currency2, updateProd.getExpense_currency());
+        Assert.assertEquals(expense_cost2, updateProd.getExpense_cost());
+        Assert.assertEquals(true, updateProd.getUpdated_at().contains("2018"));
+    }
+    @Test
+    public void D_getProductsByQuery() {
+        ResponseBody response = given()
+                .contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().get(baseURL + "?q=" + name2 + "&sort=-id").thenReturn().body();
+        ProductsResponseArray productsResponseArray = new Gson().fromJson(response.asString(), ProductsResponseArray.class);
+        Products getByQuery = productsResponseArray.data.get(0);
+        Assert.assertEquals(name2, getByQuery.getName());
+    }
+    @Test
+    public void E_getProductByBusinessID() {
+        ResponseBody response = given()
+                .contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().get(baseURLByBusiness + business_id + "/products/").thenReturn().body();
+        ProductsResponseArray productsResponseArray = new Gson().fromJson(response.asString(), ProductsResponseArray.class);
+        Products getByBusiness = productsResponseArray.data.get(0);
+        Assert.assertEquals(business_id, getByBusiness.getBusiness_id());
+
+    }
+    @Test
+    public void F_deleteProducts() {
+        ResponseBody response = given()
+                .contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().delete(baseURL + id + "/").thenReturn().body();
+        ProductsResponse productsResponse = new Gson().fromJson(response.asString(), ProductsResponse.class);
+        Products deleteProd = productsResponse.data;
+        Assert.assertEquals(id, deleteProd.getId());
+        Assert.assertEquals(true, deleteProd.getDeleted_at().contains("2018"));
+    }
+    @AfterClass
+    public void deleteBEfore() {
+        ResponseBody response = given().contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().delete("http://213.136.86.27:8083/api/v1.0/businesses/" + business_id + "/").thenReturn().body();
+        BusinesessResponse businesessResponse = new Gson().fromJson(response.asString(), BusinesessResponse.class);
+        Businesses businesses = businesessResponse.data;
+        Assert.assertEquals(business_id, businesses.getId());
+
+        ResponseBody response2 = given()
+                .contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().delete(baseURLCategory + category_id + "/").thenReturn().body();
+        CategoryWarehousesResponse categoryWarehousesResponse = new Gson().fromJson(response2.asString(), CategoryWarehousesResponse.class);
+        CategoryWarehouses deleteCategory = categoryWarehousesResponse.data;
+        Assert.assertEquals(category_id, deleteCategory. getId());
+
+        ResponseBody response3 = given()
+                .contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().delete(baseURLCategory + category_id2 + "/").thenReturn().body();
+        CategoryWarehousesResponse categoryWarehousesResponse2 = new Gson().fromJson(response3.asString(), CategoryWarehousesResponse.class);
+        CategoryWarehouses deleteCategory2 = categoryWarehousesResponse2.data;
+        Assert.assertEquals(category_id2, deleteCategory2. getId());
+
+        ResponseBody response4 = given()
+                .contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().delete(baseURLUnits + sale_unit_id + "/").thenReturn().body();
+        UnitsRespponse unitsRespponse =  new Gson().fromJson(response4.asString(), UnitsRespponse.class);
+        Units deleteUnitss = unitsRespponse.data;
+        Assert.assertEquals(sale_unit_id, deleteUnitss.getId());
+
+        ResponseBody response5 = given()
+                .contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().delete(baseURLUnits + sale_unit_id2 + "/").thenReturn().body();
+        UnitsRespponse unitsRespponse2 =  new Gson().fromJson(response5.asString(), UnitsRespponse.class);
+        Units deleteUnitss2 = unitsRespponse2.data;
+        Assert.assertEquals(sale_unit_id2, deleteUnitss2.getId());
+    }
+
+
 }
