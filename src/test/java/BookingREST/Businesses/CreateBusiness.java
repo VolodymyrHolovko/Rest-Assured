@@ -303,4 +303,10 @@ CreateBusiness {
     public String B_returncreatedToken(){
         return  createdtoken;
     }
+    public int returnPromoter(){
+        return  promoterId;
+    }
+    public int returnPlan(){
+        return  planId;
+    }
 }
