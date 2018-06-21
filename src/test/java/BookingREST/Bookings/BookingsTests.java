@@ -285,14 +285,14 @@ public class BookingsTests {
                 .filter(new ResponseLoggingFilter())
                 .when().delete("http://213.136.86.27:8083/api/v1.0/businesses/" + businesId + "/").thenReturn().body();
         ResponseBody respons = given().contentType(ContentType.JSON)
-                .header("Authorization", token)
-                .filter(new RequestLoggingFilter())
-                .filter(new ResponseLoggingFilter())
-                .when().delete("http://213.136.86.27:8083/api/v1.0/promoters/" + promoterId + "/").thenReturn().body();
-        ResponseBody respon = given().contentType(ContentType.JSON)
-                .header("Authorization", token)
-                .filter(new RequestLoggingFilter())
-                .filter(new ResponseLoggingFilter())
-                .when().delete("http://213.136.86.27:8083/api/v1.0/plans/" + planId + "/").thenReturn().body();
-    }
+            .header("Authorization", token)
+            .filter(new RequestLoggingFilter())
+            .filter(new ResponseLoggingFilter())
+            .when().delete("http://213.136.86.27:8083/api/v1.0/promoters/" + promoterId + "/").thenReturn().body();
+    ResponseBody respon = given().contentType(ContentType.JSON)
+            .header("Authorization", token)
+            .filter(new RequestLoggingFilter())
+            .filter(new ResponseLoggingFilter())
+            .when().delete("http://213.136.86.27:8083/api/v1.0/plans/" + planId + "/").thenReturn().body();
+}
 }
