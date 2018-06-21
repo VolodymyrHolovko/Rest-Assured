@@ -30,7 +30,7 @@ public class StaffTests {
     int staffId;
     String userId;
     Faker faker = new Faker();
-    String email = faker.name().firstName() + "@mail.com" + "a";
+    String email = faker.name().firstName() + faker.name().firstName()+"@mail.com" ;
     String phone = faker.regexify("+380[0-9]{9}");
     int addresId;
     int promoterId;
