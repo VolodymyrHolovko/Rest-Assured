@@ -15,13 +15,14 @@ public class AuthBusinessTest {
     AuthBusinessData authBusinessData = new AuthBusinessData();
 
     @Test
-    public String GetAdminToken() {
+    public String GetAdminToken() throws InterruptedException {
         ResponseBody responseBody = given().
                 contentType(ContentType.JSON)
                 .body(authBusinessData.authBisiness())
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter())
                 .when().post(baseURL).thenReturn().body();
+        Thread.sleep(2000);
         AuthBusinessResponse authBusinessResponse = new Gson().fromJson(responseBody.asString(), AuthBusinessResponse.class);
         AuthBusiness authBusiness = authBusinessResponse.data;
         this.token = authBusiness.getAccess_token();
