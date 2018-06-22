@@ -22,6 +22,8 @@ public class CategoryWarehousesTests {
     public String token;
     int business_id;
     String node_id;
+    int planId;
+    int promoterId;
     String baseURL = "http://213.136.86.27:8086/api/v1.0/categories/";
     String baseURLBisiness = "http://213.136.86.27:8086/api/v1.0/businesses/";
     Faker faker = new Faker();
@@ -33,9 +35,10 @@ public class CategoryWarehousesTests {
     public void getToken() {
         AuthBusinessTest getToken = new AuthBusinessTest();
         this.token = getToken.GetAdminToken();
-
         CreateBusiness getBusiness = new CreateBusiness();
         this.business_id = getBusiness.validBusiness();
+        this.planId = getBusiness.returnPlan();
+        this.promoterId = getBusiness.returnPromoter();
     }
     @Test
     public void A_createCategory() {
@@ -140,6 +143,16 @@ public class CategoryWarehousesTests {
         BusinesessResponse businesessResponse = new Gson().fromJson(response.asString(), BusinesessResponse.class);
         Businesses businesses = businesessResponse.data;
         Assert.assertEquals(business_id, businesses.getId());
+        ResponseBody respons = given().contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().delete("http://213.136.86.27:8083/api/v1.0/promoters/" + promoterId + "/").thenReturn().body();
+        ResponseBody respon = given().contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().delete("http://213.136.86.27:8083/api/v1.0/plans/" + planId + "/").thenReturn().body();
         
     }
 

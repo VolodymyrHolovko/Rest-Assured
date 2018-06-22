@@ -31,6 +31,8 @@ public class ProductsTests {
     String baseURLUnits = "http://213.136.86.27:8086/api/v1.0/units/";
     String baseURLByBusiness = "http://213.136.86.27:8086/api/v1.0/businesses/";
     String token;
+    int promoterId;
+    int planId;
     int business_id;
     int category_id;
     int category_id2;
@@ -62,8 +64,9 @@ public class ProductsTests {
     public void getToken() {
         AuthBusinessTest getToken = new AuthBusinessTest();
         this.token = getToken.GetAdminToken();
-
         CreateBusiness getBusiness = new CreateBusiness();
+        this.planId = getBusiness.returnPlan();
+        this.promoterId = getBusiness.returnPromoter();
         this.business_id = getBusiness.validBusiness();
 
         CategoryWarehouses addCategories = categoryWarehousesData.addNewCategory(business_id, nameCategory);
@@ -282,6 +285,17 @@ public class ProductsTests {
         UnitsRespponse unitsRespponse2 =  new Gson().fromJson(response5.asString(), UnitsRespponse.class);
         Units deleteUnitss2 = unitsRespponse2.data;
         Assert.assertEquals(sale_unit_id2, deleteUnitss2.getId());
+
+        ResponseBody respons = given().contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().delete("http://213.136.86.27:8083/api/v1.0/promoters/" + promoterId + "/").thenReturn().body();
+        ResponseBody respon = given().contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().delete("http://213.136.86.27:8083/api/v1.0/plans/" + planId + "/").thenReturn().body();
     }
 
 

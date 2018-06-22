@@ -27,6 +27,8 @@ public class CommentsTests {
     int businessId;
     int commentId;
     String userId;
+    int promoterId;
+    int planId;
     CommentData commentData = new CommentData();
     CreateBusiness createBusiness = new CreateBusiness();
 
@@ -35,7 +37,8 @@ public class CommentsTests {
     @BeforeClass
     public void beforeClass(){
         businessId = createBusiness.validBusiness();
-        
+        this.planId = createBusiness.returnPlan();
+        this.promoterId = createBusiness.returnPromoter();
         GetUserToken getUserToken= new GetUserToken();
         this.usertoken = getUserToken.GetUserToken();
 
@@ -125,12 +128,25 @@ public class CommentsTests {
 
     }
 
-
-
     @AfterClass
     public void O_deleteBusines() {
-    ResponseBody response = given().contentType(ContentType.JSON).header("Authorization", token).filter(new RequestLoggingFilter()).filter(new ResponseLoggingFilter()).when().delete("http://213.136.86.27:8083/api/v1.0/businesses/" + businessId + "/").thenReturn().body();
+    ResponseBody response = given().contentType(ContentType.JSON)
+            .header("Authorization", token)
+            .filter(new RequestLoggingFilter())
+            .filter(new ResponseLoggingFilter())
+            .when().delete("http://213.136.86.27:8083/api/v1.0/businesses/" + businessId + "/").thenReturn().body();
     BusinesessResponse businesessResponse = new Gson().fromJson(response.asString(), BusinesessResponse.class);
     Businesses businesses = businesessResponse.data;
+
+        ResponseBody respons = given().contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().delete("http://213.136.86.27:8083/api/v1.0/promoters/" + promoterId + "/").thenReturn().body();
+        ResponseBody respon = given().contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().delete("http://213.136.86.27:8083/api/v1.0/plans/" + planId + "/").thenReturn().body();
     }
 }

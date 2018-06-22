@@ -19,6 +19,7 @@ import com.jayway.restassured.response.Response;
 import com.jayway.restassured.response.ResponseBody;
 import com.jayway.restassured.specification.RequestSpecification;
 import org.testng.Assert;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -42,6 +43,8 @@ public class ServiceTests {
         int addressID;
         int StaffRelationID;
         int GroupRelationID;
+        int planId;
+        int promoterId;
         int AddresssRelationID;
         ServiceData serviceData = new ServiceData();
         CreateBusiness createBusiness = new CreateBusiness();
@@ -56,6 +59,8 @@ public class ServiceTests {
     @BeforeClass
     public void getToken() {
         businessID = createBusiness.validBusiness();
+        this.planId=createBusiness.returnPlan();
+        this.promoterId = createBusiness.returnPromoter();
         AuthBusinessTest authBusinessTest = new AuthBusinessTest();
         this.token = authBusinessTest.GetAdminToken();
 
@@ -383,6 +388,24 @@ public class ServiceTests {
         Assert.assertEquals(businessID,serviceGet.getBusiness_id());
         Assert.assertEquals("updatedServiceName",serviceGet.getName());
         Assert.assertTrue(serviceGet.getDeleted_at().startsWith("2018"));
+    }
+    @AfterClass
+    public void deletePreTest(){
+        ResponseBody response = given().contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().delete("http://213.136.86.27:8083/api/v1.0/businesses/" + businessID + "/").thenReturn().body();
+        ResponseBody respons = given().contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().delete("http://213.136.86.27:8083/api/v1.0/promoters/" + promoterId + "/").thenReturn().body();
+        ResponseBody respon = given().contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().delete("http://213.136.86.27:8083/api/v1.0/plans/" + planId + "/").thenReturn().body();
     }
 
 }

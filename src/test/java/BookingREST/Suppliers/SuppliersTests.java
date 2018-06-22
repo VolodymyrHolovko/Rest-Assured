@@ -38,6 +38,8 @@ public class SuppliersTests {
     String email = faker.name().lastName()+"@mail.com";
     String title2 = faker.name().firstName().toLowerCase();
     int inn = faker.hashCode();
+    int planId;
+    int promoterId;
     String address = faker.address().streetAddress();
     String comment = faker.gameOfThrones().dragon();
     String fax2 = faker.regexify("+0[0-9]{9}");
@@ -56,6 +58,8 @@ public class SuppliersTests {
 
         CreateBusiness getBusiness = new CreateBusiness();
         this.business_id = getBusiness.validBusiness();
+        this.planId = getBusiness.returnPlan();
+        this.promoterId = getBusiness.returnPromoter();
 
         ResponseBody response = given()
                 .contentType(ContentType.JSON)
@@ -211,6 +215,15 @@ public class SuppliersTests {
         SupplierTypesResponse supplierTypesResponse2 = new Gson().fromJson(response3.asString(), SupplierTypesResponse.class);
         SupplierTypes deleteSupplierType2 = supplierTypesResponse2.data;
         Assert.assertEquals(supplier_type_id2, deleteSupplierType2.getId());
-
+        ResponseBody respons = given().contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter()).when()
+                .delete("http://213.136.86.27:8083/api/v1.0/promoters/" + promoterId + "/").thenReturn().body();
+        ResponseBody respon = given().contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().delete("http://213.136.86.27:8083/api/v1.0/plans/" + planId + "/").thenReturn().body();
     }
 }

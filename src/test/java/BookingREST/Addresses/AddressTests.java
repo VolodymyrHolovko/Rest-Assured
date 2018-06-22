@@ -10,6 +10,7 @@ import com.jayway.restassured.response.Response;
 import com.jayway.restassured.response.ResponseBody;
 import com.jayway.restassured.specification.RequestSpecification;
 import org.testng.Assert;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -204,8 +205,5 @@ public class AddressTests {
         Response response = httpRequest.get("http://213.136.86.27:8083/api/v1.0/businesses/"+businessId+"/addresses/");
         Assert.assertEquals(200,response.getStatusCode());
     }
-
-
-
 
 }

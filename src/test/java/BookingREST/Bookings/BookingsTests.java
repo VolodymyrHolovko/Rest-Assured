@@ -28,7 +28,10 @@ public class BookingsTests {
     String usertoken;
     String token;
     String customerId;
+    int promoterId;
+    int planId;
     String userId = "0af3a970-8793-49dd-843d-498f7c1602de";
+
 
 
     @BeforeClass
@@ -39,6 +42,8 @@ public class BookingsTests {
         this.adressId=createBusiness.A_returnAdressId();
         this.staffId=createBusiness.B_returnStaff();
         this.serviceId=createBusiness.B_returnService();
+        this.promoterId = createBusiness.returnPromoter();
+        this.planId = createBusiness.returnPlan();
 
         GetUserToken getUserToken= new GetUserToken();
         this.usertoken = getUserToken.GetUserToken();
@@ -275,6 +280,20 @@ public class BookingsTests {
 
     @AfterClass
     public void deletePreTest(){
-        ResponseBody response = given().contentType(ContentType.JSON).header("Authorization", token).filter(new RequestLoggingFilter()).filter(new ResponseLoggingFilter()).when().delete("http://213.136.86.27:8083/api/v1.0/businesses/" + businesId + "/").thenReturn().body();
-    }
+        ResponseBody response = given().contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().delete("http://213.136.86.27:8083/api/v1.0/businesses/" + businesId + "/").thenReturn().body();
+        ResponseBody respons = given().contentType(ContentType.JSON)
+            .header("Authorization", token)
+            .filter(new RequestLoggingFilter())
+            .filter(new ResponseLoggingFilter())
+            .when().delete("http://213.136.86.27:8083/api/v1.0/promoters/" + promoterId + "/").thenReturn().body();
+         ResponseBody respon = given().contentType(ContentType.JSON)
+            .header("Authorization", token)
+            .filter(new RequestLoggingFilter())
+            .filter(new ResponseLoggingFilter())
+            .when().delete("http://213.136.86.27:8083/api/v1.0/plans/" + planId + "/").thenReturn().body();
+}
 }
