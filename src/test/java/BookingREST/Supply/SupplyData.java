@@ -13,4 +13,9 @@ public class SupplyData {
         addSupply.setComment(comment);
         return addSupply;
     }
+    public Supply updateSupply(String comment2) {
+        Supply updateSupply = new Supply();
+        updateSupply.setComment(comment2);
+        return  updateSupply;
+    }
 }

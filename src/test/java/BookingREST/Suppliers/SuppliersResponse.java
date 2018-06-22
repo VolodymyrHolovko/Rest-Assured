@@ -1,7 +1,7 @@
 package BookingREST.Suppliers;
 
 public class SuppliersResponse {
-    Suppliers data;
+    public Suppliers data;
 
     public Suppliers getData() {
         return data;
