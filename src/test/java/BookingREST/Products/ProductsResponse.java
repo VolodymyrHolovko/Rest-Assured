@@ -1,7 +1,7 @@
 package BookingREST.Products;
 
 public class ProductsResponse {
-    Products data;
+    public Products data;
 
     public Products getData() {
         return data;
