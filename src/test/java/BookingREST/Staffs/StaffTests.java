@@ -20,6 +20,8 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import java.util.Random;
+
 import static com.jayway.restassured.RestAssured.given;
 
 public class StaffTests {
@@ -30,7 +32,8 @@ public class StaffTests {
     int staffId;
     String userId;
     Faker faker = new Faker();
-    String email = faker.name().firstName() + "@mail.com" + "a";
+    char rc = (char)('A' + new Random().nextInt(26));
+    String email = faker.name().firstName() + "@mail.com"+rc + "a";
     String phone = faker.regexify("+380[0-9]{9}");
     int addresId;
     int promoterId;

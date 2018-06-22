@@ -32,26 +32,26 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import java.util.Random;
+
 import static com.jayway.restassured.RestAssured.given;
 
 public class BusinessesTests {
     String token;
-    CommentData commentData = new CommentData();
     SectorData sectorData = new SectorData();
     BusinesessData businesessData = new BusinesessData();
     PromoterData promoterData = new PromoterData();
     StrategyData strategyData = new StrategyData();
     PlanData planData = new PlanData();
-    AddressData addressData = new AddressData();
     String baseUrl = "http://213.136.86.27:8083/api/v1.0/businesses/";
-
+    char rc = (char)('A' + new Random().nextInt(26));
     Faker faker = new Faker();
-    String sectorName = faker.name().firstName().toLowerCase();
-    String firstName = faker.name().firstName()+faker.name().firstName();
-    String lastName = faker.name().lastName()+faker.name().firstName();
-    String name = faker.name().firstName()+faker.name().firstName();
-    String alias = faker.name().firstName().toLowerCase()+faker.name().firstName().toLowerCase() ;
-    String email = faker.name().firstName()+faker.name().firstName()+"@gmail.com";
+    String sectorName = faker.name().firstName().toLowerCase()+rc;
+    String firstName = faker.name().firstName()+faker.name().firstName()+rc;
+    String lastName = faker.name().lastName()+faker.name().firstName()+rc;
+    String name = faker.name().firstName()+faker.name().firstName()+rc;
+    String alias = faker.name().firstName().toLowerCase()+faker.name().firstName().toLowerCase()+rc ;
+    String email = faker.name().firstName()+faker.name().firstName()+rc+"@gmail.com";
     String phone = faker.regexify("+380[0-9]{9}");
     int sectorId;
     int promoterId;
@@ -120,9 +120,7 @@ public class BusinessesTests {
             PlanResponse planResponse = new  Gson().fromJson(responseess.asString(), PlanResponse.class);
             Plan plan = planResponse.getData();
             this.planId = plan.getId();
-
-
-    }
+        }
 
     @Test
     public void A_createBusines(){
@@ -150,8 +148,6 @@ public class BusinessesTests {
         Assert.assertEquals("http://staging.eservia.com/image/media/201805/jAgUxCmshMJuFrFl.png",businesses.getLogo());
         Assert.assertEquals("https://www.instagram.com/original.cv/?hl=ru",businesses.getLink_instagram());
         Assert.assertEquals("https://www.facebook.com/max.lutkovec",businesses.getLink_facebook());
-
-
     }
 
     @Test
@@ -162,8 +158,6 @@ public class BusinessesTests {
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter())
                 .when().patch("http://213.136.86.27:8083/api/v1.0/businesses/"+businessId+"/plans/"+planId+"/subscribe/").thenReturn().body();
-
-
     }
 
     @Test
@@ -251,9 +245,6 @@ public class BusinessesTests {
 
         Assert.assertEquals(false,businesses.is_searchable);
     }
-
-
-
 
     @Test
     public void H_promoterBusines(){

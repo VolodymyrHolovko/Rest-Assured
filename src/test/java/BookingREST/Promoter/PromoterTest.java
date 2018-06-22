@@ -11,19 +11,22 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import java.util.Random;
+
 import static com.jayway.restassured.RestAssured.given;
 
 public class PromoterTest {
     String token;
     String baseURI = "http://213.136.86.27:8083/api/v1.0/promoters/";
     Faker faker = new Faker();
-    String firstNameUpdate = faker.name().firstName()+faker.name().firstName().toLowerCase();
-    String lastNameUpdate = faker.name().lastName()+faker.name().firstName().toLowerCase();
-    String emailUpdate = faker.name().firstName().hashCode()+"@mail.com";
+    char rc = (char)('A' + new Random().nextInt(26));
+    String firstNameUpdate = faker.name().firstName()+faker.name().firstName().toLowerCase()+rc;
+    String lastNameUpdate = faker.name().lastName()+faker.name().firstName().toLowerCase()+rc;
+    String emailUpdate = faker.name().firstName().hashCode()+rc+"@mail.com";
     String phoneUpdate = faker.regexify("+380[0-9]{9}");
-    String firstName = faker.name().firstName()+faker.name().firstName().toLowerCase();
-    String lastName = faker.name().lastName()+faker.name().firstName().toLowerCase();
-    String email = faker.name().firstName().hashCode()+"@mail.com";
+    String firstName = faker.name().firstName()+faker.name().firstName().toLowerCase()+rc;
+    String lastName = faker.name().lastName()+faker.name().firstName().toLowerCase()+rc;
+    String email = faker.name().firstName().hashCode()+rc+"@mail.com";
     String phone = faker.regexify("+380[0-9]{9}");
     public int id;
     PromoterData promoterData = new  PromoterData();
