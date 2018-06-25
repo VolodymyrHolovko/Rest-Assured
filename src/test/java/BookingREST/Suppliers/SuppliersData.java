@@ -1,10 +1,10 @@
 package BookingREST.Suppliers;
 
 public class SuppliersData {
-    public Suppliers addSuppliers(int business_id, int supplier_type_id, String title, String phone, String fax, String email, int inn, String address, String comment) {
+    public Suppliers addSuppliers(int business_id, int supplier_type_id1, String title, String phone, String fax, String email, int inn, String address, String comment) {
         Suppliers addSupplier = new Suppliers();
         addSupplier.setBusiness_id(business_id);
-        addSupplier.setSupplier_type_id(supplier_type_id);
+        addSupplier.setSupplier_type_id(supplier_type_id1);
         addSupplier.setTitle(title);
         addSupplier.setPhone(phone);
         addSupplier.setFax(fax);

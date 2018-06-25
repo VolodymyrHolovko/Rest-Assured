@@ -21,7 +21,7 @@ public class ReturnSupplier {
     String baseURLType = "http://213.136.86.27:8086/api/v1.0/supplier-types/";
     public int id;
     public int business_id;
-    int supplier_type_id;
+    private int supplier_type_id;
     Faker faker = new Faker();
     String titleType = faker.name().firstName().toLowerCase();
     String title = faker.name().firstName().toLowerCase();
