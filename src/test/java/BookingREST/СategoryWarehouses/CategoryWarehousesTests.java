@@ -24,8 +24,8 @@ public class CategoryWarehousesTests {
     String node_id;
     int planId;
     int promoterId;
-    String baseURL = "http://213.136.86.27:8086/api/v1.0/categories/";
-    String baseURLBisiness = "http://213.136.86.27:8086/api/v1.0/businesses/";
+    String baseURL = "http://staging.eservia.com:8086/api/v1.0/categories/";
+    String baseURLBisiness = "http://staging.eservia.com:8086/api/v1.0/businesses/";
     Faker faker = new Faker();
     String name = faker.app().name().toLowerCase();
     String name2 = faker.app().name().toLowerCase();

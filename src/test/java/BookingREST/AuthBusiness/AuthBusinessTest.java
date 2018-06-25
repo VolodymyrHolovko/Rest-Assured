@@ -22,7 +22,7 @@ public class AuthBusinessTest {
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter())
                 .when().post(baseURL).thenReturn().body();
-        
+
         AuthBusinessResponse authBusinessResponse = new Gson().fromJson(responseBody.asString(), AuthBusinessResponse.class);
         AuthBusiness authBusiness = authBusinessResponse.data;
         this.token = authBusiness.getAccess_token();

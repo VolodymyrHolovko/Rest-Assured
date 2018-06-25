@@ -22,9 +22,9 @@ import static com.jayway.restassured.RestAssured.given;
 
 public class WarehouseTests {
     String token;
-    String baseURL = "http://213.136.86.27:8086/api/v1.0/warehouses/";
+    String baseURL = "http://staging.eservia.com:8086/api/v1.0/warehouses/";
     String baseURLStaff = "http://213.136.86.27:8084/api/v1.0/staffs/";
-    String baseUrlByBusiness = "http://213.136.86.27:8086/api/v1.0/businesses/";
+    String baseUrlByBusiness = "http://staging.eservia.com:8086/api/v1.0/businesses/";
     public int id;
     int business_id;
     int address_id;

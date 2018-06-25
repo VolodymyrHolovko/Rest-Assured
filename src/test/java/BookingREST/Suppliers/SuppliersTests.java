@@ -23,9 +23,9 @@ import static com.jayway.restassured.RestAssured.given;
 
 public class SuppliersTests {
     String token;
-    String baqseURL = "http://213.136.86.27:8086/api/v1.0/suppliers/";
-    String baseURLType = "http://213.136.86.27:8086/api/v1.0/supplier-types/";
-    String baseURLByBusiness = "http://213.136.86.27:8086/api/v1.0/businesses/";
+    String baqseURL = "http://staging.eservia.com:8086/api/v1.0/suppliers/";
+    String baseURLType = "http://staging.eservia.com:8086/api/v1.0/supplier-types/";
+    String baseURLByBusiness = "http://staging.eservia.com:8086/api/v1.0/businesses/";
     public int id;
     int business_id ;
     int supplier_type_id;
