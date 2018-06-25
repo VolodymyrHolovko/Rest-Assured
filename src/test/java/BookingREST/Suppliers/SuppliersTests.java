@@ -28,8 +28,8 @@ public class SuppliersTests {
     String baseURLByBusiness = "http://staging.eservia.com:8086/api/v1.0/businesses/";
     public int id;
     int business_id ;
-    int supplier_type_id;
-    int supplier_type_id2;
+    private int supplier_type_id1;
+    private int supplier_type_id2;
     Faker faker = new Faker();
     String titleType = faker.name().firstName().toLowerCase();
     String title = faker.name().firstName().toLowerCase();
@@ -68,7 +68,7 @@ public class SuppliersTests {
                 .when().post(baseURLType).thenReturn().body();
         SupplierTypesResponse supplierTypesResponse = new Gson().fromJson(response.asString(), SupplierTypesResponse.class);
         SupplierTypes addSupplierType = supplierTypesResponse.data;
-        this.supplier_type_id = addSupplierType.getId();
+        this.supplier_type_id1 = addSupplierType.getId();
 
         ResponseBody respons2 = given()
                 .contentType(ContentType.JSON)
@@ -81,7 +81,7 @@ public class SuppliersTests {
     }
     @Test
     public void A_addSuppliers() {
-        Suppliers addSupplier = suppliersData.addSuppliers(business_id, supplier_type_id, title, phone, fax, email, inn, address, comment);
+        Suppliers addSupplier = suppliersData.addSuppliers(business_id, supplier_type_id1, title, phone, fax, email, inn, address, comment);
         ResponseBody response = given()
                 .contentType(ContentType.JSON)
                 .header("Authorization", token)
@@ -94,7 +94,7 @@ public class SuppliersTests {
         this.id =addSuppl.getId();
         Assert.assertEquals(id, addSuppl.getId());
         Assert.assertEquals(business_id, addSuppl.getBusiness_id());
-        Assert.assertEquals(supplier_type_id, addSuppl.getSupplier_type_id());
+        Assert.assertEquals(supplier_type_id1, addSuppl.getSupplier_type_id());
         Assert.assertEquals(title, addSuppl.getTitle());
         Assert.assertEquals(phone, addSuppl.getPhone());
         Assert.assertEquals(fax, addSuppl.getFax());
@@ -116,7 +116,7 @@ public class SuppliersTests {
         Suppliers getSuppl = suppliersResponse.data;
         Assert.assertEquals(id, getSuppl.getId());
         Assert.assertEquals(business_id, getSuppl.getBusiness_id());
-        Assert.assertEquals(supplier_type_id, getSuppl.getSupplier_type_id());
+        Assert.assertEquals(supplier_type_id1, getSuppl.getSupplier_type_id());
         Assert.assertEquals(title, getSuppl.getTitle());
         Assert.assertEquals(phone, getSuppl.getPhone());
         Assert.assertEquals(fax, getSuppl.getFax());
@@ -149,7 +149,7 @@ public class SuppliersTests {
         Assert.assertEquals(true, updateSuppl.getUpdated_at().contains("2018"));
     }
     @Test
-    public void E_getSuppliersByQuery() {
+    public void D_getSuppliersByQuery() {
         ResponseBody response = given()
                 .contentType(ContentType.JSON)
                 .header("Authorization", token)
@@ -161,7 +161,7 @@ public class SuppliersTests {
         Assert.assertEquals(supplier_type_id2, suppliersQuery.getSupplier_type_id());
     }
     @Test
-    public void F_getSuppliersByBusiness() {
+    public void E_getSuppliersByBusiness() {
         ResponseBody response = given()
                 .contentType(ContentType.JSON)
                 .header("Authorization", token)
@@ -173,7 +173,7 @@ public class SuppliersTests {
         Assert.assertEquals(business_id, suppliersBusiness.getBusiness_id());
     }
     @Test
-    public void G_deleteSuppliers() {
+    public void F_deleteSuppliers() {
         ResponseBody response = given()
                 .contentType(ContentType.JSON)
                 .header("Authorization", token)
@@ -201,10 +201,10 @@ public class SuppliersTests {
                 .header("Authorization", token)
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter())
-                .when().delete(baseURLType + supplier_type_id + "/").thenReturn().body();
+                .when().delete(baseURLType + supplier_type_id1 + "/").thenReturn().body();
         SupplierTypesResponse supplierTypesResponse = new Gson().fromJson(response2.asString(), SupplierTypesResponse.class);
         SupplierTypes deleteSupplierType = supplierTypesResponse.data;
-        Assert.assertEquals(supplier_type_id, deleteSupplierType.getId());
+        Assert.assertEquals(supplier_type_id1, deleteSupplierType.getId());
 
         ResponseBody response3 = given()
                 .contentType(ContentType.JSON)
