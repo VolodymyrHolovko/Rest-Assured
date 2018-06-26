@@ -19,7 +19,7 @@ import static com.jayway.restassured.RestAssured.given;
 public class PlanTests {
 
     private String token;
-    private String baseURL = "http://213.136.86.27:8083/api/v1.0/plans/";
+    private String baseURL = "http://staging.eservia.com:8083/api/v1.0/plans/";
     int Ids;
     int planId;
     PlanData planData = new PlanData();

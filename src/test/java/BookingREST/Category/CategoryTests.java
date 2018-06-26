@@ -28,11 +28,11 @@ import static com.jayway.restassured.RestAssured.given;
 
 public class CategoryTests {
 String token;
-String baseURL = "http://213.136.86.27:8083/api/v1.0/categories/";
-String baseUrlSector = "http://213.136.86.27:8083/api/v1.0/sectors/";
-String baseURIStrategy = "http://213.136.86.27:8083/api/v1.0/strategies/";
-String baseURLPromoter = "http://213.136.86.27:8083/api/v1.0/promoters/";
-String baseURLBusiness = "http://213.136.86.27:8083/api/v1.0/businesses/";
+String baseURL = "http://staging.eservia.com:8083/api/v1.0/categories/";
+String baseUrlSector = "http://staging.eservia.com:8083/api/v1.0/sectors/";
+String baseURIStrategy = "http://staging.eservia.com:8083/api/v1.0/strategies/";
+String baseURLPromoter = "http://staging.eservia.com:8083/api/v1.0/promoters/";
+String baseURLBusiness = "http://staging.eservia.com:8083/api/v1.0/businesses/";
 Faker faker = new Faker();
 public int id;
 String category = faker.name().nameWithMiddle().toLowerCase()+faker.name().firstName().toLowerCase();
