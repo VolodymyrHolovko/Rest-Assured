@@ -27,11 +27,11 @@ import static com.jayway.restassured.RestAssured.given;
 
 public class SupplyTests {
     int id;
-    String baseURL = "http://213.136.86.27:8086/api/v1.0/supplies/";
-    String baseURLBUsiness = "http://213.136.86.27:8086/api/v1.0/businesses/";
-    String baseURLSupplier = "http://213.136.86.27:8086/api/v1.0/suppliers/";
-    String baseURLPRoduct = "http://213.136.86.27:8086/api/v1.0/products/";
-    String baseURLWarehouse = "http://213.136.86.27:8086/api/v1.0/warehouses/";
+    String baseURL = "http://staging.eservia.com:8086/api/v1.0/supplies/";
+    String baseURLBUsiness = "http://staging.eservia.com:8086/api/v1.0/businesses/";
+    String baseURLSupplier = "http://staging.eservia.com:8086/api/v1.0/suppliers/";
+    String baseURLPRoduct = "http://staging.eservia.com:8086/api/v1.0/products/";
+    String baseURLWarehouse = "http://staging.eservia.com:8086/api/v1.0/warehouses/";
     String token;
     public int business_id;
     int supplier_id;

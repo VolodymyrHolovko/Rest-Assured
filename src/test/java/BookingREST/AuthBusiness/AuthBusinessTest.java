@@ -10,7 +10,7 @@ import org.testng.annotations.Test;
 import static com.jayway.restassured.RestAssured.given;
 
 public class AuthBusinessTest {
-    String baseURL = "http://213.136.86.27:8082/api/v1.0/auth/sign-in/";
+    String baseURL = "http://staging.eservia.com:8082/api/v1.0/auth/sign-in/";
     String token;
     AuthBusinessData authBusinessData = new AuthBusinessData();
 
@@ -22,6 +22,7 @@ public class AuthBusinessTest {
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter())
                 .when().post(baseURL).thenReturn().body();
+
         AuthBusinessResponse authBusinessResponse = new Gson().fromJson(responseBody.asString(), AuthBusinessResponse.class);
         AuthBusiness authBusiness = authBusinessResponse.data;
         this.token = authBusiness.getAccess_token();

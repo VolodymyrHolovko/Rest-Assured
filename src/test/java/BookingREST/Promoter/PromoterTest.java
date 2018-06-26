@@ -17,7 +17,7 @@ import static com.jayway.restassured.RestAssured.given;
 
 public class PromoterTest {
     String token;
-    String baseURI = "http://213.136.86.27:8083/api/v1.0/promoters/";
+    String baseURI = "http://staging.eservia.com:8083/api/v1.0/promoters/";
     Faker faker = new Faker();
     char rc = (char)('A' + new Random().nextInt(26));
     String firstNameUpdate = faker.name().firstName()+faker.name().firstName().toLowerCase()+rc;

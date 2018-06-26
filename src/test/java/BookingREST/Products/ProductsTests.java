@@ -26,10 +26,10 @@ import static com.jayway.restassured.RestAssured.given;
 
 public class ProductsTests {
     int id;
-    String baseURL = "http://213.136.86.27:8086/api/v1.0/products/";
-    String baseURLCategory = "http://213.136.86.27:8086/api/v1.0/categories/";
-    String baseURLUnits = "http://213.136.86.27:8086/api/v1.0/units/";
-    String baseURLByBusiness = "http://213.136.86.27:8086/api/v1.0/businesses/";
+    String baseURL = "http://staging.eservia.com:8086/api/v1.0/products/";
+    String baseURLCategory = "http://staging.eservia.com:8086/api/v1.0/categories/";
+    String baseURLUnits = "http://staging.eservia.com:8086/api/v1.0/units/";
+    String baseURLByBusiness = "http://staging.eservia.com:8086/api/v1.0/businesses/";
     String token;
     int promoterId;
     int planId;

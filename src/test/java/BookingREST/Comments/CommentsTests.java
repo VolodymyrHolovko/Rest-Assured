@@ -21,7 +21,7 @@ import org.testng.annotations.Test;
 import static com.jayway.restassured.RestAssured.given;
 
 public class CommentsTests {
-    String baseUrl = "http://213.136.86.27:8083/api/v1.0/comments/";
+    String baseUrl = "http://staging.eservia.com:8083/api/v1.0/comments/";
     String usertoken;
     String token;
     int businessId;

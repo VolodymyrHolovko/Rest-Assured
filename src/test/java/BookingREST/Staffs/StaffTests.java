@@ -25,7 +25,7 @@ import java.util.Random;
 import static com.jayway.restassured.RestAssured.given;
 
 public class StaffTests {
-    String baseUrl = "http://213.136.86.27:8084/api/v1.0/staffs/";
+    String baseUrl = "http://staging.eservia.com:8084/api/v1.0/staffs/";
     String usertoken;
     String token;
     int businessId;

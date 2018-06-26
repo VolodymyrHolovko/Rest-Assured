@@ -22,7 +22,7 @@ public class UnitsTests {
     String abbr = faker.book().author().toLowerCase();
     String name2 = faker.name().title().toLowerCase();
     String abbr2 = faker.book().author().toLowerCase();
-    String baseURL = "http://213.136.86.27:8086/api/v1.0/units/";
+    String baseURL = "http://staging.eservia.com:8086/api/v1.0/units/";
     UnitsData unitsData = new UnitsData();
 
     @BeforeClass
