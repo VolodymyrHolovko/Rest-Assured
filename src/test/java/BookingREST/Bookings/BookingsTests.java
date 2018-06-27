@@ -128,7 +128,7 @@ public class BookingsTests {
                 .header("Authorization", token)
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter())
-                .when().get("http://213.136.86.27:8085/api/v1.0/businesses/"+businesId+"/time-slots/?address_id="+adressId+"&service_id="+serviceId+"&staff_id="+staffId+"&date=2018-06-25").thenReturn().body();
+                .when().get("http://staging.eservia.com:8085/api/v1.0/businesses/"+businesId+"/time-slots/?address_id="+adressId+"&service_id="+serviceId+"&staff_id="+staffId+"&date=2018-06-25").thenReturn().body();
         BookingListResponse bookingListResponse= new Gson().fromJson(response.asString(), BookingListResponse.class);
         Assert.assertEquals(false,response.asString().contains("2018-07-25 14:00:00"));
         Assert.assertEquals(false,response.asString().contains("2018-07-25 13:45:00"));
@@ -213,7 +213,7 @@ public class BookingsTests {
                 .header("Authorization", token)
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter())
-                .when().get("http://213.136.86.27:8085/api/v1.0/businesses/"+businesId+"/time-slots/?address_id="+adressId+"&service_id="+serviceId+"&staff_id="+staffId+"&date=2018-06-25").thenReturn().body();
+                .when().get("http://staging.eservia.com:8085/api/v1.0/businesses/"+businesId+"/time-slots/?address_id="+adressId+"&service_id="+serviceId+"&staff_id="+staffId+"&date=2018-07-25").thenReturn().body();
         BookingListResponse bookingListResponse= new Gson().fromJson(response.asString(), BookingListResponse.class);
         Assert.assertEquals(false,response.asString().contains("2018-07-25 17:00:00"));
         Assert.assertEquals(false,response.asString().contains("2018-07-25 16:45:00"));
@@ -249,7 +249,7 @@ public class BookingsTests {
                 .header("Authorization", token)
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter())
-                .when().get("http://staging.eservia.com:8085/api/v1.0/businesses/"+businesId+"/time-slots/?address_id="+adressId+"&service_id="+serviceId+"&staff_id="+staffId+"&date=2018-06-25").thenReturn().body();
+                .when().get("http://staging.eservia.com:8085/api/v1.0/businesses/"+businesId+"/time-slots/?address_id="+adressId+"&service_id="+serviceId+"&staff_id="+staffId+"&date=2018-07-25").thenReturn().body();
         BookingListResponse bookingListResponse= new Gson().fromJson(response.asString(), BookingListResponse.class);
         Assert.assertEquals(true,response.asString().contains("2018-07-25 14:00:00"));
         Assert.assertEquals(true,response.asString().contains("2018-07-25 13:45:00"));
