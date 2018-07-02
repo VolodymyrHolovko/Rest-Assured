@@ -1,19 +1,29 @@
 package BookingREST.Stock;
 
 import BookingREST.AuthBusiness.AuthBusinessTest;
+import BookingREST.Businesses.BusinesessResponse;
+import BookingREST.Businesses.Businesses;
 import BookingREST.Businesses.CreateBusiness;
+import BookingREST.Products.Products;
+import BookingREST.Products.ProductsResponse;
 import BookingREST.Products.ReturnProduct;
 import BookingREST.Suppliers.ReturnSupplier;
+import BookingREST.Suppliers.Suppliers;
+import BookingREST.Suppliers.SuppliersResponse;
 import BookingREST.Supply.Supply;
 import BookingREST.Supply.SupplyData;
 import BookingREST.Supply.SupplyResponse;
 import BookingREST.Warehouse.ReturnWarehouse;
+import BookingREST.Warehouse.Warehouse;
+import BookingREST.Warehouse.WarehouseResponse;
 import com.github.javafaker.Faker;
 import com.google.gson.Gson;
 import com.jayway.restassured.filter.log.RequestLoggingFilter;
 import com.jayway.restassured.filter.log.ResponseLoggingFilter;
 import com.jayway.restassured.http.ContentType;
 import com.jayway.restassured.response.ResponseBody;
+import org.testng.Assert;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -24,6 +34,7 @@ public class StockTests {
     String token;
     String bseURL = "http://213.136.86.27:8086/api/v1.0/stocks/";
     String baseURLSupplies = "http://staging.eservia.com:8086/api/v1.0/supplies/";
+    String baseURLByBusiness = "http://213.136.86.27:8086/api/v1.0/businesses/";
     public int business_id;
     int warehouse_id;
     int product_id;
@@ -32,7 +43,9 @@ public class StockTests {
     int supplier_id;
     Faker faker = new Faker();
     String currency = "UAH";
+    String stockQUery = "?warehouse_id=";
     int cost = faker.number().randomDigit();
+    int supplyID;
     int count = faker.number().randomDigitNotZero();
     String comment = faker.chuckNorris().fact();
     SupplyData supplyData = new SupplyData();
@@ -67,10 +80,27 @@ public class StockTests {
                 .when().post(baseURLSupplies).thenReturn().body();
         SupplyResponse supplyResponse = new Gson().fromJson(response.asString(), SupplyResponse.class);
         Supply addSupp = supplyResponse.data;
-        this.id = addSupp.getId();
+        this.supplyID = addSupp.getId();
     }
     @Test
-    public void A_getStockByID() {
+    public void A_getStockByQuery() {
+        ResponseBody response = given()
+                .contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().get(bseURL + stockQUery + warehouse_id + "&sort=-id").thenReturn().body();
+        StockResponseArray stockResponse = new Gson().fromJson(response.asString(), StockResponseArray.class);
+        Stock getByQuery = stockResponse.data.get(0);
+        this.id = getByQuery.getId();
+        Assert.assertEquals(id, getByQuery.getId());
+        Assert.assertEquals(business_id, getByQuery.getBusiness_id());
+        Assert.assertEquals(warehouse_id, getByQuery.getWarehouse_id());
+        Assert.assertEquals(product_id, getByQuery.getProduct_id());
+        Assert.assertEquals(count, getByQuery.getCount());
+    }
+    @Test
+    public void B_getStockById() {
         ResponseBody response = given()
                 .contentType(ContentType.JSON)
                 .header("Authorization", token)
@@ -78,7 +108,78 @@ public class StockTests {
                 .filter(new ResponseLoggingFilter())
                 .when().get(bseURL + id + "/").thenReturn().body();
         StockResponse stockResponse = new Gson().fromJson(response.asString(), StockResponse.class);
-        Stock getByID = stockResponse.data;
-        System.out.println(response.asString());
+        Stock getById = stockResponse.data;
+        Assert.assertEquals(id, getById.getId());
+        Assert.assertEquals(business_id, getById.getBusiness_id());
+        Assert.assertEquals(warehouse_id, getById.getWarehouse_id());
+        Assert.assertEquals(product_id, getById.getProduct_id());
+        Assert.assertEquals(count, getById.getCount());
+    }
+    @Test
+    public void C_getStockByBusiness() {
+        ResponseBody response = given()
+                .contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().get(baseURLByBusiness + business_id + "/stocks/").thenReturn().body();
+        StockResponseArray stockResponseArray = new Gson().fromJson(response.asString(), StockResponseArray.class);
+        Stock getByBusiness = stockResponseArray.data.get(0);
+        Assert.assertEquals(id, getByBusiness.getId());
+        Assert.assertEquals(business_id, getByBusiness.getBusiness_id());
+        Assert.assertEquals(warehouse_id, getByBusiness.getWarehouse_id());
+        Assert.assertEquals(product_id, getByBusiness.getProduct_id());
+        Assert.assertEquals(count, getByBusiness.getCount());
+    }
+    @AfterClass
+    public void deleteBefore() {
+        ResponseBody response = given().contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().delete("http://213.136.86.27:8083/api/v1.0/businesses/" + business_id + "/").thenReturn().body();
+        BusinesessResponse businesessResponse = new Gson().fromJson(response.asString(), BusinesessResponse.class);
+        Businesses businesses = businesessResponse.data;
+        Assert.assertEquals(business_id, businesses.getId());
+
+        ResponseBody response2 = given()
+                .contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().delete("http://staging.eservia.com:8086/api/v1.0/suppliers/" + supplier_id + "/").thenReturn().body();
+        SuppliersResponse suppliersResponse = new Gson().fromJson(response2.asString(), SuppliersResponse.class);
+        Suppliers deleteSuppl = suppliersResponse.data;
+        Assert.assertEquals(supplier_id, deleteSuppl.getId());
+
+        ResponseBody response3 = given()
+                .contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().delete("http://staging.eservia.com:8086/api/v1.0/products/" + product_id + "/").thenReturn().body();
+        ProductsResponse productsResponse = new Gson().fromJson(response3.asString(), ProductsResponse.class);
+        Products deleteProd = productsResponse.data;
+        Assert.assertEquals(product_id, deleteProd.getId());
+
+        ResponseBody response4 = given()
+                .contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().delete("http://staging.eservia.com:8086/api/v1.0/warehouses/" + warehouse_id + "/").thenReturn().body();
+        WarehouseResponse warehouseResponse = new Gson().fromJson(response4.asString(), WarehouseResponse.class);
+        Warehouse deleteWarhoses = warehouseResponse.data;
+        Assert.assertEquals(warehouse_id, deleteWarhoses.getId());
+
+        ResponseBody response5 = given()
+                .contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().delete("http://staging.eservia.com:8086/api/v1.0/supplies/" + supplyID + "/").thenReturn().body();
+        SupplyResponse supplyResponse = new Gson().fromJson(response5.asString(), SupplyResponse.class);
+        Supply deleteSupp = supplyResponse.data;
+        Assert.assertEquals(supplyID, deleteSupp.getId());
     }
 }
