@@ -23,7 +23,7 @@ import static com.jayway.restassured.RestAssured.given;
 
 public class ServiceGroupTests {
     String token;
-    private String baseURL = "http://213.136.86.27:8084/api/v1.0/service-groups/";
+    private String baseURL = "http://staging.eservia.com:8084/api/v1.0/service-groups/";
     int Ids;
     int businessID;
     int promoterId;

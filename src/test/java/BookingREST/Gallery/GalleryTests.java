@@ -18,7 +18,7 @@ import static com.jayway.restassured.RestAssured.given;
 public class GalleryTests {
 
     private  String token;
-    private  String baseURL = "http://213.136.86.27:8083/api/v1.0/photos/";
+    private  String baseURL = "http://staging.eservia.com:8083/api/v1.0/photos/";
     int businessId;
     int galleryId;
     int promoterId;

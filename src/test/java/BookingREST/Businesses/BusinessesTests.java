@@ -43,7 +43,7 @@ public class BusinessesTests {
     StrategyData strategyData = new StrategyData();
     PlanData planData = new PlanData();
     AddressData addressData = new AddressData();
-    String baseUrl = "http://213.136.86.27:8083/api/v1.0/businesses/";
+    String baseUrl = "http://staging.eservia.com:8083/api/v1.0/businesses/";
 
     Faker faker = new Faker();
     String sectorName = faker.name().firstName().toLowerCase();

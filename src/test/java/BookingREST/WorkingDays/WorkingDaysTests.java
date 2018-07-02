@@ -21,10 +21,10 @@ import static com.jayway.restassured.RestAssured.given;
 
 public class WorkingDaysTests {
     String token;
-    String baseURL = "http://213.136.86.27:8083/api/v1.0/working-days/";
-    String baseURLBeauty = "http://213.136.86.27:8084/api/v1.0/working-days/";
-    String baseUrlByAdress = "http://213.136.86.27:8083/api/v1.0/addresses/";
-    String baseURLStaff = "http://213.136.86.27:8084/api/v1.0/staffs/";
+    String baseURL = "http://staging.eservia.com:8083/api/v1.0/working-days/";
+    String baseURLBeauty = "http://staging.eservia.com:8084/api/v1.0/working-days/";
+    String baseUrlByAdress = "http://staging.eservia.com:8083/api/v1.0/addresses/";
+    String baseURLStaff = "http://staging.eservia.com:8084/api/v1.0/staffs/";
     public int id;
     public int idBeauty;
     String rule;

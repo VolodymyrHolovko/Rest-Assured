@@ -24,26 +24,30 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import java.util.Random;
+
 import static com.jayway.restassured.RestAssured.given;
 
 public class CategoryTests {
 String token;
-String baseURL = "http://213.136.86.27:8083/api/v1.0/categories/";
-String baseUrlSector = "http://213.136.86.27:8083/api/v1.0/sectors/";
-String baseURIStrategy = "http://213.136.86.27:8083/api/v1.0/strategies/";
-String baseURLPromoter = "http://213.136.86.27:8083/api/v1.0/promoters/";
-String baseURLBusiness = "http://213.136.86.27:8083/api/v1.0/businesses/";
+String baseURL = "http://staging.eservia.com:8083/api/v1.0/categories/";
+String baseUrlSector = "http://staging.eservia.com:8083/api/v1.0/sectors/";
+String baseURIStrategy = "http://staging.eservia.com:8083/api/v1.0/strategies/";
+String baseURLPromoter = "http://staging.eservia.com:8083/api/v1.0/promoters/";
+String baseURLBusiness = "http://staging.eservia.com:8083/api/v1.0/businesses/";
 Faker faker = new Faker();
 public int id;
-String category = faker.name().nameWithMiddle().toLowerCase()+faker.name().firstName().toLowerCase();
-String sectorName = faker.name().username().toLowerCase()+faker.name().firstName().toLowerCase();
-String name = faker.name().fullName().toLowerCase()+faker.name().firstName().toLowerCase();
-String enName = faker.name().title().toLowerCase()+faker.name().firstName().toLowerCase();
-String enNameUpdate = faker.name().title().toLowerCase()+faker.name().firstName().toLowerCase();
-String alias = faker.name().firstName()+faker.name().firstName().toLowerCase();
-String firstName = faker.name().firstName()+faker.name().firstName().toLowerCase();
-String lastName = faker.name().username().toLowerCase()+faker.name().firstName().toLowerCase();
-String email = faker.name().firstName().hashCode()+faker.name().firstName().toLowerCase()+"@mail.com";
+char rc = (char)('A' + new Random().nextInt(26));
+
+String category = (faker.name().nameWithMiddle().toLowerCase()+faker.name().firstName()+rc).toLowerCase();
+String sectorName = faker.name().username().toLowerCase()+faker.name().firstName().toLowerCase()+rc;
+String name = faker.name().fullName().toLowerCase()+faker.name().firstName().toLowerCase()+rc;
+String enName = faker.name().title().toLowerCase()+faker.name().firstName().toLowerCase()+rc;
+String enNameUpdate = faker.name().title().toLowerCase()+faker.name().firstName().toLowerCase()+rc;
+String alias = faker.name().firstName()+faker.name().firstName().toLowerCase()+rc;
+String firstName = faker.name().firstName()+faker.name().firstName().toLowerCase()+rc;
+String lastName = faker.name().username().toLowerCase()+faker.name().firstName().toLowerCase()+rc;
+String email = faker.name().firstName().hashCode()+faker.name().firstName().toLowerCase()+rc+"@mail.com";
 String phone = faker.regexify("+380[0-9]{9}");
 int promoterId;
 int sector_id;
@@ -127,6 +131,7 @@ PromoterData promoterData = new PromoterData();
         Assert.assertEquals(0, addCategory.getStatus());
         Assert.assertEquals(true, addCategory.getCreated_at().startsWith("2018"));
     }
+
     @Test
     public void B_updateCategory() {
         ResponseBody response = given()
@@ -144,6 +149,7 @@ PromoterData promoterData = new PromoterData();
         Assert.assertEquals(0, updateCategory.getStatus());
         Assert.assertEquals(true, updateCategory.getUpdated_at().startsWith("2018"));
     }
+
     @Test
     public void C_activateCategory() {
         ResponseBody response = given()
@@ -156,6 +162,7 @@ PromoterData promoterData = new PromoterData();
         Category activateCategory = categoryResponse.data;
         Assert.assertEquals(1, activateCategory.getStatus());
     }
+
     @Test
     public void D_getCategoryId() {
         ResponseBody response = given()
@@ -176,6 +183,7 @@ PromoterData promoterData = new PromoterData();
         Assert.assertEquals(true, getCategory.getCreated_at().startsWith("2018"));
         Assert.assertEquals(true, getCategory.getUpdated_at().startsWith("2018"));
     }
+
     @Test
     public void E_getCategory() {
         ResponseBody response = given()
@@ -195,6 +203,7 @@ PromoterData promoterData = new PromoterData();
         Assert.assertEquals(1, getCategory.getStatus());
 
     }
+
     @Test
     public void F_addBusinessIdCategory() {
         ResponseBody response = given()
@@ -211,6 +220,7 @@ PromoterData promoterData = new PromoterData();
         Assert.assertEquals(businessId, addCategoryToBusiness.getBusiness_id());
         Assert.assertEquals(id, addCategoryToBusiness.getCategory_id());
     }
+
     @Test
     public void G_getBusinessIdCategory() {
         ResponseBody response = given()
@@ -232,6 +242,7 @@ PromoterData promoterData = new PromoterData();
         Assert.assertEquals(true, getCategoryToBusiness.getCreated_at().startsWith("2018"));
         Assert.assertEquals(true, getCategoryToBusiness.getUpdated_at().startsWith("2018"));
     }
+
     @Test
     public void H_getBusinessIdCategoryRelations() {
         ResponseBody response = given()
@@ -247,6 +258,7 @@ PromoterData promoterData = new PromoterData();
         Assert.assertEquals(businessId, getCategoryToBusinessRelations.getBusiness_id());
         Assert.assertEquals(id, getCategoryToBusinessRelations.getCategory_id());
     }
+
     @Test
     public void I_deleteBusinessIdCategory() {
         ResponseBody response = given()
@@ -272,6 +284,7 @@ PromoterData promoterData = new PromoterData();
         System.out.println(getDeleted);
         Assert.assertEquals(0, getDeleted);
     }
+
     @Test
     public void J_deactivateCategory() {
         ResponseBody response = given()
@@ -284,6 +297,7 @@ PromoterData promoterData = new PromoterData();
         Category deactivateCategory = categoryResponse.data;
         Assert.assertEquals(0, deactivateCategory.getStatus());
     }
+
     @Test
     public void K_deleteCategory() {
         ResponseBody response = given()
@@ -296,6 +310,7 @@ PromoterData promoterData = new PromoterData();
         Category deletedCategory = categoryResponse.data;
         Assert.assertEquals(true, deletedCategory.getDeleted_at().startsWith("2018"));
     }
+
     @AfterClass
     public void deleteAllFromBeforeClass() {
         ResponseBody respons = given()

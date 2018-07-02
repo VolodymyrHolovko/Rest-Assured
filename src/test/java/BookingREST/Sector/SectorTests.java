@@ -17,7 +17,7 @@ public class SectorTests {
 
     String token;
     SectorData sectorData = new SectorData();
-    String baseUrl = "http://213.136.86.27:8083/api/v1.0/sectors/";
+    String baseUrl = "http://staging.eservia.com:8083/api/v1.0/sectors/";
     int id;
 
     Faker faker = new Faker();

@@ -20,17 +20,20 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import java.util.Random;
+
 import static com.jayway.restassured.RestAssured.given;
 
 public class StaffTests {
-    String baseUrl = "http://213.136.86.27:8084/api/v1.0/staffs/";
+    String baseUrl = "http://staging.eservia.com:8084/api/v1.0/staffs/";
     String usertoken;
     String token;
     int businessId;
     int staffId;
     String userId;
     Faker faker = new Faker();
-    String email = faker.name().firstName() + faker.name().firstName()+"@mail.com" ;
+    char rc = (char)('A' + new Random().nextInt(26));
+    String email = faker.name().firstName() + "@mail.com"+rc + "a";
     String phone = faker.regexify("+380[0-9]{9}");
     int addresId;
     int promoterId;
@@ -125,11 +128,11 @@ public class StaffTests {
 
     @AfterClass
     public void deleteBeforee() {
-        ResponseBody response = given().contentType(ContentType.JSON)
-                .header("Authorization", token)
-                .filter(new RequestLoggingFilter())
-                .filter(new ResponseLoggingFilter())
-                .when().delete("http://213.136.86.27:8083/api/v1.0/businesses/" + businessId + "/").thenReturn().body();
+        ResponseBody response = given().contentType(ContentType.JSON).header("Authorization", token).filter(new RequestLoggingFilter()).filter(new ResponseLoggingFilter()).when().delete("http://213.136.86.27:8083/api/v1.0/businesses/" + businessId + "/").thenReturn().body();
+        BusinesessResponse businesessResponse = new Gson().fromJson(response.asString(), BusinesessResponse.class);
+        Businesses businesses = businesessResponse.data;
+        this.businessId = businesses.getId();
+
         ResponseBody respons = given().contentType(ContentType.JSON)
                 .header("Authorization", token)
                 .filter(new RequestLoggingFilter())

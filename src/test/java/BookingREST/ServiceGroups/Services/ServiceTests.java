@@ -30,11 +30,11 @@ import static com.jayway.restassured.RestAssured.given;
 
 public class ServiceTests {
         String token;
-        private String baseURL = "http://213.136.86.27:8084/api/v1.0/services/";
-        private String baseURLServiceGroups = "http://213.136.86.27:8084/api/v1.0/service-groups/";
-        private String baseURLAddresses8083 = "http://213.136.86.27:8083/api/v1.0/addresses/";
-        private String baseURLAddresses8084 = "http://213.136.86.27:8084/api/v1.0/addresses/";
-        private String baseURLStaff = "http://213.136.86.27:8084/api/v1.0/staffs/";
+        private String baseURL = "http://staging.eservia.com:8084/api/v1.0/services/";
+        private String baseURLServiceGroups = "http://staging.eservia.com:8084/api/v1.0/service-groups/";
+        private String baseURLAddresses8083 = "http://staging.eservia.com:8083/api/v1.0/addresses/";
+        private String baseURLAddresses8084 = "http://staging.eservia.com:8084/api/v1.0/addresses/";
+        private String baseURLStaff = "http://staging.eservia.com:8084/api/v1.0/staffs/";
         int staffId;
         int Ids;
         int additionalServiceID;

@@ -39,6 +39,8 @@ import com.jayway.restassured.http.ContentType;
 import com.jayway.restassured.response.ResponseBody;
 import org.testng.Assert;
 
+import java.util.Random;
+
 import static com.jayway.restassured.RestAssured.given;
 
 public class
@@ -60,14 +62,14 @@ CreateBusiness {
     AddressData addressData = new AddressData();
     PlanSettingsData planSettingsData = new PlanSettingsData();
     String baseUrl = "http://213.136.86.27:8083/api/v1.0/businesses/";
-
+    char rc = (char)('A' + new Random().nextInt(26));
     Faker faker = new Faker();
-    String sectorName = faker.name().username()+faker.name().firstName();
-    String firstName = faker.name().firstName()+faker.name().firstName();
-    String lastName = faker.name().username()+faker.name().firstName();
-    String name = faker.name().username()+faker.name().firstName();
-    String alias = faker.name().firstName().toLowerCase()+faker.name().firstName().toLowerCase();
-    String email = faker.name().lastName()+faker.name().firstName()+"@mail.com";
+    String sectorName = faker.name().username()+faker.name().firstName()+rc;
+    String firstName = faker.name().firstName()+faker.name().firstName()+rc;
+    String lastName = faker.name().username()+faker.name().firstName()+rc;
+    String name = faker.name().username()+faker.name().firstName()+rc;
+    String alias = faker.name().firstName().toLowerCase()+faker.name().firstName().toLowerCase()+rc;
+    String email = faker.name().lastName()+faker.name().firstName()+rc+"@mail.com";
     String phone = faker.regexify("+380[0-9]{9}");
     int sectorId;
     int promoterId;
@@ -195,8 +197,6 @@ CreateBusiness {
         Address address= addressResponse.getData();
         this.adressId = address.getId();
 
-
-
         ResponseBody response1 = given()
                 .contentType(ContentType.JSON)
                 .header("Authorization", token)
@@ -205,7 +205,6 @@ CreateBusiness {
                 .when().patch("http://213.136.86.27:8083/api/v1.0/businesses/"+businessId+"/verify/").thenReturn().body();
         BusinesessResponse businesessResponse1= new Gson().fromJson(response1.asString(), BusinesessResponse.class);
         Businesses businesses1= businesessResponse1.data;
-
         Assert.assertEquals(true,businesses1.is_verified);
 
         ResponseBody staffsees = given()
@@ -285,10 +284,7 @@ CreateBusiness {
         AuthBusiness authBusiness = authBusinessResponse.getData();
         this.createdtoken = "Bearer "+authBusiness.getAccess_token();
 
-
         return businessId;
-
-
     }
 
     public int A_returnAdressId(){
