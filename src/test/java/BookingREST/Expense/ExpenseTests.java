@@ -41,6 +41,7 @@ public class ExpenseTests {
     String baseURLPRoduct = "http://staging.eservia.com:8086/api/v1.0/products/";
     String baseURLWarehouse = "http://staging.eservia.com:8086/api/v1.0/warehouses/";
     String stockQUery = "?warehouse_id=";
+    String productQuery = "?product_id=";
     String currency = "UAH";
     Faker faker = new Faker();
     int count = faker.number().randomDigitNotZero();
@@ -156,6 +157,22 @@ public class ExpenseTests {
         Assert.assertEquals(id, updateExpenses.getId());
         Assert.assertEquals(comment2, updateExpenses.getComment());
         Assert.assertEquals(true, updateExpenses.getUpdated_at().contains("2018"));
+    }
+
+    @Test
+    public void D_getExpenseByQuery() {
+        ResponseBody response = given()
+                .contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().get(baseURL+productQuery+product_id+"&sort=-id").thenReturn().body();
+        ExpenseResponseArray expenseResponseArray = new Gson().fromJson(response.asString(), ExpenseResponseArray.class);
+        Expense getByQuery = expenseResponseArray.data.get(0);
+        Assert.assertEquals(id, getByQuery.getId());
+        Assert.assertEquals(product_id, getByQuery.getProduct_id());
+        Assert.assertEquals(comment2, getByQuery.getComment());
+        Assert.assertEquals(true, getByQuery.getUpdated_at().contains("2018"));
     }
 
     @AfterClass
