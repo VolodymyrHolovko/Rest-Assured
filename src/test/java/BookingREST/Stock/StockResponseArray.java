@@ -3,7 +3,7 @@ package BookingREST.Stock;
 import java.util.List;
 
 public class StockResponseArray {
-    List<Stock> data;
+    public List<Stock> data;
 
     public List<Stock> getData() {
         return data;
