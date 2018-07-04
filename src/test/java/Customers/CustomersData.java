@@ -12,7 +12,7 @@ public class CustomersData {
         return  random_number1;
     }
 
-    public Customers createCustomer(int businessId){
+    public Customers createCustomer(int business_id){
         int r1 = getRandom_number1();
         int r2 = getRandom_number1();
         String eserviaId="eb3bdcc9-"+r1+"-48d0-"+r2+"-9e42cf116bc6";
@@ -26,7 +26,7 @@ public class CustomersData {
         customers.setPhoneNumber("+380679296215");
         customers.setEmail("lutkovec@gmail.com");
         ArrayList<Integer> tax = new ArrayList<>();
-        tax.add(businessId);
+        tax.add(business_id);
         customers.setBusinesses(tax);
         return  customers;
     }

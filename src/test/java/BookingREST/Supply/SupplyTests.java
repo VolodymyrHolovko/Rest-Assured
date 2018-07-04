@@ -1,5 +1,6 @@
 package BookingREST.Supply;
 
+import Auth.GetToken;
 import BookingREST.AuthBusiness.AuthBusinessTest;
 import BookingREST.Businesses.BusinesessResponse;
 import BookingREST.Businesses.Businesses;
