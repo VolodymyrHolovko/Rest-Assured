@@ -175,6 +175,32 @@ public class ExpenseTests {
         Assert.assertEquals(true, getByQuery.getUpdated_at().contains("2018"));
     }
 
+    @Test
+    public void E_getExpenseByBusiness(){
+        ResponseBody response = given()
+                .contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().get("http://213.136.86.27:8086/api/v1.0/businesses/"+business_id+"/expenses/").thenReturn().body();
+        ExpenseResponseArray expenseResponseArray = new Gson().fromJson(response.asString(), ExpenseResponseArray.class);
+        Expense getByBusiness = expenseResponseArray.data.get(0);
+        Assert.assertEquals(business_id, getByBusiness.getBusiness_id());
+    }
+
+    @Test
+    public void F_deleteExpense() {
+        ResponseBody response = given()
+                .contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().delete(baseURL+id+"/").thenReturn().body();
+        ExpenseResponse expenseResponse = new Gson().fromJson(response.asString(), ExpenseResponse.class);
+        Expense deleteExpense = expenseResponse.data;
+        Assert.assertEquals(id, deleteExpense.getId());
+        Assert.assertEquals(true, deleteExpense.getDeleted_at().contains("2018"));
+    }
     @AfterClass
     public void deleteBefore() {
         ResponseBody response = given().contentType(ContentType.JSON)
