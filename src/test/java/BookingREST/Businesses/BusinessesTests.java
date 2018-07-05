@@ -46,7 +46,7 @@ public class BusinessesTests {
     String baseUrl = "http://staging.eservia.com:8083/api/v1.0/businesses/";
 
     Faker faker = new Faker();
-    String sectorName = faker.name().firstName().toLowerCase();
+    String sectorName = faker.name().nameWithMiddle().toLowerCase();
     String firstName = faker.name().firstName()+faker.name().firstName();
     String lastName = faker.name().lastName()+faker.name().firstName();
     String name = faker.name().firstName()+faker.name().firstName();
@@ -85,7 +85,7 @@ public class BusinessesTests {
                 .when().post("http://213.136.86.27:8083/api/v1.0/sectors/").thenReturn().body();
         SectorResponse sectorResponse= new Gson().fromJson(respons.asString(), SectorResponse.class);
         Sector sector = sectorResponse.getData();
-        this.sectorId =sector.getId();
+         this.sectorId =sector.getId();
 
         ResponseBody response = given()
                 .contentType(ContentType.JSON)

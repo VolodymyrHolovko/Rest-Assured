@@ -12,6 +12,16 @@ public class Sale {
     private int cost;
     private String comment;
     private int id;
+    private String updated_at;
+    private String deleted_at;
+
+    public String getDeleted_at() {
+        return deleted_at;
+    }
+
+    public String getUpdated_at() {
+        return updated_at;
+    }
 
     public int getBusiness_id() {
         return business_id;

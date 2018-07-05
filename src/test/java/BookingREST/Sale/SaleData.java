@@ -15,4 +15,9 @@ public class SaleData {
         addSale.setComment(comment);
         return addSale;
     }
+    public Sale updateSales(String comment2) {
+        Sale updateSale = new Sale();
+        updateSale.setComment(comment2);
+        return updateSale;
+    }
 }
