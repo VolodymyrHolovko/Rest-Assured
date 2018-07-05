@@ -4,6 +4,15 @@ public class SalaryScheme {
     private int business_id;
     private int staff_id;
     private String started_at;
+    private  int id;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public int getBusiness_id() {
         return business_id;

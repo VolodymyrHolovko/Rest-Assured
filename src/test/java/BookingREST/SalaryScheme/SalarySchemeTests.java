@@ -9,6 +9,7 @@ import com.jayway.restassured.filter.log.RequestLoggingFilter;
 import com.jayway.restassured.filter.log.ResponseLoggingFilter;
 import com.jayway.restassured.http.ContentType;
 import com.jayway.restassured.response.ResponseBody;
+import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -19,6 +20,7 @@ public class SalarySchemeTests {
     SalarySchemeData salarySchemeData = new SalarySchemeData();
     int businesId;
     int staffId;
+    int salarySchemeId;
     String token;
 
     @BeforeClass
@@ -40,5 +42,58 @@ public class SalarySchemeTests {
                 .when().post(baseUrl).thenReturn().body();
         SalarySchemeResponse salarySchemeResponse= new Gson().fromJson(response.asString(), SalarySchemeResponse.class);
         SalaryScheme salaryScheme = salarySchemeResponse.data;
+        this.salarySchemeId = salaryScheme.getId();
+        Assert.assertEquals(businesId,salaryScheme.getBusiness_id());
+        Assert.assertEquals(staffId,salaryScheme.getStaff_id());
+        Assert.assertEquals("2017-08-21T17:32:28+03:00",salaryScheme.getStarted_at());
+    }
+
+    @Test
+    public void B_UpdateSalaryScheme(){
+        ResponseBody response = given()
+                .contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .body(salarySchemeData.updateSalaryScheme(businesId,staffId))
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().put(baseUrl+salarySchemeId+"/").thenReturn().body();
+        SalarySchemeResponse salarySchemeResponse= new Gson().fromJson(response.asString(), SalarySchemeResponse.class);
+        SalaryScheme salaryScheme = salarySchemeResponse.data;
+        this.salarySchemeId = salaryScheme.getId();
+        Assert.assertEquals(businesId,salaryScheme.getBusiness_id());
+        Assert.assertEquals(staffId,salaryScheme.getStaff_id());
+        Assert.assertEquals("2017-09-21T17:32:28+03:00",salaryScheme.getStarted_at());
+    }
+
+    @Test
+    public void C_getSalarySchemeById(){
+        ResponseBody response = given()
+                .contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().get(baseUrl+salarySchemeId+"/").thenReturn().body();
+        SalarySchemeResponse salarySchemeResponse= new Gson().fromJson(response.asString(), SalarySchemeResponse.class);
+        SalaryScheme salaryScheme = salarySchemeResponse.data;
+        this.salarySchemeId = salaryScheme.getId();
+        Assert.assertEquals(businesId,salaryScheme.getBusiness_id());
+        Assert.assertEquals(staffId,salaryScheme.getStaff_id());
+        Assert.assertEquals("2017-09-21T17:32:28+03:00",salaryScheme.getStarted_at());
+    }
+
+    @Test
+    public void D_getAllSalarySchemes(){
+        ResponseBody response = given()
+                .contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().get(" http://staging.eservia.com:8087/api/v1.0/businesses/"+businesId+"/salary-schemes/").thenReturn().body();
+        SalarySchemeResponse salarySchemeResponse= new Gson().fromJson(response.asString(), SalarySchemeResponse.class);
+        SalaryScheme salaryScheme = salarySchemeResponse.data;
+        this.salarySchemeId = salaryScheme.getId();
+        Assert.assertEquals(businesId,salaryScheme.getBusiness_id());
+        Assert.assertEquals(staffId,salaryScheme.getStaff_id());
+        Assert.assertEquals("2017-08-21T17:32:28+03:00",salaryScheme.getStarted_at());
     }
 }
