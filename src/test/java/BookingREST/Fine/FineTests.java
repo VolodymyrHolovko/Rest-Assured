@@ -1,11 +1,11 @@
-package BookingREST.Awards;
+package BookingREST.Fine;
 
+import BookingREST.Awards.Awards;
+import BookingREST.Awards.AwardsData;
+import BookingREST.Awards.AwardsResponse;
 import BookingREST.Businesses.BusinesessResponse;
 import BookingREST.Businesses.Businesses;
 import BookingREST.Businesses.CreateBusiness;
-import BookingREST.SalaryScheme.SalaryScheme;
-import BookingREST.SalaryScheme.SalarySchemeData;
-import BookingREST.SalaryScheme.SalarySchemeResponse;
 import com.google.gson.Gson;
 import com.jayway.restassured.filter.log.RequestLoggingFilter;
 import com.jayway.restassured.filter.log.ResponseLoggingFilter;
@@ -18,9 +18,9 @@ import org.testng.annotations.Test;
 
 import static com.jayway.restassured.RestAssured.given;
 
-public class AwardsTests {
-    String baseUrl = "http://staging.eservia.com:8087/api/v1.0/awards/";
-    AwardsData awardsData = new AwardsData();
+public class FineTests {
+    String baseUrl = "http://staging.eservia.com:8087/api/v1.0/fines/";
+    FineData fineData= new FineData();
     int businesId;
     int staffId;
     int id;
@@ -39,97 +39,97 @@ public class AwardsTests {
     }
 
     @Test
-    public void A_createAwards(){
+    public void A_createFine(){
         ResponseBody response = given()
                 .contentType(ContentType.JSON)
                 .header("Authorization", token)
-                .body(awardsData.createAwards(businesId,staffId))
+                .body(fineData.createFine(businesId,staffId))
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter())
                 .when().post(baseUrl).thenReturn().body();
-        AwardsResponse awardsResponse= new Gson().fromJson(response.asString(), AwardsResponse.class);
-        Awards awards= awardsResponse.data;
-        this.id = awards.getId();
-        Assert.assertEquals(businesId,awards.getBusiness_id());
-        Assert.assertEquals(staffId,awards.getStaff_id());
-        Assert.assertEquals("2017-09-21T17:32:28+03:00",awards.getAccrual_at());
-        Assert.assertEquals("UAH",awards.getCurrency());
-        Assert.assertEquals(200,awards.getAmount());
-        Assert.assertEquals("Прекрасна нагорода",awards.getComment());
+        FineResponse fineResponse= new Gson().fromJson(response.asString(), FineResponse.class);
+        Fine fine= fineResponse.data;
+        this.id = fine.getId();
+        Assert.assertEquals(businesId,fine.getBusiness_id());
+        Assert.assertEquals(staffId,fine.getStaff_id());
+        Assert.assertEquals("2017-09-21T17:32:28+03:00",fine.getAccrual_at());
+        Assert.assertEquals("UAH",fine.getCurrency());
+        Assert.assertEquals(2000,fine.getAmount());
+        Assert.assertEquals("То всьо шо ти заробив? Не позорься",fine.getComment());
     }
 
     @Test
-    public void B_updateAwardse(){
+    public void B_updateFine(){
         ResponseBody response = given()
                 .contentType(ContentType.JSON)
                 .header("Authorization", token)
-                .body(awardsData.updateAwards(businesId,staffId))
+                .body(fineData.updateFine(businesId,staffId))
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter())
                 .when().put(baseUrl+id+"/").thenReturn().body();
-        AwardsResponse awardsResponse= new Gson().fromJson(response.asString(), AwardsResponse.class);
-        Awards awards= awardsResponse.data;
-        Assert.assertEquals(businesId,awards.getBusiness_id());
-        Assert.assertEquals(staffId,awards.getStaff_id());
-        Assert.assertEquals("2017-10-21T17:32:28+03:00",awards.getAccrual_at());
-        Assert.assertEquals("USD",awards.getCurrency());
-        Assert.assertEquals(2000,awards.getAmount());
-        Assert.assertEquals("Прекрасна нагорода пацанам",awards.getComment());
+        FineResponse fineResponse= new Gson().fromJson(response.asString(), FineResponse.class);
+        Fine fine= fineResponse.data;
+        Assert.assertEquals(businesId,fine.getBusiness_id());
+        Assert.assertEquals(staffId,fine.getStaff_id());
+        Assert.assertEquals("2017-10-21T17:32:28+03:00",fine.getAccrual_at());
+        Assert.assertEquals("USD",fine.getCurrency());
+        Assert.assertEquals(200,fine.getAmount());
+        Assert.assertEquals("То всьо шо ти заробив лошара? Не позорься",fine.getComment());
     }
 
     @Test
-    public void C_getAwards(){
+    public void C_getFine(){
         ResponseBody response = given()
                 .contentType(ContentType.JSON)
                 .header("Authorization", token)
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter())
                 .when().get(baseUrl+id+"/").thenReturn().body();
-        AwardsResponse awardsResponse= new Gson().fromJson(response.asString(), AwardsResponse.class);
-        Awards awards= awardsResponse.data;
-        Assert.assertEquals(businesId,awards.getBusiness_id());
-        Assert.assertEquals(staffId,awards.getStaff_id());
-        Assert.assertEquals("2017-10-21T17:32:28+03:00",awards.getAccrual_at());
-        Assert.assertEquals("USD",awards.getCurrency());
-        Assert.assertEquals(2000,awards.getAmount());
-        Assert.assertEquals("Прекрасна нагорода пацанам",awards.getComment());
+        FineResponse fineResponse= new Gson().fromJson(response.asString(), FineResponse.class);
+        Fine fine= fineResponse.data;
+        Assert.assertEquals(businesId,fine.getBusiness_id());
+        Assert.assertEquals(staffId,fine.getStaff_id());
+        Assert.assertEquals("2017-10-21T17:32:28+03:00",fine.getAccrual_at());
+        Assert.assertEquals("USD",fine.getCurrency());
+        Assert.assertEquals(200,fine.getAmount());
+        Assert.assertEquals("То всьо шо ти заробив лошара? Не позорься",fine.getComment());
     }
 
     @Test
-    public void D_getAwards(){
+    public void D_getFineByBusiness(){
         ResponseBody response = given()
                 .contentType(ContentType.JSON)
                 .header("Authorization", token)
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter())
-                .when().get("http://staging.eservia.com:8087/api/v1.0/businesses/"+businesId+"/awards/").thenReturn().body();
-        AwardsResponseArray awardsResponse= new Gson().fromJson(response.asString(), AwardsResponseArray.class);
-        Awards awards= awardsResponse.getData().get(0);
-        Assert.assertEquals(businesId,awards.getBusiness_id());
-        Assert.assertEquals(staffId,awards.getStaff_id());
-        Assert.assertEquals("2017-10-21T17:32:28+03:00",awards.getAccrual_at());
-        Assert.assertEquals("USD",awards.getCurrency());
-        Assert.assertEquals(2000,awards.getAmount());
-        Assert.assertEquals("Прекрасна нагорода пацанам",awards.getComment());
+                .when().get("http://staging.eservia.com:8087/api/v1.0/businesses/"+businesId+"/fines/").thenReturn().body();
+        FineResponseArray fineResponse= new Gson().fromJson(response.asString(), FineResponseArray.class);
+        Fine fine= fineResponse.getData().get(0);
+        Assert.assertEquals(businesId,fine.getBusiness_id());
+        Assert.assertEquals(staffId,fine.getStaff_id());
+        Assert.assertEquals("2017-10-21T17:32:28+03:00",fine.getAccrual_at());
+        Assert.assertEquals("USD",fine.getCurrency());
+        Assert.assertEquals(200,fine.getAmount());
+        Assert.assertEquals("То всьо шо ти заробив лошара? Не позорься",fine.getComment());
     }
 
     @Test
-    public void E_deleteAwards(){
+    public void E_deleteFine(){
         ResponseBody response = given()
                 .contentType(ContentType.JSON)
                 .header("Authorization", token)
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter())
                 .when().delete(baseUrl+id+"/").thenReturn().body();
-        AwardsResponse awardsResponse= new Gson().fromJson(response.asString(), AwardsResponse.class);
-        Awards awards= awardsResponse.data;
-        Assert.assertEquals(businesId,awards.getBusiness_id());
-        Assert.assertEquals(staffId,awards.getStaff_id());
-        Assert.assertEquals("2017-10-21T17:32:28+03:00",awards.getAccrual_at());
-        Assert.assertEquals("USD",awards.getCurrency());
-        Assert.assertEquals(2000,awards.getAmount());
-        Assert.assertEquals("Прекрасна нагорода пацанам",awards.getComment());
-        Assert.assertEquals(true,awards.getDeleted_at().contains("2018"));
+        FineResponse fineResponse= new Gson().fromJson(response.asString(), FineResponse.class);
+        Fine fine= fineResponse.data;
+        Assert.assertEquals(businesId,fine.getBusiness_id());
+        Assert.assertEquals(staffId,fine.getStaff_id());
+        Assert.assertEquals("2017-10-21T17:32:28+03:00",fine.getAccrual_at());
+        Assert.assertEquals("USD",fine.getCurrency());
+        Assert.assertEquals(200,fine.getAmount());
+        Assert.assertEquals("То всьо шо ти заробив лошара? Не позорься",fine.getComment());
+        Assert.assertEquals(true,fine.getDeleted_at().contains("2018"));
     }
 
     @AfterClass
