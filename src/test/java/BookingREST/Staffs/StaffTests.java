@@ -122,7 +122,7 @@ public class StaffTests {
     @Test
     public void G_DeleteStaff() {
         RequestSpecification httpRequest = RestAssured.given().contentType(ContentType.JSON).header("Authorization", token).filter(new RequestLoggingFilter()).filter(new ResponseLoggingFilter());
-        Response response = httpRequest.get(baseUrl + staffId + "/");
+        Response response = httpRequest.delete(baseUrl + staffId + "/");
         Assert.assertEquals(200, response.getStatusCode());
     }
 
