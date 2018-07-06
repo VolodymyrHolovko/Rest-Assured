@@ -3,6 +3,8 @@ package BookingREST.SalaryScheme;
 import Auth.Users.GetUserToken;
 import BookingREST.Bookings.Booking;
 import BookingREST.Bookings.BookingsResponse;
+import BookingREST.Businesses.BusinesessResponse;
+import BookingREST.Businesses.Businesses;
 import BookingREST.Businesses.CreateBusiness;
 import com.google.gson.Gson;
 import com.jayway.restassured.filter.log.RequestLoggingFilter;
@@ -10,6 +12,7 @@ import com.jayway.restassured.filter.log.ResponseLoggingFilter;
 import com.jayway.restassured.http.ContentType;
 import com.jayway.restassured.response.ResponseBody;
 import org.testng.Assert;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -21,6 +24,8 @@ public class SalarySchemeTests {
     int businesId;
     int staffId;
     int salarySchemeId;
+    int promoterId;
+    int planId;
     String token;
 
     @BeforeClass
@@ -28,6 +33,8 @@ public class SalarySchemeTests {
         CreateBusiness createBusiness = new CreateBusiness();
         this.businesId=createBusiness.validBusiness();
         this.staffId=createBusiness.B_returnStaff();
+        this.promoterId = createBusiness.returnPromoter();
+        this.planId = createBusiness.returnPlan();
         this.token = createBusiness.B_returncreatedToken();
     }
 
@@ -89,11 +96,52 @@ public class SalarySchemeTests {
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter())
                 .when().get(" http://staging.eservia.com:8087/api/v1.0/businesses/"+businesId+"/salary-schemes/").thenReturn().body();
+        SalarySchemeResponseArray salarySchemeResponse= new Gson().fromJson(response.asString(), SalarySchemeResponseArray.class);
+        SalaryScheme salaryScheme = salarySchemeResponse.getData().get(0);
+        this.salarySchemeId = salaryScheme.getId();
+        Assert.assertEquals(businesId,salaryScheme.getBusiness_id());
+        Assert.assertEquals(staffId,salaryScheme.getStaff_id());
+        Assert.assertEquals("2017-09-21T17:32:28+03:00",salaryScheme.getStarted_at());
+    }
+
+    @Test
+    public void E_deleteSalarySchemes(){
+        ResponseBody response = given()
+                .contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().delete(baseUrl+salarySchemeId+"/").thenReturn().body();
         SalarySchemeResponse salarySchemeResponse= new Gson().fromJson(response.asString(), SalarySchemeResponse.class);
         SalaryScheme salaryScheme = salarySchemeResponse.data;
         this.salarySchemeId = salaryScheme.getId();
         Assert.assertEquals(businesId,salaryScheme.getBusiness_id());
         Assert.assertEquals(staffId,salaryScheme.getStaff_id());
-        Assert.assertEquals("2017-08-21T17:32:28+03:00",salaryScheme.getStarted_at());
+        Assert.assertEquals("2017-09-21T17:32:28+03:00",salaryScheme.getStarted_at());
+        Assert.assertEquals(true,salaryScheme.getDeleted_at().contains("2018"));
+    }
+
+    @AfterClass
+    public void deleteBeforee() {
+        ResponseBody response = given().contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter()).when()
+                .delete("http://213.136.86.27:8083/api/v1.0/businesses/" + businesId + "/").thenReturn().body();
+        BusinesessResponse businesessResponse = new Gson().fromJson(response.asString(), BusinesessResponse.class);
+        Businesses businesses = businesessResponse.data;
+        this.businesId = businesses.getId();
+
+        ResponseBody respons = given().contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter()).when()
+                .delete("http://213.136.86.27:8083/api/v1.0/promoters/" + promoterId + "/").thenReturn().body();
+
+        ResponseBody respon = given().contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().delete("http://213.136.86.27:8083/api/v1.0/plans/" + planId + "/").thenReturn().body();
     }
 }

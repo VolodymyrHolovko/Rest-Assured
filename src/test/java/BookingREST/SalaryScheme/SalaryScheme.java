@@ -5,6 +5,15 @@ public class SalaryScheme {
     private int staff_id;
     private String started_at;
     private  int id;
+    private String deleted_at;
+
+    public String getDeleted_at() {
+        return deleted_at;
+    }
+
+    public void setDeleted_at(String deleted_at) {
+        this.deleted_at = deleted_at;
+    }
 
     public int getId() {
         return id;
