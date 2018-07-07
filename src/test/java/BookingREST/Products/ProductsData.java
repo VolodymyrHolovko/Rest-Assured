@@ -8,7 +8,7 @@ public class ProductsData {
         addProducts.setSku(sku);
         addProducts.setCategory_id(category_id);
         addProducts.setSale_used(true);
-        addProducts.setSale_unit_id(sale_unit_id);
+        addProducts.setUnit_id(sale_unit_id);
         addProducts.setSale_currency(sale_currency);
         addProducts.setSale_cost(sale_cost);
         addProducts.setExpense_used(true);
@@ -23,7 +23,7 @@ public class ProductsData {
         updateProduct.setSku(sku2);
         updateProduct.setCategory_id(category_id2);
         updateProduct.setSale_used(false);
-        updateProduct.setSale_unit_id(sale_unit_id2);
+        updateProduct.setUnit_id(sale_unit_id2);
         updateProduct.setSale_currency(sale_currency2);
         updateProduct.setSale_cost(sale_cost2);
         updateProduct.setExpense_used(false);

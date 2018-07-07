@@ -33,6 +33,36 @@ public class PlanSettings {
     @JsonProperty("booking:analytics")
     @SerializedName("booking:analytics")
     private boolean bookinganalytics;
+    private boolean inventory;
+    private boolean finance;
+
+    public boolean isStaffauthentication() {
+        return staffauthentication;
+    }
+
+    public boolean isMarketing() {
+        return marketing;
+    }
+
+    public boolean isBookinganalytics() {
+        return bookinganalytics;
+    }
+
+    public boolean isInventory() {
+        return inventory;
+    }
+
+    public void setInventory(boolean inventory) {
+        this.inventory = inventory;
+    }
+
+    public boolean isFinance() {
+        return finance;
+    }
+
+    public void setFinance(boolean finance) {
+        this.finance = finance;
+    }
 
     public int getAddresslimit() {
         return addresslimit;

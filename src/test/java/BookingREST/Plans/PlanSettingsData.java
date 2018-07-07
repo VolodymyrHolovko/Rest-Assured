@@ -12,6 +12,8 @@ public class PlanSettingsData {
         planSettings.setBookinguser_history_limit(20);
         planSettings.setBookingcreate_max_duration(1000);
         planSettings.setBookinganalytics(true);
+        planSettings.setInventory(true);
+        planSettings.setFinance(true);
 
         return planSettings;
     }

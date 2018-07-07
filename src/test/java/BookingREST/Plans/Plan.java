@@ -11,6 +11,7 @@ public class Plan {
     private int status;
     private String deleted_at;
 
+
     public int getId() {
         return id;
     }

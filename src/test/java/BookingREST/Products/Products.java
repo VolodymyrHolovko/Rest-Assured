@@ -9,7 +9,7 @@ public class Products {
     private int category_id;
     @JsonProperty
     private boolean sale_used;
-    private int sale_unit_id;
+    private int unit_id;
     private String sale_currency;
     private int sale_cost;
     private boolean expense_used;
@@ -19,38 +19,6 @@ public class Products {
     private int id;
     private String updated_at;
     private String deleted_at;
-
-    public String getDeleted_at() {
-        return deleted_at;
-    }
-
-    public void setDeleted_at(String deleted_at) {
-        this.deleted_at = deleted_at;
-    }
-
-    public String getUpdated_at() {
-        return updated_at;
-    }
-
-    public void setUpdated_at(String updated_at) {
-        this.updated_at = updated_at;
-    }
-
-    public boolean isSale_used() {
-        return sale_used;
-    }
-
-    public void setSale_used(boolean sale_used) {
-        this.sale_used = sale_used;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public int getBusiness_id() {
         return business_id;
@@ -84,13 +52,20 @@ public class Products {
         this.category_id = category_id;
     }
 
-
-    public int getSale_unit_id() {
-        return sale_unit_id;
+    public boolean isSale_used() {
+        return sale_used;
     }
 
-    public void setSale_unit_id(int sale_unit_id) {
-        this.sale_unit_id = sale_unit_id;
+    public void setSale_used(boolean sale_used) {
+        this.sale_used = sale_used;
+    }
+
+    public int getUnit_id() {
+        return unit_id;
+    }
+
+    public void setUnit_id(int unit_id) {
+        this.unit_id = unit_id;
     }
 
     public String getSale_currency() {
@@ -139,5 +114,29 @@ public class Products {
 
     public void setExpense_cost(int expense_cost) {
         this.expense_cost = expense_cost;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getUpdated_at() {
+        return updated_at;
+    }
+
+    public void setUpdated_at(String updated_at) {
+        this.updated_at = updated_at;
+    }
+
+    public String getDeleted_at() {
+        return deleted_at;
+    }
+
+    public void setDeleted_at(String deleted_at) {
+        this.deleted_at = deleted_at;
     }
 }
