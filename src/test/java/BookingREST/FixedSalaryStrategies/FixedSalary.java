@@ -7,6 +7,15 @@ public class FixedSalary {
     private String currency;
     private int amount;
     private  int id;
+    private  String deleted_at;
+
+    public String getDeleted_at() {
+        return deleted_at;
+    }
+
+    public void setDeleted_at(String deleted_at) {
+        this.deleted_at = deleted_at;
+    }
 
     public int getBusiness_id() {
         return business_id;
