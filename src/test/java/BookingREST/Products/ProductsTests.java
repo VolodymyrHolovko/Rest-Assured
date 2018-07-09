@@ -44,8 +44,8 @@ public class ProductsTests {
     String nameUnit = faker.name().title().toLowerCase();
     String name2 = faker.food().ingredient();
     String sku2 = faker.name().firstName().toUpperCase();
-    int sale_unit_id;
-    int sale_unit_id2;
+    int unit_id;
+    int unit_id2;
     int expense_unit_id;
     int expense_unit_id2;
     int expense_cost = faker.number().randomDigit();
@@ -103,7 +103,7 @@ public class ProductsTests {
                 .when().post(baseURLUnits).thenReturn().body();
         UnitsRespponse unitsRespponse = new Gson().fromJson(response3.asString(), UnitsRespponse.class);
         Units addUnitss = unitsRespponse.data;
-        this.sale_unit_id = addUnitss.getId();
+        this.unit_id = addUnitss.getId();
         this.expense_unit_id = addUnitss.getId();
 
         Units addUnitt2 = unitsData.addUnits(nameUnit, abbr);
@@ -116,12 +116,12 @@ public class ProductsTests {
                 .when().post(baseURLUnits).thenReturn().body();
         UnitsRespponse unitsRespponse2 = new Gson().fromJson(response4.asString(), UnitsRespponse.class);
         Units addUnitss2 = unitsRespponse2.data;
-        this.sale_unit_id2 = addUnitss2.getId();
+        this.unit_id2 = addUnitss2.getId();
         this.expense_unit_id2 = addUnitss2.getId();
     }
     @Test
     public void A_addProducts() {
-    Products addProductt = productsData.addNewProducts(business_id, name, sku, category_id, sale_unit_id, sale_currency, sale_cost, expense_unit_id, expense_currency, expense_cost);
+    Products addProductt = productsData.addNewProducts(business_id, name, sku, category_id, unit_id, sale_currency, sale_cost, expense_unit_id, expense_currency, expense_cost);
         ResponseBody response = given()
                 .contentType(ContentType.JSON)
                 .header("Authorization", token)
@@ -137,7 +137,7 @@ public class ProductsTests {
         Assert.assertEquals(name, addProd.getName());
         Assert.assertEquals(sku, addProd.getSku());
         Assert.assertEquals(category_id, addProd.getCategory_id());
-        Assert.assertEquals(sale_unit_id, addProd.getUnit_id());
+        Assert.assertEquals(unit_id, addProd.getUnit_id());
     }
     @Test
     public void B_getProductByid() {
@@ -154,11 +154,11 @@ public class ProductsTests {
         Assert.assertEquals(name, getById.getName());
         Assert.assertEquals(sku, getById.getSku());
         Assert.assertEquals(category_id, getById.getCategory_id());
-        Assert.assertEquals(sale_unit_id, getById.getUnit_id());
+        Assert.assertEquals(unit_id, getById.getUnit_id());
     }
     @Test
     public void C_updateProducts() {
-        Products updateProductt = productsData.updateProducts(name2, sku2, category_id2, sale_unit_id2, sale_currency2, sale_cost2, expense_unit_id2, expense_currency2, expense_cost2);
+        Products updateProductt = productsData.updateProducts(name2, sku2, category_id2, unit_id2, sale_currency2, sale_cost2, expense_unit_id2, expense_currency2, expense_cost2);
         ResponseBody response = given()
                 .contentType(ContentType.JSON)
                 .header("Authorization", token)
@@ -173,7 +173,7 @@ public class ProductsTests {
         Assert.assertEquals(name2, updateProd.getName());
         Assert.assertEquals(sku2, updateProd.getSku());
         Assert.assertEquals(category_id2, updateProd.getCategory_id());
-        Assert.assertEquals(sale_unit_id2, updateProd.getUnit_id());
+        Assert.assertEquals(unit_id2, updateProd.getUnit_id());
         Assert.assertEquals(true, updateProd.getUpdated_at().contains("2018"));
     }
     @Test
@@ -250,20 +250,20 @@ public class ProductsTests {
                 .header("Authorization", token)
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter())
-                .when().delete(baseURLUnits + sale_unit_id + "/").thenReturn().body();
+                .when().delete(baseURLUnits + unit_id + "/").thenReturn().body();
         UnitsRespponse unitsRespponse =  new Gson().fromJson(response4.asString(), UnitsRespponse.class);
         Units deleteUnitss = unitsRespponse.data;
-        Assert.assertEquals(sale_unit_id, deleteUnitss.getId());
+        Assert.assertEquals(unit_id, deleteUnitss.getId());
 
         ResponseBody response5 = given()
                 .contentType(ContentType.JSON)
                 .header("Authorization", token)
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter())
-                .when().delete(baseURLUnits + sale_unit_id2 + "/").thenReturn().body();
+                .when().delete(baseURLUnits + unit_id2 + "/").thenReturn().body();
         UnitsRespponse unitsRespponse2 =  new Gson().fromJson(response5.asString(), UnitsRespponse.class);
         Units deleteUnitss2 = unitsRespponse2.data;
-        Assert.assertEquals(sale_unit_id2, deleteUnitss2.getId());
+        Assert.assertEquals(unit_id2, deleteUnitss2.getId());
 
         ResponseBody respons = given().contentType(ContentType.JSON)
                 .header("Authorization", token)
