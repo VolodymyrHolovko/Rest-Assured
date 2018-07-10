@@ -285,7 +285,7 @@ public class OrderTests {
         Assert.assertEquals(nomenclatureIdSizeExtensions,order.getOrderItems().get(0).getExtensions().get(0).getExtensionId());
         Assert.assertEquals(optionId,order.getOrderItems().get(0).getExtensions().get(0).getOptionId());
         Assert.assertEquals(1,order.getOrderItems().get(0).getExtensions().get(0).getAmount());
-    } 
+    }
 
     @Test
     public void D_CookingOrderItemStus(){
