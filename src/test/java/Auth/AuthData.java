@@ -3,7 +3,7 @@ package Auth;
 public class AuthData {
     public Auth password(){
        Auth auth = new Auth();
-       auth.setUsername("1cadmin@eservia.com");
+       auth.setUsername("1admin@eservia.com");
        auth.setPassword("manager");
        auth.setAuthType("WebAdminPanel");
        return  auth;
