@@ -8,9 +8,7 @@ public class Products {
     private String sku;
     private int category_id;
     @JsonProperty
-    private boolean sale_used;
     private int unit_id;
-
     private int id;
     private String updated_at;
     private String deleted_at;
@@ -45,14 +43,6 @@ public class Products {
 
     public void setCategory_id(int category_id) {
         this.category_id = category_id;
-    }
-
-    public boolean isSale_used() {
-        return sale_used;
-    }
-
-    public void setSale_used(boolean sale_used) {
-        this.sale_used = sale_used;
     }
 
     public int getUnit_id() {

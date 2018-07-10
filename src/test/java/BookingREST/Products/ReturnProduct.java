@@ -2,6 +2,9 @@ package BookingREST.Products;
 
 import BookingREST.AuthBusiness.AuthBusinessTest;
 import BookingREST.Businesses.CreateBusiness;
+import BookingREST.Products.ExpenseInteraction.ExpenseInteraction;
+import BookingREST.Products.ExpenseInteraction.ExpenseInteractionData;
+import BookingREST.Products.ExpenseInteraction.ExpenseInteractionResponse;
 import BookingREST.Units.Units;
 import BookingREST.Units.UnitsData;
 import BookingREST.Units.UnitsRespponse;
@@ -14,19 +17,21 @@ import com.jayway.restassured.filter.log.RequestLoggingFilter;
 import com.jayway.restassured.filter.log.ResponseLoggingFilter;
 import com.jayway.restassured.http.ContentType;
 import com.jayway.restassured.response.ResponseBody;
+import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 
 import static com.jayway.restassured.RestAssured.given;
 
 public class ReturnProduct {
-    int id;
+    int product_id;
     String baseURL = "http://213.136.86.27:8086/api/v1.0/products/";
     String baseURLCategory = "http://213.136.86.27:8086/api/v1.0/categories/";
     String baseURLUnits = "http://213.136.86.27:8086/api/v1.0/units/";
+    String baseURLExpanse = "http://staging.eservia.com:8086/api/v1.0/expense-interaction-strategies/";
     String token;
-   public int business_id;
+    public int business_id;
     int category_id;
-    int sale_unit_id;
+    int unit_id;
     int expense_unit_id;
     String sale_currency = "USD";
     Faker faker = new Faker();
@@ -41,6 +46,7 @@ public class ReturnProduct {
     CategoryWarehousesData categoryWarehousesData = new CategoryWarehousesData();
     UnitsData unitsData = new UnitsData();
     ProductsData productsData = new ProductsData();
+    ExpenseInteractionData expenseInteractionData = new ExpenseInteractionData();
 
 
     public int ReturnProduct(int business_id) {
@@ -69,10 +75,11 @@ public class ReturnProduct {
                 .when().post(baseURLUnits).thenReturn().body();
         UnitsRespponse unitsRespponse = new Gson().fromJson(response3.asString(), UnitsRespponse.class);
         Units addUnitss = unitsRespponse.data;
-        this.sale_unit_id = addUnitss.getId();
+        this.unit_id = addUnitss.getId();
         this.expense_unit_id = addUnitss.getId();
 
-        Products addProductt = productsData.addNewProducts(business_id, name, sku, category_id, sale_unit_id, sale_currency, sale_cost, expense_unit_id, expense_currency, expense_cost);
+
+        Products addProductt = productsData.addNewProducts(business_id, name, sku, category_id, unit_id, sale_currency, sale_cost, expense_unit_id, expense_currency, expense_cost);
         ResponseBody response2 = given()
                 .contentType(ContentType.JSON)
                 .header("Authorization", token)
@@ -82,7 +89,19 @@ public class ReturnProduct {
                 .when().post(baseURL).thenReturn().body();
         ProductsResponse productsResponse = new Gson().fromJson(response2.asString(), ProductsResponse.class);
         Products addProd = productsResponse.data;
-        this.id = addProd.getId();
-        return id;
+        this.product_id = addProd.getId();
+
+        ExpenseInteraction addExpenses = expenseInteractionData.addExpenseInteraction(business_id, product_id);
+        ResponseBody response5 = given()
+                .contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .body(addExpenses)
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().post(baseURLExpanse).thenReturn().body();
+        ExpenseInteractionResponse expenseInteractionResponse = new Gson().fromJson(response5.asString(), ExpenseInteractionResponse.class);
+        ExpenseInteraction addExpense = expenseInteractionResponse.data;
+        return product_id;
+
     }
 }
