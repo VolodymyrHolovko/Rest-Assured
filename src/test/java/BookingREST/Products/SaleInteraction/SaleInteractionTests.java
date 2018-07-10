@@ -1,4 +1,4 @@
-package BookingREST.Products.ExpenseInteraction;
+package BookingREST.Products.SaleInteraction;
 
 import BookingREST.AuthBusiness.AuthBusinessTest;
 import BookingREST.Businesses.BusinesessResponse;
@@ -7,6 +7,7 @@ import BookingREST.Businesses.CreateBusiness;
 import BookingREST.Products.Products;
 import BookingREST.Products.ProductsResponse;
 import BookingREST.Products.ReturnProduct;
+import com.github.javafaker.Faker;
 import com.google.gson.Gson;
 import com.jayway.restassured.filter.log.RequestLoggingFilter;
 import com.jayway.restassured.filter.log.ResponseLoggingFilter;
@@ -19,16 +20,22 @@ import org.testng.annotations.Test;
 
 import static com.jayway.restassured.RestAssured.given;
 
-public class ExpenseInteractionTests {
+public class SaleInteractionTests {
     String token;
     int id;
     int business_id;
     int product_id;
-    String productQuery = "?product_id=";
-    String baseURL = "http://staging.eservia.com:8086/api/v1.0/expense-interaction-strategies/";
+    Faker faker = new Faker();
+    String currency = "UAH";
+    String currency2 = "USD";
+    String saleQuery = "?product_id=";
+    int cost = faker.number().randomDigitNotZero();
+    int cost2 = faker.number().randomDigitNotZero();
+    String baseURL = "http://staging.eservia.com:8086/api/v1.0/sale-interaction-strategies/";
+    String baseURLByBusiness = "http://staging.eservia.com:8086/api/v1.0/businesses/";
     String baseURLBusiness = "http://staging.eservia.com:8086/api/v1.0/businesses/";
     String baseURLPRoduct = "http://staging.eservia.com:8086/api/v1.0/products/";
-    ExpenseInteractionData expenseInteractionData = new ExpenseInteractionData();
+    SaleInteractionData saleInteractionData = new SaleInteractionData();
 
     @BeforeClass
     public void beforeActions() {
@@ -42,72 +49,93 @@ public class ExpenseInteractionTests {
         this.product_id = getProduct.ReturnInactiveProduct(business_id);
     }
     @Test
-    public void A_addExpenseInteraction() {
-        ExpenseInteraction addExpenses = expenseInteractionData.addExpenseInteraction(business_id, product_id);
+    public void A_addSaleInteraction() {
+        SaleInteraction addSales = saleInteractionData.addNewSaleInteraction(business_id, product_id, currency, cost);
         ResponseBody response = given()
                 .contentType(ContentType.JSON)
                 .header("Authorization", token)
-                .body(addExpenses)
+                .body(addSales)
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter())
                 .when().post(baseURL).thenReturn().body();
-        ExpenseInteractionResponse expenseInteractionResponse = new Gson().fromJson(response.asString(), ExpenseInteractionResponse.class);
-        ExpenseInteraction addExpense = expenseInteractionResponse.data;
-        this.id = addExpense.getId();
-        Assert.assertEquals(id, addExpense.getId());
-        Assert.assertEquals(business_id, addExpense.getBusiness_id());
-        Assert.assertEquals(product_id, addExpense.getProduct_id());
+        SaleInteractionResponse saleInteractionResponse = new Gson().fromJson(response.asString(), SaleInteractionResponse.class);
+        SaleInteraction addNewSaleInter = saleInteractionResponse.data;
+        this.id = addNewSaleInter.getId();
+        Assert.assertEquals(id, addNewSaleInter.getId());
+        Assert.assertEquals(business_id, addNewSaleInter.getBusiness_id());
+        Assert.assertEquals(product_id, addNewSaleInter.getProduct_id());
+        Assert.assertEquals(currency, addNewSaleInter.getCurrency());
+        Assert.assertEquals(cost, addNewSaleInter.getCost());
     }
     @Test
-    public void B_getExpenseInteractionById() {
+    public void B_getSaleInteractionById() {
         ResponseBody response = given()
                 .contentType(ContentType.JSON)
                 .header("Authorization", token)
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter())
                 .when().get(baseURL+id+"/").thenReturn().body();
-        ExpenseInteractionResponse expenseInteractionResponse = new Gson().fromJson(response.asString(),ExpenseInteractionResponse.class);
-        ExpenseInteraction getById = expenseInteractionResponse.data;
+        SaleInteractionResponse saleInteractionResponse = new Gson().fromJson(response.asString(), SaleInteractionResponse.class);
+        SaleInteraction getById = saleInteractionResponse.data;
         Assert.assertEquals(id, getById.getId());
         Assert.assertEquals(business_id, getById.getBusiness_id());
         Assert.assertEquals(product_id, getById.getProduct_id());
+        Assert.assertEquals(currency, getById.getCurrency());
+        Assert.assertEquals(cost, getById.getCost());
     }
     @Test
-    public void C_getExpenseInteractionByQuery() {
+    public void C_updateSaleInteraction() {
+        SaleInteraction updateSales = saleInteractionData.updateSaleInteraction(currency2, cost2);
+        ResponseBody response = given()
+                .contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .body(updateSales)
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().put(baseURL+id+"/").thenReturn().body();
+        SaleInteractionResponse saleInteractionResponse = new Gson().fromJson(response.asString(), SaleInteractionResponse.class);
+        SaleInteraction updateSaleInter = saleInteractionResponse.data;
+        Assert.assertEquals(id, updateSaleInter.getId());
+        Assert.assertEquals(currency2, updateSaleInter.getCurrency());
+        Assert.assertEquals(cost2, updateSaleInter.getCost());
+        Assert.assertEquals(true, updateSaleInter.getUpdated_at().contains("2018"));
+    }
+    @Test
+    public void D_getSaleInteractionByQuery() {
         ResponseBody response = given()
                 .contentType(ContentType.JSON)
                 .header("Authorization", token)
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter())
-                .when().get(baseURL+productQuery+product_id+"&sort=-id").thenReturn().body();
-        ExpenseInteractionResponseArray expenseInteractionResponseArray = new Gson().fromJson(response.asString(),ExpenseInteractionResponseArray.class);
-        ExpenseInteraction getByQUery = expenseInteractionResponseArray.data.get(0);
-        Assert.assertEquals(product_id,getByQUery.getProduct_id());
+                .when().get(baseURL+saleQuery+product_id+"&sort=-id").thenReturn().body();
+        SaleInteractionResponseArray saleInteractionResponseArray = new Gson().fromJson(response.asString(), SaleInteractionResponseArray.class);
+        SaleInteraction getByQuery = saleInteractionResponseArray.data.get(0);
+        Assert.assertEquals(product_id, getByQuery.getProduct_id());
     }
     @Test
-    public void D_getExpenseInteractionByBusiness() {
+    public void E_getSaleInteractionByBusiness() {
         ResponseBody response = given()
                 .contentType(ContentType.JSON)
                 .header("Authorization", token)
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter())
-                .when().get(baseURLBusiness+business_id+"/expense-interaction-strategies/").thenReturn().body();
-        ExpenseInteractionResponseArray expenseInteractionResponseArray = new Gson().fromJson(response.asString(),ExpenseInteractionResponseArray.class);
-        ExpenseInteraction getByBusiness = expenseInteractionResponseArray.data.get(0);
+                .when().get(baseURLByBusiness+business_id+"/sale-interaction-strategies/").thenReturn().body();
+        SaleInteractionResponseArray saleInteractionResponseArray = new Gson().fromJson(response.asString(), SaleInteractionResponseArray.class);
+        SaleInteraction getByBusiness = saleInteractionResponseArray.data.get(0);
         Assert.assertEquals(business_id, getByBusiness.getBusiness_id());
     }
     @Test
-    public void E_deleteExpenseInteraction() {
+    public void F_deleteSaleInteraction() {
         ResponseBody response = given()
                 .contentType(ContentType.JSON)
                 .header("Authorization", token)
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter())
-                .when().delete(baseURL+id+"/").thenReturn().body();
-        ExpenseInteractionResponse expenseInteractionResponse = new Gson().fromJson(response.asString(), ExpenseInteractionResponse.class);
-        ExpenseInteraction deleteExpenseInteraction = expenseInteractionResponse.data;
-        Assert.assertEquals(id, deleteExpenseInteraction.getId());
-        Assert.assertEquals(true, deleteExpenseInteraction.getDeleted_at().contains("2018"));
+                .when().delete(baseURL+id).thenReturn().body();
+        SaleInteractionResponse saleInteractionResponse = new Gson().fromJson(response.asString(), SaleInteractionResponse.class);
+        SaleInteraction deleteSaleInteraction = saleInteractionResponse.data;
+        Assert.assertEquals(id, deleteSaleInteraction.getId());
+        Assert.assertEquals(true, deleteSaleInteraction.getDeleted_at().contains("2018"));
     }
     @AfterClass
     public void deleteBefore() {
@@ -131,4 +159,3 @@ public class ExpenseInteractionTests {
         Assert.assertEquals(product_id, deleteProd.getId());
     }
 }
-
