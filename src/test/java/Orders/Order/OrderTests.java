@@ -270,7 +270,7 @@ public class OrderTests {
         OrderResponse orderResponse1= new Gson().fromJson(get.asString(), OrderResponse.class);
         Order order  = orderResponse1.getData();
         Assert.assertEquals("37b3e606-620f-46d4-a5ab-2350e4b7840e",order.getCashierId());
-        Assert.assertEquals("37b3e606-620f-46d4-a5ab-2350e4b7840e\"",order.getWaiterId());
+        Assert.assertEquals("37b3e606-620f-46d4-a5ab-2350e4b7840e",order.getWaiterId());
         Assert.assertEquals(tableId,order.getTableId());
         Assert.assertEquals(departmentId,order.getDepartmentId());
         Assert.assertEquals(initialization,order.getInitializationId());
@@ -285,7 +285,7 @@ public class OrderTests {
         Assert.assertEquals(nomenclatureIdSizeExtensions,order.getOrderItems().get(0).getExtensions().get(0).getExtensionId());
         Assert.assertEquals(optionId,order.getOrderItems().get(0).getExtensions().get(0).getOptionId());
         Assert.assertEquals(1,order.getOrderItems().get(0).getExtensions().get(0).getAmount());
-    }
+    } 
 
     @Test
     public void D_CookingOrderItemStus(){
