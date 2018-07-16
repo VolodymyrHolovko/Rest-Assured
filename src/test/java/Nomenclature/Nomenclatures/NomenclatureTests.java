@@ -22,7 +22,7 @@ import static java.lang.Integer.parseInt;
 
 public class NomenclatureTests {
 
-    String baseURI = "http://staging.eservia.com:8008/api/v0.0/Nomenclature";
+    String baseURI = "https://staging.eservia.com:8008/api/v0.0/Nomenclature";
     public String ids;
     public String article;
     NomenclatureTestData nomenclatureTestData = new NomenclatureTestData();
@@ -255,7 +255,7 @@ public class NomenclatureTests {
                 .header("Authorization", token)
                 .header("EstablishmentContextId", "1")
                 .body(sizeData.createSize(idd))
-                .when().post("http://staging.eservia.com:8008/api/v0.0/Sizes").thenReturn().body();
+                .when().post("https://staging.eservia.com:8008/api/v0.0/Sizes").thenReturn().body();
         SizeResponse sizeResponse = new Gson().fromJson(response.asString(),  SizeResponse.class);
         Size size = sizeResponse.getData();
         this.sizeId = size.getId();
@@ -273,7 +273,7 @@ public class NomenclatureTests {
                 .header("Authorization", token)
                 .header("EstablishmentContextId", "1")
                 .body(sizeData.updateSize())
-                .when().put("http://staging.eservia.com:8008/api/v0.0/Sizes/"+sizeId).thenReturn().body();
+                .when().put("https://staging.eservia.com:8008/api/v0.0/Sizes/"+sizeId).thenReturn().body();
         SizeResponse sizeResponse = new Gson().fromJson(response.asString(),  SizeResponse.class);
         Size size = sizeResponse.getData();
         Assert.assertEquals(12, size.getSize());
@@ -290,7 +290,7 @@ public class NomenclatureTests {
                 .header("EstablishmentContextId", "1")
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter())
-                .when().patch("http://staging.eservia.com:8008/api/v0.0/Sizes/"+sizeId+"/Deactivate").thenReturn().body();
+                .when().patch("https://staging.eservia.com:8008/api/v0.0/Sizes/"+sizeId+"/Deactivate").thenReturn().body();
         SizeBoolean sizeResponse = new Gson().fromJson(response.asString(),  SizeBoolean.class);
         Assert.assertEquals("success", sizeResponse.getDescription());
     }
@@ -302,7 +302,7 @@ public class NomenclatureTests {
                 .header("EstablishmentContextId", "1")
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter())
-                .when().patch("http://staging.eservia.com:8008/api/v0.0/Sizes/"+sizeId+"/Activate").thenReturn().body();
+                .when().patch("https://staging.eservia.com:8008/api/v0.0/Sizes/"+sizeId+"/Activate").thenReturn().body();
         SizeBoolean sizeResponse = new Gson().fromJson(response.asString(),  SizeBoolean.class);
         Assert.assertEquals("success", sizeResponse.getDescription());
     }
@@ -313,7 +313,7 @@ public class NomenclatureTests {
                 .header("EstablishmentContextId", "1")
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter())
-                .when().delete("http://staging.eservia.com:8008/api/v0.0/Sizes/" + sizeId).thenReturn().body();
+                .when().delete("https://staging.eservia.com:8008/api/v0.0/Sizes/" + sizeId).thenReturn().body();
 
         ResponseBody respon = given().contentType(ContentType.JSON)
                 .header("Authorization", token)
@@ -326,7 +326,7 @@ public class NomenclatureTests {
                 .header("Authorization", token)
                 .header("EstablishmentContextId", "1")
                 .body(sizeData.updateSize())
-                .when().put("http://staging.eservia.com:8008/api/v0.0/Sizes/"+sizeId).thenReturn().body();
+                .when().put("https://staging.eservia.com:8008/api/v0.0/Sizes/"+sizeId).thenReturn().body();
         SizeResponse sizeResponse = new Gson().fromJson(respons.asString(),  SizeResponse.class);
         SizeError sizeError = sizeResponse.getError();
         Assert.assertEquals("NomenclatureSizeDoesNotExist", sizeError.getErrorDescription());
@@ -343,12 +343,12 @@ public class NomenclatureTests {
 
     @Test
     public void getAllNomenclature(){
-        RequestSpecification httpRequest = RestAssured.given()
+        RequestSpecification httpsRequest = RestAssured.given()
                 .contentType(ContentType.JSON)
                 .header("Authorization",token)
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter());
-        Response response = httpRequest.get("http://staging.eservia.com:8008/api/v0.0/Nomenclature?AddressId=2");
+        Response response = httpsRequest.get("https://staging.eservia.com:8008/api/v0.0/Nomenclature?AddressId=2");
         Assert.assertEquals(200,response.getStatusCode());
     }
 

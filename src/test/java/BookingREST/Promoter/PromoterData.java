@@ -8,7 +8,7 @@ public class PromoterData {
         addPromoter.setEmail(email);
         addPromoter.setPhone(phone);
         addPromoter.setPassword("12345678");
-        addPromoter.setPhoto("http://staging.eservia.com/image/media/201805/U82NZUzFnOvCzOSf.jpg");
+        addPromoter.setPhoto("https://staging.eservia.com/image/media/201805/U82NZUzFnOvCzOSf.jpg");
         addPromoter.setStatus(1);
         return  addPromoter;
     }
@@ -18,7 +18,7 @@ public class PromoterData {
         updatePromoter.setLast_name(lastNameUpdate);
         updatePromoter.setEmail(emailUpdate);
         updatePromoter.setPhone(phoneUpdate);
-        updatePromoter.setPhoto("http://staging.eservia.com/image/media/201805/5CMjoBr5A3tvTHRv");
+        updatePromoter.setPhoto("https://staging.eservia.com/image/media/201805/5CMjoBr5A3tvTHRv");
         return updatePromoter;
     }
     public Promoter changePasswords() {

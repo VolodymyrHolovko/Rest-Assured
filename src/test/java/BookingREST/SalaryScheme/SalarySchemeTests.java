@@ -19,7 +19,7 @@ import org.testng.annotations.Test;
 import static com.jayway.restassured.RestAssured.given;
 
 public class SalarySchemeTests {
-    String baseUrl = "http://staging.eservia.com:8087/api/v1.0/salary-schemes/";
+    String baseUrl = "https://staging.eservia.com:8087/api/v1.0/salary-schemes/";
     SalarySchemeData salarySchemeData = new SalarySchemeData();
     int businesId;
     int staffId;
@@ -95,7 +95,7 @@ public class SalarySchemeTests {
                 .header("Authorization", token)
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter())
-                .when().get(" http://staging.eservia.com:8087/api/v1.0/businesses/"+businesId+"/salary-schemes/").thenReturn().body();
+                .when().get(" https://staging.eservia.com:8087/api/v1.0/businesses/"+businesId+"/salary-schemes/").thenReturn().body();
         SalarySchemeResponseArray salarySchemeResponse= new Gson().fromJson(response.asString(), SalarySchemeResponseArray.class);
         SalaryScheme salaryScheme = salarySchemeResponse.getData().get(0);
         this.salarySchemeId = salaryScheme.getId();
@@ -127,7 +127,7 @@ public class SalarySchemeTests {
                 .header("Authorization", token)
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter()).when()
-                .delete("http://213.136.86.27:8083/api/v1.0/businesses/" + businesId + "/").thenReturn().body();
+                .delete("https://staging.eservia.com:8083/api/v1.0/businesses/" + businesId + "/").thenReturn().body();
         BusinesessResponse businesessResponse = new Gson().fromJson(response.asString(), BusinesessResponse.class);
         Businesses businesses = businesessResponse.data;
         this.businesId = businesses.getId();
@@ -136,12 +136,12 @@ public class SalarySchemeTests {
                 .header("Authorization", token)
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter()).when()
-                .delete("http://213.136.86.27:8083/api/v1.0/promoters/" + promoterId + "/").thenReturn().body();
+                .delete("https://staging.eservia.com:8083/api/v1.0/promoters/" + promoterId + "/").thenReturn().body();
 
         ResponseBody respon = given().contentType(ContentType.JSON)
                 .header("Authorization", token)
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter())
-                .when().delete("http://213.136.86.27:8083/api/v1.0/plans/" + planId + "/").thenReturn().body();
+                .when().delete("https://staging.eservia.com:8083/api/v1.0/plans/" + planId + "/").thenReturn().body();
     }
 }

@@ -17,7 +17,7 @@ import org.testng.annotations.Test;
 import static com.jayway.restassured.RestAssured.given;
 
 public class CategoryTests {
-    String baseURI = "http://staging.eservia.com:8008/api/v0.0/Categories";
+    String baseURI = "https://staging.eservia.com:8008/api/v0.0/Categories";
     public int ids;
     CategoryData categoryData= new CategoryData();
 
@@ -104,12 +104,12 @@ public class CategoryTests {
 
     @Test
     public void getAllCategory(){
-        RequestSpecification httpRequest = RestAssured.given()
+        RequestSpecification httpsRequest = RestAssured.given()
                 .contentType(ContentType.JSON)
                 .header("Authorization",token)
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter());
-        Response response = httpRequest.get("http://staging.eservia.com:8008/api/v0.0/Categories/Tree");
+        Response response = httpsRequest.get("https://staging.eservia.com:8008/api/v0.0/Categories/Tree");
         Assert.assertEquals(200,response.getStatusCode());
     }
 

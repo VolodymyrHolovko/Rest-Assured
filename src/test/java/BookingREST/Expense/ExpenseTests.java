@@ -34,12 +34,12 @@ import static com.jayway.restassured.RestAssured.given;
 public class ExpenseTests {
     String token;
     int id;
-    String baseURL = "http://213.136.86.27:8086/api/v1.0/expenses/";
-    String baseURLStock = "http://213.136.86.27:8086/api/v1.0/stocks/";
-    String baseURLSupply = "http://staging.eservia.com:8086/api/v1.0/supplies/";
-    String baseURLSupplier = "http://staging.eservia.com:8086/api/v1.0/suppliers/";
-    String baseURLPRoduct = "http://staging.eservia.com:8086/api/v1.0/products/";
-    String baseURLWarehouse = "http://staging.eservia.com:8086/api/v1.0/warehouses/";
+    String baseURL = "https://staging.eservia.com:8086/api/v1.0/expenses/";
+    String baseURLStock = "https://staging.eservia.com:8086/api/v1.0/stocks/";
+    String baseURLSupply = "https://staging.eservia.com:8086/api/v1.0/supplies/";
+    String baseURLSupplier = "https://staging.eservia.com:8086/api/v1.0/suppliers/";
+    String baseURLPRoduct = "https://staging.eservia.com:8086/api/v1.0/products/";
+    String baseURLWarehouse = "https://staging.eservia.com:8086/api/v1.0/warehouses/";
     String stockQUery = "?warehouse_id=";
     String productQuery = "?product_id=";
     String currency = "UAH";
@@ -182,7 +182,7 @@ public class ExpenseTests {
                 .header("Authorization", token)
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter())
-                .when().get("http://213.136.86.27:8086/api/v1.0/businesses/"+business_id+"/expenses/").thenReturn().body();
+                .when().get("https://staging.eservia.com:8086/api/v1.0/businesses/"+business_id+"/expenses/").thenReturn().body();
         ExpenseResponseArray expenseResponseArray = new Gson().fromJson(response.asString(), ExpenseResponseArray.class);
         Expense getByBusiness = expenseResponseArray.data.get(0);
         Assert.assertEquals(business_id, getByBusiness.getBusiness_id());
@@ -207,7 +207,7 @@ public class ExpenseTests {
                 .header("Authorization", token)
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter())
-                .when().delete("http://213.136.86.27:8083/api/v1.0/businesses/" + business_id + "/").thenReturn().body();
+                .when().delete("https://staging.eservia.com:8083/api/v1.0/businesses/" + business_id + "/").thenReturn().body();
         BusinesessResponse businesessResponse = new Gson().fromJson(response.asString(), BusinesessResponse.class);
         Businesses businesses = businesessResponse.data;
         this.business_id = businesses.getId();

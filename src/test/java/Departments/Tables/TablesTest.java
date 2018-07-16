@@ -24,7 +24,7 @@ public class TablesTest {
     String code = LocalTime.now().toString();
     int DepartmentId;
     int TableId;
-    String baseURL = "http://staging.eservia.com:8009/api/v0.0/Tables";
+    String baseURL = "https://staging.eservia.com:8009/api/v0.0/Tables";
 
     @BeforeClass
     public void getDepartmentId(){
@@ -74,12 +74,12 @@ public class TablesTest {
     }
     @Test
     public void getAllDepartments(){
-        RequestSpecification httpRequest = RestAssured.given()
+        RequestSpecification httpsRequest = RestAssured.given()
                 .contentType(ContentType.JSON)
                 .header("Authorization",token)
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter());
-        Response response = httpRequest.get("http://staging.eservia.com:8009/api/v0.0/Tables?DepartmentId="+DepartmentId+"&AddressId=2");
+        Response response = httpsRequest.get("https://staging.eservia.com:8009/api/v0.0/Tables?DepartmentId="+DepartmentId+"&AddressId=2");
         Assert.assertEquals(200,response.getStatusCode());
     }
 

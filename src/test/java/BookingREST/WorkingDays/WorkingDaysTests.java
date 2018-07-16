@@ -21,10 +21,10 @@ import static com.jayway.restassured.RestAssured.given;
 
 public class WorkingDaysTests {
     String token;
-    String baseURL = "http://staging.eservia.com:8083/api/v1.0/working-days/";
-    String baseURLBeauty = "http://staging.eservia.com:8084/api/v1.0/working-days/";
-    String baseUrlByAdress = "http://staging.eservia.com:8083/api/v1.0/addresses/";
-    String baseURLStaff = "http://staging.eservia.com:8084/api/v1.0/staffs/";
+    String baseURL = "https://staging.eservia.com:8083/api/v1.0/working-days/";
+    String baseURLBeauty = "https://staging.eservia.com:8084/api/v1.0/working-days/";
+    String baseUrlByAdress = "https://staging.eservia.com:8083/api/v1.0/addresses/";
+    String baseURLStaff = "https://staging.eservia.com:8084/api/v1.0/staffs/";
     public int id;
     public int idBeauty;
     String rule;
@@ -269,16 +269,16 @@ public class WorkingDaysTests {
                 .header("Authorization", token)
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter())
-                .when().delete("http://213.136.86.27:8083/api/v1.0/businesses/" + business_id + "/").thenReturn().body();
+                .when().delete("https://staging.eservia.com:8083/api/v1.0/businesses/" + business_id + "/").thenReturn().body();
         ResponseBody respons = given().contentType(ContentType.JSON)
                 .header("Authorization", token)
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter())
-                .when().delete("http://213.136.86.27:8083/api/v1.0/promoters/" + promoterId + "/").thenReturn().body();
+                .when().delete("https://staging.eservia.com:8083/api/v1.0/promoters/" + promoterId + "/").thenReturn().body();
         ResponseBody respon = given().contentType(ContentType.JSON)
                 .header("Authorization", token)
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter())
-                .when().delete("http://213.136.86.27:8083/api/v1.0/plans/" + planId + "/").thenReturn().body();
+                .when().delete("https://staging.eservia.com:8083/api/v1.0/plans/" + planId + "/").thenReturn().body();
     }
 }

@@ -18,7 +18,7 @@ import static com.jayway.restassured.RestAssured.given;
 public class GalleryTests {
 
     private  String token;
-    private  String baseURL = "http://staging.eservia.com:8083/api/v1.0/photos/";
+    private  String baseURL = "https://staging.eservia.com:8083/api/v1.0/photos/";
     int businessId;
     int galleryId;
     int promoterId;
@@ -52,7 +52,7 @@ public class GalleryTests {
         this.galleryId = gallery.getId();
         Assert.assertEquals("business",gallery.getObject_type());
         Assert.assertEquals(businessId,gallery.getObject_id());
-        Assert.assertEquals("http://staging.eservia.com/image/media/201805/jAgUxCmshMJuFrFl.png",gallery.getPath());
+        Assert.assertEquals("https://staging.eservia.com/image/media/201805/jAgUxCmshMJuFrFl.png",gallery.getPath());
     }
 
     @Test
@@ -69,7 +69,7 @@ public class GalleryTests {
         this.galleryId = gallery.getId();
         Assert.assertEquals("business",gallery.getObject_type());
         Assert.assertEquals(businessId,gallery.getObject_id());
-        Assert.assertEquals("http://staging.eservia.com/image/media/201805/jAgUxCmshMJuFrFl1.png",gallery.getPath());
+        Assert.assertEquals("https://staging.eservia.com/image/media/201805/jAgUxCmshMJuFrFl1.png",gallery.getPath());
     }
 
     @Test
@@ -85,7 +85,7 @@ public class GalleryTests {
         this.galleryId = gallery.getId();
         Assert.assertEquals("business",gallery.getObject_type());
         Assert.assertEquals(businessId,gallery.getObject_id());
-        Assert.assertEquals("http://staging.eservia.com/image/media/201805/jAgUxCmshMJuFrFl1.png",gallery.getPath());
+        Assert.assertEquals("https://staging.eservia.com/image/media/201805/jAgUxCmshMJuFrFl1.png",gallery.getPath());
     }
 
     @Test
@@ -101,7 +101,7 @@ public class GalleryTests {
         this.galleryId = gallery.getId();
         Assert.assertEquals("business",gallery.getObject_type());
         Assert.assertEquals(businessId,gallery.getObject_id());
-        Assert.assertEquals("http://staging.eservia.com/image/media/201805/jAgUxCmshMJuFrFl1.png",gallery.getPath());
+        Assert.assertEquals("https://staging.eservia.com/image/media/201805/jAgUxCmshMJuFrFl1.png",gallery.getPath());
     }
 
     @AfterClass
@@ -110,17 +110,17 @@ public class GalleryTests {
                 .header("Authorization", token)
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter())
-                .when().delete("http://213.136.86.27:8083/api/v1.0/businesses/" + businessId + "/").thenReturn().body();
+                .when().delete("https://staging.eservia.com:8083/api/v1.0/businesses/" + businessId + "/").thenReturn().body();
         ResponseBody respons = given().contentType(ContentType.JSON)
                 .header("Authorization", token)
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter())
-                .when().delete("http://213.136.86.27:8083/api/v1.0/promoters/" + promoterId + "/").thenReturn().body();
+                .when().delete("https://staging.eservia.com:8083/api/v1.0/promoters/" + promoterId + "/").thenReturn().body();
         ResponseBody respon = given().contentType(ContentType.JSON)
                 .header("Authorization", token)
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter())
-                .when().delete("http://213.136.86.27:8083/api/v1.0/plans/" + planId + "/").thenReturn().body();
+                .when().delete("https://staging.eservia.com:8083/api/v1.0/plans/" + planId + "/").thenReturn().body();
     }
 
 }

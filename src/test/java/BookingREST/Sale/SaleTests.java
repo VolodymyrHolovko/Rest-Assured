@@ -39,14 +39,14 @@ public class SaleTests {
     int id;
     String token;
     String tokenResto;
-    String baseURL = "http://213.136.86.27:8086/api/v1.0/sales/";
-    String baseURLStock = "http://213.136.86.27:8086/api/v1.0/stocks/";
-    String baseURLByBusiness = "http://213.136.86.27:8086/api/v1.0/businesses/";
-    String baseURLSupply = "http://staging.eservia.com:8086/api/v1.0/supplies/";
-    String baseURLSupplier = "http://staging.eservia.com:8086/api/v1.0/suppliers/";
-    String baseURLPRoduct = "http://staging.eservia.com:8086/api/v1.0/products/";
-    String baseURLWarehouse = "http://staging.eservia.com:8086/api/v1.0/warehouses/";
-    String baseUrlStaff = "http://staging.eservia.com:8084/api/v1.0/staffs/";
+    String baseURL = "https://staging.eservia.com:8086/api/v1.0/sales/";
+    String baseURLStock = "https://staging.eservia.com:8086/api/v1.0/stocks/";
+    String baseURLByBusiness = "https://staging.eservia.com:8086/api/v1.0/businesses/";
+    String baseURLSupply = "https://staging.eservia.com:8086/api/v1.0/supplies/";
+    String baseURLSupplier = "https://staging.eservia.com:8086/api/v1.0/suppliers/";
+    String baseURLPRoduct = "https://staging.eservia.com:8086/api/v1.0/products/";
+    String baseURLWarehouse = "https://staging.eservia.com:8086/api/v1.0/warehouses/";
+    String baseUrlStaff = "https://staging.eservia.com:8084/api/v1.0/staffs/";
     String stockQUery = "?warehouse_id=";
     public int business_id;
     int supplier_id;
@@ -213,7 +213,7 @@ public class SaleTests {
                 .header("Authorization", token)
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter())
-                .when().delete("http://213.136.86.27:8083/api/v1.0/businesses/" + business_id + "/").thenReturn().body();
+                .when().delete("https://staging.eservia.com:8083/api/v1.0/businesses/" + business_id + "/").thenReturn().body();
         BusinesessResponse businesessResponse = new Gson().fromJson(response.asString(), BusinesessResponse.class);
         Businesses businesses = businesessResponse.data;
         this.business_id = businesses.getId();
@@ -258,11 +258,11 @@ public class SaleTests {
         Supply deleteSupp = supplyResponse.data;
         Assert.assertEquals(supply_id, deleteSupp.getId());
 
-        RequestSpecification httpRequest = RestAssured.given().contentType(ContentType.JSON)
+        RequestSpecification httpsRequest = RestAssured.given().contentType(ContentType.JSON)
                 .header("Authorization", token)
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter());
-        Response response6 = httpRequest.delete(baseUrlStaff + seller_id + "/");
+        Response response6 = httpsRequest.delete(baseUrlStaff + seller_id + "/");
         Assert.assertEquals(200, response6.getStatusCode());
 
     }

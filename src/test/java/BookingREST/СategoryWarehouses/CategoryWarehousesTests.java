@@ -24,8 +24,8 @@ public class CategoryWarehousesTests {
     String node_id;
     int planId;
     int promoterId;
-    String baseURL = "http://staging.eservia.com:8086/api/v1.0/categories/";
-    String baseURLBisiness = "http://staging.eservia.com:8086/api/v1.0/businesses/";
+    String baseURL = "https://staging.eservia.com:8086/api/v1.0/categories/";
+    String baseURLBisiness = "https://staging.eservia.com:8086/api/v1.0/businesses/";
     Faker faker = new Faker();
     String name = faker.app().name().toLowerCase();
     String name2 = faker.app().name().toLowerCase();
@@ -139,7 +139,7 @@ public class CategoryWarehousesTests {
                 .header("Authorization", token)
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter())
-                .when().delete("http://213.136.86.27:8083/api/v1.0/businesses/" + business_id + "/").thenReturn().body();
+                .when().delete("https://staging.eservia.com:8083/api/v1.0/businesses/" + business_id + "/").thenReturn().body();
         BusinesessResponse businesessResponse = new Gson().fromJson(response.asString(), BusinesessResponse.class);
         Businesses businesses = businesessResponse.data;
         Assert.assertEquals(business_id, businesses.getId());
@@ -147,12 +147,12 @@ public class CategoryWarehousesTests {
                 .header("Authorization", token)
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter())
-                .when().delete("http://213.136.86.27:8083/api/v1.0/promoters/" + promoterId + "/").thenReturn().body();
+                .when().delete("https://staging.eservia.com:8083/api/v1.0/promoters/" + promoterId + "/").thenReturn().body();
         ResponseBody respon = given().contentType(ContentType.JSON)
                 .header("Authorization", token)
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter())
-                .when().delete("http://213.136.86.27:8083/api/v1.0/plans/" + planId + "/").thenReturn().body();
+                .when().delete("https://staging.eservia.com:8083/api/v1.0/plans/" + planId + "/").thenReturn().body();
         
     }
 

@@ -10,7 +10,7 @@ import java.io.File;
 import static com.jayway.restassured.RestAssured.given;
 
 public class PhotosTest {
-    String baseUrl = "http://staging.eservia.com:8001/api/v0.0/Photo/FormData";
+    String baseUrl = "https://staging.eservia.com:8001/api/v0.0/Photo/FormData";
     String token = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJib29raW5nLnByb21vdGVyIiwiYXVkIjoiYm9va2luZy5wcm9tb3RlciIsImlhdCI6MTUyMjY2NTIzMiwibmJmIjoxNTIyNjY1MjMyLCJwcm9tb3Rlcl9pZCI6IjI5IiwiZXhwIjoxNTIyNzUxNjMyLCJidXNpbmVzc2VzIjpbeyJpZCI6NDIsImFkZHJlc3NlcyI6WzEwMCwxNDYsMTYxLDE4OV19LHsiaWQiOjU2LCJhZGRyZXNzZXMiOlsxNTFdfV19.Vl7pKboMfKfMdlISJtwBZoizGyGoqSfPIxewDPTY_L2FNx4Zh2XIuCXEiu-ZmKvUtF2ELDPsR3f-6m_tlTV0iyEPHXJQWYTOVe1bH3XzwyqN0_wfgkgJGk8DyCWu93SzYdurxfS3E2v39T6fZu8MqScLWwzkGWkWEVTAPE8zL_FfbJQ6EwsRDn51GaatJD_auE10cBw969l4KzvPbmwe6hQa3jamjBKOvwaCDpQQxAI3P29djZ9RkxZnG8pdP75rJkeeFiLQLGBAGrO0UG_yDX7K5N6BKsOlgAJinXVJnPYxlIlzGXrH_7Cz7JjdAK0Bnsr2BEVpFrkkrubyg2Y1vg";
     PhotosData photosData = new PhotosData();
 
@@ -30,7 +30,7 @@ public class PhotosTest {
                 /*.body(photosData.addPhotosFromFolder())*/
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter())
-                .post("http://staging.eservia.com:8001/api/v0.0/Photo/FormData")
+                .post("https://staging.eservia.com:8001/api/v0.0/Photo/FormData")
                 .getBody();
         System.out.println(response.asString());
     }

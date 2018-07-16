@@ -17,7 +17,7 @@ import static com.jayway.restassured.RestAssured.given;
 
 public class PromoterTest {
     String token;
-    String baseURI = "http://staging.eservia.com:8083/api/v1.0/promoters/";
+    String baseURI = "https://staging.eservia.com:8083/api/v1.0/promoters/";
     Faker faker = new Faker();
     char rc = (char)('A' + new Random().nextInt(26));
     String firstNameUpdate = faker.name().firstName()+faker.name().firstName().toLowerCase()+rc;
@@ -55,7 +55,7 @@ public class PromoterTest {
         Assert.assertEquals(lastName, addPromoter.getLast_name());
         Assert.assertEquals(phone, addPromoter.getPhone());
         Assert.assertEquals(email, addPromoter.getEmail());
-        Assert.assertEquals("http://staging.eservia.com/image/media/201805/U82NZUzFnOvCzOSf.jpg", addPromoter.getPhoto());
+        Assert.assertEquals("https://staging.eservia.com/image/media/201805/U82NZUzFnOvCzOSf.jpg", addPromoter.getPhoto());
         Assert.assertEquals(1, addPromoter.getStatus());
     }
 
@@ -75,7 +75,7 @@ public class PromoterTest {
         Assert.assertEquals(lastNameUpdate, updatePromoter.getLast_name());
         Assert.assertEquals(emailUpdate, updatePromoter.getEmail());
         Assert.assertEquals(phoneUpdate, updatePromoter.getPhone());
-        Assert.assertEquals("http://staging.eservia.com/image/media/201805/5CMjoBr5A3tvTHRv", updatePromoter.getPhoto());
+        Assert.assertEquals("https://staging.eservia.com/image/media/201805/5CMjoBr5A3tvTHRv", updatePromoter.getPhoto());
         Assert.assertEquals(1, updatePromoter.getStatus());
 
     }
@@ -130,7 +130,7 @@ public class PromoterTest {
         Assert.assertEquals(lastNameUpdate, getPromoter.getLast_name());
         Assert.assertEquals(emailUpdate, getPromoter.getEmail());
         Assert.assertEquals(phoneUpdate, getPromoter.getPhone());
-        Assert.assertEquals("http://staging.eservia.com/image/media/201805/5CMjoBr5A3tvTHRv", getPromoter.getPhoto());
+        Assert.assertEquals("https://staging.eservia.com/image/media/201805/5CMjoBr5A3tvTHRv", getPromoter.getPhoto());
         Assert.assertEquals(1, getPromoter.getStatus());
     }
 

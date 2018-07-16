@@ -30,7 +30,7 @@ import static com.jayway.restassured.RestAssured.given;
                     .filter(new RequestLoggingFilter())
                     .filter(new ResponseLoggingFilter())
                     .body(menu.reloadAddressMenu())
-                    .when().post("http://staging.eservia.com:8008/api/v0.0/Menu/Reload").thenReturn().body();
+                    .when().post("https://staging.eservia.com:8008/api/v0.0/Menu/Reload").thenReturn().body();
             MenuResponse menuResponse = new Gson().fromJson(response.asString(),  MenuResponse.class);
             Assert.assertEquals("success",menuResponse.isDescription());
         }
@@ -42,7 +42,7 @@ import static com.jayway.restassured.RestAssured.given;
                     .body(menu.reloadAddressMenu())
                     .filter(new RequestLoggingFilter())
                     .filter(new ResponseLoggingFilter())
-                    .when().post("http://staging.eservia.com:8008/api/v0.0/Menu/Reload").thenReturn().body();
+                    .when().post("https://staging.eservia.com:8008/api/v0.0/Menu/Reload").thenReturn().body();
             MenuResponse menuResponse = new Gson().fromJson(response.asString(),  MenuResponse.class);
             Assert.assertEquals("success",menuResponse.isDescription());
         }

@@ -14,7 +14,7 @@ import static com.jayway.restassured.RestAssured.given;
 
 public class ContactTests {
     private String token;
-    private String baseURL = "http://staging.eservia.com:8083/api/v1.0/contacts/";
+    private String baseURL = "https://staging.eservia.com:8083/api/v1.0/contacts/";
     ContactData contactData = new ContactData();
 
 
@@ -26,13 +26,13 @@ public class ContactTests {
 
     @Test
     public void A_SendContact(){
-        RequestSpecification httpRequest = given()
+        RequestSpecification httpsRequest = given()
                 .contentType(ContentType.JSON)
                 .header("Authorization",token)
                 .body(contactData.ContactLetter())
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter());
-        Response response = httpRequest.post(baseURL);
+        Response response = httpsRequest.post(baseURL);
         Assert.assertEquals(200,response.getStatusCode());
     }
 

@@ -30,11 +30,11 @@ import static com.jayway.restassured.RestAssured.given;
 
 public class CategoryTests {
 String token;
-String baseURL = "http://staging.eservia.com:8083/api/v1.0/categories/";
-String baseUrlSector = "http://staging.eservia.com:8083/api/v1.0/sectors/";
-String baseURIStrategy = "http://staging.eservia.com:8083/api/v1.0/strategies/";
-String baseURLPromoter = "http://staging.eservia.com:8083/api/v1.0/promoters/";
-String baseURLBusiness = "http://staging.eservia.com:8083/api/v1.0/businesses/";
+String baseURL = "https://staging.eservia.com:8083/api/v1.0/categories/";
+String baseUrlSector = "https://staging.eservia.com:8083/api/v1.0/sectors/";
+String baseURIStrategy = "https://staging.eservia.com:8083/api/v1.0/strategies/";
+String baseURLPromoter = "https://staging.eservia.com:8083/api/v1.0/promoters/";
+String baseURLBusiness = "https://staging.eservia.com:8083/api/v1.0/businesses/";
 Faker faker = new Faker();
 public int id;
 char rc = (char)('A' + new Random().nextInt(26));

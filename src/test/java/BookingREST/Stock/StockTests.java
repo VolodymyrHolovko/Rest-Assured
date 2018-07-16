@@ -32,9 +32,9 @@ import static com.jayway.restassured.RestAssured.given;
 public class StockTests {
     int id;
     String token;
-    String bseURL = "http://213.136.86.27:8086/api/v1.0/stocks/";
-    String baseURLSupplies = "http://staging.eservia.com:8086/api/v1.0/supplies/";
-    String baseURLByBusiness = "http://213.136.86.27:8086/api/v1.0/businesses/";
+    String bseURL = "https://staging.eservia.com:8086/api/v1.0/stocks/";
+    String baseURLSupplies = "https://staging.eservia.com:8086/api/v1.0/supplies/";
+    String baseURLByBusiness = "https://staging.eservia.com:8086/api/v1.0/businesses/";
     public int business_id;
     int warehouse_id;
     int product_id;
@@ -137,7 +137,7 @@ public class StockTests {
                 .header("Authorization", token)
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter())
-                .when().delete("http://213.136.86.27:8083/api/v1.0/businesses/" + business_id + "/").thenReturn().body();
+                .when().delete("https://staging.eservia.com:8083/api/v1.0/businesses/" + business_id + "/").thenReturn().body();
         BusinesessResponse businesessResponse = new Gson().fromJson(response.asString(), BusinesessResponse.class);
         Businesses businesses = businesessResponse.data;
         Assert.assertEquals(business_id, businesses.getId());
@@ -147,7 +147,7 @@ public class StockTests {
                 .header("Authorization", token)
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter())
-                .when().delete("http://staging.eservia.com:8086/api/v1.0/suppliers/" + supplier_id + "/").thenReturn().body();
+                .when().delete("https://staging.eservia.com:8086/api/v1.0/suppliers/" + supplier_id + "/").thenReturn().body();
         SuppliersResponse suppliersResponse = new Gson().fromJson(response2.asString(), SuppliersResponse.class);
         Suppliers deleteSuppl = suppliersResponse.data;
         Assert.assertEquals(supplier_id, deleteSuppl.getId());
@@ -157,7 +157,7 @@ public class StockTests {
                 .header("Authorization", token)
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter())
-                .when().delete("http://staging.eservia.com:8086/api/v1.0/products/" + product_id + "/").thenReturn().body();
+                .when().delete("https://staging.eservia.com:8086/api/v1.0/products/" + product_id + "/").thenReturn().body();
         ProductsResponse productsResponse = new Gson().fromJson(response3.asString(), ProductsResponse.class);
         Products deleteProd = productsResponse.data;
         Assert.assertEquals(product_id, deleteProd.getId());
@@ -167,7 +167,7 @@ public class StockTests {
                 .header("Authorization", token)
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter())
-                .when().delete("http://staging.eservia.com:8086/api/v1.0/warehouses/" + warehouse_id + "/").thenReturn().body();
+                .when().delete("https://staging.eservia.com:8086/api/v1.0/warehouses/" + warehouse_id + "/").thenReturn().body();
         WarehouseResponse warehouseResponse = new Gson().fromJson(response4.asString(), WarehouseResponse.class);
         Warehouse deleteWarhoses = warehouseResponse.data;
         Assert.assertEquals(warehouse_id, deleteWarhoses.getId());
@@ -177,7 +177,7 @@ public class StockTests {
                 .header("Authorization", token)
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter())
-                .when().delete("http://staging.eservia.com:8086/api/v1.0/supplies/" + supplyID + "/").thenReturn().body();
+                .when().delete("https://staging.eservia.com:8086/api/v1.0/supplies/" + supplyID + "/").thenReturn().body();
         SupplyResponse supplyResponse = new Gson().fromJson(response5.asString(), SupplyResponse.class);
         Supply deleteSupp = supplyResponse.data;
         Assert.assertEquals(supplyID, deleteSupp.getId());

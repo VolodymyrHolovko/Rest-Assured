@@ -9,7 +9,7 @@ public class StaffData {
         staff.setLast_name("Lutkovec");
         staff.setPhone(phone);
         staff.setEmail(email);
-        staff.setPhoto("http://staging.eservia.com/image/media/201805/jAgUxCmshMJuFrFl.png");
+        staff.setPhoto("https://staging.eservia.com/image/media/201805/jAgUxCmshMJuFrFl.png");
         staff.setPassword("11111111");
         staff.setPosition("Паріхмахєр");
         staff.setDescription("Підстрижу по повній");
@@ -22,7 +22,7 @@ public class StaffData {
         staff.setLast_name("Lutkoveca");
         staff.setPhone(phone);
         staff.setEmail(email);
-        staff.setPhoto("http://staging.eservia.com/image/media/201805/jAgUxCmshMJuFrFl1.png");
+        staff.setPhoto("https://staging.eservia.com/image/media/201805/jAgUxCmshMJuFrFl1.png");
         staff.setPosition("Паріхмахєр");
         staff.setDescription("Підстрижу по повній");
         return  staff;

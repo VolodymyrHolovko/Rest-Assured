@@ -10,7 +10,7 @@ import org.testng.annotations.Test;
 import static com.jayway.restassured.RestAssured.given;
 
 public class AuthBusinessTest {
-    String baseURL = "http://staging.eservia.com:8082/api/v1.0/auth/sign-in/";
+    String baseURL = "https://staging.eservia.com:8082/api/v1.0/auth/sign-in/";
     String token;
     AuthBusinessData authBusinessData = new AuthBusinessData();
 

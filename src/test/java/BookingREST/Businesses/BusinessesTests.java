@@ -43,7 +43,7 @@ public class BusinessesTests {
     StrategyData strategyData = new StrategyData();
     PlanData planData = new PlanData();
     AddressData addressData = new AddressData();
-    String baseUrl = "http://staging.eservia.com:8083/api/v1.0/businesses/";
+    String baseUrl = "https://staging.eservia.com:8083/api/v1.0/businesses/";
 
     Faker faker = new Faker();
     String sectorName = faker.name().nameWithMiddle().toLowerCase();
@@ -82,7 +82,7 @@ public class BusinessesTests {
                 .body(sectorData.createSector(sectorName))
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter())
-                .when().post("http://213.136.86.27:8083/api/v1.0/sectors/").thenReturn().body();
+                .when().post("https://staging.eservia.com:8083/api/v1.0/sectors/").thenReturn().body();
         SectorResponse sectorResponse= new Gson().fromJson(respons.asString(), SectorResponse.class);
         Sector sector = sectorResponse.getData();
          this.sectorId =sector.getId();
@@ -93,7 +93,7 @@ public class BusinessesTests {
                 .body(promoterData.addPromoters(firstName, lastName, email, phone))
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter())
-                .when().post("http://213.136.86.27:8083/api/v1.0/promoters/").thenReturn().body();
+                .when().post("https://staging.eservia.com:8083/api/v1.0/promoters/").thenReturn().body();
         PromoterResponse promoterResponse = new Gson().fromJson(response.asString(), PromoterResponse.class);
         Promoter addPromoter = promoterResponse.getData();
         this.promoterId = addPromoter.getId();
@@ -104,7 +104,7 @@ public class BusinessesTests {
                 .body(strategyData.addPromoters(name))
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter())
-                .when().post("http://213.136.86.27:8083/api/v1.0/strategies/").thenReturn().body();
+                .when().post("https://staging.eservia.com:8083/api/v1.0/strategies/").thenReturn().body();
         StrategyResponse strategyResponse = new Gson().fromJson(responses.asString(), StrategyResponse.class);
         Strategy addStrategy = strategyResponse.getData();
         System.out.println(response.asString());
@@ -116,7 +116,7 @@ public class BusinessesTests {
                     .body(planData.freePlan(businessId))
                     .filter(new RequestLoggingFilter())
                     .filter(new ResponseLoggingFilter())
-                    .when().post("http://213.136.86.27:8083/api/v1.0/plans/").thenReturn().body();
+                    .when().post("https://staging.eservia.com:8083/api/v1.0/plans/").thenReturn().body();
             PlanResponse planResponse = new  Gson().fromJson(responseess.asString(), PlanResponse.class);
             Plan plan = planResponse.getData();
             this.planId = plan.getId();
@@ -132,7 +132,7 @@ public class BusinessesTests {
                 .body(businesessData.createBusinesses(promoterId,1,sectorId,alias))
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter())
-                .when().post("http://213.136.86.27:8083/api/v1.0/businesses/").thenReturn().body();
+                .when().post("https://staging.eservia.com:8083/api/v1.0/businesses/").thenReturn().body();
         BusinesessResponse businesessResponse= new Gson().fromJson(response.asString(), BusinesessResponse.class);
         Businesses businesses= businesessResponse.data;
         this.businessId = businesses.getId();
@@ -146,8 +146,8 @@ public class BusinessesTests {
         Assert.assertEquals(alias,businesses.getAlias());
         Assert.assertEquals(false,businesses.is_verified);
         Assert.assertEquals("https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-java/3.12.0",businesses.getUrl());
-        Assert.assertEquals("http://staging.eservia.com/image/media/201805/jAgUxCmshMJuFrFl.png",businesses.getBackground());
-        Assert.assertEquals("http://staging.eservia.com/image/media/201805/jAgUxCmshMJuFrFl.png",businesses.getLogo());
+        Assert.assertEquals("https://staging.eservia.com/image/media/201805/jAgUxCmshMJuFrFl.png",businesses.getBackground());
+        Assert.assertEquals("https://staging.eservia.com/image/media/201805/jAgUxCmshMJuFrFl.png",businesses.getLogo());
         Assert.assertEquals("https://www.instagram.com/original.cv/?hl=ru",businesses.getLink_instagram());
         Assert.assertEquals("https://www.facebook.com/max.lutkovec",businesses.getLink_facebook());
 
@@ -161,7 +161,7 @@ public class BusinessesTests {
                 .header("Authorization", token)
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter())
-                .when().patch("http://213.136.86.27:8083/api/v1.0/businesses/"+businessId+"/plans/"+planId+"/subscribe/").thenReturn().body();
+                .when().patch("https://staging.eservia.com:8083/api/v1.0/businesses/"+businessId+"/plans/"+planId+"/subscribe/").thenReturn().body();
 
 
     }
@@ -174,7 +174,7 @@ public class BusinessesTests {
                 .body(businesessData.updateBusiness())
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter())
-                .when().put("http://213.136.86.27:8083/api/v1.0/businesses/"+businessId+"/").thenReturn().body();
+                .when().put("https://staging.eservia.com:8083/api/v1.0/businesses/"+businessId+"/").thenReturn().body();
         BusinesessResponse businesessResponse= new Gson().fromJson(response.asString(), BusinesessResponse.class);
         Businesses businesses= businesessResponse.data;
 
@@ -182,8 +182,8 @@ public class BusinessesTests {
         Assert.assertEquals("Створимо цей заклад на благо людства1",businesses.getShort_description());
         Assert.assertEquals("Стара піцерія1",businesses.getDescription());
         Assert.assertEquals("https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-java1/3.12.0",businesses.getUrl());
-        Assert.assertEquals("http://staging.eservia.com/image/media/2018051/jAgUxCmshMJuFrFl.png",businesses.getBackground());
-        Assert.assertEquals("http://staging.eservia.com/image/media/2018051/jAgUxCmshMJuFrFl.png",businesses.getLogo());
+        Assert.assertEquals("https://staging.eservia.com/image/media/2018051/jAgUxCmshMJuFrFl.png",businesses.getBackground());
+        Assert.assertEquals("https://staging.eservia.com/image/media/2018051/jAgUxCmshMJuFrFl.png",businesses.getLogo());
         Assert.assertEquals("https://www.instagram.com/original.cv1/?hl=ru",businesses.getLink_instagram());
         Assert.assertEquals("https://www.facebook.com/max.lutkovec1",businesses.getLink_facebook());
     }
@@ -195,7 +195,7 @@ public class BusinessesTests {
                 .header("Authorization", token)
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter())
-                .when().get("http://213.136.86.27:8083/api/v1.0/businesses/"+businessId+"/").thenReturn().body();
+                .when().get("https://staging.eservia.com:8083/api/v1.0/businesses/"+businessId+"/").thenReturn().body();
         BusinesessResponse businesessResponse= new Gson().fromJson(response.asString(), BusinesessResponse.class);
         Businesses businesses= businesessResponse.data;
 
@@ -204,8 +204,8 @@ public class BusinessesTests {
         Assert.assertEquals("Створимо цей заклад на благо людства1",businesses.getShort_description());
         Assert.assertEquals("Стара піцерія1",businesses.getDescription());
         Assert.assertEquals("https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-java1/3.12.0",businesses.getUrl());
-        Assert.assertEquals("http://staging.eservia.com/image/media/2018051/jAgUxCmshMJuFrFl.png",businesses.getBackground());
-        Assert.assertEquals("http://staging.eservia.com/image/media/2018051/jAgUxCmshMJuFrFl.png",businesses.getLogo());
+        Assert.assertEquals("https://staging.eservia.com/image/media/2018051/jAgUxCmshMJuFrFl.png",businesses.getBackground());
+        Assert.assertEquals("https://staging.eservia.com/image/media/2018051/jAgUxCmshMJuFrFl.png",businesses.getLogo());
         Assert.assertEquals("https://www.instagram.com/original.cv1/?hl=ru",businesses.getLink_instagram());
         Assert.assertEquals("https://www.facebook.com/max.lutkovec1",businesses.getLink_facebook());
     }
@@ -217,7 +217,7 @@ public class BusinessesTests {
                 .header("Authorization", token)
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter())
-                .when().patch("http://213.136.86.27:8083/api/v1.0/businesses/"+businessId+"/verify/").thenReturn().body();
+                .when().patch("https://staging.eservia.com:8083/api/v1.0/businesses/"+businessId+"/verify/").thenReturn().body();
         BusinesessResponse businesessResponse= new Gson().fromJson(response.asString(), BusinesessResponse.class);
         Businesses businesses= businesessResponse.data;
 
@@ -231,7 +231,7 @@ public class BusinessesTests {
                 .header("Authorization", token)
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter())
-                .when().patch("http://213.136.86.27:8083/api/v1.0/businesses/"+businessId+"/display/").thenReturn().body();
+                .when().patch("https://staging.eservia.com:8083/api/v1.0/businesses/"+businessId+"/display/").thenReturn().body();
         BusinesessResponse businesessResponse= new Gson().fromJson(response.asString(), BusinesessResponse.class);
         Businesses businesses= businesessResponse.data;
 
@@ -245,7 +245,7 @@ public class BusinessesTests {
                 .header("Authorization", token)
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter())
-                .when().patch("http://213.136.86.27:8083/api/v1.0/businesses/"+businessId+"/hide/").thenReturn().body();
+                .when().patch("https://staging.eservia.com:8083/api/v1.0/businesses/"+businessId+"/hide/").thenReturn().body();
         BusinesessResponse businesessResponse= new Gson().fromJson(response.asString(), BusinesessResponse.class);
         Businesses businesses= businesessResponse.data;
 
@@ -264,7 +264,7 @@ public class BusinessesTests {
                 .header("Authorization", token)
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter())
-                .when().post("http://213.136.86.27:8083/api/v1.0/promoters/"+promoterId+"/businesses/").thenReturn().body();
+                .when().post("https://staging.eservia.com:8083/api/v1.0/promoters/"+promoterId+"/businesses/").thenReturn().body();
         BusinesessResponse businesessResponse= new Gson().fromJson(response.asString(), BusinesessResponse.class);
         Businesses businesses= businesessResponse.data;
 
@@ -281,7 +281,7 @@ public class BusinessesTests {
                 .header("Authorization", token)
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter())
-                .when().get("http://213.136.86.27:8083/api/v1.0/promoters/"+promoterId+"/businesses/").thenReturn().body();
+                .when().get("https://staging.eservia.com:8083/api/v1.0/promoters/"+promoterId+"/businesses/").thenReturn().body();
         BusinessArray businessArray= new Gson().fromJson(response.asString(), BusinessArray.class);
 
     }
@@ -292,7 +292,7 @@ public class BusinessesTests {
                 .header("Authorization", usertoken)
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter())
-                .when().post("http://213.136.86.27:8083/api/v1.0/businesses/" + businessId + "/favorites/").thenReturn().body();
+                .when().post("https://staging.eservia.com:8083/api/v1.0/businesses/" + businessId + "/favorites/").thenReturn().body();
         FavoritesResponse favoritesResponse= new Gson().fromJson(response.asString(), FavoritesResponse.class);
         Favorites favorites = favoritesResponse.getData().get(0);
         this.favoritesId = favorites.getObject_id();
@@ -304,7 +304,7 @@ public class BusinessesTests {
                 .header("Authorization", usertoken)
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter())
-                .when().get("http://213.136.86.27:8083/api/v1.0/businesses/" + businessId + "/favorites/").thenReturn().body();
+                .when().get("https://staging.eservia.com:8083/api/v1.0/businesses/" + businessId + "/favorites/").thenReturn().body();
         FavoritesResponse favoritesResponse= new Gson().fromJson(response.asString(), FavoritesResponse.class);
         Favorites favorites = favoritesResponse.getData().get(0);
         Assert.assertEquals(favoritesId,favorites.getObject_id());
@@ -316,19 +316,19 @@ public class BusinessesTests {
                 .header("Authorization", usertoken)
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter())
-                .when().get("http://213.136.86.27:8083/api/v1.0/users/" + uesrId + "/favorites/").thenReturn().body();
+                .when().get("https://staging.eservia.com:8083/api/v1.0/users/" + uesrId + "/favorites/").thenReturn().body();
         FavoritesResponse favoritesResponse= new Gson().fromJson(response.asString(), FavoritesResponse.class);
         Favorites favorites = favoritesResponse.getData().get(0);
     }
 
     @Test
     public void M_getAllBusiness(){
-            RequestSpecification httpRequest = RestAssured.given()
+            RequestSpecification httpsRequest = RestAssured.given()
                     .contentType(ContentType.JSON)
                     .header("Authorization",token)
                     .filter(new RequestLoggingFilter())
                     .filter(new ResponseLoggingFilter());
-        Response response = httpRequest.get(baseUrl);
+        Response response = httpsRequest.get(baseUrl);
         Assert.assertEquals(200,response.getStatusCode());
     }
 
@@ -339,7 +339,7 @@ public class BusinessesTests {
                 .header("Authorization", usertoken)
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter())
-                .when().delete("http://213.136.86.27:8083/api/v1.0/businesses/" + businessId + "/favorites/").thenReturn().body();
+                .when().delete("https://staging.eservia.com:8083/api/v1.0/businesses/" + businessId + "/favorites/").thenReturn().body();
         FavoritesResponse favoritesResponse= new Gson().fromJson(response.asString(), FavoritesResponse.class);
         Favorites favorites = favoritesResponse.getData().get(0);
         this.favoritesId = favorites.getObject_id();
@@ -349,7 +349,7 @@ public class BusinessesTests {
 
     @Test
     public void O_deleteBusines() {
-        ResponseBody response = given().contentType(ContentType.JSON).header("Authorization", token).filter(new RequestLoggingFilter()).filter(new ResponseLoggingFilter()).when().delete("http://213.136.86.27:8083/api/v1.0/businesses/" + businessId + "/").thenReturn().body();
+        ResponseBody response = given().contentType(ContentType.JSON).header("Authorization", token).filter(new RequestLoggingFilter()).filter(new ResponseLoggingFilter()).when().delete("https://staging.eservia.com:8083/api/v1.0/businesses/" + businessId + "/").thenReturn().body();
         BusinesessResponse businesessResponse = new Gson().fromJson(response.asString(), BusinesessResponse.class);
         Businesses businesses = businesessResponse.data;
         this.businessId = businesses.getId();
@@ -359,18 +359,18 @@ public class BusinessesTests {
     public void deleteBefore() {
         ResponseBody responses = given().contentType(ContentType.JSON)
                 .header("Authorization", token).when()
-                .delete("http://213.136.86.27:8083/api/v1.0/plans/"+planId).thenReturn().body();
+                .delete("https://staging.eservia.com:8083/api/v1.0/plans/"+planId).thenReturn().body();
 
         ResponseBody response = given().contentType(ContentType.JSON)
                 .header("Authorization", usertoken).when()
-                .get("http://213.136.86.27:8083/api/v1.0/promoters/" + promoterId).thenReturn().body();
+                .get("https://staging.eservia.com:8083/api/v1.0/promoters/" + promoterId).thenReturn().body();
 
         ResponseBody response1 = given().contentType(ContentType.JSON)
                 .header("Authorization", usertoken).when()
-                .get("http://213.136.86.27:8083/api/v1.0/sector/" + sectorId).thenReturn().body();
+                .get("https://staging.eservia.com:8083/api/v1.0/sector/" + sectorId).thenReturn().body();
 
         ResponseBody response2 = given().contentType(ContentType.JSON)
                 .header("Authorization", usertoken).when()
-                .get("http://213.136.86.27:8083/api/v1.0/strategy/" + strategyId).thenReturn().body();
+                .get("https://staging.eservia.com:8083/api/v1.0/strategy/" + strategyId).thenReturn().body();
     }
     }

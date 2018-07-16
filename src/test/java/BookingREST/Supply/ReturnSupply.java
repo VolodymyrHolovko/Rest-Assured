@@ -18,11 +18,11 @@ import static com.jayway.restassured.RestAssured.given;
 
 public class ReturnSupply {
     int id;
-    String baseURL = "http://staging.eservia.com:8086/api/v1.0/supplies/";
-    String baseURLBUsiness = "http://staging.eservia.com:8086/api/v1.0/businesses/";
-    String baseURLSupplier = "http://staging.eservia.com:8086/api/v1.0/suppliers/";
-    String baseURLPRoduct = "http://staging.eservia.com:8086/api/v1.0/products/";
-    String baseURLWarehouse = "http://staging.eservia.com:8086/api/v1.0/warehouses/";
+    String baseURL = "https://staging.eservia.com:8086/api/v1.0/supplies/";
+    String baseURLBUsiness = "https://staging.eservia.com:8086/api/v1.0/businesses/";
+    String baseURLSupplier = "https://staging.eservia.com:8086/api/v1.0/suppliers/";
+    String baseURLPRoduct = "https://staging.eservia.com:8086/api/v1.0/products/";
+    String baseURLWarehouse = "https://staging.eservia.com:8086/api/v1.0/warehouses/";
     public String token;
     public int business_id;
     int supplier_id;
