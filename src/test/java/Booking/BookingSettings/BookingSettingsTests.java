@@ -12,7 +12,7 @@ import org.testng.annotations.Test;
 import static com.jayway.restassured.RestAssured.given;
 
 public class BookingSettingsTests {
-    String baseURI = "http://staging.eservia.com:8005/api/v0.0/BookingSettings";
+    String baseURI = "https://staging.eservia.com:8005/api/v0.0/BookingSettings";
     String token;
     String adressId ="?addressId=2";
     int id;

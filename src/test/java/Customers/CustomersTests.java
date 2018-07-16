@@ -15,7 +15,7 @@ import java.util.List;
 import static com.jayway.restassured.RestAssured.given;
 
 public class CustomersTests {
-    String baseURL="http://staging.eservia.com:8010/api/v0.0/PromoterCustomers";
+    String baseURL="https://staging.eservia.com:8010/api/v0.0/PromoterCustomers";
     String token;
     CustomersData customersData = new CustomersData();
     String id;

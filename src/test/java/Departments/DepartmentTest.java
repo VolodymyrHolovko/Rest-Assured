@@ -20,7 +20,7 @@ import java.time.LocalTime;
 import static com.jayway.restassured.RestAssured.given;
 
 public class DepartmentTest {
-    private  String baseURL = "http://staging.eservia.com:8009/api/v0.0/Departments";
+    private  String baseURL = "https://staging.eservia.com:8009/api/v0.0/Departments";
     String name = (LocalTime.now()).toString();
     int Ids;
     DepartmentData departmentsData = new DepartmentData();
@@ -142,7 +142,7 @@ public class DepartmentTest {
 
     @Test
     public void G_CheckSellingDepartment(){
-        String CheckSelling = "http://staging.eservia.com:8009/api/v0.0/Departments/Selling?addressId=23";
+        String CheckSelling = "https://staging.eservia.com:8009/api/v0.0/Departments/Selling?addressId=23";
         ResponseBody response = given()
                 .contentType(ContentType.JSON)
                 .header("Authorization", token)
@@ -160,12 +160,12 @@ public class DepartmentTest {
 
     @Test
     public void getAllDepartments(){
-        RequestSpecification httpRequest = RestAssured.given()
+        RequestSpecification httpsRequest = RestAssured.given()
                 .contentType(ContentType.JSON)
                 .header("Authorization",token)
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter());
-        Response response = httpRequest.get("http://staging.eservia.com:8009/api/v0.0/Departments?addressId=2");
+        Response response = httpsRequest.get("https://staging.eservia.com:8009/api/v0.0/Departments?addressId=2");
         Assert.assertEquals(200,response.getStatusCode());
     }
 

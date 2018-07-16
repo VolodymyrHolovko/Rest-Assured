@@ -19,7 +19,7 @@ import static com.jayway.restassured.RestAssured.given;
 public class PlanTests {
 
     private String token;
-    private String baseURL = "http://staging.eservia.com:8083/api/v1.0/plans/";
+    private String baseURL = "https://staging.eservia.com:8083/api/v1.0/plans/";
     int Ids;
     int planId;
     PlanData planData = new PlanData();
@@ -142,12 +142,12 @@ public class PlanTests {
                 .when().get(baseURL).thenReturn().body();*/
 
         //RestAssured.baseURI = baseURL;
-        RequestSpecification httpRequest = RestAssured.given()
+        RequestSpecification httpsRequest = RestAssured.given()
                 .contentType(ContentType.JSON)
                 .header("Authorization",token)
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter());
-        Response response = httpRequest.get(baseURL);
+        Response response = httpsRequest.get(baseURL);
         Assert.assertEquals(200,response.getStatusCode());
     }
 

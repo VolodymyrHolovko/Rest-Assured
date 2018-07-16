@@ -12,7 +12,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import static com.jayway.restassured.RestAssured.given;
 public class MarketingTest {
-    String baseURI = "http://staging.eservia.com:8002/api/v0.0/Marketings";
+    String baseURI = "https://staging.eservia.com:8002/api/v0.0/Marketings";
     String tokenCustomer = "Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJkNWEwZDc3Ny0yMGU5LTQwYTktOWY4YS05MzhlOTAxN2MzNGYiLCJ1bmlxdWVfbmFtZSI6IiszODA5Nzk4MTI4NTkiLCJpYXQiOjE1MjI3NTg1MTQsImdpdmVuX25hbWUiOiJWb2xvZHlteXJyIiwiZmFtaWx5X25hbWUiOiIiLCJlbWFpbCI6Im1hcmt1cy5jYWJyZXJhOTQyMUBnbWFpbC5jb20iLCJuYmYiOjE1MjI3NTg1MTQsImV4cCI6MTUyMjc2MDMxNCwiaXNzIjoiZXNlcnZpYSIsImF1ZCI6ImVzZXJ2aWEifQ.BujaH247wKNd_UYi1ZjOZUFYvvoJqTt2oZ4fBB4sEklWzX0SCKTLo6vlUV-58AvTAcc1N1BmcYx5kpu6HmPn5PDur8_yW1kKOaJDIWxLNWOY2gobLVlMmaRtC4d5C9B13wNMkwbOPWqGQVfJXXv48r-yyMP48mlS-yMEBue3Tszh9Yn1rrIXJxRu5wOH7xe0vDO7gAtLqHZ9cT_lO6FoxYxZZbwBeROnGaAsKSEVz0mPvTyZjIn69upUitK0ejXZzG3fXouRIOquLLYY-Ta33pOB7sfnPuWeMVdnRr49KCEYjaq3GMpNNQJiqQbCeIsQ5oK_Vg_MX2P95YbT8FCZSQ";
     public int ids;
     MarketingData marketingData = new MarketingData();
@@ -49,7 +49,7 @@ public class MarketingTest {
         Assert.assertEquals(true, marketing.isActive());
         Assert.assertEquals(1, marketing.getLinks().size());
         Assert.assertEquals(1, marketing.getLinks().get(0).getSocialTypeId());
-        Assert.assertEquals("http://facebook.com",marketing.getLinks().get(0).getUrl());
+        Assert.assertEquals("https://facebook.com",marketing.getLinks().get(0).getUrl());
         Assert.assertEquals(1,marketing.getWorkSchedule().size());
         Assert.assertEquals(1,marketing.getWorkSchedule().get(0).getDay());
         Assert.assertEquals(1521472003,marketing.getWorkSchedule().get(0).getStartTime());
@@ -77,7 +77,7 @@ public class MarketingTest {
         Assert.assertEquals(true, marketingGet.isActive());
         Assert.assertEquals(1, marketingGet.getLinks().size());
         Assert.assertEquals(1, marketingGet.getLinks().get(0).getSocialTypeId());
-        Assert.assertEquals("http://facebook.com",marketingGet.getLinks().get(0).getUrl());
+        Assert.assertEquals("https://facebook.com",marketingGet.getLinks().get(0).getUrl());
         Assert.assertEquals(1,marketingGet.getWorkSchedule().size());
         Assert.assertEquals(1,marketingGet.getWorkSchedule().get(0).getDay());
         Assert.assertEquals(1521472003,marketingGet.getWorkSchedule().get(0).getStartTime());
@@ -104,7 +104,7 @@ public class MarketingTest {
         Assert.assertEquals(true, marketingGetCustomer.isActive());
         Assert.assertEquals(1, marketingGetCustomer.getLinks().size());
         Assert.assertEquals(1, marketingGetCustomer.getLinks().get(0).getSocialTypeId());
-        Assert.assertEquals("http://facebook.com",marketingGetCustomer.getLinks().get(0).getUrl());
+        Assert.assertEquals("https://facebook.com",marketingGetCustomer.getLinks().get(0).getUrl());
         Assert.assertEquals(1,marketingGetCustomer.getWorkSchedule().size());
         Assert.assertEquals(1,marketingGetCustomer.getWorkSchedule().get(0).getDay());
         Assert.assertEquals(1521472003,marketingGetCustomer.getWorkSchedule().get(0).getStartTime());
@@ -134,7 +134,7 @@ public class MarketingTest {
         Assert.assertEquals(false, marketingupdate.isActive());
         Assert.assertEquals(1,marketingupdate.getLinks().size());
         Assert.assertEquals(2,marketingupdate.getLinks().get(0).getSocialTypeId());
-        Assert.assertEquals("http://www.instagram.com/",marketingupdate.getLinks().get(0).getUrl());
+        Assert.assertEquals("https://www.instagram.com/",marketingupdate.getLinks().get(0).getUrl());
         Assert.assertEquals(1,marketingupdate.getWorkSchedule().size());
         Assert.assertEquals(2,marketingupdate.getWorkSchedule().get(0).getDay());
         Assert.assertEquals(1520765319,marketingupdate.getWorkSchedule().get(0).getStartTime());

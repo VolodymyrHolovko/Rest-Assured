@@ -1,6 +1,9 @@
 package Auth;
 
 import com.google.gson.Gson;
+import com.jayway.restassured.RestAssured;
+import com.jayway.restassured.config.SSLConfig;
+
 import com.jayway.restassured.http.ContentType;
 import com.jayway.restassured.response.ResponseBody;
 import org.junit.Test;
@@ -12,11 +15,12 @@ public class GetToken {
     String token;
     String sessionId;
 
-    String baseURL = "http://staging.eservia.com:8003/api/v0.0/Auth/";
+    String baseURL = "https://staging.eservia.com:8003/api/v0.0/Auth/";
 
     public String GetFinallyToken() {
         ResponseBody responseBody = given().
-                contentType(ContentType.JSON).body(authData.password())
+                contentType(ContentType.JSON)
+                .body(authData.password())
                 .when()
                 .post(baseURL + "Password")
                 .thenReturn()

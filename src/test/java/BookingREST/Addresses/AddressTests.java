@@ -19,7 +19,7 @@ import static com.jayway.restassured.RestAssured.given;
 public class AddressTests {
 
     private String token;
-    private  String baseURL = "http://213.136.86.27:8083/api/v1.0/addresses/";
+    private  String baseURL = "https://staging.eservia.com:8083/api/v1.0/addresses/";
     int businessId = 1;
     int Ids;
     AddressData addressData = new AddressData();
@@ -156,7 +156,7 @@ public class AddressTests {
                 .header("Authorization",token)
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter())
-                .when().get("http://213.136.86.27:8083/api/v1.0/businesses/1/addresses/").thenReturn().body();
+                .when().get("https://staging.eservia.com:8083/api/v1.0/businesses/1/addresses/").thenReturn().body();
     }
 
 
@@ -186,23 +186,23 @@ public class AddressTests {
 
     @Test
     public void G_GetAllAddresses(){
-        RequestSpecification httpRequest = RestAssured.given()
+        RequestSpecification httpsRequest = RestAssured.given()
                 .contentType(ContentType.JSON)
                 .header("Authorization",token)
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter());
-        Response response = httpRequest.get(baseURL);
+        Response response = httpsRequest.get(baseURL);
         Assert.assertEquals(200,response.getStatusCode());
     }
 
     @Test
     public void H_GetBusinessAddresses(){
-        RequestSpecification httpRequest = RestAssured.given()
+        RequestSpecification httpsRequest = RestAssured.given()
                 .contentType(ContentType.JSON)
                 .header("Authorization",token)
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter());
-        Response response = httpRequest.get("http://213.136.86.27:8083/api/v1.0/businesses/"+businessId+"/addresses/");
+        Response response = httpsRequest.get("https://staging.eservia.com:8083/api/v1.0/businesses/"+businessId+"/addresses/");
         Assert.assertEquals(200,response.getStatusCode());
     }
 

@@ -19,7 +19,7 @@ import org.testng.annotations.Test;
 import static com.jayway.restassured.RestAssured.given;
 
 public class AwardsTests {
-    String baseUrl = "http://staging.eservia.com:8087/api/v1.0/awards/";
+    String baseUrl = "https://staging.eservia.com:8087/api/v1.0/awards/";
     AwardsData awardsData = new AwardsData();
     int businesId;
     int staffId;
@@ -102,7 +102,7 @@ public class AwardsTests {
                 .header("Authorization", token)
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter())
-                .when().get("http://staging.eservia.com:8087/api/v1.0/businesses/"+businesId+"/awards/").thenReturn().body();
+                .when().get("https://staging.eservia.com:8087/api/v1.0/businesses/"+businesId+"/awards/").thenReturn().body();
         AwardsResponseArray awardsResponse= new Gson().fromJson(response.asString(), AwardsResponseArray.class);
         Awards awards= awardsResponse.getData().get(0);
         Assert.assertEquals(businesId,awards.getBusiness_id());
@@ -138,7 +138,7 @@ public class AwardsTests {
                 .header("Authorization", token)
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter()).when()
-                .delete("http://213.136.86.27:8083/api/v1.0/businesses/" + businesId + "/").thenReturn().body();
+                .delete("https://staging.eservia.com:8083/api/v1.0/businesses/" + businesId + "/").thenReturn().body();
         BusinesessResponse businesessResponse = new Gson().fromJson(response.asString(), BusinesessResponse.class);
         Businesses businesses = businesessResponse.data;
         this.businesId = businesses.getId();
@@ -147,12 +147,12 @@ public class AwardsTests {
                 .header("Authorization", token)
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter()).when()
-                .delete("http://213.136.86.27:8083/api/v1.0/promoters/" + promoterId + "/").thenReturn().body();
+                .delete("https://staging.eservia.com:8083/api/v1.0/promoters/" + promoterId + "/").thenReturn().body();
 
         ResponseBody respon = given().contentType(ContentType.JSON)
                 .header("Authorization", token)
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter())
-                .when().delete("http://213.136.86.27:8083/api/v1.0/plans/" + planId + "/").thenReturn().body();
+                .when().delete("https://staging.eservia.com:8083/api/v1.0/plans/" + planId + "/").thenReturn().body();
     }
 }

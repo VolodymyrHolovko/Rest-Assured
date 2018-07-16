@@ -25,9 +25,9 @@ public class ExpenseInteractionTests {
     int business_id;
     int product_id;
     String productQuery = "?product_id=";
-    String baseURL = "http://staging.eservia.com:8086/api/v1.0/expense-interaction-strategies/";
-    String baseURLBusiness = "http://staging.eservia.com:8086/api/v1.0/businesses/";
-    String baseURLPRoduct = "http://staging.eservia.com:8086/api/v1.0/products/";
+    String baseURL = "https://staging.eservia.com:8086/api/v1.0/expense-interaction-strategies/";
+    String baseURLBusiness = "https://staging.eservia.com:8086/api/v1.0/businesses/";
+    String baseURLPRoduct = "https://staging.eservia.com:8086/api/v1.0/products/";
     ExpenseInteractionData expenseInteractionData = new ExpenseInteractionData();
 
     @BeforeClass
@@ -115,7 +115,7 @@ public class ExpenseInteractionTests {
                 .header("Authorization", token)
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter())
-                .when().delete("http://213.136.86.27:8083/api/v1.0/businesses/" + business_id + "/").thenReturn().body();
+                .when().delete("https://staging.eservia.com:8083/api/v1.0/businesses/" + business_id + "/").thenReturn().body();
         BusinesessResponse businesessResponse = new Gson().fromJson(response.asString(), BusinesessResponse.class);
         Businesses businesses = businesessResponse.data;
         this.business_id = businesses.getId();

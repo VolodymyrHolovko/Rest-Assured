@@ -21,7 +21,7 @@ import org.testng.annotations.Test;
 import static com.jayway.restassured.RestAssured.given;
 
 public class CommentsTests {
-    String baseUrl = "http://staging.eservia.com:8083/api/v1.0/comments/";
+    String baseUrl = "https://staging.eservia.com:8083/api/v1.0/comments/";
     String usertoken;
     String token;
     int businessId;
@@ -86,34 +86,34 @@ public class CommentsTests {
 
     @Test
     public void C_getAllComments(){
-        RequestSpecification httpRequest = RestAssured.given()
+        RequestSpecification httpsRequest = RestAssured.given()
                 .contentType(ContentType.JSON)
                 .header("Authorization",token)
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter());
-        Response response = httpRequest.get(baseUrl);
+        Response response = httpsRequest.get(baseUrl);
         Assert.assertEquals(200,response.getStatusCode());
     }
 
     @Test
     public void D_getUserComment() {
-        RequestSpecification httpRequest = RestAssured.given()
+        RequestSpecification httpsRequest = RestAssured.given()
                 .contentType(ContentType.JSON)
                 .header("Authorization",token)
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter());
-        Response response = httpRequest.get("http://213.136.86.27:8083/api/v1.0/users/"+userId+"/comments/");
+        Response response = httpsRequest.get("https://staging.eservia.com:8083/api/v1.0/users/"+userId+"/comments/");
         Assert.assertEquals(200,response.getStatusCode());
     }
 
     @Test
     public void E_getAllComments(){
-        RequestSpecification httpRequest = RestAssured.given()
+        RequestSpecification httpsRequest = RestAssured.given()
                 .contentType(ContentType.JSON)
                 .header("Authorization",token)
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter());
-        Response response = httpRequest.get("http://213.136.86.27:8083/api/v1.0/businesses/"+businessId+"/comments/");
+        Response response = httpsRequest.get("https://staging.eservia.com:8083/api/v1.0/businesses/"+businessId+"/comments/");
         Assert.assertEquals(200,response.getStatusCode());
     }
 
@@ -134,7 +134,7 @@ public class CommentsTests {
             .header("Authorization", token)
             .filter(new RequestLoggingFilter())
             .filter(new ResponseLoggingFilter())
-            .when().delete("http://213.136.86.27:8083/api/v1.0/businesses/" + businessId + "/").thenReturn().body();
+            .when().delete("https://staging.eservia.com:8083/api/v1.0/businesses/" + businessId + "/").thenReturn().body();
     BusinesessResponse businesessResponse = new Gson().fromJson(response.asString(), BusinesessResponse.class);
     Businesses businesses = businesessResponse.data;
 
@@ -142,11 +142,11 @@ public class CommentsTests {
                 .header("Authorization", token)
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter())
-                .when().delete("http://213.136.86.27:8083/api/v1.0/promoters/" + promoterId + "/").thenReturn().body();
+                .when().delete("https://staging.eservia.com:8083/api/v1.0/promoters/" + promoterId + "/").thenReturn().body();
         ResponseBody respon = given().contentType(ContentType.JSON)
                 .header("Authorization", token)
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter())
-                .when().delete("http://213.136.86.27:8083/api/v1.0/plans/" + planId + "/").thenReturn().body();
+                .when().delete("https://staging.eservia.com:8083/api/v1.0/plans/" + planId + "/").thenReturn().body();
     }
 }

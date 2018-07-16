@@ -16,7 +16,7 @@ import org.testng.annotations.Test;
 import static com.jayway.restassured.RestAssured.given;
 
 public class SizeTests {
-    String baseURI = "http://staging.eservia.com:8008/api/v0.0/Sizes";
+    String baseURI = "https://staging.eservia.com:8008/api/v0.0/Sizes";
     public int ids;
     public String article;
     NomenclatureTestData nomenclatureTestData = new NomenclatureTestData();
@@ -33,7 +33,7 @@ public class SizeTests {
                 .header("Authorization", token)
                 .header("EstablishmentContextId", "1")
                 .body(nomenclatureTestData.type1SupportSelling())
-                .when().post("http://staging.eservia.com:8008/api/v0.0/Nomenclature").thenReturn().body();
+                .when().post("https://staging.eservia.com:8008/api/v0.0/Nomenclature").thenReturn().body();
         System.out.println(response.asString());
         NomenclatureResponse nomenclatureResponse  = new Gson().fromJson(response.asString(),  NomenclatureResponse.class);
         Nomenclature nomenclature = nomenclatureResponse.data;

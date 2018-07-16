@@ -31,7 +31,7 @@ public class MarketingData {
         List<Link> links = new ArrayList<Link>();
         Link link = new Link();
         link.setSocialTypeId(1);
-        link.setUrl("http://facebook.com");
+        link.setUrl("https://facebook.com");
         links.add(link);
         marketing.setLinks(links);
 
@@ -62,7 +62,7 @@ public class MarketingData {
         List<Link> links = new ArrayList<Link>();
         Link link = new Link();
         link.setSocialTypeId(2);
-        link.setUrl("http://www.instagram.com/");
+        link.setUrl("https://www.instagram.com/");
         links.add(link);
         marketingUpdate.setLinks(links);
 

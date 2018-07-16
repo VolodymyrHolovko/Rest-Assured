@@ -28,11 +28,11 @@ import static com.jayway.restassured.RestAssured.given;
 public class ReturnProduct {
     int product_id;
     int inactiveProduct_id;
-    String baseURL = "http://213.136.86.27:8086/api/v1.0/products/";
-    String baseURLCategory = "http://213.136.86.27:8086/api/v1.0/categories/";
-    String baseURLUnits = "http://213.136.86.27:8086/api/v1.0/units/";
-    String baseURLExpanse = "http://staging.eservia.com:8086/api/v1.0/expense-interaction-strategies/";
-    String baseURLSALES = "http://staging.eservia.com:8086/api/v1.0/sale-interaction-strategies/";
+    String baseURL = "https://staging.eservia.com:8086/api/v1.0/products/";
+    String baseURLCategory = "https://staging.eservia.com:8086/api/v1.0/categories/";
+    String baseURLUnits = "https://staging.eservia.com:8086/api/v1.0/units/";
+    String baseURLExpanse = "https://staging.eservia.com:8086/api/v1.0/expense-interaction-strategies/";
+    String baseURLSALES = "https://staging.eservia.com:8086/api/v1.0/sale-interaction-strategies/";
     String token;
     public int business_id;
     int category_id;

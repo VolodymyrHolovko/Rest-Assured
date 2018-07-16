@@ -28,11 +28,11 @@ import static com.jayway.restassured.RestAssured.given;
 
 public class SupplyTests {
     int id;
-    String baseURL = "http://staging.eservia.com:8086/api/v1.0/supplies/";
-    String baseURLBUsiness = "http://staging.eservia.com:8086/api/v1.0/businesses/";
-    String baseURLSupplier = "http://staging.eservia.com:8086/api/v1.0/suppliers/";
-    String baseURLPRoduct = "http://staging.eservia.com:8086/api/v1.0/products/";
-    String baseURLWarehouse = "http://staging.eservia.com:8086/api/v1.0/warehouses/";
+    String baseURL = "https://staging.eservia.com:8086/api/v1.0/supplies/";
+    String baseURLBUsiness = "https://staging.eservia.com:8086/api/v1.0/businesses/";
+    String baseURLSupplier = "https://staging.eservia.com:8086/api/v1.0/suppliers/";
+    String baseURLPRoduct = "https://staging.eservia.com:8086/api/v1.0/products/";
+    String baseURLWarehouse = "https://staging.eservia.com:8086/api/v1.0/warehouses/";
     String token;
     public int business_id;
     int supplier_id;
@@ -170,7 +170,7 @@ public class SupplyTests {
                 .header("Authorization", token)
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter())
-                .when().delete("http://213.136.86.27:8083/api/v1.0/businesses/" + business_id + "/").thenReturn().body();
+                .when().delete("https://staging.eservia.com:8083/api/v1.0/businesses/" + business_id + "/").thenReturn().body();
         BusinesessResponse businesessResponse = new Gson().fromJson(response.asString(), BusinesessResponse.class);
         Businesses businesses = businesessResponse.data;
         this.business_id = businesses.getId();

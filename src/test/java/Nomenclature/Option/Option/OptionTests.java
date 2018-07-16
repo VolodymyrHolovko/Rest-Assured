@@ -21,7 +21,7 @@ import org.testng.annotations.Test;
 import static com.jayway.restassured.RestAssured.given;
 
 public class OptionTests {
-    String baseURI = "http://staging.eservia.com:8008/api/v0.0/Options";
+    String baseURI = "https://staging.eservia.com:8008/api/v0.0/Options";
     public int nomenclatureId;
     OptionGroupData optionGroupData = new OptionGroupData();
     OptionData optionData= new OptionData();
@@ -39,7 +39,7 @@ public class OptionTests {
                 .header("Authorization", token)
                 .header("EstablishmentContextId", "1")
                 .body(optionGroupData.createOptionGroup())
-                .when().post("http://staging.eservia.com:8008/api/v0.0/Options/Groups").thenReturn().body();
+                .when().post("https://staging.eservia.com:8008/api/v0.0/Options/Groups").thenReturn().body();
         OptionGroupResponse optionGroupResponse= new Gson().fromJson(response.asString(),  OptionGroupResponse.class);
         OptionGroup optionGroup= optionGroupResponse.getData();
         this.optionGroupId =  optionGroup.getId();
@@ -50,7 +50,7 @@ public class OptionTests {
                 .body(nomenclatureTestData.type1SupportSelling())
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter())
-                .when().post("http://staging.eservia.com:8008/api/v0.0/Nomenclature").thenReturn().body();
+                .when().post("https://staging.eservia.com:8008/api/v0.0/Nomenclature").thenReturn().body();
         System.out.println(response.asString());
         NomenclatureResponse nomenclatureResponse  = new Gson().fromJson(respons.asString(),  NomenclatureResponse.class);
         Nomenclature nomenclature = nomenclatureResponse.data;
@@ -87,7 +87,7 @@ public class OptionTests {
                 .header("EstablishmentContextId", "1")
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter())
-                .when().get("http://staging.eservia.com:8008/api/v0.0/Options/Groups/"+optionGroupId).thenReturn().body();
+                .when().get("https://staging.eservia.com:8008/api/v0.0/Options/Groups/"+optionGroupId).thenReturn().body();
         OptionLeafs optionLeafs= new Gson().fromJson(responsee.asString(), OptionLeafs.class);
         OptionLeafs optionLeafs1=optionLeafs.data;
         Assert.assertEquals(1,optionLeafs1.getLeafs().size());
@@ -181,12 +181,12 @@ public class OptionTests {
 
     @Test
     public void getAllOption(){
-        RequestSpecification httpRequest = RestAssured.given()
+        RequestSpecification httpsRequest = RestAssured.given()
                 .contentType(ContentType.JSON)
                 .header("Authorization",token)
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter());
-        Response response = httpRequest.get("http://staging.eservia.com:8008/api/v0.0/Options?AddressId=2");
+        Response response = httpsRequest.get("https://staging.eservia.com:8008/api/v0.0/Options?AddressId=2");
         Assert.assertEquals(200,response.getStatusCode());
     }
 
@@ -220,12 +220,12 @@ public class OptionTests {
                 .header("EstablishmentContextId", "1")
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter())
-                .when().delete("http://staging.eservia.com:8008/api/v0.0/Nomenclature" + "/" + nomenclatureId).thenReturn().body();
+                .when().delete("https://staging.eservia.com:8008/api/v0.0/Nomenclature" + "/" + nomenclatureId).thenReturn().body();
 
         ResponseBody response = given().contentType(ContentType.JSON)
                 .header("Authorization", token)
                 .header("EstablishmentContextId", "1")
-                .when().delete("http://staging.eservia.com:8008/api/v0.0/Options/Groups"+"/"+optionGroupId).thenReturn().body();
+                .when().delete("https://staging.eservia.com:8008/api/v0.0/Options/Groups"+"/"+optionGroupId).thenReturn().body();
         OptionGroupBoolean optionGroupBoolean= new Gson().fromJson(response.asString(),  OptionGroupBoolean.class);
         Assert.assertEquals("success",optionGroupBoolean.getDescription());
     }

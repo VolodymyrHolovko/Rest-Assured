@@ -26,10 +26,10 @@ import static com.jayway.restassured.RestAssured.given;
 
 public class ProductsTests {
     int id;
-    String baseURL = "http://staging.eservia.com:8086/api/v1.0/products/";
-    String baseURLCategory = "http://staging.eservia.com:8086/api/v1.0/categories/";
-    String baseURLUnits = "http://staging.eservia.com:8086/api/v1.0/units/";
-    String baseURLByBusiness = "http://staging.eservia.com:8086/api/v1.0/businesses/";
+    String baseURL = "https://staging.eservia.com:8086/api/v1.0/products/";
+    String baseURLCategory = "https://staging.eservia.com:8086/api/v1.0/categories/";
+    String baseURLUnits = "https://staging.eservia.com:8086/api/v1.0/units/";
+    String baseURLByBusiness = "https://staging.eservia.com:8086/api/v1.0/businesses/";
     String token;
     int promoterId;
     int planId;
@@ -220,7 +220,7 @@ public class ProductsTests {
                 .header("Authorization", token)
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter())
-                .when().delete("http://213.136.86.27:8083/api/v1.0/businesses/" + business_id + "/").thenReturn().body();
+                .when().delete("https://staging.eservia.com:8083/api/v1.0/businesses/" + business_id + "/").thenReturn().body();
         BusinesessResponse businesessResponse = new Gson().fromJson(response.asString(), BusinesessResponse.class);
         Businesses businesses = businesessResponse.data;
         Assert.assertEquals(business_id, businesses.getId());
@@ -269,12 +269,12 @@ public class ProductsTests {
                 .header("Authorization", token)
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter())
-                .when().delete("http://213.136.86.27:8083/api/v1.0/promoters/" + promoterId + "/").thenReturn().body();
+                .when().delete("https://staging.eservia.com:8083/api/v1.0/promoters/" + promoterId + "/").thenReturn().body();
         ResponseBody respon = given().contentType(ContentType.JSON)
                 .header("Authorization", token)
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter())
-                .when().delete("http://213.136.86.27:8083/api/v1.0/plans/" + planId + "/").thenReturn().body();
+                .when().delete("https://staging.eservia.com:8083/api/v1.0/plans/" + planId + "/").thenReturn().body();
     }
 
 

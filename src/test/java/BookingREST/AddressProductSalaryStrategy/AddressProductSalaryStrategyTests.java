@@ -22,7 +22,7 @@ import org.testng.annotations.Test;
 import static com.jayway.restassured.RestAssured.given;
 
 public class AddressProductSalaryStrategyTests {
-    String baseUrl = "http://staging.eservia.com:8087/api/v1.0/address-product-salary-strategies/";
+    String baseUrl = "https://staging.eservia.com:8087/api/v1.0/address-product-salary-strategies/";
     AddressProductSalaryStrategyData addressProductSalaryStrategyData= new AddressProductSalaryStrategyData();
     SalarySchemeData salarySchemeData = new SalarySchemeData();
     int businesId;
@@ -47,7 +47,7 @@ public class AddressProductSalaryStrategyTests {
                 .body(salarySchemeData.createSalaryScheme(businesId,staffId))
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter())
-                .when().post("http://staging.eservia.com:8087/api/v1.0/salary-schemes/").thenReturn().body();
+                .when().post("https://staging.eservia.com:8087/api/v1.0/salary-schemes/").thenReturn().body();
         SalarySchemeResponse salarySchemeResponse= new Gson().fromJson(response.asString(), SalarySchemeResponse.class);
         SalaryScheme salaryScheme = salarySchemeResponse.getData();
         this.salarySchemeId = salaryScheme.getId();
@@ -111,7 +111,7 @@ public class AddressProductSalaryStrategyTests {
                 .header("Authorization", token)
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter())
-                .when().get("http://staging.eservia.com:8087/api/v1.0/businesses/"+businesId+"/address-product-salary-strategies/").thenReturn().body();
+                .when().get("https://staging.eservia.com:8087/api/v1.0/businesses/"+businesId+"/address-product-salary-strategies/").thenReturn().body();
         AddressProductSalaryStrategyresponseArray addressProductSalaryStrategyresponseArray= new Gson().fromJson(response.asString(), AddressProductSalaryStrategyresponseArray.class);
         AddressProductSalaryStrategy addressProductSalaryStrategy= addressProductSalaryStrategyresponseArray.getData().get(0);
         this.addressProductSalarySchemeId = addressProductSalaryStrategy.getId();
@@ -143,7 +143,7 @@ public class AddressProductSalaryStrategyTests {
                 .header("Authorization", token)
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter()).when()
-                .delete("http://213.136.86.27:8083/api/v1.0/businesses/" + businesId + "/").thenReturn().body();
+                .delete("https://staging.eservia.com:8083/api/v1.0/businesses/" + businesId + "/").thenReturn().body();
         BusinesessResponse businesessResponse = new Gson().fromJson(response.asString(), BusinesessResponse.class);
         Businesses businesses = businesessResponse.data;
         this.businesId = businesses.getId();
@@ -152,12 +152,12 @@ public class AddressProductSalaryStrategyTests {
                 .header("Authorization", token)
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter()).when()
-                .delete("http://213.136.86.27:8083/api/v1.0/promoters/" + promoterId + "/").thenReturn().body();
+                .delete("https://staging.eservia.com:8083/api/v1.0/promoters/" + promoterId + "/").thenReturn().body();
 
         ResponseBody respon = given().contentType(ContentType.JSON)
                 .header("Authorization", token)
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter())
-                .when().delete("http://213.136.86.27:8083/api/v1.0/plans/" + planId + "/").thenReturn().body();
+                .when().delete("https://staging.eservia.com:8083/api/v1.0/plans/" + planId + "/").thenReturn().body();
     }
 }

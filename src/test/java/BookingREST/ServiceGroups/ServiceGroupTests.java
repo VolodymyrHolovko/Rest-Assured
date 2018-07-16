@@ -23,7 +23,7 @@ import static com.jayway.restassured.RestAssured.given;
 
 public class ServiceGroupTests {
     String token;
-    private String baseURL = "http://staging.eservia.com:8084/api/v1.0/service-groups/";
+    private String baseURL = "https://staging.eservia.com:8084/api/v1.0/service-groups/";
     int Ids;
     int businessID;
     int promoterId;
@@ -93,12 +93,12 @@ public class ServiceGroupTests {
 
     @Test
     public void D_GetAllServiceGroups(){
-        RequestSpecification httpRequest = RestAssured.given()
+        RequestSpecification httpsRequest = RestAssured.given()
                 .contentType(ContentType.JSON)
                 .header("Authorization",token)
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter());
-        Response response = httpRequest.get(baseURL);
+        Response response = httpsRequest.get(baseURL);
         Assert.assertEquals(200,response.getStatusCode());
     }
 
@@ -137,17 +137,17 @@ public class ServiceGroupTests {
                 .header("Authorization", token)
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter())
-                .when().delete("http://213.136.86.27:8083/api/v1.0/businesses/" + businessID + "/").thenReturn().body();
+                .when().delete("https://staging.eservia.com:8083/api/v1.0/businesses/" + businessID + "/").thenReturn().body();
         ResponseBody respons = given().contentType(ContentType.JSON)
                 .header("Authorization", token)
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter())
-                .when().delete("http://213.136.86.27:8083/api/v1.0/promoters/" + promoterId + "/").thenReturn().body();
+                .when().delete("https://staging.eservia.com:8083/api/v1.0/promoters/" + promoterId + "/").thenReturn().body();
         ResponseBody respon = given().contentType(ContentType.JSON)
                 .header("Authorization", token)
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter())
-                .when().delete("http://213.136.86.27:8083/api/v1.0/plans/" + planId + "/").thenReturn().body();
+                .when().delete("https://staging.eservia.com:8083/api/v1.0/plans/" + planId + "/").thenReturn().body();
     }
 
 

@@ -16,7 +16,7 @@ import static com.jayway.restassured.RestAssured.given;
 
 public class ReturnWarehouse {
     String token;
-    String baseURL = "http://213.136.86.27:8086/api/v1.0/warehouses/";
+    String baseURL = "https://staging.eservia.com:8086/api/v1.0/warehouses/";
     Faker faker = new Faker();
     String title = faker.name().firstName().toLowerCase();
     public int id;

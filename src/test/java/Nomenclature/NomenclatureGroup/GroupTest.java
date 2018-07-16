@@ -16,7 +16,7 @@ import org.testng.annotations.Test;
 import static com.jayway.restassured.RestAssured.given;
 
 public class GroupTest {
-    String baseURI = "http://staging.eservia.com:8008/api/v0.0/Nomenclature/Groups";
+    String baseURI = "https://staging.eservia.com:8008/api/v0.0/Nomenclature/Groups";
     GroupData groupData = new GroupData();
     String token;
     int ids;
@@ -74,12 +74,12 @@ public class GroupTest {
     }
     @Test
     public void getAllNomenclatureGroup(){
-        RequestSpecification httpRequest = RestAssured.given()
+        RequestSpecification httpsRequest = RestAssured.given()
                 .contentType(ContentType.JSON)
                 .header("Authorization",token)
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter());
-        Response response = httpRequest.get("http://staging.eservia.com:8008/api/v0.0/Nomenclature/Groups/Tree");
+        Response response = httpsRequest.get("https://staging.eservia.com:8008/api/v0.0/Nomenclature/Groups/Tree");
         Assert.assertEquals(200,response.getStatusCode());
     }
 

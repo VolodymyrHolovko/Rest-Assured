@@ -21,7 +21,7 @@ import static com.jayway.restassured.RestAssured.given;
 public class PositionTests {
 
     private  String token;
-    private  String baseURL = "http://staging.eservia.com:8003/api/v0.0/Positions";
+    private  String baseURL = "https://staging.eservia.com:8003/api/v0.0/Positions";
     String name = (LocalTime.now()).toString();
     int Ids;
     PositionData positionData = new PositionData();
@@ -93,12 +93,12 @@ public class PositionTests {
 
     @Test
     public void getAllPosition(){
-        RequestSpecification httpRequest = RestAssured.given()
+        RequestSpecification httpsRequest = RestAssured.given()
                 .contentType(ContentType.JSON)
                 .header("Authorization",token)
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter());
-        Response response = httpRequest.get("http://staging.eservia.com:8003/api/v0.0/Positions");
+        Response response = httpsRequest.get("https://staging.eservia.com:8003/api/v0.0/Positions");
         Assert.assertEquals(200,response.getStatusCode());
     }
     @Test

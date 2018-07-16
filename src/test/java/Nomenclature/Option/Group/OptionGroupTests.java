@@ -16,7 +16,7 @@ import org.testng.annotations.Test;
 import static com.jayway.restassured.RestAssured.given;
 
 public class OptionGroupTests {
-    String baseURI = "http://staging.eservia.com:8008/api/v0.0/Options/Groups";
+    String baseURI = "https://staging.eservia.com:8008/api/v0.0/Options/Groups";
     OptionGroupData optionGroupData= new OptionGroupData();
     String token;
     public int optionGroupId;
@@ -99,12 +99,12 @@ public class OptionGroupTests {
 
     @Test
     public void gerOptionTree(){
-        RequestSpecification httpRequest = RestAssured.given()
+        RequestSpecification httpsRequest = RestAssured.given()
                 .contentType(ContentType.JSON)
                 .header("Authorization",token)
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter());
-        Response response = httpRequest.get("http://staging.eservia.com:8008/api/v0.0/Options/Groups/Tree");
+        Response response = httpsRequest.get("https://staging.eservia.com:8008/api/v0.0/Options/Groups/Tree");
         Assert.assertEquals(200,response.getStatusCode());
     }
 

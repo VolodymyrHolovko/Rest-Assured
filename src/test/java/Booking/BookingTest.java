@@ -21,8 +21,8 @@ import java.time.LocalTime;
 import static com.jayway.restassured.RestAssured.given;
 
 public class BookingTest {
-    String baseURI = "http://staging.eservia.com:8005/api/v0.0/Bookings";
-    String baseURLTables = "http://staging.eservia.com:8009/api/v0.0/Tables";
+    String baseURI = "https://staging.eservia.com:8005/api/v0.0/Bookings";
+    String baseURLTables = "https://staging.eservia.com:8009/api/v0.0/Tables";
     String token;
     String code = LocalTime.now().toString();
     int TableId;

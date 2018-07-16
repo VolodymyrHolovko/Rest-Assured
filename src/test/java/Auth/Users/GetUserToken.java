@@ -1,6 +1,8 @@
 package Auth.Users;
 
 import com.google.gson.Gson;
+import com.jayway.restassured.RestAssured;
+import com.jayway.restassured.config.SSLConfig;
 import com.jayway.restassured.filter.log.RequestLoggingFilter;
 import com.jayway.restassured.filter.log.ResponseLoggingFilter;
 import com.jayway.restassured.http.ContentType;
@@ -12,7 +14,7 @@ import static com.jayway.restassured.RestAssured.given;
 public class GetUserToken {
     AuthUserData authUserData = new AuthUserData();
     public String token;
-    String baseURL = "http://auth.staging.eservia.com/api/v0.0/Auth/SignIn";
+    String baseURL = "https://auth.staging.eservia.com/api/v0.0/Auth/SignIn";
 
     public String GetUserToken() {
         ResponseBody responseBody = given().
