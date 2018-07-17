@@ -68,7 +68,7 @@ public class MovementTests {
 
         ReturnWarehouse getWarehouse = new ReturnWarehouse();
         this.warehouse_id = getWarehouse.ReturnWarehouse(business_id, address_id, responsible_id);
-        this.sender_warehouse_id = getWarehouse.ReturnWarehouse(business_id, address_id, responsible_id);
+        this.sender_warehouse_id = warehouse_id;
 
         Supply addSupply = supplyData.addNewSupply(business_id, supplier_id, warehouse_id, product_id, count, currency, cost, comment);
         ResponseBody response = given()

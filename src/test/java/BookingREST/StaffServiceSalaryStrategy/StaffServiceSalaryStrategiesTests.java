@@ -23,7 +23,7 @@ import org.testng.annotations.Test;
 import static com.jayway.restassured.RestAssured.given;
 
 public class StaffServiceSalaryStrategiesTests {
-    String baseUrl = "http://staging.eservia.com:8087/api/v1.0/staff-service-salary-strategies/";
+    String baseUrl = "https://staging.eservia.com:8087/api/v1.0/staff-service-salary-strategies/";
     StaffServiceSalaryStrategies staffServiceSalaryStrategies= new StaffServiceSalaryStrategies();
     StaffServiceSalaryStrategiesData staffServiceSalaryStrategiesData= new StaffServiceSalaryStrategiesData();
     SalarySchemeData salarySchemeData = new SalarySchemeData();
@@ -49,7 +49,7 @@ public class StaffServiceSalaryStrategiesTests {
                 .body(salarySchemeData.createSalaryScheme(businesId,staffId))
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter())
-                .when().post("http://staging.eservia.com:8087/api/v1.0/salary-schemes/").thenReturn().body();
+                .when().post("https://staging.eservia.com:8087/api/v1.0/salary-schemes/").thenReturn().body();
         SalarySchemeResponse salarySchemeResponse= new Gson().fromJson(response.asString(), SalarySchemeResponse.class);
         SalaryScheme salaryScheme = salarySchemeResponse.getData();
         this.salarySchemeId = salaryScheme.getId();
@@ -113,7 +113,7 @@ public class StaffServiceSalaryStrategiesTests {
                 .header("Authorization", token)
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter())
-                .when().get("http://staging.eservia.com:8087/api/v1.0/businesses/"+businesId+"/staff-service-salary-strategies/").thenReturn().body();
+                .when().get("https://staging.eservia.com:8087/api/v1.0/businesses/"+businesId+"/staff-service-salary-strategies/").thenReturn().body();
         StaffServiceSalaryStrategiesResponseArray staffServiceSalaryStrategiesResponseArray= new Gson().fromJson(response.asString(), StaffServiceSalaryStrategiesResponseArray.class);
         StaffServiceSalaryStrategies staffServiceSalaryStrategies= staffServiceSalaryStrategiesResponseArray.getData().get(0);
         this.addressProductSalarySchemeId = staffServiceSalaryStrategies.getId();
@@ -145,7 +145,7 @@ public class StaffServiceSalaryStrategiesTests {
                 .header("Authorization", token)
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter()).when()
-                .delete("http://213.136.86.27:8083/api/v1.0/businesses/" + businesId + "/").thenReturn().body();
+                .delete("https://staging.eservia.com:8083/api/v1.0/businesses/" + businesId + "/").thenReturn().body();
         BusinesessResponse businesessResponse = new Gson().fromJson(response.asString(), BusinesessResponse.class);
         Businesses businesses = businesessResponse.data;
         this.businesId = businesses.getId();
@@ -154,12 +154,12 @@ public class StaffServiceSalaryStrategiesTests {
                 .header("Authorization", token)
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter()).when()
-                .delete("http://213.136.86.27:8083/api/v1.0/promoters/" + promoterId + "/").thenReturn().body();
+                .delete("https://staging.eservia.com:8083/api/v1.0/promoters/" + promoterId + "/").thenReturn().body();
 
         ResponseBody respon = given().contentType(ContentType.JSON)
                 .header("Authorization", token)
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter())
-                .when().delete("http://213.136.86.27:8083/api/v1.0/plans/" + planId + "/").thenReturn().body();
+                .when().delete("https://staging.eservia.com:8083/api/v1.0/plans/" + planId + "/").thenReturn().body();
     }
 }
