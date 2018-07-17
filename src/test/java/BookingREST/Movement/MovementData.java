@@ -14,4 +14,9 @@ public class MovementData {
         addMovement.setComment(comment);
         return addMovement;
     }
+    public Movement updateMovements(String comment2) {
+        Movement updateMovement = new Movement();
+        updateMovement.setComment(comment2);
+        return updateMovement;
+    }
 }
