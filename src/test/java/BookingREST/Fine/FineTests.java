@@ -52,7 +52,7 @@ public class FineTests {
         this.id = fine.getId();
         Assert.assertEquals(businesId,fine.getBusiness_id());
         Assert.assertEquals(staffId,fine.getStaff_id());
-        Assert.assertEquals("2017-09-21T17:32:28+03:00",fine.getAccrual_at());
+        Assert.assertEquals("2017-09-23T17:32:28+03:00",fine.getAccrual_at());
         Assert.assertEquals("UAH",fine.getCurrency());
         Assert.assertEquals(2000,fine.getAmount());
         Assert.assertEquals("То всьо шо ти заробив? Не позорься",fine.getComment());
@@ -71,7 +71,7 @@ public class FineTests {
         Fine fine= fineResponse.data;
         Assert.assertEquals(businesId,fine.getBusiness_id());
         Assert.assertEquals(staffId,fine.getStaff_id());
-        Assert.assertEquals("2017-10-21T17:32:28+03:00",fine.getAccrual_at());
+        Assert.assertEquals("2017-10-23T17:32:28+03:00",fine.getAccrual_at());
         Assert.assertEquals("USD",fine.getCurrency());
         Assert.assertEquals(200,fine.getAmount());
         Assert.assertEquals("То всьо шо ти заробив лошара? Не позорься",fine.getComment());
@@ -89,7 +89,7 @@ public class FineTests {
         Fine fine= fineResponse.data;
         Assert.assertEquals(businesId,fine.getBusiness_id());
         Assert.assertEquals(staffId,fine.getStaff_id());
-        Assert.assertEquals("2017-10-21T17:32:28+03:00",fine.getAccrual_at());
+        Assert.assertEquals("2017-10-23T17:32:28+03:00",fine.getAccrual_at());
         Assert.assertEquals("USD",fine.getCurrency());
         Assert.assertEquals(200,fine.getAmount());
         Assert.assertEquals("То всьо шо ти заробив лошара? Не позорься",fine.getComment());
@@ -107,7 +107,7 @@ public class FineTests {
         Fine fine= fineResponse.getData().get(0);
         Assert.assertEquals(businesId,fine.getBusiness_id());
         Assert.assertEquals(staffId,fine.getStaff_id());
-        Assert.assertEquals("2017-10-21T17:32:28+03:00",fine.getAccrual_at());
+        Assert.assertEquals("2017-10-23T17:32:28+03:00",fine.getAccrual_at());
         Assert.assertEquals("USD",fine.getCurrency());
         Assert.assertEquals(200,fine.getAmount());
         Assert.assertEquals("То всьо шо ти заробив лошара? Не позорься",fine.getComment());
@@ -125,7 +125,7 @@ public class FineTests {
         Fine fine= fineResponse.data;
         Assert.assertEquals(businesId,fine.getBusiness_id());
         Assert.assertEquals(staffId,fine.getStaff_id());
-        Assert.assertEquals("2017-10-21T17:32:28+03:00",fine.getAccrual_at());
+        Assert.assertEquals("2017-10-23T17:32:28+03:00",fine.getAccrual_at());
         Assert.assertEquals("USD",fine.getCurrency());
         Assert.assertEquals(200,fine.getAmount());
         Assert.assertEquals("То всьо шо ти заробив лошара? Не позорься",fine.getComment());
