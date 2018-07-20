@@ -1,0 +1,19 @@
+version: '3.3'
+
+networks:
+  private:
+    driver: overlay
+  gateway:
+    external:
+      name: eservia-gateway
+
+services:
+  app:
+    image: $DOCKER_REPO_URL/cluster-api-tests-app:$CI_COMMIT_TAG
+    networks:
+      - private
+      - gateway
+    deploy:
+      placement:
+        constraints:
+          - node.role == manager
