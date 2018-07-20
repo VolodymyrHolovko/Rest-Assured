@@ -65,12 +65,12 @@ CreateBusiness {
     String baseUrl = "https://staging.eservia.com:8083/api/v1.0/businesses/";
     char rc = (char)('A' + new Random().nextInt(600));
     Faker faker = new Faker();
-    String sectorName = faker.name().username()+faker.name().firstName()+rc;
+    String sectorName = faker.name().username()+faker.name().firstName();
     String firstName = faker.name().firstName()+faker.name().firstName()+rc;
     String lastName = faker.name().username()+faker.name().firstName()+rc;
     String name = faker.name().username()+faker.name().firstName()+rc;
     String alias = faker.name().firstName().toLowerCase()+faker.name().firstName().toLowerCase()+rc;
-    String email = faker.name().lastName()+faker.name().firstName()+rc+"@mail.com";
+    String email = faker.name().lastName()+faker.name().firstName()+"@mail.com";
     String phone = faker.regexify("+380[0-9]{9}");
     int sectorId;
     int promoterId;
