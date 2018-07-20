@@ -1,0 +1,21 @@
+version: '3.3'
+
+networks:
+  private:
+    driver: overlay
+  gateway:
+    external:
+      name: eservia-gateway
+
+services:
+  app:
+    image: $DOCKER_REPO_URL/cluster-api-tests-app
+    networks:
+      - private
+      - gateway
+    volumes:
+      - ./../../../:/home/gradle/project:cached
+    deploy:
+      placement:
+        constraints:
+          - node.role == manager
