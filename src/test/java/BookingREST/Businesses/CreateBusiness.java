@@ -63,7 +63,7 @@ CreateBusiness {
     AddressData addressData = new AddressData();
     PlanSettingsData planSettingsData = new PlanSettingsData();
     String baseUrl = "https://staging.eservia.com:8083/api/v1.0/businesses/";
-    char rc = (char)('A' + new Random().nextInt(600));
+    char rc = (char)('A' + new Random().nextInt(36));
     Faker faker = new Faker();
     String sectorName = faker.name().username()+faker.name().firstName()+rc;
     String firstName = faker.name().firstName()+faker.name().firstName()+rc;
