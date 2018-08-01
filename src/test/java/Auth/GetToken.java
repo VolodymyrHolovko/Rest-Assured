@@ -8,6 +8,8 @@ import com.jayway.restassured.http.ContentType;
 import com.jayway.restassured.response.ResponseBody;
 import org.junit.Test;
 
+import java.net.BindException;
+
 import static com.jayway.restassured.RestAssured.given;
 
 public class GetToken {
@@ -17,7 +19,7 @@ public class GetToken {
 
     String baseURL = "https://staging.eservia.com:8003/api/v0.0/Auth/";
 
-    public String GetFinallyToken() {
+    public String GetFinallyToken()  {
         ResponseBody responseBody = given().
                 contentType(ContentType.JSON)
                 .body(authData.password())

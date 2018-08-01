@@ -25,6 +25,7 @@ public class SaleInteractionTests {
     int id;
     int business_id;
     int product_id;
+    int planId;
     Faker faker = new Faker();
     String currency = "UAH";
     String currency2 = "USD";
@@ -44,6 +45,8 @@ public class SaleInteractionTests {
 
         CreateBusiness getBusiness = new CreateBusiness();
         this.business_id = getBusiness.validBusiness();
+
+        this.planId = getBusiness.returnPlan();
 
         ReturnProduct getProduct = new ReturnProduct();
         this.product_id = getProduct.ReturnInactiveProduct(business_id);
@@ -157,5 +160,10 @@ public class SaleInteractionTests {
         ProductsResponse productsResponse = new Gson().fromJson(response3.asString(), ProductsResponse.class);
         Products deleteProd = productsResponse.data;
         Assert.assertEquals(product_id, deleteProd.getId());
+        ResponseBody respon = given().contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().delete("https://staging.eservia.com:8083/api/v1.0/plans/" + planId + "/").thenReturn().body();
     }
 }

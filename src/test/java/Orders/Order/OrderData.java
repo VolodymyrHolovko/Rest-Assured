@@ -18,7 +18,7 @@ public class OrderData {
         order.setDescription("Цей прекрасний ордер повинен бути виконаним");
         order.setOrderTypeId(1);
         order.setTotalPrice(42);
-        order.setToBePreparedAtTime("2018-07-30T12:18:25");
+        order.setToBePreparedAtTime("2018-08-30T12:18:25");
 
         List<Order.orderItems> orderItems = new ArrayList<>();
         Order.orderItems orderItem = new Order.orderItems ();
@@ -51,7 +51,7 @@ public class OrderData {
         order.setDescription("Цей прекрасний ордер повинен бути виконаним");
         order.setOrderTypeId(1);
         order.setTotalPrice(42);
-        order.setToBePreparedAtTime("2018-07-30T12:18:25");
+        order.setToBePreparedAtTime("2018-08-30T12:18:25");
 
         List<Order.orderItems> orderItems = new ArrayList<>();
         Order.orderItems orderItem = new Order.orderItems ();

@@ -24,6 +24,7 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import java.net.BindException;
 import java.util.Random;
 
 import static com.jayway.restassured.RestAssured.given;
@@ -61,7 +62,7 @@ BusinesessData businesessData = new BusinesessData();
 PromoterData promoterData = new PromoterData();
 
     @BeforeClass
-    public void getToken() {
+    public void getToken() throws BindException {
     AuthBusinessTest getToken = new AuthBusinessTest();
     this.token = getToken.GetAdminToken();
 

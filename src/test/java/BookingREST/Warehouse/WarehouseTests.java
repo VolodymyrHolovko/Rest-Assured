@@ -83,6 +83,7 @@ public class WarehouseTests {
         Assert.assertEquals(true, addWarhoses.getCreated_at().startsWith("2018"));
         Assert.assertEquals(true, addWarhoses.getUpdated_at().startsWith("2018"));
     }
+
     @Test
     public void B_getWarehouseById() {
         ResponseBody response = given()

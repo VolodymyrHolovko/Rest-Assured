@@ -40,6 +40,7 @@ public class SupplyTests {
     int responsible_id;
     int warehouse_id;
     int product_id;
+    int planId;
     Faker faker = new Faker();
     String currency = "UAH";
     int cost = faker.number().randomDigit();
@@ -57,7 +58,7 @@ public class SupplyTests {
         this.business_id = getBusiness.validBusiness();
         this.address_id = getBusiness.A_returnAdressId();
         this.responsible_id = getBusiness.B_returnStaff();
-
+        this.planId  = getBusiness.returnPlan();
         ReturnSupplier getSupplier = new ReturnSupplier();
         this.supplier_id = getSupplier.ReturnSupplier(business_id);
 
@@ -204,5 +205,11 @@ public class SupplyTests {
         WarehouseResponse warehouseResponse = new Gson().fromJson(response4.asString(), WarehouseResponse.class);
         Warehouse deleteWarhoses = warehouseResponse.data;
         Assert.assertEquals(warehouse_id, deleteWarhoses.getId());
+
+        ResponseBody respon = given().contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().delete("https://staging.eservia.com:8083/api/v1.0/plans/" + planId + "/").thenReturn().body();
     }
 }

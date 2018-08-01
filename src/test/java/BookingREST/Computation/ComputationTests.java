@@ -52,16 +52,6 @@ public class ComputationTests {
         AwardsResponse awardsResponse = new Gson().fromJson(response.asString(), AwardsResponse.class);
         Awards awards = awardsResponse.getData();
         this.awardsId = awards.getId();
-        ResponseBody response1 = given()
-                .contentType(ContentType.JSON)
-                .header("Authorization", token)
-                .body(fineData.createFine(businesId,staffId))
-                .filter(new RequestLoggingFilter())
-                .filter(new ResponseLoggingFilter())
-                .when().post("https://staging.eservia.com:8087/api/v1.0/fines/").thenReturn().body();
-        FineResponse fineResponse= new Gson().fromJson(response1.asString(), FineResponse.class);
-        Fine fine= fineResponse.getData();
-        this.fineId = fine.getId();
     }
 
     @Test
@@ -80,7 +70,7 @@ public class ComputationTests {
         Assert.assertEquals("2017-09-21T14:32:28+03:00",computation.getStarted_at());
         Assert.assertEquals("2017-09-21T19:32:28+03:00",computation.getEnded_at());
         Assert.assertEquals("UAH",computation.getCurrency());
-        Assert.assertEquals(200,computation.getAmount());
+        Assert.assertEquals(0,computation.getAmount());
     }
 
     @Test
@@ -98,7 +88,7 @@ public class ComputationTests {
         Assert.assertEquals("2017-09-21T14:32:28+03:00",computation.getStarted_at());
         Assert.assertEquals("2017-09-21T19:32:28+03:00",computation.getEnded_at());
         Assert.assertEquals("UAH",computation.getCurrency());
-        Assert.assertEquals(200,computation.getAmount());
+        Assert.assertEquals(0,computation.getAmount());
     }
 
     @Test
@@ -116,7 +106,7 @@ public class ComputationTests {
         Assert.assertEquals("2017-09-21T14:32:28+03:00",computation.getStarted_at());
         Assert.assertEquals("2017-09-21T19:32:28+03:00",computation.getEnded_at());
         Assert.assertEquals("UAH",computation.getCurrency());
-        Assert.assertEquals(200,computation.getAmount());
+        Assert.assertEquals(0,computation.getAmount());
     }
 
     @Test
@@ -135,7 +125,7 @@ public class ComputationTests {
         Assert.assertEquals("2017-09-23T14:32:28+03:00",computation.getStarted_at());
         Assert.assertEquals("2017-09-23T19:32:28+03:00",computation.getEnded_at());
         Assert.assertEquals("UAH",computation.getCurrency());
-        Assert.assertEquals(-2000,computation.getAmount());
+        Assert.assertEquals(0,computation.getAmount());
     }
 
     @AfterClass
