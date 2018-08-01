@@ -1,0 +1,30 @@
+#!/bin/bash
+
+set -e
+
+ENVIRONMENT=$1
+STACK_NAME=cluster-api-tests
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+if [[ -z "$ENVIRONMENT" ]] ; then
+    echo "No environment supplied"
+    exit 1
+fi
+
+if [[ -z "$STACK_NAME" ]] ; then
+    echo "No stack name supplied"
+    exit 1
+fi
+
+if [[ ! -d "$DIR/../environments/$ENVIRONMENT" ]] ; then
+    echo "Invalid environment supplied"
+    exit 1
+fi
+
+cd "$DIR/../environments/$ENVIRONMENT"
+
+docker stack rm "$STACK_NAME"
+
+while [[ $(docker network ls -f name="$STACK_NAME"_ --format "{{.ID}}" | wc -l) -ne 0 ]] ; do sleep 1 ; done
+
+echo "$(docker-compose -f docker-compose.yml config 2>/dev/null)" | docker stack deploy --with-registry-auth -c- "$STACK_NAME"
