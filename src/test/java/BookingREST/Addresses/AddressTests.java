@@ -30,7 +30,6 @@ public class AddressTests {
         this.token = authBusinessTest.GetAdminToken();
     }
 
-
     @Test
     public void A_CreateAddress(){
         ResponseBody response = given()

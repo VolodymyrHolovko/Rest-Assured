@@ -269,8 +269,8 @@ public class OrderTests {
 
         OrderResponse orderResponse1= new Gson().fromJson(get.asString(), OrderResponse.class);
         Order order  = orderResponse1.getData();
-        Assert.assertEquals("d57cce88-e688-44c0-844f-d298ed0448e9",order.getCashierId());
-        Assert.assertEquals("d57cce88-e688-44c0-844f-d298ed0448e9",order.getWaiterId());
+        Assert.assertEquals("9bd48817-4283-4a3b-93d2-731a5f3660f4",order.getCashierId());
+        Assert.assertEquals("9bd48817-4283-4a3b-93d2-731a5f3660f4",order.getWaiterId());
         Assert.assertEquals(tableId,order.getTableId());
         Assert.assertEquals(departmentId,order.getDepartmentId());
         Assert.assertEquals(initialization,order.getInitializationId());
