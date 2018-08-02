@@ -1,6 +1,7 @@
 package BookingREST.Addresses;
 
 import BookingREST.AuthBusiness.AuthBusinessTest;
+import BookingREST.Businesses.CreateBusiness;
 import com.google.gson.Gson;
 import com.jayway.restassured.RestAssured;
 import com.jayway.restassured.filter.log.RequestLoggingFilter;
@@ -20,7 +21,7 @@ public class AddressTests {
 
     private String token;
     private  String baseURL = "https://staging.eservia.com:8083/api/v1.0/addresses/";
-    int businessId = 1;
+    int businessId ;
     int Ids;
     AddressData addressData = new AddressData();
 
@@ -28,6 +29,8 @@ public class AddressTests {
     public void getToken(){
         AuthBusinessTest authBusinessTest = new AuthBusinessTest();
         this.token = authBusinessTest.GetAdminToken();
+        CreateBusiness createBusiness = new CreateBusiness();
+        this.businessId = createBusiness.validBusiness();
     }
 
     @Test
@@ -35,7 +38,7 @@ public class AddressTests {
         ResponseBody response = given()
                 .contentType(ContentType.JSON)
                 .header("Authorization", token)
-                .body(addressData.CreateAddress(1))
+                .body(addressData.CreateAddress(businessId))
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter())
                 .when().post(baseURL).thenReturn().body();
@@ -60,7 +63,7 @@ public class AddressTests {
         ResponseBody response = given()
                 .contentType(ContentType.JSON)
                 .header("Authorization",token)
-                .body(addressData.UpdateAddress(1))
+                .body(addressData.UpdateAddress(businessId))
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter())
                 .when().put(baseURL+Ids+"/").thenReturn().body();
