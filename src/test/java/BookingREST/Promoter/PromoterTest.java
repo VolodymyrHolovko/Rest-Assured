@@ -19,13 +19,19 @@ public class PromoterTest {
     String token;
     String baseURI = "https://staging.eservia.com:8083/api/v1.0/promoters/";
     Faker faker = new Faker();
+<<<<<<< HEAD
     char rсc = (char)('A' + new Random().nextInt(28));
     String firstNameUpdate = faker.name().firstName()+faker.name().firstName().toLowerCase()+faker.name().firstName();
     String lastNameUpdate = faker.name().lastName()+faker.name().firstName().toLowerCase()+faker.name().firstName();
+=======
+    char rсc = (char)('A' + new Random().nextInt(50));
+    String firstNameUpdate = faker.name().firstName()+faker.name().firstName().toLowerCase()+rсc;
+    String lastNameUpdate = faker.name().lastName()+faker.name().firstName().toLowerCase()+rсc;
+>>>>>>> v_holovko
     String emailUpdate = faker.name().firstName().hashCode()+rсc+"@mail.com";
     String phoneUpdate = faker.regexify("+380[0-9]{9}");
-    String firstName = faker.name().firstName()+faker.name().firstName().toLowerCase()+faker.name().firstName();
-    String lastName = faker.name().lastName()+faker.name().firstName().toLowerCase()+faker.name().firstName();
+    String firstName = faker.name().firstName()+faker.name().firstName().toLowerCase()+rсc;
+    String lastName = faker.name().lastName()+faker.name().firstName().toLowerCase()+rсc;
     String email = faker.name().firstName().hashCode()+rсc+"@mail.com";
     String phone = faker.regexify("+380[0-9]{9}");
     public int id;
