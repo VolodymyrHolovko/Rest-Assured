@@ -54,7 +54,7 @@ public class AddressProductSalaryStrategyTests {
     }
 
     @Test
-    public void A_createFixedSalaryScheme(){
+    public void A_createAddressSalaryScheme(){
         ResponseBody response = given()
                 .contentType(ContentType.JSON)
                 .header("Authorization", token)
@@ -72,7 +72,7 @@ public class AddressProductSalaryStrategyTests {
     }
 
     @Test
-    public void B_updateFixedSalaryScheme(){
+    public void B_updateAddressSalaryScheme(){
         ResponseBody response = given()
                 .contentType(ContentType.JSON)
                 .header("Authorization", token)
@@ -89,7 +89,7 @@ public class AddressProductSalaryStrategyTests {
     }
 
     @Test
-    public void C_getFixedSalaryScheme(){
+    public void C_getAddressSalaryScheme(){
         ResponseBody response = given()
                 .contentType(ContentType.JSON)
                 .header("Authorization", token)
@@ -105,7 +105,7 @@ public class AddressProductSalaryStrategyTests {
     }
 
     @Test
-    public void D_getFixedSalarySchemeByBusiness(){
+    public void D_getAddressSalarySchemeByBusiness(){
         ResponseBody response = given()
                 .contentType(ContentType.JSON)
                 .header("Authorization", token)
@@ -121,7 +121,7 @@ public class AddressProductSalaryStrategyTests {
     }
 
     @Test
-    public void E_deleteFixedSalaryScheme(){
+    public void E_deleteAddressSalaryScheme(){
         ResponseBody response = given()
                 .contentType(ContentType.JSON)
                 .header("Authorization", token)

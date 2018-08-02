@@ -24,6 +24,7 @@ public class ExpenseInteractionTests {
     int id;
     int business_id;
     int product_id;
+    int planId;
     String productQuery = "?product_id=";
     String baseURL = "https://staging.eservia.com:8086/api/v1.0/expense-interaction-strategies/";
     String baseURLBusiness = "https://staging.eservia.com:8086/api/v1.0/businesses/";
@@ -37,6 +38,8 @@ public class ExpenseInteractionTests {
 
         CreateBusiness getBusiness = new CreateBusiness();
         this.business_id = getBusiness.validBusiness();
+
+        this.planId = getBusiness.returnPlan();
 
         ReturnProduct getProduct = new ReturnProduct();
         this.product_id = getProduct.ReturnInactiveProduct(business_id);
@@ -129,6 +132,12 @@ public class ExpenseInteractionTests {
         ProductsResponse productsResponse = new Gson().fromJson(response3.asString(), ProductsResponse.class);
         Products deleteProd = productsResponse.data;
         Assert.assertEquals(product_id, deleteProd.getId());
+
+        ResponseBody respon = given().contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().delete("https://staging.eservia.com:8083/api/v1.0/plans/" + planId + "/").thenReturn().body();
     }
 }
 
