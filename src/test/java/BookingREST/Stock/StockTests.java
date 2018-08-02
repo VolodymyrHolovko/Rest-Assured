@@ -46,6 +46,7 @@ public class StockTests {
     String stockQUery = "?warehouse_id=";
     int cost = faker.number().randomDigit();
     int supplyID;
+    int planId;
     int count = faker.number().randomDigitNotZero();
     String comment = faker.chuckNorris().fact();
     SupplyData supplyData = new SupplyData();
@@ -60,6 +61,7 @@ public class StockTests {
         this.business_id = getBusiness.validBusiness();
         this.address_id = getBusiness.A_returnAdressId();
         this.responsible_id = getBusiness.B_returnStaff();
+        this.planId = getBusiness.returnPlan();
 
         ReturnSupplier getSupplier = new ReturnSupplier();
         this.supplier_id = getSupplier.ReturnSupplier(business_id);
@@ -181,5 +183,11 @@ public class StockTests {
         SupplyResponse supplyResponse = new Gson().fromJson(response5.asString(), SupplyResponse.class);
         Supply deleteSupp = supplyResponse.data;
         Assert.assertEquals(supplyID, deleteSupp.getId());
+
+        ResponseBody respon = given().contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().delete("https://staging.eservia.com:8083/api/v1.0/plans/" + planId + "/").thenReturn().body();
     }
 }

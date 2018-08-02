@@ -57,6 +57,7 @@ public class SaleTests {
     int supply_id;
     int seller_id;
     int stock_id;
+    int planId;
     String customer_id;
     Faker faker = new Faker();
     String currency = "UAH";
@@ -80,7 +81,7 @@ public class SaleTests {
         this.address_id = getBusiness.A_returnAdressId();
         this.responsible_id = getBusiness.B_returnStaff();
         this.seller_id = getBusiness.B_returnStaff();
-
+        this.planId = getBusiness.returnPlan();
         ReturnSupplier getSupplier = new ReturnSupplier();
         this.supplier_id = getSupplier.ReturnSupplier(business_id);
 
@@ -265,5 +266,10 @@ public class SaleTests {
         Response response6 = httpsRequest.delete(baseUrlStaff + seller_id + "/");
         Assert.assertEquals(200, response6.getStatusCode());
 
+        ResponseBody respon = given().contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().delete("https://staging.eservia.com:8083/api/v1.0/plans/" + planId + "/").thenReturn().body();
     }
 }

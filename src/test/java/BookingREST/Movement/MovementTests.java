@@ -53,6 +53,7 @@ public class MovementTests {
     int supply_id;
     int receiver_warehouse_id;
     int receiver_responsible_id;
+    int planId;
     Faker faker = new Faker();
     int count = faker.number().randomDigitNotZero();
     String comment = faker.chuckNorris().fact();
@@ -85,6 +86,7 @@ public class MovementTests {
         this.address_id = getBusiness.A_returnAdressId();
         this.responsible_id = getBusiness.B_returnStaff();
         this.sender_responsible_id = getBusiness.B_returnStaff();
+        this.planId = getBusiness.returnPlan();
 
         ReturnSupplier getSupplier = new ReturnSupplier();
         this.supplier_id = getSupplier.ReturnSupplier(business_id);
@@ -309,5 +311,10 @@ public class MovementTests {
                 .filter(new ResponseLoggingFilter());
         Response response62 = httpsRequest.delete(baseURLStaff + receiver_responsible_id + "/");
 
+        ResponseBody respon = given().contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .filter(new RequestLoggingFilter())
+                .filter(new ResponseLoggingFilter())
+                .when().delete("https://staging.eservia.com:8083/api/v1.0/plans/" + planId + "/").thenReturn().body();
     }
 }
