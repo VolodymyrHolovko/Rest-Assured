@@ -27,8 +27,8 @@ public class CategoryWarehousesTests {
     String baseURL = "https://staging.eservia.com:8086/api/v1.0/categories/";
     String baseURLBisiness = "https://staging.eservia.com:8086/api/v1.0/businesses/";
     Faker faker = new Faker();
-    String name = faker.app().name().toLowerCase();
-    String name2 = faker.app().name().toLowerCase();
+    String name = faker.app().name().toLowerCase()+faker.name().firstName();
+    String name2 = faker.app().name().toLowerCase()+faker.name().firstName();
     CategoryWarehousesData categoryWarehousesData = new CategoryWarehousesData();
 
     @BeforeClass

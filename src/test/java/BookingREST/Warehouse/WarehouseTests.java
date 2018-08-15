@@ -34,8 +34,8 @@ public class WarehouseTests {
     Faker faker = new Faker();
     int planId;
     int promoterId;
-    String title = faker.name().firstName().toLowerCase();
-    String title2 = faker.name().firstName().toLowerCase();
+    String title = faker.name().firstName().toLowerCase()+faker.name().firstName();
+    String title2 = faker.name().firstName().toLowerCase()+faker.name().firstName();
     String email = faker.name().firstName()+"@mail.com"+"a";
     String phone = faker.regexify("+380[0-9]{9}");
     WarehouseData warehouseData = new WarehouseData();

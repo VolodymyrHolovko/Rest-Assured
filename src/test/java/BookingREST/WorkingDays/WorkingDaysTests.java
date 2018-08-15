@@ -29,7 +29,7 @@ public class WorkingDaysTests {
     public int idBeauty;
     String rule;
     Faker faker = new Faker();
-    String email = faker.name().lastName()+"@mail.com"+"a";
+    String email = faker.name().lastName()+"@madil.com"+"a";
     String phone = faker.regexify("+380[0-9]{9}");
     String ruleStaff;
     String ruleStaffUpdated;

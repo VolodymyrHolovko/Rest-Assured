@@ -18,8 +18,8 @@ public class SupplierTypesTests {
     String baseURL = "https://staging.eservia.com:8086/api/v1.0/supplier-types/";
     public int id;
     Faker faker = new Faker();
-    String title = faker.name().lastName().toLowerCase();
-    String title2 = faker.name().title().toLowerCase();
+    String title = faker.name().lastName().toLowerCase()+faker.name().firstName();
+    String title2 = faker.name().title().toLowerCase()+faker.name().firstName();
     SupplierTypesData supplierTypesData = new SupplierTypesData();
 
     @BeforeClass
