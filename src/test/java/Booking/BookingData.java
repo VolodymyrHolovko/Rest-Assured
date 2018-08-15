@@ -13,32 +13,20 @@ static final String D_F_T = "yyyy-MM-dd'T'HH:mm:ss.000";
 
     public Booking addBookingAdmin(int TableIds, int DepId) {
         Booking bookingAdmin = new Booking();
-        DateFormat dateFormat = new SimpleDateFormat(D_F_T, Locale.getDefault());
-        Date date = new Date();
-        long addHours = date.getTime() + TimeUnit.MINUTES.toMillis(61);
-        long addTwoHours = date.getTime() + TimeUnit.MINUTES.toMillis(122);
-        String dateTime = dateFormat.format(new Date(addHours));
-        String endTime = dateFormat.format(new Date(addTwoHours));
         bookingAdmin.setDepartmentId(DepId);
         List<Integer> tableIds = new ArrayList<>();
         tableIds.add(TableIds);
         bookingAdmin.setTableIds(tableIds);
         bookingAdmin.setPeopleCount(2);
         bookingAdmin.setRequestDescription("хочу живої музики без мертвих музикантів");
-        bookingAdmin.setBookingDateTime(dateTime);
-        bookingAdmin.setBookingEndTime(endTime);
+        bookingAdmin.setBookingDateTime("2018-10-15T18:58:57.000");
+        bookingAdmin.setBookingEndTime("2018-10-15T18:58:57.000");
         bookingAdmin.setAddressId(2);
 
         return bookingAdmin;
     }
     public Booking updateBookingAdmin (int TableIds, int DepId, int id ) {
         Booking updateBookingAdm = new Booking();
-        DateFormat dateFormat = new SimpleDateFormat(D_F_T, Locale.getDefault());
-        Date date = new Date();
-        long addHours = date.getTime() + TimeUnit.MINUTES.toMillis(62);
-        long addTwoHours = date.getTime() + TimeUnit.MINUTES.toMillis(123);
-        String dateTime = dateFormat.format(new Date(addHours));
-        String endTime = dateFormat.format(new Date(addTwoHours));
         updateBookingAdm.setDepartmentId(DepId);
         List<Integer> tableIds = new ArrayList<>();
         tableIds.add(TableIds);
@@ -46,8 +34,8 @@ static final String D_F_T = "yyyy-MM-dd'T'HH:mm:ss.000";
         updateBookingAdm.setId(id);
         updateBookingAdm.setPeopleCount(2);
         updateBookingAdm.setRequestDescription("а сєводня в завтрашній дєнь");
-        updateBookingAdm.setBookingDateTime(dateTime);
-        updateBookingAdm.setBookingEndTime(endTime);
+        updateBookingAdm.setBookingDateTime("2018-10-16T18:58:57.000");
+        updateBookingAdm.setBookingEndTime("2018-10-16T18:58:57.000");
         updateBookingAdm.setAddressId(2);
 
         return updateBookingAdm;
