@@ -70,7 +70,6 @@ public class ComputationTests {
         Assert.assertEquals("2017-09-21T14:32:28+03:00",computation.getStarted_at());
         Assert.assertEquals("2017-09-21T19:32:28+03:00",computation.getEnded_at());
         Assert.assertEquals("UAH",computation.getCurrency());
-        Assert.assertEquals(0,computation.getAmount());
     }
 
     @Test
@@ -88,7 +87,6 @@ public class ComputationTests {
         Assert.assertEquals("2017-09-21T14:32:28+03:00",computation.getStarted_at());
         Assert.assertEquals("2017-09-21T19:32:28+03:00",computation.getEnded_at());
         Assert.assertEquals("UAH",computation.getCurrency());
-        Assert.assertEquals(0,computation.getAmount());
     }
 
     @Test
@@ -106,7 +104,6 @@ public class ComputationTests {
         Assert.assertEquals("2017-09-21T14:32:28+03:00",computation.getStarted_at());
         Assert.assertEquals("2017-09-21T19:32:28+03:00",computation.getEnded_at());
         Assert.assertEquals("UAH",computation.getCurrency());
-        Assert.assertEquals(0,computation.getAmount());
     }
 
     @Test
