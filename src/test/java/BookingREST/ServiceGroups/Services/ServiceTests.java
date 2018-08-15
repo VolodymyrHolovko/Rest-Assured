@@ -58,7 +58,7 @@ public class ServiceTests {
 
     @BeforeClass
     public void getToken() {
-        businessID = createBusiness.validBusiness();
+        this.businessID= createBusiness.validBusiness();
         this.planId=createBusiness.returnPlan();
         this.promoterId = createBusiness.returnPromoter();
         AuthBusinessTest authBusinessTest = new AuthBusinessTest();
