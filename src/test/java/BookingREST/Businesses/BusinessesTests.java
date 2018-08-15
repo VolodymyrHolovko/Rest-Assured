@@ -46,10 +46,10 @@ public class BusinessesTests {
     String baseUrl = "https://staging.eservia.com:8083/api/v1.0/businesses/";
 
     Faker faker = new Faker();
-    String sectorName = faker.name().nameWithMiddle().toLowerCase()+faker.name().firstName();
-    String firstName = faker.name().firstName()+faker.name().firstName()+faker.name().firstName();
-    String lastName = faker.name().lastName()+faker.name().firstName()+faker.name().firstName();
-    String name = faker.name().firstName()+faker.name().firstName()+faker.name().firstName();
+    String sectorName = faker.name().nameWithMiddle().toLowerCase()+faker.name().firstName().toLowerCase();
+    String firstName = faker.name().firstName()+faker.name().firstName()+faker.name().firstName().toLowerCase();
+    String lastName = faker.name().lastName()+faker.name().firstName()+faker.name().firstName().toLowerCase();
+    String name = faker.name().firstName()+faker.name().firstName()+faker.name().firstName().toLowerCase();
     String alias = faker.name().firstName().toLowerCase()+faker.name().firstName().toLowerCase()+faker.name().firstName()+faker.name().firstName().toLowerCase() ;
     String email = faker.name().firstName()+faker.name().firstName()+faker.name().firstName()+"@gmail.com";
     String phone = faker.regexify("+380[0-9]{9}");
