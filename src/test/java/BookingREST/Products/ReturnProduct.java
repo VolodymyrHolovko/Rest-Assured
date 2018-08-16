@@ -61,11 +61,10 @@ public class ReturnProduct {
         AuthBusinessTest getToken = new AuthBusinessTest();
         this.token = getToken.GetAdminToken();
 
-        CategoryWarehouses addCategories = categoryWarehousesData.addNewCategory(business_id, nameCategory);
         ResponseBody response = given()
                 .contentType(ContentType.JSON)
                 .header("Authorization", token)
-                .body(addCategories)
+                .body(categoryWarehousesData.addNewCategory(business_id, nameCategory))
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter())
                 .when().post(baseURLCategory).thenReturn().body();
@@ -73,11 +72,10 @@ public class ReturnProduct {
         CategoryWarehouses addCategory = categoryWarehousesResponse.data;
         this.category_id = addCategory.getId();
 
-        Units addUnitt = unitsData.addUnits(nameUnit, abbr);
         ResponseBody response3 = given()
                 .contentType(ContentType.JSON)
                 .header("Authorization", token)
-                .body(addUnitt)
+                .body(unitsData.addUnits(nameUnit, abbr))
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter())
                 .when().post(baseURLUnits).thenReturn().body();
@@ -87,11 +85,10 @@ public class ReturnProduct {
         this.expense_unit_id = addUnitss.getId();
 
 
-        Products addProductt = productsData.addNewProducts(business_id, name, sku, category_id, unit_id, sale_currency, sale_cost, expense_unit_id, expense_currency, expense_cost);
         ResponseBody response2 = given()
                 .contentType(ContentType.JSON)
                 .header("Authorization", token)
-                .body(addProductt)
+                .body(productsData.addNewProducts(business_id, name, sku, category_id, unit_id, sale_currency, sale_cost, expense_unit_id, expense_currency, expense_cost))
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter())
                 .when().post(baseURL).thenReturn().body();

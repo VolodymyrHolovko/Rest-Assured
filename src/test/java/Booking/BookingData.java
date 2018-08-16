@@ -19,8 +19,8 @@ static final String D_F_T = "yyyy-MM-dd'T'HH:mm:ss.000";
         bookingAdmin.setTableIds(tableIds);
         bookingAdmin.setPeopleCount(2);
         bookingAdmin.setRequestDescription("хочу живої музики без мертвих музикантів");
-        bookingAdmin.setBookingDateTime("2018-10-15T18:58:57.000");
-        bookingAdmin.setBookingEndTime("2018-10-15T18:58:57.000");
+        bookingAdmin.setBookingDateTime("2018-09-25T18:58:57.000");
+        bookingAdmin.setBookingEndTime("2018-09-25T19:59:57.000");
         bookingAdmin.setAddressId(2);
 
         return bookingAdmin;
@@ -34,8 +34,8 @@ static final String D_F_T = "yyyy-MM-dd'T'HH:mm:ss.000";
         updateBookingAdm.setId(id);
         updateBookingAdm.setPeopleCount(2);
         updateBookingAdm.setRequestDescription("а сєводня в завтрашній дєнь");
-        updateBookingAdm.setBookingDateTime("2018-10-16T18:58:57.000");
-        updateBookingAdm.setBookingEndTime("2018-10-16T18:58:57.000");
+        updateBookingAdm.setBookingDateTime("2018-09-25T18:57:57.000");
+        updateBookingAdm.setBookingEndTime("2018-09-25T19:58:57.000");
         updateBookingAdm.setAddressId(2);
 
         return updateBookingAdm;

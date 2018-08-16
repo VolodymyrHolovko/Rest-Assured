@@ -8,6 +8,8 @@ public class ProductsData {
         addProducts.setSku(sku);
         addProducts.setCategory_id(category_id);
         addProducts.setUnit_id(unit_id);
+        addProducts.setExpense_used(true);
+        addProducts.setSale_used(true);
         return addProducts;
     }
     public Products updateProducts(String name2, String sku2, int category_id2, int unit_id2, String sale_currency2, int sale_cost2, int expense_unit_id2, String expense_currency2, int expense_cost2) {

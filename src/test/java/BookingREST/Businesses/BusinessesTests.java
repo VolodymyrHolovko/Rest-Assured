@@ -32,6 +32,8 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import java.util.Random;
+
 import static com.jayway.restassured.RestAssured.given;
 
 public class BusinessesTests {
@@ -45,13 +47,28 @@ public class BusinessesTests {
     AddressData addressData = new AddressData();
     String baseUrl = "https://staging.eservia.com:8083/api/v1.0/businesses/";
 
+    public String randomString(){
+        String characters = "abcdefghijklmnopqrstuvwxyz";
+        String randomString="";
+        int length = 15;
+        Random random = new Random();
+        char[] text = new char[length];
+        for(int i = 0;i<length;i++){
+            text[i] = characters.charAt(random.nextInt(characters.length()));
+        }
+        for (int i = 0;i<text.length;i++){
+            randomString+=text[i];
+        }
+        return randomString;
+    }
+
     Faker faker = new Faker();
-    String sectorName = faker.name().nameWithMiddle().toLowerCase();
-    String firstName = faker.name().firstName()+faker.name().firstName();
-    String lastName = faker.name().lastName()+faker.name().firstName();
-    String name = faker.name().firstName()+faker.name().firstName();
-    String alias = faker.name().firstName().toLowerCase()+faker.name().firstName().toLowerCase() ;
-    String email = faker.name().firstName()+faker.name().firstName()+"@gmail.com";
+    String sectorName = randomString();
+    String firstName = randomString();
+    String lastName = randomString();
+    String name = randomString();
+    String alias = randomString();
+    String email = randomString()+"@gmail.com";
     String phone = faker.regexify("+380[0-9]{9}");
     int sectorId;
     int promoterId;

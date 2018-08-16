@@ -13,32 +13,20 @@ public class BookingCustomerData {
 
     public BookingCustomer addBookingCustomer(int TableId, int DepId) {
         BookingCustomer bookingCustomer = new BookingCustomer();
-        DateFormat dateFormat = new SimpleDateFormat(D_F_T, Locale.getDefault());
-        Date date = new Date();
-        long addTwoHours = date.getTime() + TimeUnit.MINUTES.toMillis(125);
-        long addThreeHours = date.getTime() + TimeUnit.MINUTES.toMillis(251);
-        String dateTime = dateFormat.format(new Date(addTwoHours));
-        String endTime = dateFormat.format(new Date(addThreeHours));
+        bookingCustomer.setBookingDateTime("2018-09-25T18:58:57.000");
+        bookingCustomer.setBookingEndTime("2018-09-25T19:59:57.000");
         bookingCustomer.setDepartmentId(DepId);
         List<Integer> tableIds = new ArrayList<>();
         tableIds.add(TableId);
         bookingCustomer.setTableIds(tableIds);
         bookingCustomer.setPeopleCount(1);
         bookingCustomer.setRequestDescription("це мій букінг кастомера");
-        bookingCustomer.setBookingDateTime(dateTime);
-        bookingCustomer.setBookingEndTime(endTime);
         bookingCustomer.setAddressId(2);
 
         return bookingCustomer;
     }
     public BookingCustomer updateBookingCustomer(int TableId, int DepId, int id) {
         BookingCustomer updateBooking = new BookingCustomer();
-        DateFormat dateFormat = new SimpleDateFormat(D_F_T, Locale.getDefault());
-        Date date = new Date();
-        long addTwoHours = date.getTime() + TimeUnit.MINUTES.toMillis(130);
-        long addThreeHours = date.getTime() + TimeUnit.MINUTES.toMillis(260);
-        String dateTimeUpdate = dateFormat.format(new Date(addTwoHours));
-        String endTimeUpdate = dateFormat.format(new Date(addThreeHours));
         updateBooking.setDepartmentId(DepId);
         List<Integer> tableIds = new ArrayList<>();
         tableIds.add(TableId);
@@ -46,8 +34,8 @@ public class BookingCustomerData {
         updateBooking.setId(id);
         updateBooking.setPeopleCount(2);
         updateBooking.setRequestDescription("це мій букінг кастомера, який я редагую");
-        updateBooking.setBookingDateTime(dateTimeUpdate);
-        updateBooking.setBookingEndTime(endTimeUpdate);
+        updateBooking.setBookingDateTime("2018-09-25T18:58:57.000");
+        updateBooking.setBookingEndTime("2018-09-25T19:59:57.000");
         updateBooking.setAddressId(2);
         updateBooking.setPreviousBookingAvailable(false);
 
