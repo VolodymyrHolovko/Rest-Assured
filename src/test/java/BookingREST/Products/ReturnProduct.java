@@ -88,7 +88,7 @@ public class ReturnProduct {
         ResponseBody response2 = given()
                 .contentType(ContentType.JSON)
                 .header("Authorization", token)
-                .body(productsData.addNewProducts(business_id, name, sku, category_id, unit_id, sale_currency, sale_cost, expense_unit_id, expense_currency, expense_cost))
+                .body(productsData.addNewProducts(business_id, name, sku, category_id, unit_id))
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter())
                 .when().post(baseURL).thenReturn().body();
@@ -151,7 +151,7 @@ public class ReturnProduct {
         this.unit_id = addUnitss.getId();
         this.expense_unit_id = addUnitss.getId();
 
-        Products addProductt = productsData.addNewProducts(business_id, name, sku, category_id, unit_id, sale_currency, sale_cost, expense_unit_id, expense_currency, expense_cost);
+        Products addProductt = productsData.addNewProducts(business_id, name, sku, category_id, unit_id);
         ResponseBody response2 = given()
                 .contentType(ContentType.JSON)
                 .header("Authorization", token)

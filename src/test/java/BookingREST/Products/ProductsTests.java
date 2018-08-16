@@ -121,7 +121,7 @@ public class ProductsTests {
     }
     @Test
     public void A_addProducts() {
-    Products addProductt = productsData.addNewProducts(business_id, name, sku, category_id, unit_id, sale_currency, sale_cost, expense_unit_id, expense_currency, expense_cost);
+    Products addProductt = productsData.addNewProducts(business_id, name, sku, category_id, unit_id);
         ResponseBody response = given()
                 .contentType(ContentType.JSON)
                 .header("Authorization", token)
@@ -158,7 +158,7 @@ public class ProductsTests {
     }
     @Test
     public void C_updateProducts() {
-        Products updateProductt = productsData.updateProducts(name2, sku2, category_id2, unit_id2, sale_currency2, sale_cost2, expense_unit_id2, expense_currency2, expense_cost2);
+        Products updateProductt = productsData.updateProducts(name2, sku2, category_id2, unit_id2);
         ResponseBody response = given()
                 .contentType(ContentType.JSON)
                 .header("Authorization", token)

@@ -1,7 +1,7 @@
 package BookingREST.Products;
 
 public class ProductsData {
-    public Products addNewProducts(int business_id, String name, String sku, int category_id, int unit_id, String sale_currency, int sale_cost, int expense_unit_id, String expense_currency, int expense_cost) {
+    public Products addNewProducts(int business_id, String name, String sku, int category_id, int unit_id) {
         Products addProducts = new Products();
         addProducts.setBusiness_id(business_id);
         addProducts.setName(name);
@@ -12,7 +12,7 @@ public class ProductsData {
         addProducts.setSale_used(true);
         return addProducts;
     }
-    public Products updateProducts(String name2, String sku2, int category_id2, int unit_id2, String sale_currency2, int sale_cost2, int expense_unit_id2, String expense_currency2, int expense_cost2) {
+    public Products updateProducts(String name2, String sku2, int category_id2, int unit_id2) {
         Products updateProduct = new Products();
         updateProduct.setName(name2);
         updateProduct.setSku(sku2);
