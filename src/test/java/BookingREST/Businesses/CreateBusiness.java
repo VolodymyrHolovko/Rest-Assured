@@ -76,15 +76,7 @@ CreateBusiness {
         return randomString;
     }
     Faker faker = new Faker();
-<<<<<<< HEAD
-    String sectorName = faker.name().username()+faker.name().firstName()+faker.name().firstName().toLowerCase()+"a";
-    String firstName = faker.name().firstName()+faker.name().firstName()+faker.name().firstName().toLowerCase()+"a";
-    String lastName = faker.name().username()+faker.name().firstName()+faker.name().firstName().toLowerCase()+"a";
-    String name = faker.name().username()+faker.name().firstName()+faker.name().firstName().toLowerCase()+"a";
-    String alias = faker.name().firstName().toLowerCase()+faker.name().firstName().toLowerCase()+faker.name().firstName()+"a";
-    String email = faker.name().lastName()+faker.name().firstName()+"a"+faker.name().firstName()+"@amail.com";
-    String phone = faker.regexify("+380[1-9]{9}");
-=======
+
     String sectorName = randomString();
     String firstName = randomString();
     String lastName = randomString();
@@ -92,7 +84,7 @@ CreateBusiness {
     String alias = randomString();
     String email = randomString()+"@mail.com";
     String phone = faker.regexify("+380[0-9]{9}");
->>>>>>> Maks
+
     int sectorId;
     int promoterId;
     int strategyId;
