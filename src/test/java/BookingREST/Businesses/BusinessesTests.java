@@ -88,7 +88,6 @@ public class BusinessesTests {
             GetUserToken getUserToken1= new GetUserToken();
             this.uesrId = getUserToken1.GetUserId();
 
-
             AuthBusinessTest getToken = new AuthBusinessTest();
             this.token = getToken.GetAdminToken();
 
