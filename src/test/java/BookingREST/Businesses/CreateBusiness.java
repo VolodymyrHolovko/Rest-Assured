@@ -53,7 +53,6 @@ CreateBusiness {
     StaffData staffData = new StaffData();
     ServiceData serviceData = new ServiceData();
     ServiceGroupData serviceGroupData = new ServiceGroupData();
-    CommentData commentData = new CommentData();
     SectorData sectorData = new SectorData();
     BusinesessData businesessData = new BusinesessData();
     PromoterData promoterData = new PromoterData();
@@ -62,7 +61,22 @@ CreateBusiness {
     WorkingDaysData workingDaysData = new WorkingDaysData();
     AddressData addressData = new AddressData();
     PlanSettingsData planSettingsData = new PlanSettingsData();
+    public String randomString(){
+        String characters = "abcdefghijklmnopqrstuvwxyz";
+        String randomString="";
+        int length = 15;
+        Random random = new Random();
+        char[] text = new char[length];
+        for(int i = 0;i<length;i++){
+            text[i] = characters.charAt(random.nextInt(characters.length()));
+        }
+        for (int i = 0;i<text.length;i++){
+            randomString+=text[i];
+        }
+        return randomString;
+    }
     Faker faker = new Faker();
+<<<<<<< HEAD
     String sectorName = faker.name().username()+faker.name().firstName()+faker.name().firstName().toLowerCase()+"a";
     String firstName = faker.name().firstName()+faker.name().firstName()+faker.name().firstName().toLowerCase()+"a";
     String lastName = faker.name().username()+faker.name().firstName()+faker.name().firstName().toLowerCase()+"a";
@@ -70,6 +84,15 @@ CreateBusiness {
     String alias = faker.name().firstName().toLowerCase()+faker.name().firstName().toLowerCase()+faker.name().firstName()+"a";
     String email = faker.name().lastName()+faker.name().firstName()+"a"+faker.name().firstName()+"@amail.com";
     String phone = faker.regexify("+380[1-9]{9}");
+=======
+    String sectorName = randomString();
+    String firstName = randomString();
+    String lastName = randomString();
+    String name = randomString();
+    String alias = randomString();
+    String email = randomString()+"@mail.com";
+    String phone = faker.regexify("+380[0-9]{9}");
+>>>>>>> Maks
     int sectorId;
     int promoterId;
     int strategyId;

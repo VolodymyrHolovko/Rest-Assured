@@ -7,11 +7,30 @@ public class Products {
     private String name;
     private String sku;
     private int category_id;
+    private boolean expense_used;
+    private boolean sale_used;
+
     @JsonProperty
     private int unit_id;
     private int id;
     private String updated_at;
     private String deleted_at;
+
+    public boolean isExpense_used() {
+        return expense_used;
+    }
+
+    public void setExpense_used(boolean expense_used) {
+        this.expense_used = expense_used;
+    }
+
+    public boolean isSale_used() {
+        return sale_used;
+    }
+
+    public void setSale_used(boolean sale_used) {
+        this.sale_used = sale_used;
+    }
 
     public int getBusiness_id() {
         return business_id;

@@ -18,7 +18,22 @@ import static com.jayway.restassured.RestAssured.given;
 public class PromoterTest {
     String token;
     String baseURI = "https://staging.eservia.com:8083/api/v1.0/promoters/";
+    public String randomString(){
+        String characters = "abcdefghijklmnopqrstuvwxyz";
+        String randomString="";
+        int length = 15;
+        Random random = new Random();
+        char[] text = new char[length];
+        for(int i = 0;i<length;i++){
+            text[i] = characters.charAt(random.nextInt(characters.length()));
+        }
+        for (int i = 0;i<text.length;i++){
+            randomString+=text[i];
+        }
+        return randomString;
+    }
     Faker faker = new Faker();
+<<<<<<< HEAD
     char rсc = (char)('A' + new Random().nextInt(28));
     String firstNameUpdate = faker.name().firstName()+faker.name().firstName().toLowerCase()+faker.name().firstName()+"a";
     String lastNameUpdate = faker.name().lastName()+faker.name().firstName().toLowerCase()+faker.name().firstName()+"q";
@@ -27,6 +42,15 @@ public class PromoterTest {
     String firstName = faker.name().firstName()+faker.name().firstName().toLowerCase()+faker.name().firstName();
     String lastName = faker.name().lastName()+faker.name().firstName().toLowerCase()+faker.name().firstName();
     String email = faker.name().firstName().hashCode()+faker.name().firstName()+"@dmail.com";
+=======
+    String firstNameUpdate = randomString();
+    String lastNameUpdate = randomString();
+    String emailUpdate = randomString()+"@mail.com";
+    String phoneUpdate = faker.regexify("+380[0-9]{9}");
+    String firstName = randomString();
+    String lastName = randomString();
+    String email = randomString()+"@mail.com";
+>>>>>>> Maks
     String phone = faker.regexify("+380[0-9]{9}");
     public int id;
     PromoterData promoterData = new  PromoterData();

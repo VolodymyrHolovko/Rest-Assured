@@ -94,7 +94,7 @@ public class OrderTests {
                     .body(tablesData.createTable(departmentId,code))
                     .filter(new RequestLoggingFilter())
                     .filter(new ResponseLoggingFilter())
-                    .when().post("https://auth.staging.eservia.com:8009/api/v0.0/Tables").thenReturn().body();
+                    .when().post("https://staging.eservia.com:8009/api/v0.0/Tables").thenReturn().body();
             TableResponse tableResponse = new Gson().fromJson(tableresponse.asString(), TableResponse.class);
             Tables tables = tableResponse.data;
             this.tableId = tables.getId();
@@ -104,7 +104,7 @@ public class OrderTests {
                     .body(nomenclatureTestData.createNomenclatureThirdType())
                     .filter(new RequestLoggingFilter())
                     .filter(new ResponseLoggingFilter())
-                    .when().post("https://auth.staging.eservia.com:8008/api/v0.0/Nomenclature").thenReturn().body();
+                    .when().post("https://staging.eservia.com:8008/api/v0.0/Nomenclature").thenReturn().body();
             NomenclatureResponse nomenclatureResponse= new Gson().fromJson(nomenclatureresponse.asString(), NomenclatureResponse.class);
             Nomenclature nomenclature= nomenclatureResponse.data;
             this.nomenclatureId = Integer.parseInt(nomenclature.getId());
@@ -114,7 +114,7 @@ public class OrderTests {
                     .body(sizeData.createSize(nomenclatureId))
                     .filter(new RequestLoggingFilter())
                     .filter(new ResponseLoggingFilter())
-                    .when().post("https://auth.staging.eservia.com:8008/api/v0.0/Sizes").thenReturn().body();
+                    .when().post("https://staging.eservia.com:8008/api/v0.0/Sizes").thenReturn().body();
             SizeResponse sizeResponse= new Gson().fromJson(sizeresponse.asString(), SizeResponse.class);
             Size size= sizeResponse.getData();
             this.sizeId = size.getId();
@@ -124,7 +124,7 @@ public class OrderTests {
                     .body(nomenclatureTestData.createNomenclatureFourthType())
                     .filter(new RequestLoggingFilter())
                     .filter(new ResponseLoggingFilter())
-                    .when().post("https://auth.staging.eservia.com:8008/api/v0.0/Nomenclature").thenReturn().body();
+                    .when().post("https://staging.eservia.com:8008/api/v0.0/Nomenclature").thenReturn().body();
             NomenclatureResponse nomenclatureResponse1= new Gson().fromJson(nomenclatureresponse1.asString(), NomenclatureResponse.class);
             Nomenclature nomenclature1= nomenclatureResponse1.data;
             this.nomenclatureIdSizeExtensions = Integer.parseInt(nomenclature1.getId());
@@ -134,7 +134,7 @@ public class OrderTests {
                     .body(sizeData.createSizeExtension(nomenclatureIdSizeExtensions))
                     .filter(new RequestLoggingFilter())
                     .filter(new ResponseLoggingFilter())
-                    .when().post("https://auth.staging.eservia.com:8008/api/v0.0/Sizes").thenReturn().body();
+                    .when().post("https://staging.eservia.com:8008/api/v0.0/Sizes").thenReturn().body();
             SizeResponse sizeResponse1= new Gson().fromJson(sizeresponse1.asString(), SizeResponse.class);
             Size size1= sizeResponse1.getData();
             this.sizeIdExtension = size1.getId();
@@ -144,7 +144,7 @@ public class OrderTests {
                     .body(optionGroupData.createOptionGroup())
                     .filter(new RequestLoggingFilter())
                     .filter(new ResponseLoggingFilter())
-                    .when().post("https://auth.staging.eservia.com:8008/api/v0.0/Options/Groups").thenReturn().body();
+                    .when().post("https://staging.eservia.com:8008/api/v0.0/Options/Groups").thenReturn().body();
             OptionGroupResponse optionGroupResponse= new Gson().fromJson(optiongroupresponse.asString(), OptionGroupResponse.class);
             OptionGroup optionGroup= optionGroupResponse.getData();
             this.optionGroupId = optionGroup.getId();
@@ -154,7 +154,7 @@ public class OrderTests {
                     .body(optionData.createOption(optionGroupId,nomenclatureIdSizeExtensions))
                     .filter(new RequestLoggingFilter())
                     .filter(new ResponseLoggingFilter())
-                    .when().post("https://auth.staging.eservia.com:8008/api/v0.0/Options").thenReturn().body();
+                    .when().post("https://staging.eservia.com:8008/api/v0.0/Options").thenReturn().body();
             OptionResponse optionResponse= new Gson().fromJson(optionresponse.asString(), OptionResponse.class);
             Option option= optionResponse.getData();
             this.optionId = option.getId();
@@ -171,13 +171,13 @@ public class OrderTests {
                     .body(menuData.reloadMenu(departmentId))
                     .filter(new RequestLoggingFilter())
                     .filter(new ResponseLoggingFilter())
-                    .when().post("https://auth.staging.eservia.com:8008/api/v0.0/Menu/Reload").thenReturn().body();
+                    .when().post("https://staging.eservia.com:8008/api/v0.0/Menu/Reload").thenReturn().body();
 
             ResponseBody menuresponse = given().contentType(ContentType.JSON)
                     .header("Authorization", token)
                     .filter(new RequestLoggingFilter())
                     .filter(new ResponseLoggingFilter())
-                    .when().get("https://auth.staging.eservia.com:8006/api/v0.0/Menu/Version?AddressId=2&DepartmentId="+departmentId).thenReturn().body();
+                    .when().get("https://staging.eservia.com:8006/api/v0.0/Menu/Version?AddressId=2&DepartmentId="+departmentId).thenReturn().body();
             MenuResponse menuResponse= new Gson().fromJson(menuresponse.asString(), MenuResponse.class);
             this.menuVersion = menuResponse.getData();
         }
@@ -189,7 +189,7 @@ public class OrderTests {
                     .body(orderData.createNewOrder(tableId, nomenclatureId, departmentId,optionId,menuVersion,initialization, nomenclatureIdSizeExtensions))
                     .filter(new RequestLoggingFilter())
                     .filter(new ResponseLoggingFilter())
-                    .when().post("https://auth.staging.eservia.com:8006/api/v0.0/Orders").thenReturn().body();
+                    .when().post("https://staging.eservia.com:8006/api/v0.0/Orders").thenReturn().body();
             OrderResponse orderResponse= new Gson().fromJson(orderRespons.asString(), OrderResponse.class);
             Order order  = orderResponse.getData();
             this.orderFirstId = order.getId();
@@ -232,7 +232,7 @@ public class OrderTests {
                 .body(orderData.withoutWaiter(tableId, nomenclatureId, departmentId,optionId,menuVersion,initialization, nomenclatureIdSizeExtensions))
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter())
-                .when().post("https://auth.staging.eservia.com:8006/api/v0.0/Orders").thenReturn().body();
+                .when().post("https://staging.eservia.com:8006/api/v0.0/Orders").thenReturn().body();
         OrderResponse orderResponse= new Gson().fromJson(orderRespons.asString(), OrderResponse.class);
         Order order  = orderResponse.getData();
         this.orderId=order.getId();
