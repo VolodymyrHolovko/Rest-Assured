@@ -59,7 +59,7 @@ public class ProductsTests {
     String abbr = randomString();
     String nameUnit = randomString();
     String name2 = faker.food().ingredient();
-    String sku2 = randomString();
+    String sku2 = randomString().toUpperCase();
     int unit_id;
     int unit_id2;
     int expense_unit_id;
