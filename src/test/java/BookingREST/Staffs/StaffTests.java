@@ -32,8 +32,22 @@ public class StaffTests {
     int staffId;
     String userId;
     Faker faker = new Faker();
+    public String randomString(){
+        String characters = "abcdefghijklmnopqrstuvwxyz";
+        String randomString="";
+        int length = 15;
+        Random random = new Random();
+        char[] text = new char[length];
+        for(int i = 0;i<length;i++){
+            text[i] = characters.charAt(random.nextInt(characters.length()));
+        }
+        for (int i = 0;i<text.length;i++){
+            randomString+=text[i];
+        }
+        return randomString;
+    }
     char rc = (char)('A' + new Random().nextInt(26));
-    String email = faker.name().firstName() + "@mail.com"+rc + "a";
+    String email = randomString() + "@mail.com"+rc + "a";
     String phone = faker.regexify("+380[0-9]{9}");
     int addresId;
     int promoterId;

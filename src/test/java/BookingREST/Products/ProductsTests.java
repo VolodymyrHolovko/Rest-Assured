@@ -22,6 +22,8 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import java.util.Random;
+
 import static com.jayway.restassured.RestAssured.given;
 
 public class ProductsTests {
@@ -36,14 +38,28 @@ public class ProductsTests {
     int business_id;
     int category_id;
     int category_id2;
+    public String randomString(){
+        String characters = "abcdefghijklmnopqrstuvwxyz";
+        String randomString="";
+        int length = 15;
+        Random random = new Random();
+        char[] text = new char[length];
+        for(int i = 0;i<length;i++){
+            text[i] = characters.charAt(random.nextInt(characters.length()));
+        }
+        for (int i = 0;i<text.length;i++){
+            randomString+=text[i];
+        }
+        return randomString;
+    }
     Faker faker = new Faker();
-    String nameCategory = faker.name().lastName().toLowerCase();
-    String name = faker.food().ingredient();
+    String nameCategory = randomString();
+    String name = randomString();
     String sku = faker.name().firstName().toUpperCase();
-    String abbr = faker.app().name().toLowerCase();
-    String nameUnit = faker.name().title().toLowerCase();
+    String abbr = randomString();
+    String nameUnit = randomString();
     String name2 = faker.food().ingredient();
-    String sku2 = faker.name().firstName().toUpperCase();
+    String sku2 = randomString();
     int unit_id;
     int unit_id2;
     int expense_unit_id;

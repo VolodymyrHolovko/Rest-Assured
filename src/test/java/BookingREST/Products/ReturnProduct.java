@@ -23,6 +23,8 @@ import com.jayway.restassured.response.ResponseBody;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 
+import java.util.Random;
+
 import static com.jayway.restassured.RestAssured.given;
 
 public class ReturnProduct {
@@ -38,12 +40,26 @@ public class ReturnProduct {
     int category_id;
     int unit_id;
     int expense_unit_id;
+    public String randomString(){
+        String characters = "abcdefghijklmnopqrstuvwxyz";
+        String randomString="";
+        int length = 15;
+        Random random = new Random();
+        char[] text = new char[length];
+        for(int i = 0;i<length;i++){
+            text[i] = characters.charAt(random.nextInt(characters.length()));
+        }
+        for (int i = 0;i<text.length;i++){
+            randomString+=text[i];
+        }
+        return randomString;
+    }
     String sale_currency = "USD";
     Faker faker = new Faker();
-    String nameCategory = faker.name().lastName().toLowerCase();
+    String nameCategory = randomString();
     String name = faker.food().ingredient();
     String sku = faker.name().firstName().toUpperCase();
-    String abbr = faker.app().name().toLowerCase();
+    String abbr = randomString();
     String nameUnit = faker.name().title().toLowerCase();
     int expense_cost = faker.number().randomDigit();
     String expense_currency = "USD";

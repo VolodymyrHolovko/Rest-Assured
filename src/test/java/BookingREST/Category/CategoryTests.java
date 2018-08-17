@@ -40,15 +40,30 @@ Faker faker = new Faker();
 public int id;
 char rc = (char)('A' + new Random().nextInt(26));
 
-String category = (faker.name().nameWithMiddle().toLowerCase()+faker.name().firstName()+rc).toLowerCase()+faker.name().firstName().toLowerCase();
-String sectorName = faker.name().username().toLowerCase()+faker.name().firstName().toLowerCase()+faker.name().firstName().toLowerCase();
-String name = faker.name().fullName().toLowerCase()+faker.name().firstName().toLowerCase()+faker.name().firstName().toLowerCase();
-String enName = faker.name().title().toLowerCase()+faker.name().firstName().toLowerCase()+faker.name().firstName().toLowerCase();
-String enNameUpdate = faker.name().title().toLowerCase()+faker.name().firstName().toLowerCase()+faker.name().firstName().toLowerCase();
-String alias = faker.name().firstName()+faker.name().firstName().toLowerCase()+faker.name().firstName().toLowerCase();
-String firstName = faker.name().firstName()+faker.name().firstName().toLowerCase()+faker.name().firstName().toLowerCase();
-String lastName = faker.name().username().toLowerCase()+faker.name().firstName().toLowerCase()+faker.name().firstName().toLowerCase();
-String email = faker.name().firstName().hashCode()+faker.name().firstName().toLowerCase()+faker.name().firstName()+"@mail.com";
+    public String randomString(){
+        String characters = "abcdefghijklmnopqrstuvwxyz";
+        String randomString="";
+        int length = 15;
+        Random random = new Random();
+        char[] text = new char[length];
+        for(int i = 0;i<length;i++){
+            text[i] = characters.charAt(random.nextInt(characters.length()));
+        }
+        for (int i = 0;i<text.length;i++){
+            randomString+=text[i];
+        }
+        return randomString;
+    }
+
+String category = randomString();
+String sectorName = randomString();
+String name = randomString();
+String enName = randomString();
+String enNameUpdate = randomString();
+String alias = randomString();
+String firstName = randomString();
+String lastName = randomString();
+String email = randomString()+"@mail.com";
 String phone = faker.regexify("+380[0-9]{9}");
 int promoterId;
 int sector_id;
