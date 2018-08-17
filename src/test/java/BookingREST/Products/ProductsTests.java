@@ -55,7 +55,7 @@ public class ProductsTests {
     Faker faker = new Faker();
     String nameCategory = randomString();
     String name = randomString();
-    String sku = randomString();
+    String sku = randomString().toUpperCase();
     String abbr = randomString();
     String nameUnit = randomString();
     String name2 = faker.food().ingredient();
