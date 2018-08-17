@@ -63,21 +63,14 @@ public class BusinessesTests {
     }
 
     Faker faker = new Faker();
-<<<<<<< HEAD
-    String sectorName = faker.name().nameWithMiddle().toLowerCase()+faker.name().firstName().toLowerCase();
-    String firstName = faker.name().firstName()+faker.name().firstName()+faker.name().firstName().toLowerCase();
-    String lastName = faker.name().lastName()+faker.name().firstName()+faker.name().firstName().toLowerCase();
-    String name = faker.name().firstName()+faker.name().firstName()+faker.name().firstName().toLowerCase();
-    String alias = faker.name().firstName().toLowerCase()+faker.name().firstName().toLowerCase()+faker.name().firstName()+faker.name().firstName().toLowerCase() ;
-    String email = faker.name().firstName()+faker.name().firstName()+faker.name().firstName()+"@gmail.com";
-=======
+
     String sectorName = randomString();
     String firstName = randomString();
     String lastName = randomString();
     String name = randomString();
     String alias = randomString();
     String email = randomString()+"@gmail.com";
->>>>>>> Maks
+
     String phone = faker.regexify("+380[0-9]{9}");
     int sectorId;
     int promoterId;

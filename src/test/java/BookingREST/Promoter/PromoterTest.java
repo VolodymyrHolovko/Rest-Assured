@@ -33,16 +33,7 @@ public class PromoterTest {
         return randomString;
     }
     Faker faker = new Faker();
-<<<<<<< HEAD
-    char rсc = (char)('A' + new Random().nextInt(28));
-    String firstNameUpdate = faker.name().firstName()+faker.name().firstName().toLowerCase()+faker.name().firstName()+"a";
-    String lastNameUpdate = faker.name().lastName()+faker.name().firstName().toLowerCase()+faker.name().firstName()+"q";
-    String emailUpdate = faker.name().firstName().hashCode()+faker.name().firstName()+"@dmail.com";
-    String phoneUpdate = faker.regexify("+380[0-9]{9}");
-    String firstName = faker.name().firstName()+faker.name().firstName().toLowerCase()+faker.name().firstName();
-    String lastName = faker.name().lastName()+faker.name().firstName().toLowerCase()+faker.name().firstName();
-    String email = faker.name().firstName().hashCode()+faker.name().firstName()+"@dmail.com";
-=======
+
     String firstNameUpdate = randomString();
     String lastNameUpdate = randomString();
     String emailUpdate = randomString()+"@mail.com";
@@ -50,7 +41,7 @@ public class PromoterTest {
     String firstName = randomString();
     String lastName = randomString();
     String email = randomString()+"@mail.com";
->>>>>>> Maks
+
     String phone = faker.regexify("+380[0-9]{9}");
     public int id;
     PromoterData promoterData = new  PromoterData();
