@@ -25,6 +25,7 @@ import org.testng.annotations.Test;
 
 
 import java.util.List;
+import java.util.Random;
 
 import static com.jayway.restassured.RestAssured.given;
 
@@ -48,9 +49,22 @@ public class ServiceTests {
         int AddresssRelationID;
         ServiceData serviceData = new ServiceData();
         CreateBusiness createBusiness = new CreateBusiness();
-
+    public String randomString(){
+        String characters = "abcdefghijklmnopqrstuvwxyz";
+        String randomString="";
+        int length = 15;
+        Random random = new Random();
+        char[] text = new char[length];
+        for(int i = 0;i<length;i++){
+            text[i] = characters.charAt(random.nextInt(characters.length()));
+        }
+        for (int i = 0;i<text.length;i++){
+            randomString+=text[i];
+        }
+        return randomString;
+    }
         Faker faker = new Faker();
-        String email = faker.name().firstName()+"@mail.com"+"a";
+        String email = randomString()+"@mail.com"+"a";
         String phone = faker.regexify("+380[0-9]{9}");
         StaffData staffData = new StaffData();
 

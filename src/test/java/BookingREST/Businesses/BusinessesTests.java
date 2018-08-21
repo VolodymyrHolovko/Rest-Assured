@@ -275,7 +275,6 @@ public class BusinessesTests {
 
     @Test
     public void H_promoterBusines(){
-        this.alias = faker.name().firstName();
         ResponseBody response = given()
                 .contentType(ContentType.JSON)
                 .body(businesessData.promoterBusinesses(strategyId,sectorId,alias+"a"))
@@ -293,7 +292,6 @@ public class BusinessesTests {
 
     @Test
     public void I_promoterBusines(){
-        this.alias = faker.name().firstName();
         ResponseBody response = given()
                 .contentType(ContentType.JSON)
                 .header("Authorization", token)
