@@ -45,7 +45,6 @@ public class PositionTests {
         Position position = positionResponse.data;
         this.Ids = position.getId();
         Assert.assertEquals(name,position.getName());
-        Assert.assertEquals("TestShortName",position.getShortName());
         Assert.assertEquals("TestComment",position.getComment());
         Assert.assertEquals("Salary",position.getScheduleType());
         Assert.assertEquals(700,position.getSalary());
@@ -65,7 +64,6 @@ public class PositionTests {
         Position position = positionResponse.data;
         this.Ids = position.getId();
         Assert.assertEquals(name,position.getName());
-        Assert.assertEquals("OtherTestShortname",position.getShortName());
         Assert.assertEquals("OtherTestComment",position.getComment());
         Assert.assertEquals("Free",position.getScheduleType());
         Assert.assertEquals(400, position.getSalary());
@@ -84,7 +82,6 @@ public class PositionTests {
         Position position = positionResponse.data;
         this.Ids = position.getId();
         Assert.assertEquals(name,position.getName());
-        Assert.assertEquals("OtherTestShortname",position.getShortName());
         Assert.assertEquals("OtherTestComment",position.getComment());
         Assert.assertEquals("Free",position.getScheduleType());
         Assert.assertEquals(400, position.getSalary());

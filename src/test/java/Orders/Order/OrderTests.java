@@ -383,16 +383,13 @@ public class OrderTests {
     }
 
     @Test
-    public void G_addOrderItem(){
-        int a = random.nextInt(8999)+1000;
-        int b = random.nextInt(8999)+1000;
-        this.initialization = "6f81303a-"+a+"-"+b+"-83f9-7927b927d2cf";
+    public void J_addOrderItem(){
         ResponseBody pickUp = given().contentType(ContentType.JSON)
                 .header("Authorization", token)
                 .body(orderItemData.addOrderItem(nomenclatureId,initialization,nomenclatureIdSizeExtensions,optionId))
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter())
-                .when().post("https://staging.eservia.com:8006/api/v0.0/Orders/"+orderId+"/Items").thenReturn().body();
+                .when().post("https://staging.eservia.com:8006/api/v0.0/Orders/"+orderFirstId+"/Items").thenReturn().body();
 
         ResponseBody get = given().contentType(ContentType.JSON)
                 .header("Authorization", token)
@@ -402,11 +399,11 @@ public class OrderTests {
         OrderResponse orderResponse1= new Gson().fromJson(get.asString(), OrderResponse.class);
         Order orders  = orderResponse1.getData();
         this.orderItemId = orders.getOrderItems().get(0).getId();
-        Assert.assertEquals(nomenclatureId,orders.getOrderItems().get(1).getNomenclatureId());
-        Assert.assertEquals(1,orders.getOrderItems().get(1).getAmount());
-        Assert.assertEquals(10,orders.getOrderItems().get(1).getSize());
-        Assert.assertEquals(initialization,orders.getOrderItems().get(1).getInitializationId());
-        Assert.assertEquals("Додайту цю страву до замовлення",orders.getOrderItems().get(1).getDescription());
+        Assert.assertEquals(nomenclatureId,orders.getOrderItems().get(0).getNomenclatureId());
+        Assert.assertEquals(2,orders.getOrderItems().get(0).getAmount());
+        Assert.assertEquals(10,orders.getOrderItems().get(0).getSize());
+        Assert.assertEquals(initialization,orders.getOrderItems().get(0).getInitializationId());
+        Assert.assertEquals("Цей прекрасний айтем повинен бути виконаним",orders.getOrderItems().get(0).getDescription());
         Assert.assertEquals(nomenclatureIdSizeExtensions,orders.getOrderItems().get(0).getExtensions().get(0).getExtensionId());
         Assert.assertEquals(optionId,orders.getOrderItems().get(0).getExtensions().get(0).getOptionId());
         Assert.assertEquals(1,orders.getOrderItems().get(0).getExtensions().get(0).getAmount());
