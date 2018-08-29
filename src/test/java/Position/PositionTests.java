@@ -48,7 +48,6 @@ public class PositionTests {
         Assert.assertEquals("TestComment",position.getComment());
         Assert.assertEquals("Salary",position.getScheduleType());
         Assert.assertEquals(700,position.getSalary());
-        Assert.assertEquals(800 ,position.getPrepaidExpense());
     }
 
     @Test
@@ -67,7 +66,6 @@ public class PositionTests {
         Assert.assertEquals("OtherTestComment",position.getComment());
         Assert.assertEquals("Free",position.getScheduleType());
         Assert.assertEquals(400, position.getSalary());
-        Assert.assertEquals(900, position.getPrepaidExpense());
         }
 
     @Test
@@ -85,7 +83,6 @@ public class PositionTests {
         Assert.assertEquals("OtherTestComment",position.getComment());
         Assert.assertEquals("Free",position.getScheduleType());
         Assert.assertEquals(400, position.getSalary());
-        Assert.assertEquals(900, position.getPrepaidExpense());
     }
 
     @Test

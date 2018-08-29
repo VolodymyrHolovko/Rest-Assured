@@ -73,7 +73,7 @@ public class BookingsTests {
         Assert.assertEquals("0af3a970-8793-49dd-843d-498f7c1602de",booking.getCustomer_id());
         Assert.assertEquals(2,booking.getStatus());
         Assert.assertEquals(2,booking.getType());
-        Assert.assertEquals("2018-08-25 17:00:00",booking.getDate());
+        Assert.assertEquals("2018-09-25 17:00:00",booking.getDate());
     }
 
     @Test
@@ -96,7 +96,7 @@ public class BookingsTests {
         Assert.assertEquals("0af3a970-8793-49dd-843d-498f7c1602de",booking.getCustomer_id());
         Assert.assertEquals(2,booking.getStatus());
         Assert.assertEquals(2,booking.getType());
-        Assert.assertEquals("2018-08-25 14:00:00",booking.getDate());
+        Assert.assertEquals("2018-09-25 14:00:00",booking.getDate());
     }
 
     @Test
@@ -118,7 +118,7 @@ public class BookingsTests {
         Assert.assertEquals("0af3a970-8793-49dd-843d-498f7c1602de",booking.getCustomer_id());
         Assert.assertEquals(2,booking.getStatus());
         Assert.assertEquals(2,booking.getType());
-        Assert.assertEquals("2018-08-25 14:00:00",booking.getDate());
+        Assert.assertEquals("2018-09-25 14:00:00",booking.getDate());
     }
 
     @Test
@@ -128,11 +128,11 @@ public class BookingsTests {
                 .header("Authorization", token)
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter())
-                .when().get("https://staging.eservia.com:8085/api/v1.0/businesses/"+businesId+"/time-slots/?address_id="+adressId+"&service_id="+serviceId+"&staff_id="+staffId+"&date=2018-06-25").thenReturn().body();
+                .when().get("https://staging.eservia.com:8085/api/v1.0/businesses/"+businesId+"/time-slots/?address_id="+adressId+"&service_id="+serviceId+"&staff_id="+staffId+"&date=2018-09-25").thenReturn().body();
         BookingListResponse bookingListResponse= new Gson().fromJson(response.asString(), BookingListResponse.class);
-        Assert.assertEquals(false,response.asString().contains("2018-08-25 14:00:00"));
-        Assert.assertEquals(false,response.asString().contains("2018-08-25 13:45:00"));
-        Assert.assertEquals(false,response.asString().contains("2018-08-25 14:15:00"));
+        Assert.assertEquals(false,response.asString().contains("2018-09-25 14:00:00"));
+        Assert.assertEquals(false,response.asString().contains("2018-09-25 13:45:00"));
+        Assert.assertEquals(false,response.asString().contains("2018-09-25 14:15:00"));
     }
     
 
@@ -155,7 +155,7 @@ public class BookingsTests {
         Assert.assertEquals("0af3a970-8793-49dd-843d-498f7c1602de",booking.getCustomer_id());
         Assert.assertEquals(0,booking.getStatus());
         Assert.assertEquals(2,booking.getType());
-        Assert.assertEquals("2018-08-25 14:00:00",booking.getDate());
+        Assert.assertEquals("2018-09-25 14:00:00",booking.getDate());
     }
 
     @Test
@@ -165,11 +165,11 @@ public class BookingsTests {
                 .header("Authorization", token)
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter())
-                .when().get("https://staging.eservia.com:8085/api/v1.0/businesses/"+businesId+"/time-slots/?address_id="+adressId+"&service_id="+serviceId+"&staff_id="+staffId+"&date=2018-08-25").thenReturn().body();
+                .when().get("https://staging.eservia.com:8085/api/v1.0/businesses/"+businesId+"/time-slots/?address_id="+adressId+"&service_id="+serviceId+"&staff_id="+staffId+"&date=2018-09-25").thenReturn().body();
         BookingListResponse bookingListResponse= new Gson().fromJson(response.asString(), BookingListResponse.class);
-        Assert.assertEquals(true,response.asString().contains("2018-08-25 14:00:00"));
-        Assert.assertEquals(true,response.asString().contains("2018-08-25 13:45:00"));
-        Assert.assertEquals(true,response.asString().contains("2018-08-25 14:15:00"));
+        Assert.assertEquals(true,response.asString().contains("2018-09-25 14:00:00"));
+        Assert.assertEquals(true,response.asString().contains("2018-09-25 13:45:00"));
+        Assert.assertEquals(true,response.asString().contains("2018-09-25 14:15:00"));
     }
 
     @Test
@@ -193,7 +193,7 @@ public class BookingsTests {
         Assert.assertEquals("6559fafa-0b89-4779-b999-3ab961da149a",booking.getCustomer_id());
         Assert.assertEquals(2,booking.getStatus());
         Assert.assertEquals(1,booking.getType());
-        Assert.assertEquals("2018-08-25 17:00:00",booking.getDate());
+        Assert.assertEquals("2018-09-25 17:00:00",booking.getDate());
     }
 
     @Test
@@ -213,11 +213,11 @@ public class BookingsTests {
                 .header("Authorization", token)
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter())
-                .when().get("https://staging.eservia.com:8085/api/v1.0/businesses/"+businesId+"/time-slots/?address_id="+adressId+"&service_id="+serviceId+"&staff_id="+staffId+"&date=2018-08-25").thenReturn().body();
+                .when().get("https://staging.eservia.com:8085/api/v1.0/businesses/"+businesId+"/time-slots/?address_id="+adressId+"&service_id="+serviceId+"&staff_id="+staffId+"&date=2018-09-25").thenReturn().body();
         BookingListResponse bookingListResponse= new Gson().fromJson(response.asString(), BookingListResponse.class);
-        Assert.assertEquals(false,response.asString().contains("2018-08-25 17:00:00"));
-        Assert.assertEquals(false,response.asString().contains("2018-08-25 16:45:00"));
-        Assert.assertEquals(false,response.asString().contains("2018-08-25 17:15:00"));
+        Assert.assertEquals(false,response.asString().contains("2018-09-25 17:00:00"));
+        Assert.assertEquals(false,response.asString().contains("2018-09-25 16:45:00"));
+        Assert.assertEquals(false,response.asString().contains("2018-09-25 17:15:00"));
     }
 
     @Test
@@ -239,7 +239,7 @@ public class BookingsTests {
         Assert.assertEquals("6559fafa-0b89-4779-b999-3ab961da149a",booking.getCustomer_id());
         Assert.assertEquals(0,booking.getStatus());
         Assert.assertEquals(1,booking.getType());
-        Assert.assertEquals("2018-08-25 17:00:00",booking.getDate());
+        Assert.assertEquals("2018-09-25 17:00:00",booking.getDate());
     }
 
     @Test
@@ -249,11 +249,11 @@ public class BookingsTests {
                 .header("Authorization", token)
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter())
-                .when().get("https://staging.eservia.com:8085/api/v1.0/businesses/"+businesId+"/time-slots/?address_id="+adressId+"&service_id="+serviceId+"&staff_id="+staffId+"&date=2018-08-25").thenReturn().body();
+                .when().get("https://staging.eservia.com:8085/api/v1.0/businesses/"+businesId+"/time-slots/?address_id="+adressId+"&service_id="+serviceId+"&staff_id="+staffId+"&date=2018-09-25").thenReturn().body();
         BookingListResponse bookingListResponse= new Gson().fromJson(response.asString(), BookingListResponse.class);
-        Assert.assertEquals(true,response.asString().contains("2018-08-25 14:00:00"));
-        Assert.assertEquals(true,response.asString().contains("2018-08-25 13:45:00"));
-        Assert.assertEquals(true,response.asString().contains("2018-08-25 14:15:00"));
+        Assert.assertEquals(true,response.asString().contains("2018-09-25 14:00:00"));
+        Assert.assertEquals(true,response.asString().contains("2018-09-25 13:45:00"));
+        Assert.assertEquals(true,response.asString().contains("2018-09-25 14:15:00"));
     }
 
     @Test
@@ -275,7 +275,7 @@ public class BookingsTests {
         Assert.assertEquals("6559fafa-0b89-4779-b999-3ab961da149a",booking.getCustomer_id());
         Assert.assertEquals(0,booking.getStatus());
         Assert.assertEquals(1,booking.getType());
-        Assert.assertEquals("2018-08-25 17:00:00",booking.getDate());
+        Assert.assertEquals("2018-09-25 17:00:00",booking.getDate());
     }
 
     @AfterClass
