@@ -1,7 +1,5 @@
-package DeliveryBack.Tokens;
+package DeliveryBACK.Tokens;
 
-import Position.Position;
-import Position.PositionResponse;
 import com.google.gson.Gson;
 import com.jayway.restassured.filter.log.RequestLoggingFilter;
 import com.jayway.restassured.filter.log.ResponseLoggingFilter;
